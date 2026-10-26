@@ -13,6 +13,7 @@ them merely because a newer milestone or release exists.
 
 - [Circuit research](circuit-design.md)
 - [Synthesized driving audio research and implementation plan](audio-system.md)
+  and [separate implementation qualification](audio-qualification.json)
 - [M4 portfolio](m4-v2-portfolio.html) and [qualification](m4-v2-qualification.json)
 - [M5 construction qualification](m5-qualification.json) and
   [browser measurements](m5-browser-budget.json)

@@ -3261,3 +3261,230 @@ dialog > .save-button {
     min-height: 210px;
   }
 }
+
+/* Synthesized driving audio preferences, kept separate from session settings. */
+.audio-dialog.m6-dialog {
+  width: min(850px, 94vw);
+  height: auto;
+  max-height: 92dvh;
+  color: #d6e0cd;
+}
+.audio-header > div {
+  max-width: 640px;
+}
+.audio-header #audio-description {
+  margin: 9px 0 0;
+  max-width: 570px;
+  color: #a4b0aa;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.audio-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  padding: 22px 30px 26px;
+  overflow: auto;
+  max-height: calc(87dvh - 210px);
+}
+.audio-body section {
+  min-width: 0;
+}
+.audio-dialog .audio-body h3 {
+  margin: 0 0 16px;
+  font-size: 17px;
+}
+.audio-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.audio-section-heading h3 {
+  margin: 0;
+}
+.audio-dialog .audio-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: 12px;
+  color: #e1e8dc;
+}
+.audio-dialog .audio-toggle > input {
+  margin: 0;
+  flex: 0 0 auto;
+  accent-color: var(--lime);
+}
+.audio-slider {
+  margin-bottom: 19px;
+}
+.audio-slider > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.audio-dialog .audio-slider label {
+  margin: 0;
+  font-size: 12px;
+}
+.audio-slider output {
+  color: var(--lime);
+  font-family: var(--mono);
+  font-size: 11px;
+  min-width: 38px;
+  text-align: right;
+}
+.audio-dialog .audio-slider input[type="range"] {
+  width: 100%;
+  margin: 10px 0 0;
+  height: 18px;
+  accent-color: var(--lime);
+}
+.audio-dialog .audio-hint {
+  margin: 6px 0 0;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #9faea5;
+}
+.audio-select-label {
+  margin-bottom: 7px;
+}
+.audio-dialog #audio-output {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+.audio-dialog #audio-output-hint {
+  margin-bottom: 20px;
+}
+.audio-dialog .audio-soft {
+  margin-top: 25px;
+}
+.audio-wheel-checks {
+  padding: 15px;
+  border: 1px solid #465145;
+  background: #202a26;
+  border-radius: 5px;
+  margin-top: 21px;
+}
+.audio-check-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.audio-dialog .audio-check-heading h3 {
+  margin: 0;
+  font-size: 12px;
+}
+.audio-check-heading > span {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.audio-wheel-grid,
+.audio-channel-checks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.audio-wheel-grid .button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 9px 8px;
+  gap: 8px;
+  min-height: 40px;
+  font-size: 11px;
+}
+.audio-wheel-grid .button span {
+  display: grid;
+  place-items: center;
+  height: 23px;
+  min-width: 23px;
+  color: #d8eeb0;
+  background: #394932;
+  border-radius: 3px;
+  font: 10px var(--mono);
+}
+.audio-wheel-grid .button:nth-child(n + 3) span {
+  color: #d8c6ac;
+  background: #453f32;
+}
+.audio-channel-checks {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #3b493e;
+}
+.audio-dialog .audio-channel-checks .button {
+  padding: 7px 4px;
+  font-size: 10px;
+  white-space: normal;
+  min-height: 36px;
+}
+.audio-stop-check {
+  width: 100%;
+  margin-top: 10px;
+}
+.audio-footer {
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.audio-footer #audio-status {
+  flex: 1 1 220px;
+  font-size: 11px;
+}
+.audio-lab-link {
+  color: var(--lime);
+  font-size: 11px;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.audio-settings-open {
+  white-space: nowrap;
+}
+@media (max-width: 700px) {
+  .audio-body {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 20px;
+    gap: 22px;
+    max-height: calc(87dvh - 245px);
+  }
+  .audio-spatial {
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .audio-dialog .audio-header,
+  .audio-dialog .audio-footer {
+    padding: 18px 20px;
+  }
+  .audio-footer #audio-status {
+    flex-basis: 100%;
+  }
+  .audio-lab-link {
+    margin-right: auto;
+  }
+  .audio-wheel-grid .button {
+    justify-content: center;
+  }
+}
+@media (max-width: 500px) {
+  .audio-dialog.m6-dialog {
+    width: 96vw;
+  }
+  .audio-section-heading {
+    gap: 8px;
+  }
+  .audio-dialog .audio-toggle {
+    font-size: 11px;
+  }
+  .audio-settings-open {
+    max-width: 62px;
+    white-space: normal;
+    line-height: 1.2;
+  }
+}

@@ -22,7 +22,9 @@
     "report:m7": "node scripts/report-m7.mjs",
     "qualify:m8": "node scripts/qualify-m8.mjs",
     "qualify:m8:stress": "node scripts/qualify-m8-stress.mjs",
-    "report:m8": "node scripts/report-m8.mjs"
+    "report:m8": "node scripts/report-m8.mjs",
+    "qualify:audio": "vitest run tests/audio --maxWorkers=2",
+    "report:audio": "node scripts/report-audio.mjs"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.21.0",
