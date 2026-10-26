@@ -13,13 +13,12 @@
     <a href="/">← Back to driving</a>
   </header>
   <main>
-    <section class="card"><h2>Accepted screech reference</h2><p>Compare the live B voice with the reconstruction you accepted. Listen for the same character as slip builds, holds and recovers.</p><div class="row"><button id="hear-accepted-reference">Hear accepted reference · 2 seconds</button><a href="/audio-reference.html">Open the original reference comparison →</a></div></section>
     <section class="transport card" aria-label="Audition transport">
       <div class="row"><button id="play" class="primary">Play example</button><button id="stop" disabled>Stop</button><button id="candidate-a" aria-pressed="false">A · Original</button><button id="candidate-b" class="selected" aria-pressed="true">B · Live screech</button><label class="inline"><input id="loop" type="checkbox" /> Loop short example</label></div>
       <p id="status" role="status">Choose an example and press Play. Listening is the acceptance test; the level meters are only a guide.</p>
       <p id="tyre-state" aria-live="polite"></p>
       <div class="meters"><div><span>A · original</span><meter id="meter-a" min="0" max="0.2" value="0"></meter><strong id="rms-a">—</strong></div><div><span id="meter-b-label">B · tonal</span><meter id="meter-b" min="0" max="0.2" value="0"></meter><strong id="rms-b">—</strong></div></div>
-      <p class="hint">A and B receive the same controls; A/B fades over 60 ms. The accepted two-second reference plays separately, near the default steady-slide level. Keep B selected for the new voice.</p>
+      <p class="hint">A and B are synthesized from the same live controls; A/B fades over 60 ms. Keep B selected for the accepted voice. No recorded clips are loaded.</p>
     </section>
     <div class="grid">
       <section class="card" aria-labelledby="examples-title">
@@ -36,14 +35,14 @@
       </section>
     </div>
     <section class="card presets" aria-labelledby="preset-title">
-      <div><h2 id="preset-title">Presets</h2><p>Presets stay in this browser and do not change the driving game. Export JSON to keep or share a setting. Live screech presets identify the prepared local reference model.</p>
+      <div><h2 id="preset-title">Presets</h2><p>Presets stay in this browser and do not change the driving game. Export JSON to keep or share a setting. Live screech presets identify the included synthesis parameter model.</p>
         <div class="row"><button id="load-reference-default">Load live screech starting point</button><button id="load-tonal-default">Load second tonal prototype</button><button id="load-first-prototype">Load first noise tyre prototype</button></div>
       </div>
       <div class="row"><label>Preset name <input id="preset-name" maxlength="80" value="Accepted screech · live control" /></label><button id="save-preset" class="primary">Save named preset</button><button id="duplicate-preset">Duplicate</button><label>Saved preset <select id="saved-presets"><option value="">Choose a saved preset</option></select></label><button id="load-preset">Load</button><button id="revert-preset">Revert</button><button id="export-preset">Export JSON</button></div>
       <details><summary>Import preset JSON</summary><textarea id="import-json" aria-label="Preset JSON to import" spellcheck="false"></textarea><button id="import-preset">Import</button></details>
     </section>
   </main>
-  <footer>Experimental voices for audible review. Production driving audio remains the current A voice.</footer>
+  <footer>The accepted B engine and screech also power the driving simulation. A and the earlier prototypes remain synthesized comparisons.</footer>
   <script type="module" src="/src/diagnostics/AudioPlayground.ts"></script>
 </body>
 </html>

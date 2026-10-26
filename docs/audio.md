@@ -13,12 +13,12 @@ like an isolated tone. The [user-recording analysis](research/tyre-recording-com
 shows broader, moving spectral structure and different early/middle/late
 character in the real reference. The user accepted the
 [reference reconstruction](research/tyre-reference-audition.md) at
-`/audio-reference.html` as the screech direction. The approved
+the former `/audio-reference.html` comparison as the screech direction. The approved
 [live-control prototype](research/controlled-tyre-screech.md) has also been accepted.
 **27 October: the accepted engine and screech are integrated into driving on
 development**, using real per-wheel controls and the existing surface/spatial/mixer
 foundation. Open the normal simulation for the next listening review. See
-[integration, local profile setup and targeted evidence](research/reference-audio-integration.md).
+[integration and targeted evidence](research/reference-audio-integration.md).
 Further mix/family tuning remains open. Main promotion and full release checks
 are deferred. Original qualification records retain their source hashes.
 
@@ -29,8 +29,10 @@ audible A/B prototype. **A** is the original production engine and tyre voice;
 **B** is the accepted-direction combustion-pulse/exhaust-path engine and the new
 reference-model tyre candidate. Both get the same short synthetic RPM/load or
 slip controls. The page starts on B, solo tyre, dry/centred, with the 10.5-second
-build/slide/recovery/re-entry cycle. A separate button replays the accepted
-two-second screech reconstruction. Switch A/B during playback with a 60 ms fade.
+build/slide/recovery/re-entry cycle. Switch synthesized A/B sources during
+playback with a 60 ms fade. The owner requested removal of the source/comparison
+recordings and their playback page before release; see the
+[cleanup record](research/audio-recording-cleanup.md).
 Driving now uses B's accepted engine and reference-model tyre with the live collector.
 
 Choose an idle, steady-load, sweep or shift engine example, or a scrub, onset,
@@ -51,8 +53,11 @@ presets, with their original controls and sounds.
 Named versioned presets live under a separate local-storage key, with load,
 duplicate, revert, JSON export and validated JSON import. They carry the
 backend version, seed, fixture, manual controls, route, wheel and audition trims.
-The live reference backend identifies its separately prepared local spectral
-model; that model and the reference WAVs remain outside production assets.
+The live reference backend identifies the included synthesis parameter model at
+`/audio/tyre-control-v1.json`. It renders continuous oscillators and fresh noise;
+no source or comparison WAVs are shipped or loaded. The parameter trajectories
+and spectral shapes were derived from the supplied recording; see
+[model provenance](research/audio-model-provenance.json).
 Saving or importing a preset never applies it to the game. The first
 listening review accepted B's engine direction but rejected its first tyre
 source; meters only check for an active, finite digital signal. The second review
@@ -115,9 +120,10 @@ not pause driving.
 
 The driving system uses the accepted pulse/exhaust and spectral-reference
 AudioWorklet renderers, plus native surface/impact and spatial/mixer nodes.
-It loads the prepared local spectral model, with no source-WAV playback or new
+It loads the packaged spectral parameter model, with no source-WAV playback or new
 audio dependency. The [integration notes](research/reference-audio-integration.md)
-describe local development availability and release-profile packaging still due.
+describe the driving integration; the [cleanup notes](research/audio-recording-cleanup.md)
+record static model packaging and removal of the recording comparisons.
 
 Noise buffer lengths have an exact frames → seconds → frames round trip.
 Chromium 152 has a [loop-boundary regression](https://issues.chromium.org/issues/561828152)

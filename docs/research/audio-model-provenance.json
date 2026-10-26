@@ -1,0 +1,13 @@
+{
+  "format": "procgen-racing:synthesis-model-provenance",
+  "version": 1,
+  "asset": "public/audio/tyre-control-v1.json",
+  "sha256": "0f640d311e0f7c9297bb30b9784880553ac67275b433705b9629b291d6ec6082",
+  "modelId": "local:tyre-spectrum-v1:2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0",
+  "referenceSha256": "2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0",
+  "origin": "Numerical analysis of the tyre recording supplied by the project owner. Original online source and reuse terms were not supplied.",
+  "representation": "Partial frequency/strength trajectories, initial oscillator phases and residual spectral magnitudes, normalized without the recording's overall level envelope.",
+  "rendering": "Continuous oscillators and fresh seeded noise, driven by live contact, slip and history. No original PCM, residual waveform phases or recorded audio clips are played or packaged.",
+  "authorization": "Owner approved the sound and requested a versioned audio release, then requested removal of source/comparison recordings before promotion.",
+  "scope": "Provenance and technical composition only; this record makes no determination about the original recording's licence or fair use."
+}

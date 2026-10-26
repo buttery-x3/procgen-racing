@@ -2,6 +2,7 @@ import { EngineVoice } from "../audio/EngineVoice";
 import { TyreVoice } from "../audio/TyreVoice";
 import { SpatialAudio } from "../audio/SpatialAudio";
 import { smoothParam } from "../audio/nodes";
+import { TYRE_MODEL_URL } from "../audio/reference-tuning";
 import type { AudioSettings } from "../audio/types";
 import { DEFAULT_PRESET, TONAL_PRESET, LEGACY_PRESET, FIXTURES, REFERENCE_MODEL_ID, ENGINE_TUNING_KEYS, LEGACY_TYRE_TUNING_KEYS, TONAL_TYRE_TUNING_KEYS, REFERENCE_TYRE_TUNING_KEYS,
   fixtureControls, parsePreset,
@@ -26,9 +27,6 @@ let committed: PlaygroundPreset = structuredClone(DEFAULT_PRESET);
 let choice: "a" | "b" = "b";
 let graph: Graph | undefined;
 let opening = 0;
-const acceptedReference = new Audio("/__audio-reference/reconstruction.wav");
-acceptedReference.preload = "none"; acceptedReference.volume = 0.4;
-acceptedReference.onended = () => { if (!graph) { stopButton.disabled = true; setStatus("Accepted reference finished. Press Play example for the live voice."); } };
 
 interface Graph {
   context: AudioContext;
@@ -179,10 +177,10 @@ async function start(): Promise<void> {
     let profile: unknown;
     if (reference) {
       await context.audioWorklet.addModule("/audio/reference-tyre.js");
-      const response = await fetch("/__audio-reference/control-model.json", { cache: "no-store" });
-      if (!response.ok) throw new Error("Prepare the local tyre control model first; see the live screech notes.");
+      const response = await fetch(TYRE_MODEL_URL);
+      if (!response.ok) throw new Error("Tyre sound profile unavailable. Reload to retry.");
       profile = await response.json();
-      if ((profile as { id?: string }).id !== REFERENCE_MODEL_ID) throw new Error("The local tyre model does not match this preset's reference.");
+      if ((profile as { id?: string }).id !== REFERENCE_MODEL_ID) throw new Error("The tyre model does not match this preset's reference.");
     }
     if (generation !== opening) { await context.close(); return; }
     const nodes: AudioNode[] = [];
@@ -254,7 +252,6 @@ async function start(): Promise<void> {
 
 function stop(): void {
   opening++;
-  acceptedReference.pause(); acceptedReference.currentTime = 0;
   element("tyre-state").textContent = "";
   const g = graph; graph = undefined;
   if (g) {
@@ -337,13 +334,6 @@ aButton.addEventListener("click", () => { choice = "a"; applyMix(); setStatus("A
 bButton.addEventListener("click", () => { choice = "b"; applyMix(); setStatus(preset.backend === "pulse-exhaust-reference-v3"
   ? "B · live reference screech and accepted pulse/exhaust engine."
   : preset.backend === "pulse-exhaust-tonal-v2" ? "B · tonal tyre and pulse/exhaust engine." : "B · first noise-driven tyre and pulse/exhaust engine."); });
-element("hear-accepted-reference").addEventListener("click", () => {
-  stop(); const generation = opening;
-  void acceptedReference.play().then(() => {
-    if (generation !== opening) return;
-    stopButton.disabled = false; setStatus("Playing the accepted 1.87-second reconstruction reference.");
-  }).catch(() => { if (generation === opening) setStatus("The local accepted reference is unavailable. Prepare the reference audition files first."); });
-});
 fixtureSelect.addEventListener("change", () => {
   preset.fixture = fixtureSelect.value as FixtureId;
   const kind = FIXTURES[preset.fixture].kind;

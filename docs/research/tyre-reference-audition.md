@@ -1,5 +1,11 @@
 # Tyre reference reconstruction: ready for listening
 
+**Historical experiment:** the owner requested removal of its source/comparison
+recordings, player page and serving route before the audio release on 27 October
+2026. The measurements and analysis below retain their original scope. Current
+driving/playground sound uses the numerical model and fresh synthesis; see the
+[cleanup record](audio-recording-cleanup.md).
+
 26 October 2026. The user approved continuing the
 [recording-informed proposal](tyre-recording-comparison.md) until the next hearing
 step. That step is now prepared at **`/audio-reference.html`** on the development
