@@ -34,6 +34,11 @@ The primary checkout also contained uncommitted M8 work on
 planning branch. In particular, engine/squeal and presentation settings below
 describe that M8 working snapshot, not the committed M7 baseline.
 
+During finalization, M8 landed on development at `97d30ad` (implementation
+`50bbd27`). This planning branch was reconciled with that completed integration;
+the two audio-file hashes below still matched. The final delta against integrated
+M8 is documentation only. The earlier working-snapshot observations remain valid.
+
 | Location | Evidence | Implication |
 | --- | --- | --- |
 | `src/audio/SurfaceAudio.ts` | Committed M7 has one aggregate noise/rumble path; the inspected M8 version adds one filtered sawtooth engine and one sine squeal. All feed the destination without wheel spatialization. | Replace the aggregate tyre path with four voices; preserve surface feedback and lifecycle behavior. |
@@ -531,10 +536,12 @@ then-current development, after reconciling M8 integration. Complete the checks,
 publish source-matching evidence, commit/push that branch, merge and push
 development for testing. Promotion to main remains a separate release request.
 
-Planning validation on this M7-based documentation branch: **216 tests passed
-across 14 files** using `npm test -- --maxWorkers=2`; `npm run build` passed strict
-TypeScript and production compilation (the existing large-chunk warning remains).
-All **56 relative Markdown links** across the four changed documents resolved;
-`git diff --check` passed. No runtime source was changed. These checks do not
-qualify M8's uncommitted work or the sound quality/perception of this unimplemented
-design. No audio or generation qualification report was rewritten.
+Planning validation initially passed 216 tests on the M7-based branch. After
+reconciling completed M8, **237 tests passed across 15 files** using
+`npm test -- --maxWorkers=2`; `npm run build` passed strict TypeScript and
+production compilation (the existing large-chunk warning remains). All **68
+relative Markdown links** across the four changed documents resolved;
+`git diff --check` passed. The final change against integrated M8 is documentation
+only. These regression/build checks do not establish sound quality or perception
+of this unimplemented design. Existing M8 and generation qualification reports
+retain their original source hashes; none was rewritten by this planning task.
