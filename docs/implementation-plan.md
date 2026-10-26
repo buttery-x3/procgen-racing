@@ -559,10 +559,11 @@ infrastructure baseline. The [sound playground research](research/audio-timbre.m
 led to an accepted pulse/exhaust engine direction, a rejected rain-like tyre
 source, then a rejected tonal tyre source. The [supplied-WAV comparison](research/tyre-recording-comparison.md)
 now measures moving spectral bands and changing early/middle/late character
-missing from the tuned synthetic recording. Its next proposal is a short
-reference reconstruction before another real-time backend. That approved
-[reconstruction comparison](research/tyre-reference-audition.md) is now ready for
-the next hearing step; another realtime source depends on that decision.
-Keep the engine and channel foundation. Select a convincing
-tyre voice before expanding presets or production integration; this analysis
-changes no playback code and needs no application test campaign.
+missing from the tuned synthetic recording. The user accepted the resulting
+[reconstruction comparison](research/tyre-reference-audition.md), and the approved
+[live-control screech](research/controlled-tyre-screech.md) is now ready in the
+playground for its next hearing decision.
+Keep the engine and channel foundation. Accept the live tyre's character before
+expanding profiles or production integration. Validation for this prototype uses
+focused source/control checks and a short browser review, preserving the
+established infrastructure evidence.

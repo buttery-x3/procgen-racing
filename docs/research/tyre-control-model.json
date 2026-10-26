@@ -1,0 +1,19 @@
+{
+  "scope": "Local reference-specific control model, for a live playground hearing decision.",
+  "model_id": "local:tyre-spectrum-v1:2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0",
+  "source_sha256": "2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0",
+  "analysis_script_sha256": "dec8837a7a188b94cbd76e8717533f4f24ff4fd55b9368c39e8db4069db5f6da",
+  "export_script_sha256": "81824606a45f05b6f56852f85981c45deee3b78e2e1c3a3b7210db4ab8087722",
+  "model_sha256": "0f640d311e0f7c9297bb30b9784880553ac67275b433705b9629b291d6ec6082",
+  "model_bytes": 1846340,
+  "frames": 376,
+  "partial_slots": 18,
+  "retained_tracks": 251,
+  "residual_bins": 428,
+  "synthesis_fft_frames": 2048,
+  "normalization": "Per-frame expected model RMS 0.07; input clip envelope removed",
+  "limitations": [
+    "Reference-specific model is local and excluded from the production build.",
+    "No realtime sound acceptance or production integration is inferred."
+  ]
+}

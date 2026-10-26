@@ -11,11 +11,12 @@ is accepted as a promising base for later vehicle tuning. Both tyre candidates
 are rejected: the first sounds like rain, and the tonal revision still sounds
 like an isolated tone. The [user-recording analysis](research/tyre-recording-comparison.md)
 shows broader, moving spectral structure and different early/middle/late
-character in the real reference. It proposes a short reference reconstruction
-before another playground backend. That approved reconstruction is now
-[ready for hearing](research/tyre-reference-audition.md) at `/audio-reference.html`.
-The original
-production voices remain the infrastructure/comparison baseline; existing
+character in the real reference. The user accepted the
+[reference reconstruction](research/tyre-reference-audition.md) at
+`/audio-reference.html` as the screech direction. The approved
+[live-control prototype](research/controlled-tyre-screech.md) is now ready in
+the playground, with onset, indefinite sliding, recovery and load response.
+The original production voices remain the infrastructure/comparison baseline; existing
 qualification records are preserved.
 
 ## Sound-quality playground
@@ -23,13 +24,14 @@ qualification records are preserved.
 Open `/audio-playground.html` on the running development server for the short
 audible A/B prototype. **A** is the existing production engine and tyre voice;
 **B** is the accepted-direction combustion-pulse/exhaust-path engine and the new
-tonal tyre candidate. Both get the same short synthetic RPM/load or slip
-controls. The page starts on B, solo tyre, a dry sustained slide and zero
-scrape; switch A/B during playback with a 60 ms fade. The comparison does not
-replace the driving game's audio.
+reference-model tyre candidate. Both get the same short synthetic RPM/load or
+slip controls. The page starts on B, solo tyre, dry/centred, with the 10.5-second
+build/slide/recovery/re-entry cycle. A separate button replays the accepted
+two-second screech reconstruction. Switch A/B during playback with a 60 ms fade.
+The comparison does not replace the driving game's audio.
 
 Choose an idle, steady-load, sweep or shift engine example, or a scrub, onset,
-sustained slide or recovery tyre example. Each ends after 7–9 seconds unless
+sustained slide or recovery tyre example. Each ends after 7–10.5 seconds unless
 Loop is selected. Manual mode lets you vary RPM, engine load, tyre slip, sliding
 speed and wheel load. Solo engine, tyre or surface, or hear a simple mix. Start
 with Dry/Centred, then try the existing `SpatialAudio` headphone, stereo or mono
@@ -39,25 +41,29 @@ trim; leave that trim fixed when comparing a sweep or onset. The shared output
 has a protective limiter, but no per-example loudness normalization.
 
 B exposes engine body, exhaust openness, rasp, pulse unevenness and mechanical
-texture. The new tyre controls are squeal strength, harmonic edge, pitch
-character, irregular roughness, optional scrape, onset and release. The previous
-noise-driven tyre can still be loaded as a named built-in comparison or through
-its saved presets, with its original controls and sound.
+texture. The live tyre controls are lower/higher character, texture balance,
+pitch, character movement, level attack and release. The two previous tyre
+sources can still be loaded as named built-in comparisons or through their saved
+presets, with their original controls and sounds.
 Named versioned presets live under a separate local-storage key, with load,
 duplicate, revert, JSON export and validated JSON import. They carry the
-backend version, seed, fixture, manual controls, route, wheel and audition trims; no sample assets
-are used. Saving or importing a preset never applies it to the game. The first
+backend version, seed, fixture, manual controls, route, wheel and audition trims.
+The live reference backend identifies its separately prepared local spectral
+model; that model and the reference WAVs remain outside production assets.
+Saving or importing a preset never applies it to the game. The first
 listening review accepted B's engine direction but rejected its first tyre
 source; meters only check for an active, finite digital signal. The second review
 also rejected the tonal tyre candidate; it remains available as comparison
-material. Real-control capture/replay and
+material. The reference reconstruction was accepted, and the new live model's
+dynamic character is the next hearing decision. Real-control capture/replay and
 a mix review follow source selection before production integration.
 
-This playground uses one isolated AudioWorklet module, loaded only after Play.
+This playground uses isolated AudioWorklet modules, loaded only after Play.
 The existing production `EngineVoice`, `TyreVoice`, collector, buses, preferences,
-and qualification reports are unchanged. Focused checks for the tonal pass cover
-both preset backends, short processor renders at 44.1/48 kHz, the build and a
-brief visible A/B and legacy playback check. No 20-minute endurance test or
+and qualification reports are unchanged. The live pass has 15 focused checks
+covering its worklet, all three preset backends, fixtures and the local-file
+service; short actual-model renders at 44.1/48 kHz; the strict build; and a brief
+native playback/manual-control check. No 20-minute endurance test or
 channel campaign is required.
 
 ## Listening and controls

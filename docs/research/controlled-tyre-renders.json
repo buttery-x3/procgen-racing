@@ -1,0 +1,187 @@
+{
+  "scope": "Exact-worklet host renders with actual playground fixtures; excludes browser audio rendering, device behavior and listening acceptance.",
+  "workletSha256": "cabfc0d81c6b76d3d8b443d8c37399b2aaeebe03e37ca079f87d868e448d7fa8",
+  "controlsSha256": "12b3f6df3cf2ebe73c64fbac3be3587d91bb26bc36d405bcc62a573578441182",
+  "modelId": "local:tyre-spectrum-v1:2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0",
+  "modelSha256": "0f640d311e0f7c9297bb30b9784880553ac67275b433705b9629b291d6ec6082",
+  "renders": [
+    {
+      "fixture": "tyre-cycle",
+      "sampleRate": 44100,
+      "durationSeconds": 10.5,
+      "file": "tyre-cycle-44100.wav",
+      "rms": 0.034830163223022584,
+      "peak": 0.2194570004940033,
+      "lateRms": 0.04209524593558611,
+      "hostBlockP95Ms": 3.244299999999839,
+      "states": [
+        {
+          "type": "state",
+          "state": "quiet",
+          "position": 0.07,
+          "level": 0,
+          "seconds": 0.10158730158730159
+        },
+        {
+          "type": "state",
+          "state": "entering",
+          "position": 0.07010195861465698,
+          "level": 0.006671320730314114,
+          "seconds": 0.8126984126984127
+        },
+        {
+          "type": "state",
+          "state": "sliding",
+          "position": 0.38457420245273927,
+          "level": 0.3953222536064547,
+          "seconds": 1.5238095238095237
+        },
+        {
+          "type": "state",
+          "state": "recovering",
+          "position": 0.6725549745623389,
+          "level": 0.7068150334590264,
+          "seconds": 4.266666666666667
+        },
+        {
+          "type": "state",
+          "state": "entering",
+          "position": 0.07045208869133013,
+          "level": 0.015668364435570854,
+          "seconds": 6.298412698412698
+        },
+        {
+          "type": "state",
+          "state": "sliding",
+          "position": 0.41336386230106564,
+          "level": 0.4277221043104973,
+          "seconds": 7.0095238095238095
+        },
+        {
+          "type": "state",
+          "state": "recovering",
+          "position": 0.63169231946936,
+          "level": 0.6139636359824792,
+          "seconds": 9.142857142857142
+        }
+      ],
+      "sha256": "355ec37ef1dad30b66a9638d00c6c08de4a333912690366a31c9a79524fd7ac2"
+    },
+    {
+      "fixture": "tyre-slide",
+      "sampleRate": 44100,
+      "durationSeconds": 7,
+      "file": "tyre-slide-44100.wav",
+      "rms": 0.048875846996881016,
+      "peak": 0.20960906147956848,
+      "lateRms": 0.0498686122012911,
+      "hostBlockP95Ms": 2.253099999999904,
+      "states": [
+        {
+          "type": "state",
+          "state": "entering",
+          "position": 0.0893691264434484,
+          "level": 0.6297957069619436,
+          "seconds": 0.10158730158730159
+        },
+        {
+          "type": "state",
+          "state": "sliding",
+          "position": 0.5136172468539981,
+          "level": 0.7033774465609646,
+          "seconds": 0.7111111111111111
+        }
+      ],
+      "sha256": "55baaa7b5afe3b6d111f76f460c6ae6fb9211ace58b781dd6d308d9edb1b6774"
+    },
+    {
+      "fixture": "tyre-cycle",
+      "sampleRate": 48000,
+      "durationSeconds": 10.5,
+      "file": "tyre-cycle-48000.wav",
+      "rms": 0.034350799897790496,
+      "peak": 0.23390407860279083,
+      "lateRms": 0.04090362130062784,
+      "hostBlockP95Ms": 2.4884000000001834,
+      "states": [
+        {
+          "type": "state",
+          "state": "quiet",
+          "position": 0.07,
+          "level": 0,
+          "seconds": 0.10133333333333333
+        },
+        {
+          "type": "state",
+          "state": "entering",
+          "position": 0.0700304174853107,
+          "level": 0.0031601979577599976,
+          "seconds": 0.8106666666666666
+        },
+        {
+          "type": "state",
+          "state": "sliding",
+          "position": 0.46980038248202044,
+          "level": 0.3934460995378297,
+          "seconds": 1.52
+        },
+        {
+          "type": "state",
+          "state": "recovering",
+          "position": 0.6445700676731424,
+          "level": 0.7082856071853565,
+          "seconds": 4.256
+        },
+        {
+          "type": "state",
+          "state": "entering",
+          "position": 0.08698642897694105,
+          "level": 0.07498765517634051,
+          "seconds": 6.384
+        },
+        {
+          "type": "state",
+          "state": "sliding",
+          "position": 0.438193374408688,
+          "level": 0.4179668076316091,
+          "seconds": 6.992
+        },
+        {
+          "type": "state",
+          "state": "recovering",
+          "position": 0.6363150568993057,
+          "level": 0.6160357153275853,
+          "seconds": 9.12
+        }
+      ],
+      "sha256": "89798f6ee312f13da0343de37f1d8fde8f977ce98d9ac9a6b39271c99b19b1b4"
+    },
+    {
+      "fixture": "tyre-slide",
+      "sampleRate": 48000,
+      "durationSeconds": 7,
+      "file": "tyre-slide-48000.wav",
+      "rms": 0.04900975860209643,
+      "peak": 0.2130003422498703,
+      "lateRms": 0.04720474289182593,
+      "hostBlockP95Ms": 2.240699999998469,
+      "states": [
+        {
+          "type": "state",
+          "state": "entering",
+          "position": 0.0892380874179372,
+          "level": 0.6293792562216356,
+          "seconds": 0.10133333333333333
+        },
+        {
+          "type": "state",
+          "state": "sliding",
+          "position": 0.5325577172439627,
+          "level": 0.7033774426746748,
+          "seconds": 0.7093333333333334
+        }
+      ],
+      "sha256": "bcdb9b68f17882359739bbd613753d8c1c6a73c821ee06f4c033a8bd2b9c65db"
+    }
+  ]
+}

@@ -3,8 +3,10 @@
 26 October 2026. Research following rejection of the second, tonal tyre candidate
 (`cff62ae`, integrated at `bfbf475`). The user subsequently approved the short
 reference reconstruction up to the next hearing step; see the
-[prepared audition](tyre-reference-audition.md). A realtime replacement tyre
-source is still a later decision. The engine direction remains accepted. This report updates the
+[prepared audition](tyre-reference-audition.md). That sound was accepted, and the
+[controllable prototype](controlled-tyre-screech.md) is now ready for its hearing
+step. Production replacement remains a later decision. The engine direction
+remains accepted. This report updates the
 [timbre plan](audio-timbre.md); it does not change the playground or production DSP.
 
 ## Finding

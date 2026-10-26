@@ -3,7 +3,10 @@
 26 October 2026. The user approved continuing the
 [recording-informed proposal](tyre-recording-comparison.md) until the next hearing
 step. That step is now prepared at **`/audio-reference.html`** on the development
-server, also linked from the audio playground. The sound has not been accepted.
+server, also linked from the audio playground. The user has now accepted the
+reconstruction as the tyre-screech direction: “yes perfectly”. The next approved
+[live-control prototype](controlled-tyre-screech.md) is ready in the playground;
+its dynamic timbre is the next hearing decision.
 
 ## The short comparison
 
@@ -82,8 +85,9 @@ reach this step.
 
 The source WAVs remain untouched in the user's Documents folder. Generated
 reference-derived audio and the small manifest live only in ignored
-`artifacts/tyre-reference/`. The development-only middleware serves five fixed
-filenames under `/__audio-reference/`; it cannot browse arbitrary paths. No
+`artifacts/tyre-reference/`. The development-only middleware serves those fixed
+filenames and the later control-model JSON under `/__audio-reference/`; it cannot
+browse arbitrary paths. No
 recording or reconstruction is committed, copied into `public/`, or bundled
 by the production build. A different checkout/machine must prepare its local
 files before this page can play them. The page reports that condition clearly.

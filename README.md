@@ -282,15 +282,17 @@ playground engine. Both tyre sources have been rejected: the first sounds like
 rain, the second like a tone. The [recording comparison](docs/research/tyre-recording-comparison.md)
 measures the missing spectral evolution and proposes a short reference
 reconstruction. The approved [short reference audition](docs/research/tyre-reference-audition.md)
-is ready at `/audio-reference.html`: start with **Hear reference → reconstruction**.
+was accepted at `/audio-reference.html`. The approved
+[controllable version](docs/research/controlled-tyre-screech.md) is now ready in
+`/audio-playground.html`: B starts on a short build/slide/recovery/re-entry example.
 Development commits use [targeted validation](docs/workflow.md#validation-scope--revised-26-october-2026);
 the full suite is required before merging into `main`.
 
 The [audio playground](audio-playground.html) is the first audible A/B prototype:
 short engine and tyre examples, perceptual controls and local JSON presets. It
-starts on a dry tonal tyre slide, while the first noise tyre remains available
-for comparison. The engine direction is accepted for later tuning; the tyre
-sources remain research comparisons. Production driving audio remains unchanged.
+starts on the live reference-model tyre, with both earlier tyre sources available
+for comparison. The engine and reconstructed screech directions are accepted;
+the live tyre dynamics are the next listening decision. Production driving audio remains unchanged.
 
 The separate [audio feature](docs/audio.md) adds RPM/load/shift engine synthesis,
 four independent tyre warning/slip voices, headphone spatialization and distinct
