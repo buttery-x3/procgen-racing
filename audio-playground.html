@@ -9,14 +9,14 @@
 </head>
 <body>
   <header>
-    <div><span class="eyebrow">PROCEDURAL RACING / SOUND DESIGN</span><h1>Audio playground</h1><p>Short, synthetic listening examples. A is the current production voice; B is the new pulse/exhaust engine and noise-excited tyre candidate. Choose what actually sounds better to you.</p></div>
+    <div><span class="eyebrow">PROCEDURAL RACING / SOUND DESIGN</span><h1>Audio playground</h1><p>Short, synthetic listening examples. A is the original production voice. B starts with the new tonal tyre and the engine you liked. Listen to the tyre on its own first.</p></div>
     <a href="/">← Back to driving</a>
   </header>
   <main>
     <section class="transport card" aria-label="Audition transport">
-      <div class="row"><button id="play" class="primary">Play example</button><button id="stop" disabled>Stop</button><button id="candidate-a" aria-pressed="false">A · Current</button><button id="candidate-b" class="selected" aria-pressed="true">B · New</button><label class="inline"><input id="loop" type="checkbox" /> Loop short example</label></div>
+      <div class="row"><button id="play" class="primary">Play example</button><button id="stop" disabled>Stop</button><button id="candidate-a" aria-pressed="false">A · Original</button><button id="candidate-b" class="selected" aria-pressed="true">B · Tonal squeal</button><label class="inline"><input id="loop" type="checkbox" /> Loop short example</label></div>
       <p id="status" role="status">Choose an example and press Play. Listening is the acceptance test; the level meters are only a guide.</p>
-      <div class="meters"><div><span>A · current</span><meter id="meter-a" min="0" max="0.2" value="0"></meter><strong id="rms-a">—</strong></div><div><span>B · new</span><meter id="meter-b" min="0" max="0.2" value="0"></meter><strong id="rms-b">—</strong></div></div>
+      <div class="meters"><div><span>A · original</span><meter id="meter-a" min="0" max="0.2" value="0"></meter><strong id="rms-a">—</strong></div><div><span id="meter-b-label">B · tonal</span><meter id="meter-b" min="0" max="0.2" value="0"></meter><strong id="rms-b">—</strong></div></div>
       <p class="hint">Both voices receive the same controls. A/B fades over 60 ms. Use “Match B level” after a steady example, then leave the trims fixed while comparing dynamics; equal RMS may still sound differently loud.</p>
     </section>
     <div class="grid">
@@ -30,10 +30,10 @@
       </section>
       <section class="card" aria-labelledby="engine-title">
         <h2 id="engine-title">Engine B</h2><p>Combustion pulses feed two short exhaust paths. Body and pipe colour change separately from RPM.</p><div id="engine-controls" class="sliders"></div>
-        <h2 class="section-title" id="tyre-title">Tyre B</h2><p>Broad scrape and several unequal noise-excited resonances replace the dominant pure tone.</p><div id="tyre-controls" class="sliders"></div>
+        <h2 class="section-title" id="tyre-title">Tyre B</h2><p id="tyre-description">A sustained tonal squeal with a rough harmonic edge. Scrape starts at zero and can be added separately.</p><div id="tyre-controls" class="sliders"></div>
       </section>
     </div>
-    <section class="card presets" aria-labelledby="preset-title"><div><h2 id="preset-title">Presets</h2><p>Presets stay in this browser and do not change the driving game. Export JSON to keep or share a setting.</p></div><div class="row"><label>Preset name <input id="preset-name" maxlength="80" value="Pulse and friction starting point" /></label><button id="save-preset" class="primary">Save named preset</button><button id="duplicate-preset">Duplicate</button><label>Saved preset <select id="saved-presets"><option value="">Choose a saved preset</option></select></label><button id="load-preset">Load</button><button id="revert-preset">Revert</button><button id="export-preset">Export JSON</button></div><details><summary>Import preset JSON</summary><textarea id="import-json" aria-label="Preset JSON to import" spellcheck="false"></textarea><button id="import-preset">Import</button></details></section>
+    <section class="card presets" aria-labelledby="preset-title"><div><h2 id="preset-title">Presets</h2><p>Presets stay in this browser and do not change the driving game. Export JSON to keep or share a setting.</p><div class="row"><button id="load-tonal-default">Load tonal starting point</button><button id="load-first-prototype">Load first noise tyre prototype</button></div></div><div class="row"><label>Preset name <input id="preset-name" maxlength="80" value="Tonal tyre starting point" /></label><button id="save-preset" class="primary">Save named preset</button><button id="duplicate-preset">Duplicate</button><label>Saved preset <select id="saved-presets"><option value="">Choose a saved preset</option></select></label><button id="load-preset">Load</button><button id="revert-preset">Revert</button><button id="export-preset">Export JSON</button></div><details><summary>Import preset JSON</summary><textarea id="import-json" aria-label="Preset JSON to import" spellcheck="false"></textarea><button id="import-preset">Import</button></details></section>
   </main>
   <footer>Experimental voices for audible review. Production driving audio remains the current A voice.</footer>
   <script type="module" src="/src/diagnostics/AudioPlayground.ts"></script>

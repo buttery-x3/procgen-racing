@@ -279,16 +279,16 @@ See the [implementation plan](docs/implementation-plan.md),
 
 The channel/control system is the working foundation. The user likes the new
 playground engine; its tyre modulation is useful but the noise-driven source
-sounds like rain. The [revised tyre plan](docs/research/audio-timbre.md#next-tyre-pass-tonal-screech-awaiting-approval)
-proposes a tonal screech with optional scrape and awaits implementation approval.
+sounds like rain. The [tonal tyre pass](docs/research/audio-timbre.md#tonal-tyre-pass-ready-for-listening)
+is now ready for listening, with a sustained squeal and optional scrape.
 Development commits use [targeted validation](docs/workflow.md#validation-scope--revised-26-october-2026);
 the full suite is required before merging into `main`.
 
 The [audio playground](audio-playground.html) is the first audible A/B prototype:
-short engine and tyre examples, perceptual controls and local JSON presets. Its
-new pulse/exhaust and friction voices remain separate from production driving
-audio. The engine direction is accepted for later tuning; the tyre needs the
-focused source revision described in the plan.
+short engine and tyre examples, perceptual controls and local JSON presets. It
+starts on a dry tonal tyre slide, while the first noise tyre remains available
+for comparison. The engine direction is accepted for later tuning; the new tyre
+sound awaits user review. Production driving audio remains unchanged.
 
 The separate [audio feature](docs/audio.md) adds RPM/load/shift engine synthesis,
 four independent tyre warning/slip voices, headphone spatialization and distinct

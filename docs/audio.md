@@ -9,20 +9,21 @@ The [research and approved plan](research/audio-system.md) records the rationale
 **Sound-quality review, 26 October 2026:** the playground's pulse/exhaust engine
 is accepted as a promising base for later vehicle tuning. Its new tyre voice is
 rejected as rain-like; the user likes its modulation but wants a convincing
-high-pitched squeal underneath. The [revised tyre plan](research/audio-timbre.md#next-tyre-pass-tonal-screech-awaiting-approval)
-proposes a coherent tonal screech with shaped harmonics and optional scrape down
-to true zero. That next implementation awaits approval. The original production
-voices remain the infrastructure/comparison baseline; existing qualification
-records are preserved.
+high-pitched squeal underneath. The [tonal tyre pass](research/audio-timbre.md#tonal-tyre-pass-ready-for-listening)
+adds a coherent squeal with shaped harmonics and optional scrape down to true
+zero in the playground. It is ready for a short listening decision. The original
+production voices remain the infrastructure/comparison baseline; existing
+qualification records are preserved.
 
 ## Sound-quality playground
 
-Open `/audio-playground.html` on the running development server for the first
+Open `/audio-playground.html` on the running development server for the short
 audible A/B prototype. **A** is the existing production engine and tyre voice;
-**B** is an experimental audio-rate combustion-pulse/exhaust-path engine and a
-noise-excited, multi-mode tyre voice. Both get the same short synthetic RPM/load
-or slip controls. The page starts on B; switch A/B during playback with a 60 ms
-fade. The comparison does not replace the driving game's audio.
+**B** is the accepted-direction combustion-pulse/exhaust-path engine and the new
+tonal tyre candidate. Both get the same short synthetic RPM/load or slip
+controls. The page starts on B, solo tyre, a dry sustained slide and zero
+scrape; switch A/B during playback with a 60 ms fade. The comparison does not
+replace the driving game's audio.
 
 Choose an idle, steady-load, sweep or shift engine example, or a scrub, onset,
 sustained slide or recovery tyre example. Each ends after 7–9 seconds unless
@@ -35,22 +36,25 @@ trim; leave that trim fixed when comparing a sweep or onset. The shared output
 has a protective limiter, but no per-example loudness normalization.
 
 B exposes engine body, exhaust openness, rasp, pulse unevenness and mechanical
-texture; tyre scrape, modal screech, roughness, brightness, onset and release.
+texture. The new tyre controls are squeal strength, harmonic edge, pitch
+character, irregular roughness, optional scrape, onset and release. The previous
+noise-driven tyre can still be loaded as a named built-in comparison or through
+its saved presets, with its original controls and sound.
 Named versioned presets live under a separate local-storage key, with load,
 duplicate, revert, JSON export and validated JSON import. They carry the
 backend version, seed, fixture, manual controls, route, wheel and audition trims; no sample assets
 are used. Saving or importing a preset never applies it to the game. The first
-listening review accepted B's engine direction but rejected B's tyre source;
-meters only check for an active, finite digital signal. The next approved work
-would revise the tyre in this playground while preserving the accepted engine.
-Short real-control capture/replay and a mix review follow source selection before
-production integration.
+listening review accepted B's engine direction but rejected its first tyre
+source; meters only check for an active, finite digital signal. The new tyre
+candidate awaits the user's short sound review. Real-control capture/replay and
+a mix review follow source selection before production integration.
 
-This playground adds one isolated AudioWorklet module, loaded only after Play.
+This playground uses one isolated AudioWorklet module, loaded only after Play.
 The existing production `EngineVoice`, `TyreVoice`, collector, buses, preferences,
-and qualification reports are unchanged. Focused development checks cover the
-new fixtures/preset codec, build integration and a short visible browser playback
-in each voice; no 20-minute endurance test or channel campaign is required.
+and qualification reports are unchanged. Focused checks for the tonal pass cover
+both preset backends, short processor renders at 44.1/48 kHz, the build and a
+brief visible A/B and legacy playback check. No 20-minute endurance test or
+channel campaign is required.
 
 ## Listening and controls
 

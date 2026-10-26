@@ -1,6 +1,7 @@
 # Driving audio: sound quality and a tuning workflow
 
-26 October 2026. Revised after the first playground listening review. The
+26 October 2026. Revised after the first playground listening review and the
+approved tonal-tyre prototype. The
 prototype is described in [the audio delivery notes](../audio.md#sound-quality-playground).
 Audited foundation: `development` at `c7d31fc`, including
 the Vivaldi loop fix. This document supersedes the timbre and iteration plan in
@@ -12,8 +13,9 @@ Keep the production channel, control and lifecycle foundation and its original
 voices as comparison references. The first playground is implemented at
 `224d963`, integrated into `development` at `96dec79`. Its **pulse/exhaust engine
 is accepted as a promising base sound**; its **noise-driven tyre is rejected**.
-The next proposed implementation changes only the playground tyre source and
-the controls/preset handling needed to compare it. It awaits user approval.
+The approved next pass changes only the playground tyre source and the
+controls/preset handling needed to compare it. It is ready for the user's
+next listening review; its sound is not yet accepted.
 
 | Listening feedback | Decision for the next pass |
 | --- | --- |
@@ -22,12 +24,12 @@ the controls/preset handling needed to compare it. It awaits user approval.
 | The high-pitched portion is closer to tyre squeal; breathy noise previously contributed to the whistle impression. | Keep high-pitched tonal energy, but give it a rougher harmonic edge. Neither pure whistling nor a wash of hiss is the target. The complete original tyre voice is not accepted. |
 | Present slider variation/modulation is good. | Retain the useful onset, release and changing roughness behavior while changing what produces the sound. Do not rebuild slip calculations to solve a source-timbre problem. |
 
-The [next tyre pass](#next-tyre-pass-tonal-screech-awaiting-approval) below replaces
+The [tonal tyre pass](#tonal-tyre-pass-ready-for-listening) below replaces
 the earlier open-ended multi-component tyre proposal. The engine research and
 original playground requirements remain background, not another implementation
 or testing checklist. Production integration remains a later listening decision.
 
-## Next tyre pass: tonal screech, awaiting approval
+## Tonal tyre pass: ready for listening
 
 ### What the first candidate got wrong
 
@@ -74,9 +76,9 @@ which pitch and edge actually work.
    screech" wording. Supply a useful default: the user should not need to find
    it by searching dozens of slider combinations.
 
-This pass freezes the accepted engine source and reference settings. It does
-not expand vehicle profiles, change physics/slip thresholds, integrate the new
-voices into driving, or redesign the channel/context system.
+The implementation keeps the accepted engine source and reference settings.
+Vehicle profiles, physics/slip thresholds and production driving integration
+remain later decisions after the sound itself is heard.
 
 ### Comparison and preset continuity
 
@@ -94,8 +96,12 @@ Keep existing save, duplicate, revert and JSON export/import workflows.
 
 ### Brief listening decision
 
-The next delivery needs one new default and the original reference, ready for
-ordinary short listening. No implementation is authorized by this plan update.
+The playground now opens on a dry seven-second sustained slide with the tonal
+candidate selected and scrape at zero. The original production voice is A.
+The first noise-driven tyre remains available through **Load first noise tyre
+prototype** and existing version-one saved presets. The user can switch A/B,
+choose onset or recovery, and adjust the new source controls. Their listening
+decision remains the acceptance step.
 
 | Order | What the listen decides |
 | --- | --- |
@@ -111,13 +117,21 @@ it does not reopen engine development or the proven channel system.
 
 ### Checks for this scope
 
-This plan update needs content, local-link and diff review only. For the eventual
-implementation, run short targeted DSP renders for finite output, headroom,
-alias/stability concerns and parameter transitions, plus affected preset-version
-cases and a brief playback check. Recheck loading/routing/lifecycle only if those
-boundaries actually change. Keep existing infrastructure evidence; do not rerun
-the full suite, driving campaign or endurance test for this timbre iteration.
-The full release checks remain due before a requested promotion into `main`.
+The implementation uses a separate `playground-tonal-tyre` processor. It
+generates a phase-continuous five-harmonic squeal around the original high-pitch
+region, with bounded irregular amplitude and slight pitch movement. The existing
+onset/release activity envelope drives it. Broadband scrape has independent
+gain that reaches zero. The original noise processor stays registered for old
+presets. `pulse-exhaust-tonal-v2` presets use `tone`, `edge` and `pitch` instead
+of treating version-one `screech` and `brightness` values as equivalent.
+
+Focused checks covered short 44.1/48 kHz processor renders, finite output and
+headroom, a coherent dry sustained tone, zero scrape after the control fade,
+contact release, both preset backends, strict build and a short visible browser
+playback/A-B/legacy-preset check. These are signal and workflow checks; the user
+must judge the sound. Keep existing infrastructure evidence. No full suite,
+driving campaign or endurance test is needed for this timbre iteration. The full
+release checks remain due before a requested promotion into `main`.
 
 ## What the original production code explains
 

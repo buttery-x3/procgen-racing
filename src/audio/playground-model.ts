@@ -4,12 +4,15 @@ export type FixtureId = "engine-idle" | "engine-light" | "engine-full" | "engine
 export type SoloMode = "engine" | "tyre" | "surface" | "mix";
 export type RouteMode = "dry" | "headphones" | "stereo" | "mono";
 
-export interface PlaygroundTuning {
+export interface EnginePlaygroundTuning {
   body: number;
   openness: number;
   rasp: number;
   unevenness: number;
   mechanical: number;
+}
+
+export interface LegacyTyrePlaygroundTuning {
   scrape: number;
   screech: number;
   roughness: number;
@@ -18,11 +21,20 @@ export interface PlaygroundTuning {
   release: number;
 }
 
-export interface PlaygroundPreset {
+export interface TonalTyrePlaygroundTuning {
+  tone: number;
+  edge: number;
+  pitch: number;
+  scrape: number;
+  roughness: number;
+  onset: number;
+  release: number;
+}
+
+interface BasePlaygroundPreset {
   format: "procgen-racing:audio-playground-preset";
   version: 1;
   name: string;
-  backend: "pulse-exhaust-friction-v1";
   seed: number;
   assetIds: string[];
   fixture: FixtureId;
@@ -32,16 +44,32 @@ export interface PlaygroundPreset {
   aTrim: number;
   bTrim: number;
   manual: ManualControls;
-  tuning: PlaygroundTuning;
 }
 
-export const TUNING_KEYS = ["body", "openness", "rasp", "unevenness", "mechanical", "scrape", "screech", "roughness", "brightness", "onset", "release"] as const;
+export type PlaygroundPreset = BasePlaygroundPreset & (
+  { backend: "pulse-exhaust-friction-v1"; tuning: EnginePlaygroundTuning & LegacyTyrePlaygroundTuning } |
+  { backend: "pulse-exhaust-tonal-v2"; tuning: EnginePlaygroundTuning & TonalTyrePlaygroundTuning }
+);
+
+export const ENGINE_TUNING_KEYS = ["body", "openness", "rasp", "unevenness", "mechanical"] as const;
+export const LEGACY_TYRE_TUNING_KEYS = ["scrape", "screech", "roughness", "brightness", "onset", "release"] as const;
+export const TONAL_TYRE_TUNING_KEYS = ["tone", "edge", "pitch", "roughness", "scrape", "onset", "release"] as const;
+
+export function tuningKeys(backend: PlaygroundPreset["backend"]): readonly string[] {
+  return [...ENGINE_TUNING_KEYS, ...(backend === "pulse-exhaust-tonal-v2" ? TONAL_TYRE_TUNING_KEYS : LEGACY_TYRE_TUNING_KEYS)];
+}
 
 export const DEFAULT_PRESET: PlaygroundPreset = {
-  format: "procgen-racing:audio-playground-preset", version: 1, name: "Pulse and friction starting point",
-  backend: "pulse-exhaust-friction-v1", seed: 0x51a3d207, assetIds: [], fixture: "engine-sweep",
-  solo: "engine", route: "dry", wheel: "fl", aTrim: 1, bTrim: 1,
+  format: "procgen-racing:audio-playground-preset", version: 1, name: "Tonal tyre starting point",
+  backend: "pulse-exhaust-tonal-v2", seed: 0x51a3d207, assetIds: [], fixture: "tyre-slide",
+  solo: "tyre", route: "dry", wheel: "fl", aTrim: 1, bTrim: 1,
   manual: { rpm: 2400, load: 0.55, slip: 0.6, slipSpeed: 8, wheelLoad: 0.8 },
+  tuning: { body: 0.78, openness: 0.35, rasp: 0.28, unevenness: 0.35, mechanical: 0.16,
+    tone: 0.74, edge: 0.7, pitch: 0.47, roughness: 0.64, scrape: 0, onset: 0.22, release: 0.36 },
+};
+
+export const LEGACY_PRESET: PlaygroundPreset = {
+  ...DEFAULT_PRESET, name: "First noise tyre prototype", backend: "pulse-exhaust-friction-v1",
   tuning: { body: 0.78, openness: 0.35, rasp: 0.28, unevenness: 0.35, mechanical: 0.16,
     scrape: 0.78, screech: 0.42, roughness: 0.7, brightness: 0.5, onset: 0.22, release: 0.36 },
 };
@@ -49,7 +77,8 @@ export const DEFAULT_PRESET: PlaygroundPreset = {
 export function parsePreset(value: unknown): PlaygroundPreset {
   if (!value || typeof value !== "object") throw new Error("Preset must be a JSON object.");
   const v = value as Record<string, unknown>;
-  if (v.format !== DEFAULT_PRESET.format || v.version !== 1 || v.backend !== DEFAULT_PRESET.backend)
+  if (v.format !== DEFAULT_PRESET.format || v.version !== 1 ||
+    (v.backend !== "pulse-exhaust-friction-v1" && v.backend !== "pulse-exhaust-tonal-v2"))
     throw new Error("Unsupported preset format, version or sound backend.");
   const fixture = v.fixture as FixtureId;
   if (!(fixture in FIXTURES)) throw new Error("Unknown fixture.");
@@ -69,15 +98,19 @@ export function parsePreset(value: unknown): PlaygroundPreset {
   }
   if (!v.tuning || typeof v.tuning !== "object") throw new Error("Missing tuning.");
   const tuning = v.tuning as Record<string, unknown>;
-  for (const key of TUNING_KEYS) {
+  const backend = v.backend as PlaygroundPreset["backend"];
+  for (const key of tuningKeys(backend)) {
     const n = tuning[key];
     if (typeof n !== "number" || !Number.isFinite(n) || n < 0 || n > 1) throw new Error(`Invalid ${key} control.`);
   }
-  return { format: DEFAULT_PRESET.format, version: 1, name: v.name.trim(), backend: DEFAULT_PRESET.backend,
+  const common: BasePlaygroundPreset = { format: DEFAULT_PRESET.format, version: 1, name: v.name.trim(),
     seed: v.seed as number, assetIds: [], fixture, solo: v.solo as SoloMode, route: v.route as RouteMode,
     wheel: v.wheel as PlaygroundPreset["wheel"], aTrim: v.aTrim as number, bTrim: v.bTrim as number,
-    manual: Object.fromEntries(["rpm", "load", "slip", "slipSpeed", "wheelLoad"].map((key) => [key, manual[key]])) as unknown as ManualControls,
-    tuning: Object.fromEntries(TUNING_KEYS.map((key) => [key, tuning[key]])) as unknown as PlaygroundTuning };
+    manual: Object.fromEntries(["rpm", "load", "slip", "slipSpeed", "wheelLoad"].map((key) => [key, manual[key]])) as unknown as ManualControls };
+  const selectedTuning = Object.fromEntries(tuningKeys(backend).map((key) => [key, tuning[key]]));
+  return backend === "pulse-exhaust-tonal-v2"
+    ? { ...common, backend, tuning: selectedTuning as unknown as EnginePlaygroundTuning & TonalTyrePlaygroundTuning }
+    : { ...common, backend, tuning: selectedTuning as unknown as EnginePlaygroundTuning & LegacyTyrePlaygroundTuning };
 }
 
 type Fixture = { label: string; duration: number; kind: "engine" | "tyre" | "both" };

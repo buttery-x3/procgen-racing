@@ -3,7 +3,8 @@ import { TyreVoice } from "../audio/TyreVoice";
 import { SpatialAudio } from "../audio/SpatialAudio";
 import { smoothParam } from "../audio/nodes";
 import type { AudioSettings } from "../audio/types";
-import { DEFAULT_PRESET, FIXTURES, TUNING_KEYS, fixtureControls, parsePreset,
+import { DEFAULT_PRESET, LEGACY_PRESET, FIXTURES, ENGINE_TUNING_KEYS, LEGACY_TYRE_TUNING_KEYS, TONAL_TYRE_TUNING_KEYS,
+  fixtureControls, parsePreset,
   type FixtureId, type ManualControls, type PlaygroundPreset, type RouteMode } from "../audio/playground-model";
 
 const element = <T extends HTMLElement>(id: string) => {
@@ -71,14 +72,30 @@ for (const [id, definition] of Object.entries(FIXTURES)) {
   fixtureSelect.append(option);
 }
 const engineLabels: Record<string, string> = { body: "Body / low rumble", openness: "Exhaust openness", rasp: "Exhaust rasp", unevenness: "Pulse unevenness", mechanical: "Intake / mechanical" };
-const tyreLabels: Record<string, string> = { scrape: "Broad scrape", screech: "Resonant screech", roughness: "Roughness", brightness: "Brightness", onset: "Onset time", release: "Release time" };
-for (const key of TUNING_KEYS) {
-  const parent = key in engineLabels ? element("engine-controls") : element("tyre-controls");
-  range(parent, engineLabels[key] || tyreLabels[key], key, 0, 1, 0.01, preset.tuning[key], (v) => {
-    preset.tuning[key] = v;
-    graph?.engineB.port.postMessage({ type: "tuning", value: preset.tuning });
-    graph?.tyreB.port.postMessage({ type: "tuning", value: preset.tuning });
-  });
+const legacyTyreLabels: Record<string, string> = { scrape: "Broad scrape", screech: "Modal resonance", roughness: "Roughness", brightness: "Brightness", onset: "Onset time", release: "Release time" };
+const tonalTyreLabels: Record<string, string> = { tone: "Squeal strength", edge: "Harmonic edge", pitch: "Pitch character", roughness: "Irregular roughness", scrape: "Optional scrape", onset: "Onset time", release: "Release time" };
+function renderTuningControls(): void {
+  const engine = element("engine-controls"), tyre = element("tyre-controls");
+  engine.replaceChildren(); tyre.replaceChildren();
+  const legacy = preset.backend === "pulse-exhaust-friction-v1";
+  const tuning = preset.tuning as unknown as Record<string, number>;
+  for (const key of ENGINE_TUNING_KEYS) {
+    range(engine, engineLabels[key], key, 0, 1, 0.01, tuning[key], (v) => {
+      (preset.tuning as unknown as Record<string, number>)[key] = v;
+      graph?.engineB.port.postMessage({ type: "tuning", value: preset.tuning });
+    });
+  }
+  for (const key of legacy ? LEGACY_TYRE_TUNING_KEYS : TONAL_TYRE_TUNING_KEYS) {
+    range(tyre, (legacy ? legacyTyreLabels : tonalTyreLabels)[key], key, 0, 1, 0.01, tuning[key], (v) => {
+      (preset.tuning as unknown as Record<string, number>)[key] = v;
+      graph?.tyreB.port.postMessage({ type: "tuning", value: preset.tuning });
+    });
+  }
+  element("tyre-description").textContent = legacy
+    ? "First prototype: broadband scrape and noise-excited resonances. Kept for saved preset comparisons."
+    : "A sustained tonal squeal with a rough harmonic edge. Scrape starts at zero and can be added separately.";
+  bButton.textContent = legacy ? "B · First tyre prototype" : "B · Tonal squeal";
+  element("meter-b-label").textContent = legacy ? "B · first" : "B · tonal";
 }
 const manualControls: { key: keyof ManualControls; label: string; min: number; max: number; step: number }[] = [
   { key: "rpm", label: "RPM", min: 700, max: 7500, step: 25 },
@@ -99,7 +116,7 @@ function syncForm(): void {
   fixtureSelect.value = preset.fixture; soloSelect.value = preset.solo; routeSelect.value = preset.route; wheelSelect.value = preset.wheel;
   presetName.value = preset.name;
   syncManualAvailability();
-  for (const key of TUNING_KEYS) syncRange(key, preset.tuning[key]);
+  renderTuningControls();
   for (const item of manualControls) syncRange(item.key, preset.manual[item.key]);
   syncRange("aTrim", preset.aTrim); syncRange("bTrim", preset.bTrim);
   graph?.engineB.port.postMessage({ type: "tuning", value: preset.tuning });
@@ -177,7 +194,8 @@ async function start(): Promise<void> {
     const engineA = new EngineVoice(context, aEngine, { id: "deep", cylinders: 8, body: 1.15, brightness: 0.85, irregularity: 0.28, seed: preset.seed }, startTime);
     const tyreA = new TyreVoice(context, preset.wheel, aTyre, aSurface, startTime);
     const engineB = new AudioWorkletNode(context, "playground-pulse-exhaust", { numberOfInputs: 0, numberOfOutputs: 1, outputChannelCount: [1] });
-    const tyreB = new AudioWorkletNode(context, "playground-friction-tyre", { numberOfInputs: 0, numberOfOutputs: 2, outputChannelCount: [1, 1] });
+    const tyreProcessor = preset.backend === "pulse-exhaust-tonal-v2" ? "playground-tonal-tyre" : "playground-friction-tyre";
+    const tyreB = new AudioWorkletNode(context, tyreProcessor, { numberOfInputs: 0, numberOfOutputs: 2, outputChannelCount: [1, 1] });
     engineB.connect(bEngine); tyreB.connect(bTyre, 0, 0); tyreB.connect(bSurface, 1, 0); nodes.push(engineB, tyreB);
     const failure = () => { setStatus("The candidate audio processor stopped. Stop and replay to retry."); stop(); };
     engineB.onprocessorerror = failure; tyreB.onprocessorerror = failure;
@@ -278,8 +296,8 @@ function saveAs(suggested: string): void {
 
 playButton.addEventListener("click", () => { void start(); });
 stopButton.addEventListener("click", () => { stop(); setStatus("Playback stopped."); });
-aButton.addEventListener("click", () => { choice = "a"; applyMix(); setStatus("A · current production voice."); });
-bButton.addEventListener("click", () => { choice = "b"; applyMix(); setStatus("B · new pulse/exhaust and friction voice."); });
+aButton.addEventListener("click", () => { choice = "a"; applyMix(); setStatus("A · original production voice."); });
+bButton.addEventListener("click", () => { choice = "b"; applyMix(); setStatus(preset.backend === "pulse-exhaust-tonal-v2" ? "B · tonal tyre and pulse/exhaust engine." : "B · first noise-driven tyre and pulse/exhaust engine."); });
 fixtureSelect.addEventListener("change", () => {
   preset.fixture = fixtureSelect.value as FixtureId;
   preset.solo = FIXTURES[preset.fixture].kind === "tyre" ? "tyre" : "engine"; soloSelect.value = preset.solo;
@@ -298,6 +316,12 @@ element("match-level").addEventListener("click", () => {
 });
 element("save-preset").addEventListener("click", () => saveAs(presetName.value));
 element("duplicate-preset").addEventListener("click", () => saveAs(`${presetName.value.trim()} copy`));
+function loadBuiltIn(builtIn: PlaygroundPreset): void {
+  preset = structuredClone(builtIn); committed = structuredClone(builtIn); syncForm();
+  if (graph) void start(); else setStatus(`Loaded “${builtIn.name}”. Press Play.`);
+}
+element("load-tonal-default").addEventListener("click", () => loadBuiltIn(DEFAULT_PRESET));
+element("load-first-prototype").addEventListener("click", () => loadBuiltIn(LEGACY_PRESET));
 element("load-preset").addEventListener("click", () => {
   const found = stored().find((item) => item.name === savedSelect.value);
   if (!found) { setStatus("Select a saved preset to load."); return; }
