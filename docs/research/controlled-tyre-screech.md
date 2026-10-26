@@ -8,6 +8,11 @@ describe its use in the simulation; driving mix/tuning is the next listening ste
 
 ## Hear it
 
+The source/comparison recordings and reference playback controls were subsequently
+removed at the owner's request. The live playground now loads its parameter model
+from the application's static assets. The original hearing procedure below is
+retained as a development record; only the live cycle/manual controls remain.
+
 Open **`/audio-playground.html`**. It starts on **B · Live screech**, solo tyre,
 dry/centred, with **Build → slide → recover → slide** selected.
 
@@ -68,6 +73,11 @@ are the first hearing candidate. The accepted engine controls/settings, routing,
 surface output and existing manual-input ranges remain available.
 
 ## Presets and local preparation
+
+**Pre-release update:** the accepted parameter model is now committed at
+`public/audio/tyre-control-v1.json`. Normal builds need no local preparation. The
+[cleanup notes](audio-recording-cleanup.md) supersede the local-only distribution
+boundary below; source and comparison WAVs remain excluded and their player was removed.
 
 `pulse-exhaust-reference-v3` presets identify the local model in `assetIds` and
 have their own tuning keys. Import rejects an absent or different model ID.

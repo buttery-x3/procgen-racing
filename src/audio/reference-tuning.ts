@@ -1,5 +1,7 @@
 /** Shared accepted listening defaults. Vehicle-family voicing remains a later tuning pass. */
 export const REFERENCE_MODEL_ID = "local:tyre-spectrum-v1:2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0";
+/** Static synthesis parameters shipped with the application; never a recording. */
+export const TYRE_MODEL_URL = "/audio/tyre-control-v1.json";
 export const ACCEPTED_ENGINE_TUNING = Object.freeze({
   body: 0.78, openness: 0.35, rasp: 0.28, unevenness: 0.35, mechanical: 0.16,
 });

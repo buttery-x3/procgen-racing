@@ -1,7 +1,7 @@
 import type { WheelId } from "../vehicle/types";
 import type { AudioSettings, EngineAudioControl, EngineAudioProfile, TyreAudioControl } from "./types";
 import type { AudioSourceFactory } from "./source-types";
-import { ACCEPTED_ENGINE_TUNING, ACCEPTED_TYRE_TUNING, REFERENCE_MODEL_ID } from "./reference-tuning";
+import { ACCEPTED_ENGINE_TUNING, ACCEPTED_TYRE_TUNING, REFERENCE_MODEL_ID, TYRE_MODEL_URL } from "./reference-tuning";
 import { SurfaceVoice, WHEEL_AUDIO_SEEDS } from "./SurfaceVoice";
 import { clampAudio, smoothParam } from "./nodes";
 
@@ -115,8 +115,8 @@ export function loadDrivingAudio(context: BaseAudioContext): Promise<AudioSource
     const [, , model] = await Promise.all([
       context.audioWorklet.addModule("/audio/playground-voices.js"),
       context.audioWorklet.addModule("/audio/reference-tyre.js"),
-      fetch("/__audio-reference/control-model.json", { signal: AbortSignal.timeout(8000) }).then(async (response) => {
-        if (!response.ok) throw new Error("Tyre sound profile unavailable. Prepare the local reference model and reload.");
+      fetch(TYRE_MODEL_URL, { signal: AbortSignal.timeout(8000) }).then(async (response) => {
+        if (!response.ok) throw new Error("Tyre sound profile unavailable. Reload to retry.");
         const value = await response.json() as { id?: unknown };
         if (value.id !== REFERENCE_MODEL_ID) throw new Error("The driving tyre sound profile does not match the accepted reference.");
         return value;

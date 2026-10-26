@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import { localAudioEvidence } from "./scripts/audio-evidence.mjs";
-import { localAudioReference } from "./scripts/audio-reference.mjs";
 import { physicsVersion } from "./scripts/physics-version.mjs";
 import { audioVersion } from "./scripts/audio-version.mjs";
 
@@ -11,7 +10,7 @@ export default defineConfig({
   },
   // Isolated worktrees can share dependencies without sharing Vite's mutable cache.
   cacheDir: ".vite",
-  plugins: [localAudioEvidence(), localAudioReference()],
+  plugins: [localAudioEvidence()],
   server: { port: 5173, strictPort: true },
   build: {
     target: "es2022",
@@ -25,7 +24,6 @@ export default defineConfig({
         audioLab: "audio-lab.html",
         audioDriving: "audio-driving.html",
         audioPlayground: "audio-playground.html",
-        audioReference: "audio-reference.html",
       },
     },
   },

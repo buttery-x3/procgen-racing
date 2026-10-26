@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { loadDrivingAudio, referenceTyreControl } from "../src/audio/ReferenceAudio";
 import { VehicleAudioGraph } from "../src/audio/VehicleAudioGraph";
 import { DEFAULT_AUDIO_SETTINGS } from "../src/audio/settings";
-import { REFERENCE_MODEL_ID } from "../src/audio/reference-tuning";
+import { REFERENCE_MODEL_ID, TYRE_MODEL_URL } from "../src/audio/reference-tuning";
 import { auditionFrame } from "../src/audio/audition";
 import { engineAudioProfile } from "../src/audio/profiles";
 import { DEFAULT_SETUP } from "../src/vehicle/setup";
@@ -81,6 +81,7 @@ describe("accepted sounds in the driving graph", () => {
     Worklet.nodes.forEach((node) => node.acknowledge());
     await Promise.all(wheels.map((wheel) => wheel.ready));
     expect(fetchModel).toHaveBeenCalledTimes(1);
+    expect(fetchModel).toHaveBeenCalledWith(TYRE_MODEL_URL, expect.objectContaining({ signal: expect.anything() }));
     expect(context.audioWorklet.addModule).toHaveBeenCalledTimes(2);
     expect(Worklet.nodes.filter((node) => node.name === "playground-reference-tyre")).toHaveLength(4);
     const seeds = Worklet.nodes.slice(1).map((node) => node.port.postMessage.mock.calls.find(([message]) => message.type === "reset")![0].seed);

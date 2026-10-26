@@ -5,6 +5,11 @@ integration of that voice and the previously accepted pulse/exhaust engine into
 the simulation. This pass is on `codex/reference-audio-integration`, delivered
 through `development` for driving/listening adjustments. It is not a release.
 
+**Subsequent owner decision, 27 October:** the integrated sounds are accepted for
+a versioned audio release. A [feature-branch cleanup](audio-recording-cleanup.md)
+removes the recording comparisons and packages the unchanged numerical synthesis
+model. The local-profile boundary below records this earlier integration stage.
+
 ## Try it
 
 Open the normal application (`/` on the running Vite server), select **Drive pad**
@@ -54,7 +59,7 @@ smoke and the actual-app driving diagnostic exercise `VehicleAudio`, which now
 selects the accepted sources. No physics, slip model, race rules, generation or
 result-compatibility code changed.
 
-## Local profile and release boundary
+## Local profile and release boundary at integration time
 
 The same already-prepared local profile powers the playground and driving:
 `artifacts/tyre-reference/control-model.json`, served by the existing development

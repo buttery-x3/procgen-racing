@@ -281,7 +281,9 @@ The accepted pulse/exhaust engine and evolving reference-model tyre screech now
 run in the simulation on development. They use actual RPM/load/shift and
 independent per-wheel slip/contact controls, retaining the established surface,
 spatial and mixer foundation. Open the normal app and drive for the next listening
-review. See [integration and local profile setup](docs/research/reference-audio-integration.md).
+review. The synthesis parameter model is included; source and comparison recordings
+were removed before release. See [integration](docs/research/reference-audio-integration.md)
+and [recording cleanup](docs/research/audio-recording-cleanup.md).
 Development commits use [targeted validation](docs/workflow.md#validation-scope--revised-26-october-2026);
 the full suite is reserved for release promotion into `main`, which is deferred
 while driving feedback and further tuning remain open.

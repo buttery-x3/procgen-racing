@@ -18,6 +18,7 @@ export function audioVersion(root = process.cwd()) {
     "audio-driving.html",
     "public/audio/playground-voices.js",
     "public/audio/reference-tyre.js",
+    "public/audio/tyre-control-v1.json",
     "package-lock.json",
     "scripts/audio-version.mjs",
     "scripts/report-audio.mjs",
