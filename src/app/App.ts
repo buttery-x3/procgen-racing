@@ -8,7 +8,7 @@ import {
   sanitizeSetup,
   STRUCTURAL_KEYS,
 } from "../vehicle/setup";
-import { FIXED_STEP } from "../vehicle/types";
+import { FIXED_STEP, WHEEL_IDS } from "../vehicle/types";
 import type {
   Experiment,
   VehicleSetup,
@@ -27,7 +27,7 @@ import type {
   GenerationResult,
 } from "../track/generationTypes";
 import { CircuitView } from "../rendering/CircuitView";
-import { SurfaceAudio } from "../audio/SurfaceAudio";
+import { VehicleAudio } from "../audio/VehicleAudio";
 import { venueGeometrySettings } from "../track/venue/types";
 import { SetupHistory, copySetup } from "../storage/GarageStorage";
 import { generateCar } from "../vehicle/generateCar";
@@ -62,7 +62,7 @@ export class App {
   private savedSetup: VehicleSetup | null = loadSetup();
   private comparisonReturn: VehicleSetup | null = null;
   private readonly generation = new GenerationClient();
-  private readonly surfaceAudio = new SurfaceAudio();
+  private readonly surfaceAudio = new VehicleAudio();
   private preview?: GenerationResult;
   private previewVersion = 0;
   private readonly previewCache = new Map<string, GenerationResult>();
@@ -90,6 +90,7 @@ export class App {
     if (this.disposed) return;
     const setup = this.savedSetup ?? DEFAULT_SETUP;
     this.rig = new SuspensionRig(setup);
+    this.surfaceAudio.setSetup(setup);
     this.rig.setExperiment("circuit");
     // Open on a settled chassis; the drop button remains a repeatable explicit test.
     for (let i = 0; i < 360; i++) this.rig.step();
@@ -106,6 +107,10 @@ export class App {
         sessionExport: () => this.exportSession(),
         sessionImport: (raw) => this.importSession(raw),
         presentation: (settings) => this.presentation(settings),
+        audio: (settings) => {
+          this.surfaceAudio.configure(settings);
+          this.workbench?.setSound(settings.enabled);
+        },
         driveArchive: (archive) => this.driveArchive(archive),
         storage: this.soloStorage,
       },
@@ -119,6 +124,18 @@ export class App {
     this.workbench.setCamera("chase");
     this.configureSession("practice");
     this.presentation(this.workbench.sessions.settings);
+    this.surfaceAudio.configure(this.workbench.audio.settings);
+    this.surfaceAudio.onStatus = () => {
+      this.workbench.setSound(this.surfaceAudio.enabled);
+      this.workbench.audio.setRuntimeStatus(this.surfaceAudio.state);
+      const button = root.querySelector<HTMLButtonElement>("#surface-sound-button");
+      if (button) button.title = this.surfaceAudio.state === "ready"
+        ? "Sound is on; starts with your first driving key or pointer interaction."
+        : this.surfaceAudio.state === "unavailable" ? "Audio unavailable; toggle sound to retry."
+        : "Toggle driving sound";
+    };
+    this.surfaceAudio.attach();
+    this.surfaceAudio.capture(this.rig.telemetry, this.rig.setup);
     this.input = new Input((action) =>
       this.action(
         {
@@ -209,6 +226,7 @@ export class App {
   }
 
   private loadCircuit(circuit: CompiledCircuit, archive?: CircuitArchive) {
+    this.surfaceAudio.silence();
     // Build the view before changing physics. Both preparation failures keep the
     // current scene; successful replacement releases all previous mesh/colliders.
     const nextView = new CircuitView(circuit);
@@ -273,6 +291,7 @@ export class App {
         (key) => next[key] !== this.rig.setup[key],
       );
     this.rig.updateSetup(next, structural);
+    this.surfaceAudio.setSetup(next);
     this.configureSession();
     if (structural || visual) {
       this.view.buildCar(next);
@@ -294,13 +313,16 @@ export class App {
   }
 
   private action(action: string) {
+    if (["reset", "home", "drop"].includes(action) ||
+        /^(experiment:|start:|session:(trial|practice))/.test(action))
+      this.surfaceAudio.silence();
     if (action === "surface-sound") {
-      void this.surfaceAudio
-        .toggle()
-        .then((enabled) => this.workbench.setSound(enabled))
-        .catch(() =>
-          this.workbench.toast("Surface audio is unavailable in this browser."),
-        );
+      this.workbench.audio.setEnabled(!this.surfaceAudio.enabled);
+    } else if (action === "audio:stop") {
+      this.surfaceAudio.stopAudition();
+    } else if (/^audio:(demo|channel):/.test(action)) {
+      const id = WHEEL_IDS.find((wheel) => action.endsWith(":" + wheel));
+      if (id) this.surfaceAudio.demo(id, action.startsWith("audio:channel:"));
     } else if (
       action === "generator:cancel" ||
       action === "generator:invalidate"
@@ -724,7 +746,7 @@ export class App {
   }
   private presentation(settings: PresentationSettings) {
     this.view.configure(settings);
-    this.surfaceAudio.volume = settings.volume;
+    // Audio mixer preferences have their own version and do not affect sessions.
   }
   private async driveArchive(archive: CircuitArchive) {
     const version = ++this.previewVersion;
@@ -791,10 +813,6 @@ export class App {
             this.rig.circuit,
           )
         : this.input.read(dt);
-    this.surfaceAudio.update(
-      this.rig.telemetry,
-      effectivePause || document.hidden,
-    );
     const start = performance.now();
     if (!effectivePause) {
       this.accumulator += dt;
@@ -802,6 +820,7 @@ export class App {
       while (this.accumulator >= FIXED_STEP && steps < 10) {
         this.view.remember(this.rig.telemetry);
         this.rig.step(controls);
+        this.surfaceAudio.capture(this.rig.telemetry, this.rig.setup);
         if (this.rig.experiment === "circuit")
           this.session.step(this.rig.telemetry);
         this.workbench.recordTelemetry(
@@ -813,6 +832,7 @@ export class App {
       }
     } else this.accumulator = 0;
     const physicsMs = performance.now() - start;
+    this.surfaceAudio.update(effectivePause || document.hidden);
     if (now - this.lastUIUpdate > 50) {
       this.workbench.update(
         this.rig.telemetry,
@@ -841,6 +861,10 @@ export class App {
     );
     this.frame = requestAnimationFrame(this.animate);
   };
+
+  audioDiagnostics() {
+    return this.surfaceAudio.diagnostics();
+  }
 
   dispose() {
     this.disposed = true;

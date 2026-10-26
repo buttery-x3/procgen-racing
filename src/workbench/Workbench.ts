@@ -34,6 +34,8 @@ import { SessionPanel } from "./SessionPanel";
 import { CircuitLibraryPanel } from "./CircuitLibraryPanel";
 import { SoloStorage } from "../storage/SoloStorage";
 import type { PresentationSettings } from "../rendering/settings";
+import type { AudioSettings } from "../audio/types";
+import { AudioPanel } from "./AudioPanel";
 
 export interface WorkbenchCallbacks {
   action: (action: string) => void;
@@ -43,6 +45,7 @@ export interface WorkbenchCallbacks {
   sessionExport: () => Promise<string>;
   sessionImport: (raw: string) => void;
   presentation: (settings: PresentationSettings) => void;
+  audio?: (settings: AudioSettings) => void;
   driveArchive: (archive: CircuitArchive) => Promise<void>;
   storage: SoloStorage;
 }
@@ -399,6 +402,7 @@ export class Workbench {
   readonly inputSettings: InputPanel;
   readonly sessions: SessionPanel;
   readonly library: CircuitLibraryPanel;
+  readonly audio: AudioPanel;
   private circuit = getTestCircuit();
   private map = mapProjection(this.circuit, 220, 150);
   private setup: VehicleSetup;
@@ -430,7 +434,7 @@ export class Workbench {
       <header class="app-header">
         <a class="brand" href="#" aria-label="Procgen Racing home" data-action="home"><span class="brand-mark">P<span>R</span></span><span>PROCGEN<span class="brand-light">RACING</span></span></a>
         <div class="header-divider"></div><span class="header-title">DYNAMICS LAB <span>/ 08</span></span>
-        <div class="header-right"><button class="button subtle header-workshop" data-action="car-workshop">Car workshop</button><button class="button subtle header-workshop" data-action="garage">Garage / Compare</button><span class="live-badge" id="live-badge"><i></i>LIVE SIMULATION</span><button class="button subtle" id="pause-button" data-action="pause">${icon("pause")}<span>Pause</span></button><button class="button subtle surface-sound-button" id="surface-sound-button" data-action="surface-sound" aria-pressed="false">Driving sound off</button><button class="button save-button" data-action="save">${icon("save")}Save setup</button></div>
+        <div class="header-right"><button class="button subtle header-workshop" data-action="car-workshop">Car workshop</button><button class="button subtle header-workshop" data-action="garage">Garage / Compare</button><span class="live-badge" id="live-badge"><i></i>LIVE SIMULATION</span><button class="button subtle" id="pause-button" data-action="pause">${icon("pause")}<span>Pause</span></button><button class="button subtle surface-sound-button" id="surface-sound-button" data-action="surface-sound" aria-pressed="true">Sound on</button><button class="button subtle audio-settings-open" data-action="audio-settings" title="Sound settings and wheel listening checks">Sound settings</button><button class="button save-button" data-action="save">${icon("save")}Save setup</button></div>
       </header>
       <div class="workspace">
         <nav class="tool-rail" aria-label="Workbench tools"><div class="rail-tools"><button class="rail-button" data-action="car-workshop" title="Car workshop" aria-label="Open car workshop">${icon("rig")}</button><button class="rail-button" data-action="garage" title="Garage and A/B comparison" aria-label="Open garage and comparison">${icon("compare")}</button><button class="rail-button active" data-action="home" title="Suspension rig" aria-label="Suspension rig">${icon("rig")}</button><button class="rail-button" data-action="generator" title="Circuit workshop" aria-label="Open circuit workshop">${icon("layers")}</button><button class="rail-button" data-action="inspector" title="Toggle setup panel" aria-label="Toggle setup panel">${icon("sliders")}</button><button class="rail-button" data-action="telemetry" title="Expand response trace" aria-label="Expand response trace">${icon("chart")}</button></div><button class="rail-button" data-action="input-settings" title="Input settings" aria-label="Open input settings">${icon("sliders")}</button><button class="rail-button" data-action="help" title="Controls and guide" aria-label="Controls and guide">${icon("help")}</button><span class="rail-version">M8</span></nav>
@@ -483,8 +487,19 @@ export class Workbench {
       generate: callbacks.generate,
       action: callbacks.action,
     });
-    this.sessions = new SessionPanel(root, this.node("session-strip"), {
+    this.audio = new AudioPanel(root, {
+      change: (settings) => {
+        callbacks.audio?.(settings);
+        this.setSound(settings.enabled);
+      },
       action: callbacks.action,
+    });
+    this.setSound(this.audio.settings.enabled);
+    this.sessions = new SessionPanel(root, this.node("session-strip"), {
+      action: (action) => {
+        if (action === "audio-settings") this.audio.open();
+        else callbacks.action(action);
+      },
       export: callbacks.sessionExport,
       import: callbacks.sessionImport,
       presentation: callbacks.presentation,
@@ -554,6 +569,10 @@ export class Workbench {
     }
     if (action === "input-settings") {
       this.inputSettings.open();
+      return;
+    }
+    if (action === "audio-settings") {
+      this.audio.open();
       return;
     }
     if (action === "discard-chassis") {
@@ -1103,7 +1122,7 @@ export class Workbench {
   }
   setSound(enabled: boolean) {
     const button = this.node("surface-sound-button");
-    button.textContent = enabled ? "Driving sound on" : "Driving sound off";
+    button.textContent = enabled ? "Sound on" : "Sound off";
     button.setAttribute("aria-pressed", String(enabled));
   }
   setCamera(mode: string) {
@@ -1298,6 +1317,7 @@ export class Workbench {
     this.inputSettings.dispose();
     this.sessions.dispose();
     this.library.dispose();
+    this.audio.dispose();
     this.abort.abort();
     clearTimeout(this.toastTimeout);
   }

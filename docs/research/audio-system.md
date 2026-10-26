@@ -1,8 +1,9 @@
 # Synthesized driving audio — research and implementation plan
 
-Prepared 26 October 2026. **Status: researched proposal; audio implementation and
-listening validation are still pending.** This document covers the player's car
-in the browser solo-driving experience.
+Prepared 26 October 2026; approved for implementation the same day.
+**Status: implemented as a separate audio feature following completed M8.**
+See [delivery and qualification notes](../audio.md). Human listening validation
+remains unmeasured. This document records the research and approved design.
 
 The user confirmed that **headphones are the primary output** and that
 **clear handling feedback takes priority over naturalism**, including deliberately
@@ -21,9 +22,10 @@ Offer ordinary stereo panning with the same timbres as a fallback. Keep the
 listening position attached to the driver/car, independently of the chase,
 bonnet or overhead camera. Give tyre information priority in the mix.
 
-This is a follow-up to the initial M8 presentation audio. A milestone number has
-not been assigned. This planning task adds documentation only; it does not
-declare the proposed system implemented or qualify its perceptual performance.
+The user approved this as separate work following completed M8, with sound
+enabled by default. A milestone number has not been assigned. The source-matching
+audio report is separate from M8; measured channel/spectral properties do not
+qualify human perception.
 
 ## 1. Repository evidence and integration boundary
 
@@ -491,13 +493,14 @@ Lap time is secondary; perception and controllability are the primary gates.
   results. No broad browser claim from one Chromium session; smoke-test Firefox
   and Safari on available hardware or record them as untested.
 
-At implementation completion run
-`npm test -- --maxWorkers=2` and `npm run build`. Since this integrates M8
-session/presentation, also follow `qualify:m8`, `qualify:m8:stress`, visible
-session/browser checks and `report:m8` from the then-current M8 instructions.
-Restart the development server after any physics/race edits. Add an audio report
-such as `docs/research/audio-qualification.json`; do not create passing evidence
-until it has actually been measured.
+At implementation completion run `npm test -- --maxWorkers=2`,
+`npm run build` and `npm run qualify:audio`, then use the visible Audio lab
+offline, lifecycle and full 20-minute audio-on stress checks. Publish its own
+source-matching evidence with `npm run report:audio`. The user's implementation
+approval treats audio as separate work after completed M8, so M8's existing
+qualification records are retained. Physics/race changes would require their
+separate checks and a restarted development server; this implementation does
+not change those sources.
 
 Audio-only synthesis/settings do not require rerunning historical car/track
 construction campaigns. Any scope expansion into construction or physics must
@@ -514,7 +517,8 @@ Resolved with the user:
 Working defaults needing no further clarification to finish this plan:
 
 - Driver-relative sound in all driving cameras.
-- Explicit sound enable; persistent level/mode preferences.
+- Sound enabled by default; playback begins on the first trusted browser interaction.
+  Explicit mute and level/mode preferences persist.
 - Near-limit warning enabled; quieter idle and engine ducking during strong slip.
 - Three modest engine personalities; no car mechanics/schema change for audio.
 - Separate audio settings/profile version; preserve M8 session identity.

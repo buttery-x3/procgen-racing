@@ -95,3 +95,12 @@ M6, M7 and M8 were developed on `codex/m6-car-generation`,
 available for comparison. Future work continues to use its own branches and
 `development` testing before another explicitly requested release. See the
 [M6 delivery notes](m6.md), [M7 delivery notes](m7.md) and [M8 delivery notes](m8.md).
+
+## Separate synthesized-audio feature
+
+The audio implementation follows completed M8 on
+`codex/synthesized-driving-audio`, starting from current development and
+integrating back into development for testing. M8 remains complete in v0.2.0;
+this feature does not amend that release or promote itself to main.
+Its own [delivery notes](audio.md) and source-matching audio qualification are
+separate from M8 and generation reports.

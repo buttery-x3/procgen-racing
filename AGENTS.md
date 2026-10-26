@@ -54,3 +54,10 @@ Historical milestone notes and qualification reports do not override this policy
   their original hashes; session-only changes do not require regenerating them.
 - Keep installed dependencies, build output and local screenshots/traces out of
   commits according to `.gitignore`.
+
+- The separate synthesized-audio feature uses `npm run qualify:audio`, the
+  visible `audio-lab.html` offline/lifecycle checks and a full 1,200-second
+  audio-on driving stress run. Publish source-matching evidence with
+  `npm run report:audio`; see [docs/audio.md](docs/audio.md). Audio-only changes
+  retain M8 and historical generation evidence. Full regression/build checks
+  still apply; changes to physics, races or construction require their own scope.

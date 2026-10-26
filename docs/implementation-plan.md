@@ -527,13 +527,20 @@ Working defaults that can be changed during implementation without reopening the
 
 No further user decision is required to begin M0–M1. Handling feel should be reviewed on the M2 driving build, where the alternatives can be compared rather than settled only in prose.
 
-## 15. Audio follow-up research — 26 October 2026
+## 15. Separate synthesized driving audio — 26 October 2026
 
-The [audio system plan](research/audio-system.md) develops the initial M8 audio
-into RPM/load/shift engine synthesis and per-wheel near-limit/slip feedback.
-The user confirmed headphones as the main output and accepted distinct front/rear
-tyre timbres for clarity. The proposal combines HRTF spatialization with these
-axle cues and includes a stereo fallback, telemetry audit, staged implementation
-and perceptual/performance gates. It is planning only, with no milestone number
-assigned and no claim of completed audio validation. Reconcile with integrated
-M8 before implementing it on a separate branch from development.
+The user approved the [audio plan](research/audio-system.md) as separate work
+after completed M8, with sound enabled by default. The feature uses
+`codex/synthesized-driving-audio` and integrates into development for testing.
+See [implementation and qualification](audio.md).
+
+The native graph implements RPM/load/shift engine layers, four per-wheel
+near-limit and slip voices, headphone HRTF positioning reinforced by axle timbres,
+stereo/mono fallback, an independent mixer and persistent mute. Physics-step
+capture, gesture activation and bounded pause/reset/disposal are integrated into
+the app. The standalone Audio lab provides actual renders, lifecycle checks,
+source-matched stress evidence and a human identification test.
+
+Human recognition and acoustic end-to-end latency remain unmeasured; automated
+spectral/channel checks do not substitute for listening. This work leaves M8
+completed and preserves its release and qualification records.
