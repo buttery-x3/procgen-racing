@@ -10,7 +10,8 @@ instructions for coding agents.
 | Branch or tag                                              | Purpose                                                                          |
 | ---------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | `main`                                                     | Released baseline, updated only on an explicit release/promotion request.        |
-| `v0.2.0`                                                   | Current baseline release: M0–M8, including the tyre-feedback sensitivity fix.    |
+| `v0.3.0`                                                   | Current baseline release: accepted synthesized driving-audio update over M0–M8. |
+| `v0.2.0`                                                   | Preserved solo baseline: M0–M8, including the tyre-feedback sensitivity fix.    |
 | `v0.1.0`                                                   | First baseline release: the implemented M0–M5 browser sandbox.                   |
 | `development` / `origin/development`                       | Shared integration branch pushed to the remote for testing completed milestones. |
 | `codex/m6-car-generation`, `codex/m7-track-families`, etc. | A separate branch for each future milestone, created from current `development`. |
@@ -130,7 +131,12 @@ correctness. See [audio sound-quality research](research/audio-timbre.md).
 
 ## Released baselines
 
-The current **v0.2.0 baseline** promotes the user-approved M8 development state
+The current **v0.3.0 audio update** promotes the accepted driving sounds and
+the owner's requested recording cleanup. The release packages synthesis code
+and the accepted numerical tyre model, with no source/comparison recordings.
+See [v0.3.0 release notes](releases/v0.3.0.md).
+
+The preserved **v0.2.0 baseline** promotes the user-approved M8 development state
 `c885073` plus release metadata/documentation and fresh release checks. It includes
 M0–M8, the tyre-feedback sensitivity fix, and the documentation-only audio proposal.
 See [v0.2.0 release notes](releases/v0.2.0.md). The first **v0.1.0 M0–M5 baseline**
@@ -148,6 +154,7 @@ available for comparison. Future work continues to use its own branches and
 The audio implementation follows completed M8 on
 `codex/synthesized-driving-audio`, starting from current development and
 integrating back into development for testing. M8 remains complete in v0.2.0;
-this feature does not amend that release or promote itself to main.
+this feature does not amend that older release. The owner explicitly authorized
+the separate v0.3.0 audio promotion on 27 October 2026.
 Its own [delivery notes](audio.md) and source-matching audio qualification are
 separate from M8 and generation reports.

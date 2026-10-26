@@ -1,6 +1,6 @@
 # Procedural Racing — implementation plan
 
-> **Branch policy:** `main` holds the M0–M8 `v0.2.0` baseline. Each future
+> **Branch policy:** `main` holds the `v0.3.0` audio update over M0–M8. Each future
 > milestone uses its own branch from `development`, then is merged and pushed
 > to remote `development` on completion for testing. Later releases to `main`
 > require an explicit request. See the [release workflow](workflow.md).
@@ -20,9 +20,9 @@ supersede conflicting generation details below. V1 and the research lab remain
 archived baselines. [M8 solo sessions, ghosts and the circuit library](m8.md) complete the planned solo feature set, released in [v0.2.0](releases/v0.2.0.md); optional M7-D racing bridges remain deferred. Generation qualification uses the
 development desktop's Ryzen 5 5600X / 32 GiB; broader hardware testing is still needed.
 
-The current repository baseline is **v0.2.0 (M0–M8)** on `main`; the first
-**v0.1.0 (M0–M5)** baseline remains tagged. The complete solo/time-trial feature
-set has passed development testing and been approved for this release.
+The current repository baseline is **v0.3.0 (M0–M8 plus driving audio)** on `main`;
+the earlier **v0.2.0 solo** and **v0.1.0 (M0–M5)** baselines remain tagged. The
+owner accepted the integrated synthesized sounds for this separate audio update.
 Every future milestone starts from `development` on a separate
 `codex/m<number>-<name>` branch and finish by merging and pushing to
 `origin/development` for testing; they do not automatically update `main`.
@@ -567,5 +567,8 @@ uses those engine/tyre defaults with real per-wheel controls and the established
 surface/spatial/mixer foundation. The next step is owner listening in the
 simulation, with vehicle voicing and further tuning still open. Only targeted
 adapter/runtime/worklet tests, type checking and a short actual-app driving
-sequence are required for this development pass. Full regression/release
-verification and promotion to main remain deferred at the owner's request.
+sequence were required for that development pass. The owner subsequently accepted
+the integrated sound for [v0.3.0](releases/v0.3.0.md) and explicitly requested
+promotion to main. The release includes full regression/build checks, the packaged
+parameter model and removal of source/comparison recordings. The 20-minute run
+remains excluded from required checks.

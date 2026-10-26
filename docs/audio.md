@@ -3,7 +3,8 @@
 This feature follows the completed M8 release as separate work on
 `codex/synthesized-driving-audio`. It replaces the initial aggregate driving
 sound with an RPM/load engine and four independent tyre voices. It is integrated
-through `development`; release promotion remains a separate request.
+through `development`; the owner authorized its separate
+[v0.3.0 audio release](releases/v0.3.0.md) on 27 October 2026.
 The [research and approved plan](research/audio-system.md) records the rationale.
 
 **Sound-quality review, 26 October 2026:** the playground's pulse/exhaust engine
@@ -19,8 +20,10 @@ the former `/audio-reference.html` comparison as the screech direction. The appr
 development**, using real per-wheel controls and the existing surface/spatial/mixer
 foundation. Open the normal simulation for the next listening review. See
 [integration and targeted evidence](research/reference-audio-integration.md).
-Further mix/family tuning remains open. Main promotion and full release checks
-are deferred. Original qualification records retain their source hashes.
+The owner subsequently accepted this sound for v0.3.0. Further vehicle-family
+tuning remains possible without delaying this audio update. Original qualification
+records retain their source hashes; the release records its own regression/build
+and static-package checks.
 
 ## Sound-quality playground
 
