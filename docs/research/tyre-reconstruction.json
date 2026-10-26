@@ -1,0 +1,107 @@
+{
+  "scope": "Short offline reference reconstruction for human review; no realtime voice or driving integration.",
+  "script_sha256": "dec8837a7a188b94cbd76e8717533f4f24ff4fd55b9368c39e8db4069db5f6da",
+  "sources": [
+    {
+      "filename": "good screech (real recording).wav",
+      "sha256": "2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0"
+    },
+    {
+      "filename": "bad screech.wav",
+      "sha256": "a6080a6b9aea894a14a11b1b25ff9b290196cf03e6d9ab1ab2c5a49e33d9d042"
+    }
+  ],
+  "method": {
+    "rate_hz": 48000,
+    "window_frames": 2048,
+    "hop_frames": 240,
+    "fft_points": 8192,
+    "max_peaks_per_frame": 18,
+    "minimum_track_seconds": 0.04,
+    "retained_tracks": 251,
+    "freeze_time_seconds": 0.935,
+    "frozen_tracks": 12,
+    "residual": "Fresh seeded Gaussian excitation filtered by smoothed residual power; original residual phases discarded",
+    "level_envelope": "10 ms Gaussian RMS, sampled every 5 ms, two smooth gain-fit passes",
+    "previous_excerpt_start_seconds": 0.4,
+    "noise_seed": 20261026
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2"
+  },
+  "outputs": [
+    {
+      "id": "reference",
+      "label": "Real reference",
+      "file": "reference.wav",
+      "sha256": "3b03fbb09117339a6d269b4718f78c9d6ccdeebd56b056317235fc4aec3fb5b1",
+      "duration_seconds": 1.8703125,
+      "rms_dbfs": -23.0,
+      "peak_dbfs": -9.154256042419911,
+      "normalized_spectral_change_median": 0.17996435600387856,
+      "centroid_500_8000_hz_median": 1269.0828927357072,
+      "third_centroids_hz": [
+        1176.8680723961309,
+        1248.4465056676468,
+        1415.508200244373
+      ]
+    },
+    {
+      "id": "reconstruction",
+      "label": "Reconstruction",
+      "file": "reconstruction.wav",
+      "sha256": "acf5ddc6a40139db1e27c671e2fed48a3df8be99cca44f6d1bdbe50b00636b85",
+      "duration_seconds": 1.8703125,
+      "rms_dbfs": -23.0,
+      "peak_dbfs": -9.980033722083594,
+      "normalized_spectral_change_median": 0.19177882283716333,
+      "centroid_500_8000_hz_median": 1304.5423483207696,
+      "third_centroids_hz": [
+        1193.6844834137978,
+        1295.9238210880278,
+        1454.6176422573708
+      ]
+    },
+    {
+      "id": "frozen",
+      "label": "Frozen character",
+      "file": "frozen.wav",
+      "sha256": "2ba46bbe256a9d6cafac92564f14814414e3fb9d217e8b11afa571bb821a864a",
+      "duration_seconds": 1.8703125,
+      "rms_dbfs": -23.0,
+      "peak_dbfs": -9.630696675187346,
+      "normalized_spectral_change_median": 0.1593488943490618,
+      "centroid_500_8000_hz_median": 1221.9080710500189,
+      "third_centroids_hz": [
+        1215.2958332828248,
+        1225.764133771495,
+        1230.0213634930224
+      ]
+    },
+    {
+      "id": "previous",
+      "label": "Previous playground",
+      "file": "previous.wav",
+      "sha256": "abc3e1d9e1b9ff6e5d0427b56a6cec990f85f0955549a9bbc0cae80d738bbdb3",
+      "duration_seconds": 1.8703125,
+      "rms_dbfs": -23.0,
+      "peak_dbfs": -14.553917403080089,
+      "normalized_spectral_change_median": 0.03047001908551596,
+      "centroid_500_8000_hz_median": 2005.0232608384968,
+      "third_centroids_hz": [
+        2003.9883775035114,
+        2004.417403046329,
+        2007.125251806538
+      ]
+    }
+  ],
+  "limitations": [
+    "Measurement is not listening acceptance.",
+    "Reference-specific analysis/resynthesis; not a generative tyre or an isolated physical source model.",
+    "Frozen control freezes active mid-phrase partials and local residual colour; it is not mathematically identical except for a single variable.",
+    "Matched RMS is not matched perceived loudness.",
+    "All audio is local, ignored and excluded from production build assets."
+  ]
+}

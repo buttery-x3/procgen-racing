@@ -560,7 +560,9 @@ led to an accepted pulse/exhaust engine direction, a rejected rain-like tyre
 source, then a rejected tonal tyre source. The [supplied-WAV comparison](research/tyre-recording-comparison.md)
 now measures moving spectral bands and changing early/middle/late character
 missing from the tuned synthetic recording. Its next proposal is a short
-reference reconstruction before another real-time backend; implementation
-awaits approval. Keep the engine and channel foundation. Select a convincing
+reference reconstruction before another real-time backend. That approved
+[reconstruction comparison](research/tyre-reference-audition.md) is now ready for
+the next hearing step; another realtime source depends on that decision.
+Keep the engine and channel foundation. Select a convincing
 tyre voice before expanding presets or production integration; this analysis
 changes no playback code and needs no application test campaign.

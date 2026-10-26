@@ -14,9 +14,11 @@ voices as comparison references. The first playground is implemented at
 `224d963`, integrated into `development` at `96dec79`. Its **pulse/exhaust engine
 is accepted as a promising base sound**; its **noise-driven tyre is rejected**.
 The second, tonal tyre pass (`cff62ae`, integrated at `bfbf475`) is also
-**rejected: it still sounds like a tone**. Further implementation is not approved.
+**rejected: it still sounds like a tone**. The user approved the next short
+reference reconstruction, now [ready for hearing](tyre-reference-audition.md).
 The [recording comparison and revised proposal](tyre-recording-comparison.md)
-is now the active next-step plan. The existing voices remain comparison material.
+sets the next-step plan. The existing voices remain comparison material;
+another realtime backend depends on this listen.
 
 | Listening feedback | Decision for the next pass |
 | --- | --- |
@@ -26,7 +28,7 @@ is now the active next-step plan. The existing voices remain comparison material
 | Present slider variation/modulation is good. | Retain the useful onset, release and changing roughness behavior while changing what produces the sound. Do not rebuild slip calculations to solve a source-timbre problem. |
 | Tonal revision still sounds like a tone; the supplied real screech changes character through its duration. | Measurements show broader moving bands and changing spectral balance in the reference, versus an almost fixed harmonic pattern in the playground. Stop tuning that fixed pattern. Propose a short reference reconstruction before another real-time backend. |
 
-## Current next step: recording-informed reconstruction, pending approval
+## Current next step: hear the prepared reference reconstruction
 
 The [WAV analysis](tyre-recording-comparison.md) includes spectrograms, evolving
 spectral shapes, envelope measurements and a reproducible analysis script. The
@@ -36,12 +38,14 @@ shape changes throughout the real event and remains almost fixed in the syntheti
 one. The original distinction between intensity and texture was not carried far
 enough into the tonal implementation.
 
-The proposed next experiment reconstructs one short reference phrase using
+The approved experiment reconstructs one short reference phrase using
 measured partial trajectories and a changing spectral residual. A fixed-shape
 version with the same volume envelope can isolate the importance of evolving
 timbre. This is a small, prepared audible comparison before choosing another
-playground backend, not another set of sliders for the user to search. No new
-candidate or reference-derived audio has been generated in this analysis pass.
+playground backend. The [audition](tyre-reference-audition.md) now contains the
+real reference, one reconstruction, the frozen-character control and the supplied
+previous-playground excerpt. Each is 1.87 seconds, at a shared overall level.
+Reference-derived WAVs are local ignored files, served only in development.
 
 If a compact reconstruction works, evolve several spectral families and their
 roughness independently of level. Later drive their transitions from current

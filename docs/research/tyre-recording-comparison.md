@@ -1,8 +1,10 @@
 # Tyre screech: reference recording versus playground
 
 26 October 2026. Research following rejection of the second, tonal tyre candidate
-(`cff62ae`, integrated at `bfbf475`). **Another source implementation is not
-approved.** The engine direction remains accepted. This report updates the
+(`cff62ae`, integrated at `bfbf475`). The user subsequently approved the short
+reference reconstruction up to the next hearing step; see the
+[prepared audition](tyre-reference-audition.md). A realtime replacement tyre
+source is still a later decision. The engine direction remains accepted. This report updates the
 [timbre plan](audio-timbre.md); it does not change the playground or production DSP.
 
 ## Finding
@@ -122,7 +124,11 @@ fixed harmonics plus unchanging hiss. Applying it to this tyre target is our
 proposed experiment, not an already validated tyre model.
 [Spectral Modeling Synthesis, 1990, author-group description](https://mtg.upf.edu/node/251).
 
-## Revised proposal — pending approval
+## Revised proposal — reconstruction approved and prepared
+
+The first step below is now implemented as a local offline comparison; the
+[audition notes](tyre-reference-audition.md) record the actual method and checks.
+The remaining source-selection and control-mapping steps depend on that listen.
 
 ### 1. Reconstruct one short phrase before another playground backend
 
@@ -136,8 +142,9 @@ Prepare a short comparison of the original reference, reconstruction and the
 current synthetic clip at a fixed, comfortable comparison level. A useful
 diagnostic version can freeze the reconstruction's spectral shape while keeping
 its overall envelope: the difference isolates what temporal timbre contributes.
-This is a proposed future audible experiment, not work performed in this report.
-It should have one prepared candidate, not another hunt through sliders.
+This experiment is now prepared on `/audio-reference.html`. It has one
+reconstruction candidate and a frozen-character control, without a new slider
+search. The initial measurements above retain their original scope and hashes.
 
 Use the supplied WAV as a local reference. Do not bundle it or its reconstruction
 as a game asset. If sampling is preferred for the eventual voice, select material
