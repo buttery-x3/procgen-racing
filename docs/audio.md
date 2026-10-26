@@ -7,11 +7,12 @@ through `development`; release promotion remains a separate request.
 The [research and approved plan](research/audio-system.md) records the rationale.
 
 **Sound-quality review, 26 October 2026:** the playground's pulse/exhaust engine
-is accepted as a promising base for later vehicle tuning. Its new tyre voice is
-rejected as rain-like; the user likes its modulation but wants a convincing
-high-pitched squeal underneath. The [tonal tyre pass](research/audio-timbre.md#tonal-tyre-pass-ready-for-listening)
-adds a coherent squeal with shaped harmonics and optional scrape down to true
-zero in the playground. It is ready for a short listening decision. The original
+is accepted as a promising base for later vehicle tuning. Both tyre candidates
+are rejected: the first sounds like rain, and the tonal revision still sounds
+like an isolated tone. The [user-recording analysis](research/tyre-recording-comparison.md)
+shows broader, moving spectral structure and different early/middle/late
+character in the real reference. It proposes a short reference reconstruction
+before another playground backend; further implementation awaits approval. The original
 production voices remain the infrastructure/comparison baseline; existing
 qualification records are preserved.
 
@@ -45,8 +46,9 @@ duplicate, revert, JSON export and validated JSON import. They carry the
 backend version, seed, fixture, manual controls, route, wheel and audition trims; no sample assets
 are used. Saving or importing a preset never applies it to the game. The first
 listening review accepted B's engine direction but rejected its first tyre
-source; meters only check for an active, finite digital signal. The new tyre
-candidate awaits the user's short sound review. Real-control capture/replay and
+source; meters only check for an active, finite digital signal. The second review
+also rejected the tonal tyre candidate; it remains available as comparison
+material. Real-control capture/replay and
 a mix review follow source selection before production integration.
 
 This playground uses one isolated AudioWorklet module, loaded only after Play.

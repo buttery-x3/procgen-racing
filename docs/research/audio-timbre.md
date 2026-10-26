@@ -1,7 +1,7 @@
 # Driving audio: sound quality and a tuning workflow
 
-26 October 2026. Revised after the first playground listening review and the
-approved tonal-tyre prototype. The
+26 October 2026. Revised after the second tyre listening review and analysis of
+the user's real and playground WAV recordings. The
 prototype is described in [the audio delivery notes](../audio.md#sound-quality-playground).
 Audited foundation: `development` at `c7d31fc`, including
 the Vivaldi loop fix. This document supersedes the timbre and iteration plan in
@@ -13,9 +13,10 @@ Keep the production channel, control and lifecycle foundation and its original
 voices as comparison references. The first playground is implemented at
 `224d963`, integrated into `development` at `96dec79`. Its **pulse/exhaust engine
 is accepted as a promising base sound**; its **noise-driven tyre is rejected**.
-The approved next pass changes only the playground tyre source and the
-controls/preset handling needed to compare it. It is ready for the user's
-next listening review; its sound is not yet accepted.
+The second, tonal tyre pass (`cff62ae`, integrated at `bfbf475`) is also
+**rejected: it still sounds like a tone**. Further implementation is not approved.
+The [recording comparison and revised proposal](tyre-recording-comparison.md)
+is now the active next-step plan. The existing voices remain comparison material.
 
 | Listening feedback | Decision for the next pass |
 | --- | --- |
@@ -23,13 +24,41 @@ next listening review; its sound is not yet accepted.
 | New tyre is worse and "sounds like rain". | Replace its noise-dominated base with a sustained, tonal squeal. More filtering of the same noise is not the next candidate. |
 | The high-pitched portion is closer to tyre squeal; breathy noise previously contributed to the whistle impression. | Keep high-pitched tonal energy, but give it a rougher harmonic edge. Neither pure whistling nor a wash of hiss is the target. The complete original tyre voice is not accepted. |
 | Present slider variation/modulation is good. | Retain the useful onset, release and changing roughness behavior while changing what produces the sound. Do not rebuild slip calculations to solve a source-timbre problem. |
+| Tonal revision still sounds like a tone; the supplied real screech changes character through its duration. | Measurements show broader moving bands and changing spectral balance in the reference, versus an almost fixed harmonic pattern in the playground. Stop tuning that fixed pattern. Propose a short reference reconstruction before another real-time backend. |
 
-The [tonal tyre pass](#tonal-tyre-pass-ready-for-listening) below replaces
-the earlier open-ended multi-component tyre proposal. The engine research and
-original playground requirements remain background, not another implementation
-or testing checklist. Production integration remains a later listening decision.
+## Current next step: recording-informed reconstruction, pending approval
 
-## Tonal tyre pass: ready for listening
+The [WAV analysis](tyre-recording-comparison.md) includes spectrograms, evolving
+spectral shapes, envelope measurements and a reproducible analysis script. The
+reference's dominant region is approximately 0.9–1.2 kHz; the user's tuned
+playground clip stays near 1.62 kHz. More significantly, level-normalized spectral
+shape changes throughout the real event and remains almost fixed in the synthetic
+one. The original distinction between intensity and texture was not carried far
+enough into the tonal implementation.
+
+The proposed next experiment reconstructs one short reference phrase using
+measured partial trajectories and a changing spectral residual. A fixed-shape
+version with the same volume envelope can isolate the importance of evolving
+timbre. This is a small, prepared audible comparison before choosing another
+playground backend, not another set of sliders for the user to search. No new
+candidate or reference-derived audio has been generated in this analysis pass.
+
+If a compact reconstruction works, evolve several spectral families and their
+roughness independently of level. Later drive their transitions from current
+and recent slip/excitation, so entry and recovery can differ at the same slip.
+If reconstruction loses the identity, compare recording-based material before
+another speculative procedural design. See the detailed proposal for limits,
+asset handling and the distinction between audio history and tyre physics.
+
+The engine research and original playground requirements below remain background.
+Preserve the accepted engine, presets, channel/runtime evidence and current
+physics. Production integration remains a later listening decision.
+
+## Tonal tyre pass: completed and rejected
+
+Historical plan and implementation record for the approved second tyre pass.
+The user's supplied recording and feedback reject its timbre; the current
+proposal above supersedes the following source-design and listening steps.
 
 ### What the first candidate got wrong
 

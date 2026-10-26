@@ -278,17 +278,18 @@ See the [implementation plan](docs/implementation-plan.md),
 ## Synthesized driving audio on development
 
 The channel/control system is the working foundation. The user likes the new
-playground engine; its tyre modulation is useful but the noise-driven source
-sounds like rain. The [tonal tyre pass](docs/research/audio-timbre.md#tonal-tyre-pass-ready-for-listening)
-is now ready for listening, with a sustained squeal and optional scrape.
+playground engine. Both tyre sources have been rejected: the first sounds like
+rain, the second like a tone. The [recording comparison](docs/research/tyre-recording-comparison.md)
+measures the missing spectral evolution and proposes a short reference
+reconstruction; further implementation awaits approval.
 Development commits use [targeted validation](docs/workflow.md#validation-scope--revised-26-october-2026);
 the full suite is required before merging into `main`.
 
 The [audio playground](audio-playground.html) is the first audible A/B prototype:
 short engine and tyre examples, perceptual controls and local JSON presets. It
 starts on a dry tonal tyre slide, while the first noise tyre remains available
-for comparison. The engine direction is accepted for later tuning; the new tyre
-sound awaits user review. Production driving audio remains unchanged.
+for comparison. The engine direction is accepted for later tuning; the tyre
+sources remain research comparisons. Production driving audio remains unchanged.
 
 The separate [audio feature](docs/audio.md) adds RPM/load/shift engine synthesis,
 four independent tyre warning/slip voices, headphone spatialization and distinct

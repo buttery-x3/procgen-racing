@@ -553,10 +553,14 @@ Human recognition and acoustic end-to-end latency remain unmeasured; automated
 spectral/channel checks do not substitute for listening. This work leaves M8
 completed and preserves its release and qualification records.
 
-The user's subsequent sound-quality review rejected the engine's buzzy timbre
-and the tyres' whistle-like tone. Preserve this implementation as the audio
-infrastructure baseline. The [follow-up research](research/audio-timbre.md)
-proposes short, level-matched A/B auditions of a pulse/exhaust engine and richer
-tyre texture in a small sound playground, with recording-assisted alternatives
-if needed. Select a convincing voice before expanding presets or production
-integration. This research pass adds no replacement voices or new test campaign.
+The user's subsequent sound-quality review rejected the original engine's buzzy
+timbre and the tyres' whistle-like tone. Preserve this implementation as the audio
+infrastructure baseline. The [sound playground research](research/audio-timbre.md)
+led to an accepted pulse/exhaust engine direction, a rejected rain-like tyre
+source, then a rejected tonal tyre source. The [supplied-WAV comparison](research/tyre-recording-comparison.md)
+now measures moving spectral bands and changing early/middle/late character
+missing from the tuned synthetic recording. Its next proposal is a short
+reference reconstruction before another real-time backend; implementation
+awaits approval. Keep the engine and channel foundation. Select a convincing
+tyre voice before expanding presets or production integration; this analysis
+changes no playback code and needs no application test campaign.
