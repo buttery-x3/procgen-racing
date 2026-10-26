@@ -266,3 +266,10 @@ See the [implementation plan](docs/implementation-plan.md),
 [M3 surface compiler notes](docs/m3.md), [M4 v2 notes](docs/m4-v2.md),
 [M5 venue notes](docs/m5.md), [M6 car/workbench notes](docs/m6.md), [M7 expanded-family notes](docs/m7.md), [M8 solo-session notes](docs/m8.md) and
 [archived M4 v1 notes](docs/m4.md).
+
+## Planned audio follow-up
+
+The [audio research and implementation plan](docs/research/audio-system.md)
+proposes synthesized engine/load/shift sounds and four independent tyre voices,
+with near-limit warnings, headphone spatialization and distinct front/rear cues.
+This is a researched proposal; implementation and listening validation are pending.
