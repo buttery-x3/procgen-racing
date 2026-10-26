@@ -6,12 +6,14 @@ sound with an RPM/load engine and four independent tyre voices. It is integrated
 through `development`; release promotion remains a separate request.
 The [research and approved plan](research/audio-system.md) records the rationale.
 
-**Sound-quality review, 26 October 2026:** the user finds the engine thin/buzzy
-and the tyres whistle-like. Treat this implementation as the working audio
-infrastructure and comparison baseline, not accepted final timbre. The
-[new research and playground proposal](research/audio-timbre.md) describes a
-pulse/exhaust engine, richer friction texture and short A/B tuning workflow.
-Production voices and existing qualification records are preserved.
+**Sound-quality review, 26 October 2026:** the playground's pulse/exhaust engine
+is accepted as a promising base for later vehicle tuning. Its new tyre voice is
+rejected as rain-like; the user likes its modulation but wants a convincing
+high-pitched squeal underneath. The [revised tyre plan](research/audio-timbre.md#next-tyre-pass-tonal-screech-awaiting-approval)
+proposes a coherent tonal screech with shaped harmonics and optional scrape down
+to true zero. That next implementation awaits approval. The original production
+voices remain the infrastructure/comparison baseline; existing qualification
+records are preserved.
 
 ## Sound-quality playground
 
@@ -37,10 +39,12 @@ texture; tyre scrape, modal screech, roughness, brightness, onset and release.
 Named versioned presets live under a separate local-storage key, with load,
 duplicate, revert, JSON export and validated JSON import. They carry the
 backend version, seed, fixture, manual controls, route, wheel and audition trims; no sample assets
-are used. Saving or importing a preset never applies it to the game. User
-listening decides whether B is an improvement; meters only check for an active,
-finite digital signal. The next stage after selecting a promising timbre is a
-short real-control capture/replay and mix review before production integration.
+are used. Saving or importing a preset never applies it to the game. The first
+listening review accepted B's engine direction but rejected B's tyre source;
+meters only check for an active, finite digital signal. The next approved work
+would revise the tyre in this playground while preserving the accepted engine.
+Short real-control capture/replay and a mix review follow source selection before
+production integration.
 
 This playground adds one isolated AudioWorklet module, loaded only after Play.
 The existing production `EngineVoice`, `TyreVoice`, collector, buses, preferences,

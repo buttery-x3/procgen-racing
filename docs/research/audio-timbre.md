@@ -1,31 +1,125 @@
 # Driving audio: sound quality and a tuning workflow
 
-26 October 2026. Original research and proposal; its first playground prototype
-is now described in [the audio delivery notes](../audio.md#sound-quality-playground).
+26 October 2026. Revised after the first playground listening review. The
+prototype is described in [the audio delivery notes](../audio.md#sound-quality-playground).
 Audited foundation: `development` at `c7d31fc`, including
 the Vivaldi loop fix. This document supersedes the timbre and iteration plan in
 [the original audio proposal](audio-system.md). Its infrastructure remains useful.
 
 ## Decision
 
-Keep the current implementation as the working channel, control and lifecycle
-foundation and as an A/B reference. The user's listening feedback rejects its
-engine and tyre character: the engine is thin and insect-like, while the tyres
-resemble whistling. Passing signal tests did not demonstrate the intended sound.
-Clear handling cues still matter, but they need a credible engine/tyre texture.
+Keep the production channel, control and lifecycle foundation and its original
+voices as comparison references. The first playground is implemented at
+`224d963`, integrated into `development` at `96dec79`. Its **pulse/exhaust engine
+is accepted as a promising base sound**; its **noise-driven tyre is rejected**.
+The next proposed implementation changes only the playground tyre source and
+the controls/preset handling needed to compare it. It awaits user approval.
 
-The next implementation should be a small **sound-design playground**, with one
-engine and one tyre candidate before expanding the range of cars. Build a
-combustion-pulse/exhaust-resonance engine and a rough, multi-component tyre voice.
-Judge short examples on the user's headphones before production integration.
-Keep a recording-assisted option available if those candidates do not convince.
-More sliders around the current oscillator mix alone would be insufficient.
+| Listening feedback | Decision for the next pass |
+| --- | --- |
+| New engine is "excellent, much better"; vehicle types look achievable with tuning. | Preserve the engine DSP and its current reference tuning. Different vehicle profiles are later work; this is acceptance of the direction, not every future profile. |
+| New tyre is worse and "sounds like rain". | Replace its noise-dominated base with a sustained, tonal squeal. More filtering of the same noise is not the next candidate. |
+| The high-pitched portion is closer to tyre squeal; breathy noise previously contributed to the whistle impression. | Keep high-pitched tonal energy, but give it a rougher harmonic edge. Neither pure whistling nor a wash of hiss is the target. The complete original tyre voice is not accepted. |
+| Present slider variation/modulation is good. | Retain the useful onset, release and changing roughness behavior while changing what produces the sound. Do not rebuild slip calculations to solve a source-timbre problem. |
 
-This is a recommendation for the next piece of work, not approval inferred for
-building every alternative, training a model, buying assets or importing an audio
-middleware. The research and documentation change leaves production audio intact.
+The [next tyre pass](#next-tyre-pass-tonal-screech-awaiting-approval) below replaces
+the earlier open-ended multi-component tyre proposal. The engine research and
+original playground requirements remain background, not another implementation
+or testing checklist. Production integration remains a later listening decision.
 
-## What the existing code explains
+## Next tyre pass: tonal screech, awaiting approval
+
+### What the first candidate got wrong
+
+In `public/audio/playground-voices.js`, `FrictionTyre` feeds random noise into
+four band-pass modes. Its `screech` parameter increases those modes' contribution
+and resonance; there is no independently sustained tonal source. Its broadband
+coefficient is `0.32 + scrape * 0.5`, so even zero scrape cannot remove that bed.
+This is a code-based explanation consistent with the rain report, not a measured
+acoustic diagnosis. The implementation overcorrected away from the old narrow
+tone, despite the original research explicitly calling for tonal components.
+
+The next candidate must first work **with the noise layer completely off**.
+Changing its resonance sliders alone cannot establish whether we have found the
+right base squeal. Preserve the old voice's high-frequency component as a useful
+starting reference, while treating the user's next listen as the decision on
+which pitch and edge actually work.
+
+### Source design and controls
+
+1. **Start with a coherent squeal.** Use an audio-rate, phase-continuous tonal
+   exciter in the original squeal's frequency region, with a dominant pitch and
+   stronger, shaped upper harmonics. Use a band-limited harmonic source or
+   alias-controlled shaping, not just a sine with louder white noise. This is an
+   authored approximation of sustained friction vibration, not a new contact
+   solver. Establish one useful dry default before adding other components.
+2. **Add screech character within that tone.** Shape its harmonic edge and
+   resonant emphasis, then use bounded irregular amplitude/pitch variation and,
+   only if needed, one quieter competing mode. Keep a recognizable tonal centre;
+   avoid equally loud notes, a chorus, fixed vibrato or a smooth whistle. The
+   first comparison should show whether this changes the base character, not
+   merely whether it is louder or higher pitched.
+3. **Keep the useful dynamics.** Reuse the current candidate's onset/release
+   envelope and roughness progression with the same synthetic slip/load inputs.
+   Apply that variation to the tonal source. Keep slip primarily responsible for
+   activity, intensity and texture, with restrained pitch movement. Leave the
+   production control mapping, contact gates and 120 Hz collector intact.
+4. **Make scrape subordinate and removable.** Give the broadband layer its own
+   true-zero gain, including at the default first audition. Add a quiet scrape
+   only after the dry squeal is convincing. Warning scrub and the separate
+   rolling/surface layer must not become the sustained squeal's dominant sound.
+5. **Expose the meaningful differences.** Retain onset, release and roughness;
+   make tonal strength, harmonic edge/brightness and scrape independently
+   adjustable, with a modest pitch/character range. Replace misleading "modal
+   screech" wording. Supply a useful default: the user should not need to find
+   it by searching dozens of slider combinations.
+
+This pass freezes the accepted engine source and reference settings. It does
+not expand vehicle profiles, change physics/slip thresholds, integrate the new
+voices into driving, or redesign the channel/context system.
+
+### Comparison and preset continuity
+
+Keep **A: Original squeal** and make **B: Tonal screech** the normal short
+comparison. Retain the first noise-driven candidate as a named legacy reference
+for old saved presets; it need not become a third mandatory listening task.
+Use the same fixture, seed and wheel with a fixed audition trim per candidate.
+Begin with a dry solo tyre so the accepted engine cannot hide source problems.
+
+Version the changed tyre backend and parameter meanings. Existing
+`pulse-exhaust-friction-v1` presets must retain their old sound when loaded;
+do not silently reinterpret their `screech`/`scrape` values as the new model.
+New presets identify the new tyre backend while preserving the engine settings.
+Keep existing save, duplicate, revert and JSON export/import workflows.
+
+### Brief listening decision
+
+The next delivery needs one new default and the original reference, ready for
+ordinary short listening. No implementation is authorized by this plan update.
+
+| Order | What the listen decides |
+| --- | --- |
+| Dry sustained slide, roughly 5–10 seconds, scrape at zero | Is the base now recognizably closer to tyre squeal, with the useful high-pitched bite and without rain, breathy whistle or an isolated musical-note character? |
+| Existing onset/recovery example and a few slider changes | Does the liked modulation still convey increasing stress and recovery without destroying that base tone? |
+| Optional low scrape, then the accepted engine with the tyre | Does texture add detail without taking over, and does the squeal remain useful at a comfortable level in the mix? |
+
+Accept the source character before expanding profiles or adding real-control
+capture/replay. If this focused tonal revision still misses, stop extending the
+procedural recipe and propose one recording-assisted tyre comparison using
+appropriately licensed, isolated material. That fallback is a separate decision;
+it does not reopen engine development or the proven channel system.
+
+### Checks for this scope
+
+This plan update needs content, local-link and diff review only. For the eventual
+implementation, run short targeted DSP renders for finite output, headroom,
+alias/stability concerns and parameter transitions, plus affected preset-version
+cases and a brief playback check. Recheck loading/routing/lifecycle only if those
+boundaries actually change. Keep existing infrastructure evidence; do not rerun
+the full suite, driving campaign or endurance test for this timbre iteration.
+The full release checks remain due before a requested promotion into `main`.
+
+## What the original production code explains
 
 | Inspected code | Current behavior | Implication for the listening report |
 | --- | --- | --- |
@@ -69,7 +163,7 @@ signal can be represented by harmonics: additive synthesis is not intrinsically
 incapable of realism. Our generic harmonic coefficients and operating-state
 variation are the limitation.
 
-### Proposed engine candidate
+### Engine design background: first candidate now heard
 
 Use a small sound model with a continuous crank phase and an explicit firing
 pattern. Produce band-limited asymmetric pressure pulses with bounded, seeded
@@ -186,11 +280,11 @@ to prevent threshold chatter. Increase roughness/energy and vary mode balance
 with sliding severity; do not turn slip ratio into a linear pitch knob. Keep a
 bounded sliding-speed contribution after peak grip, where force can fall.
 
-Start with three to five tonal/modal components plus shaped, time-varying friction
-noise. Allow uneven excitation and limited mode dominance changes; avoid a set of
-equally loud musical notes or periodic vibrato. Try a more friction-like nonlinear
-exciter only if the simpler candidate still whistles. These component counts are
-prototype choices to compare, not values asserted by the tyre papers.
+The original proposal suggested three to five tonal/modal components plus
+friction noise. The first implementation's noise-excited modes did not deliver
+the intended squeal. The revised pass above starts with one dominant coherent
+tone, shaped harmonics and optional subordinate texture instead. Component counts
+are sound-design choices, not values asserted by the tyre papers.
 
 Keep tyre identity tied mainly to the tyre/profile. Front/rear cue strength should
 apply modest differences in brightness, roughness or mode balance after a useful
@@ -237,14 +331,15 @@ Use source recordings only with appropriate reuse rights; research demonstration
 audio is a listening reference, not automatically a distributable game asset.
 No recordings, external DSP or pretrained weights were imported in this pass.
 
-## Playground proposal: listening first
+## Original playground requirements and later workflow
 
-Make a proposed `/audio-playground.html` alongside the existing diagnostic pages.
+The first `/audio-playground.html` now exists alongside the diagnostic pages.
+These requirements describe its design and later capture/integration stages.
 The existing Audio lab serves qualification; the playground's primary actions
 should be **Play**, **Compare A/B**, and **Save preset**. Do not make a large
 benchmark dashboard or a mandatory listening exam part of tuning.
 
-### First useful version
+### First version design
 
 1. Start with the existing voice as A and one candidate as B. Use the same inputs,
    playback time and seed. Switch with a short click-free fade; replay both from
@@ -334,6 +429,7 @@ The complete report publisher can remain strict and be used when a new complete
 qualification is actually wanted. The 20-minute audio endurance test is excluded
 from required checks and runs only on explicit request.
 
-The original research commit changed documentation only. The first playground
-implementation has its own targeted checks and delivery notes; no full suite,
-browser driving sequence or endurance run is claimed for that prototype.
+The original research and this feedback-plan update changed documentation only.
+The first playground implementation has its own targeted checks and delivery
+notes; no full suite, browser driving sequence or endurance run is claimed for
+that prototype.
