@@ -1,2 +1,4 @@
 # Keep source bytes and qualification hashes stable across Windows/macOS/Linux.
 * text=auto eol=lf
+# Keep the accepted parameter asset byte-identical to its recorded provenance hash.
+public/audio/tyre-control-v1.json -text
