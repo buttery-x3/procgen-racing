@@ -482,8 +482,9 @@ Lap time is secondary; perception and controllability are the primary gates.
   confirm with paired audio-on/off captures.
 - Profile the complete audio render graph, not just JavaScript update time.
   Target comfortably below its device render-block deadline and record
-  underruns/glitches using available browser diagnostics. Run at least 20 minutes
-  with four-wheel slip, engine load and representative generation/session work.
+  underruns/glitches using available browser diagnostics. The user removed the
+  20-minute endurance requirement on 26 October 2026; it is not a routine check
+  and should run only on an explicit user request.
 - Aim for graph response within about 30 ms of receiving a control update;
   measure the onset convention explicitly. Aim for action-to-ear response below
   80 ms on the reference wired setup if a loopback measurement is available.
@@ -495,7 +496,8 @@ Lap time is secondary; perception and controllability are the primary gates.
 
 At implementation completion run `npm test -- --maxWorkers=2`,
 `npm run build` and `npm run qualify:audio`, then use the visible Audio lab
-offline, lifecycle and full 20-minute audio-on stress checks. Publish its own
+offline/lifecycle checks and the short actual-app launch/shift/stop/relaunch
+sequence at `audio-driving.html`. Publish its own
 source-matching evidence with `npm run report:audio`. The user's implementation
 approval treats audio as separate work after completed M8, so M8's existing
 qualification records are retained. Physics/race changes would require their

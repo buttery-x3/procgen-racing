@@ -538,8 +538,10 @@ The native graph implements RPM/load/shift engine layers, four per-wheel
 near-limit and slip voices, headphone HRTF positioning reinforced by axle timbres,
 stereo/mono fallback, an independent mixer and persistent mute. Physics-step
 capture, gesture activation and bounded pause/reset/disposal are integrated into
-the app. The standalone Audio lab provides actual renders, lifecycle checks,
-source-matched stress evidence and a human identification test.
+the app. The standalone Audio lab provides actual renders, lifecycle checks
+and a human identification test; the driving diagnostic exercises the actual app
+through launch, shift, stopping and relaunch. The user removed the 20-minute
+endurance run from required checks.
 
 Human recognition and acoustic end-to-end latency remain unmeasured; automated
 spectral/channel checks do not substitute for listening. This work leaves M8

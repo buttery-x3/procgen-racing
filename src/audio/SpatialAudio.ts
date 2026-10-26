@@ -2,6 +2,8 @@ import type { WheelId } from "../vehicle/types";
 import type { AudioSettings } from "./types";
 import { clampAudio, smoothParam, stopAndDisconnect } from "./nodes";
 
+export interface SpatialSignalMeasurement { finite: boolean; rms: number; peak: number }
+
 /** Audio coordinates: -X left, -Z forward; equal radius for every quadrant. */
 export function wheelAudioPosition(id: WheelId, width = 0.75): { x: number; y: number; z: number } {
   const angle = (Math.PI / 4) * (clampAudio(width) / 0.75);
@@ -24,6 +26,7 @@ export class SpatialAudio {
   private readonly manualLeft?: GainNode;
   private readonly manualRight?: GainNode;
   private disposed = false;
+  private meters?: { analysers: Record<string, AnalyserNode>; pcm: Float32Array<ArrayBuffer> };
 
   constructor(
     private readonly context: BaseAudioContext,
@@ -103,10 +106,43 @@ export class SpatialAudio {
     }
   }
 
+  /** Explicit diagnostic taps only; no changes to the audible routing or panner controls. */
+  sampleSignals(): Record<string, SpatialSignalMeasurement> {
+    if (this.disposed) return {};
+    if (!this.meters) {
+      const analysers: Record<string, AnalyserNode> = {};
+      const sources: [string, AudioNode | undefined][] = [
+        ["input", this.input], ["hrtf", this.hrtf], ["hrtf-routed", this.hrtfMix],
+        ["stereo", this.stereo], ["stereo-routed", this.stereoMix], ["mono-routed", this.monoMix],
+      ];
+      for (const [name, source] of sources) {
+        if (!source) continue;
+        const analyser = this.context.createAnalyser();
+        analyser.fftSize = 2048;
+        source.connect(analyser);
+        this.nodes.push(analyser);
+        analysers[name] = analyser;
+      }
+      this.meters = { analysers, pcm: new Float32Array(2048) };
+    }
+    const result: Record<string, SpatialSignalMeasurement> = {}, { pcm, analysers } = this.meters;
+    for (const [name, analyser] of Object.entries(analysers)) {
+      analyser.getFloatTimeDomainData(pcm);
+      let finite = true, energy = 0, peak = 0;
+      for (const value of pcm) {
+        finite &&= Number.isFinite(value);
+        if (Number.isFinite(value)) { energy += value * value; peak = Math.max(peak, Math.abs(value)); }
+      }
+      result[name] = { finite, rms: Math.sqrt(energy / pcm.length), peak };
+    }
+    return result;
+  }
+
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
     stopAndDisconnect([], this.nodes);
+    this.meters = undefined;
   }
 
   private gain(value: number): GainNode {

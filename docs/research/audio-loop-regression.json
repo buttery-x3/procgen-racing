@@ -1,0 +1,1922 @@
+{
+  "format": "procgen-racing:audio-qualification",
+  "version": 1,
+  "sourceHash": "e3322f2cdfca015b",
+  "recordedAt": "2026-10-26T09:54:12.181Z",
+  "scope": "Standalone audio feature qualification. Native Web Audio graph renders at 44.1/48 kHz; stereo, HRTF and mono measurements. No listening result is inferred from signal measurements.",
+  "browser": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "devicePixelRatio": 1,
+    "hardwareConcurrency": 12
+  },
+  "sampleRates": [
+    44100,
+    48000
+  ],
+  "offline": {
+    "checks": [
+      {
+        "name": "Control mapping warns before sliding",
+        "passed": true,
+        "detail": "Controlled contact kinematics at 0.82 normalized model demand."
+      },
+      {
+        "name": "Control mapping reports a slide beyond the peak",
+        "passed": true,
+        "detail": "Controlled contact kinematics at 1.6 normalized model demand."
+      },
+      {
+        "name": "Stopped and airborne tyres suppress grip cues",
+        "passed": true,
+        "detail": "No cue is inferred from load alone or an airborne wheel."
+      },
+      {
+        "name": "44100/stereo/fl: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02687; finite true"
+      },
+      {
+        "name": "44100/stereo/fl: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.007507/0.001494 RMS"
+      },
+      {
+        "name": "44100/stereo/fl: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004500 RMS"
+      },
+      {
+        "name": "44100/stereo/fr: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02662; finite true"
+      },
+      {
+        "name": "44100/stereo/fr: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.007510/0.001494 RMS"
+      },
+      {
+        "name": "44100/stereo/fr: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004502 RMS"
+      },
+      {
+        "name": "44100/stereo/rl: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02589; finite true"
+      },
+      {
+        "name": "44100/stereo/rl: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.006903/0.001373 RMS"
+      },
+      {
+        "name": "44100/stereo/rl: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004138 RMS"
+      },
+      {
+        "name": "44100/stereo/rr: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02551; finite true"
+      },
+      {
+        "name": "44100/stereo/rr: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.006843/0.001361 RMS"
+      },
+      {
+        "name": "44100/stereo/rr: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004102 RMS"
+      },
+      {
+        "name": "44100/headphones/fl: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02946; finite true"
+      },
+      {
+        "name": "44100/headphones/fl: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.007863/0.002859 RMS"
+      },
+      {
+        "name": "44100/headphones/fl: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004189 RMS"
+      },
+      {
+        "name": "44100/headphones/fr: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02899; finite true"
+      },
+      {
+        "name": "44100/headphones/fr: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.007981/0.002939 RMS"
+      },
+      {
+        "name": "44100/headphones/fr: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004284 RMS"
+      },
+      {
+        "name": "44100/headphones/rl: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02268; finite true"
+      },
+      {
+        "name": "44100/headphones/rl: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.006192/0.002567 RMS"
+      },
+      {
+        "name": "44100/headphones/rl: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.002795 RMS"
+      },
+      {
+        "name": "44100/headphones/rr: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02036; finite true"
+      },
+      {
+        "name": "44100/headphones/rr: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.006056/0.002509 RMS"
+      },
+      {
+        "name": "44100/headphones/rr: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.002754 RMS"
+      },
+      {
+        "name": "44100/mono/fl-axle-tone: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02133; finite true"
+      },
+      {
+        "name": "44100/mono/rl-axle-tone: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01842; finite true"
+      },
+      {
+        "name": "44100: front/rear spectral distinction",
+        "passed": true,
+        "detail": "front/rear energy centroids 2703.4/1683.2 Hz; engine and road muted"
+      },
+      {
+        "name": "44100/mono/four-wheel: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.10215; finite true"
+      },
+      {
+        "name": "44100: mono channels agree",
+        "passed": true,
+        "detail": "left/right 0.027374/0.027374"
+      },
+      {
+        "name": "44100/engine/idle: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01606; finite true"
+      },
+      {
+        "name": "44100/engine/same-rpm-low-load: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01729; finite true"
+      },
+      {
+        "name": "44100/engine/loaded: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.04916; finite true"
+      },
+      {
+        "name": "44100/engine/shift-cut: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02894; finite true"
+      },
+      {
+        "name": "44100/engine/high-rpm: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.04979; finite true"
+      },
+      {
+        "name": "44100/engine/neutral-free-rev: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02789; finite true"
+      },
+      {
+        "name": "44100/engine/overrun: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01754; finite true"
+      },
+      {
+        "name": "44100: idle is audible",
+        "passed": true,
+        "detail": "0.010443 RMS"
+      },
+      {
+        "name": "44100: power increases level",
+        "passed": true,
+        "detail": "loaded/low-load 0.031430/0.010623 at 4000 RPM"
+      },
+      {
+        "name": "44100: shift cuts load texture without silencing the engine",
+        "passed": true,
+        "detail": "shift/loaded 0.018811/0.031430 at identical RPM"
+      },
+      {
+        "name": "44100: pitch rises with RPM",
+        "passed": true,
+        "detail": "dominant bins idle/high 53.8/355.3 Hz"
+      },
+      {
+        "name": "44100: neutral revs remain audible",
+        "passed": true,
+        "detail": "neutral 0.017346 RMS; dominant 301.5 Hz"
+      },
+      {
+        "name": "44100/engine/launch-shift-stop-relaunch: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.05097; finite true"
+      },
+      {
+        "name": "44100: dynamic engine stays audible through first shift, stop and relaunch",
+        "passed": true,
+        "detail": "100 Hz native automation; idle 0.010490 RMS; launch 0.032500 RMS; shift 0.019430 RMS; post-shift 0.032334 RMS; stopped-idle 0.010445 RMS; relaunch 0.032490 RMS"
+      },
+      {
+        "name": "44100: braking returns engine pitch and level to idle",
+        "passed": true,
+        "detail": "initial/stopped 53.8/53.8 Hz; 0.010490/0.010445 RMS"
+      },
+      {
+        "name": "44100/loop-boundaries/headphones/four-wheels: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.09584; finite true"
+      },
+      {
+        "name": "44100/headphones: all noise loops stay finite and audible after repeated wraps",
+        "passed": true,
+        "detail": "7.2-second native render; first-pass 0.023768 RMS; after-first-wrap 0.024059 RMS; after-second-wrap 0.024064 RMS; after-third-wrap 0.023257 RMS"
+      },
+      {
+        "name": "44100/loop-boundaries/stereo/four-wheels: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.09817; finite true"
+      },
+      {
+        "name": "44100/stereo: all noise loops stay finite and audible after repeated wraps",
+        "passed": true,
+        "detail": "7.2-second native render; first-pass 0.025403 RMS; after-first-wrap 0.025281 RMS; after-second-wrap 0.025439 RMS; after-third-wrap 0.025682 RMS"
+      },
+      {
+        "name": "44100/loop-boundaries/mono/four-wheels: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.10270; finite true"
+      },
+      {
+        "name": "44100/mono: all noise loops stay finite and audible after repeated wraps",
+        "passed": true,
+        "detail": "7.2-second native render; first-pass 0.027374 RMS; after-first-wrap 0.027239 RMS; after-second-wrap 0.027421 RMS; after-third-wrap 0.027677 RMS"
+      },
+      {
+        "name": "44100: overrun contributes a distinct rendered layer",
+        "passed": true,
+        "detail": "phase-aligned difference 3.3901e-4 RMS / -29.92 dB relative to coast; design minimum -35 dB and RMS > 1e-5; human audibility unmeasured"
+      },
+      {
+        "name": "44100/lifecycle/interrupted-resume: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.07623; finite true"
+      },
+      {
+        "name": "44100: interrupted resume waits silently for fresh controls",
+        "passed": true,
+        "detail": "270–370 ms gate RMS 0.000e+0; original watchdog would still be open"
+      },
+      {
+        "name": "44100/warning/near-limit: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01441; finite true"
+      },
+      {
+        "name": "44100/warning/full-slip: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.05242; finite true"
+      },
+      {
+        "name": "44100: warning and slip are audible with escalation",
+        "passed": true,
+        "detail": "near-limit/slip 0.002143/0.009332 RMS"
+      },
+      {
+        "name": "44100/maximum/four-wheels-engine-impact: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.19108; finite true"
+      },
+      {
+        "name": "44100: worst-case sum retains digital headroom",
+        "passed": true,
+        "detail": "peak 0.191084"
+      },
+      {
+        "name": "44100/lifecycle/pause: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.07623; finite true"
+      },
+      {
+        "name": "44100: pause reaches silence",
+        "passed": true,
+        "detail": "tail 720–850 ms 0.000e+0 RMS"
+      },
+      {
+        "name": "44100/lifecycle/watchdog: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.07623; finite true"
+      },
+      {
+        "name": "44100: watchdog reaches silence",
+        "passed": true,
+        "detail": "tail 720–850 ms 0.000e+0 RMS"
+      },
+      {
+        "name": "44100/lifecycle/mute: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.00000; finite true"
+      },
+      {
+        "name": "44100: mute reaches silence",
+        "passed": true,
+        "detail": "tail 720–850 ms 0.000e+0 RMS"
+      },
+      {
+        "name": "48000/stereo/fl: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02551; finite true"
+      },
+      {
+        "name": "48000/stereo/fl: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.007295/0.001451 RMS"
+      },
+      {
+        "name": "48000/stereo/fl: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004373 RMS"
+      },
+      {
+        "name": "48000/stereo/fr: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02607; finite true"
+      },
+      {
+        "name": "48000/stereo/fr: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.007477/0.001488 RMS"
+      },
+      {
+        "name": "48000/stereo/fr: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004482 RMS"
+      },
+      {
+        "name": "48000/stereo/rl: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02439; finite true"
+      },
+      {
+        "name": "48000/stereo/rl: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.006553/0.001304 RMS"
+      },
+      {
+        "name": "48000/stereo/rl: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.003929 RMS"
+      },
+      {
+        "name": "48000/stereo/rr: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02479; finite true"
+      },
+      {
+        "name": "48000/stereo/rr: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.006926/0.001378 RMS"
+      },
+      {
+        "name": "48000/stereo/rr: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004152 RMS"
+      },
+      {
+        "name": "48000/headphones/fl: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.03032; finite true"
+      },
+      {
+        "name": "48000/headphones/fl: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.008391/0.003003 RMS"
+      },
+      {
+        "name": "48000/headphones/fl: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004454 RMS"
+      },
+      {
+        "name": "48000/headphones/fr: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.03104; finite true"
+      },
+      {
+        "name": "48000/headphones/fr: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.008601/0.003165 RMS"
+      },
+      {
+        "name": "48000/headphones/fr: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.004631 RMS"
+      },
+      {
+        "name": "48000/headphones/rl: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02288; finite true"
+      },
+      {
+        "name": "48000/headphones/rl: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.006385/0.002594 RMS"
+      },
+      {
+        "name": "48000/headphones/rl: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.002914 RMS"
+      },
+      {
+        "name": "48000/headphones/rr: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02449; finite true"
+      },
+      {
+        "name": "48000/headphones/rr: side dominance",
+        "passed": true,
+        "detail": "intended/opposite 0.006798/0.002695 RMS"
+      },
+      {
+        "name": "48000/headphones/rr: mono fold-down",
+        "passed": true,
+        "detail": "fold-down 0.003051 RMS"
+      },
+      {
+        "name": "48000/mono/fl-axle-tone: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01962; finite true"
+      },
+      {
+        "name": "48000/mono/rl-axle-tone: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01630; finite true"
+      },
+      {
+        "name": "48000: front/rear spectral distinction",
+        "passed": true,
+        "detail": "front/rear energy centroids 2770.6/1669.6 Hz; engine and road muted"
+      },
+      {
+        "name": "48000/mono/four-wheel: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.08823; finite true"
+      },
+      {
+        "name": "48000: mono channels agree",
+        "passed": true,
+        "detail": "left/right 0.026911/0.026911"
+      },
+      {
+        "name": "48000/engine/idle: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01600; finite true"
+      },
+      {
+        "name": "48000/engine/same-rpm-low-load: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01740; finite true"
+      },
+      {
+        "name": "48000/engine/loaded: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.04890; finite true"
+      },
+      {
+        "name": "48000/engine/shift-cut: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02903; finite true"
+      },
+      {
+        "name": "48000/engine/high-rpm: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.05010; finite true"
+      },
+      {
+        "name": "48000/engine/neutral-free-rev: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.02772; finite true"
+      },
+      {
+        "name": "48000/engine/overrun: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01801; finite true"
+      },
+      {
+        "name": "48000: idle is audible",
+        "passed": true,
+        "detail": "0.010447 RMS"
+      },
+      {
+        "name": "48000: power increases level",
+        "passed": true,
+        "detail": "loaded/low-load 0.031440/0.010625 at 4000 RPM"
+      },
+      {
+        "name": "48000: shift cuts load texture without silencing the engine",
+        "passed": true,
+        "detail": "shift/loaded 0.018815/0.031440 at identical RPM"
+      },
+      {
+        "name": "48000: pitch rises with RPM",
+        "passed": true,
+        "detail": "dominant bins idle/high 46.9/351.6 Hz"
+      },
+      {
+        "name": "48000: neutral revs remain audible",
+        "passed": true,
+        "detail": "neutral 0.017360 RMS; dominant 304.7 Hz"
+      },
+      {
+        "name": "48000/engine/launch-shift-stop-relaunch: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.05113; finite true"
+      },
+      {
+        "name": "48000: dynamic engine stays audible through first shift, stop and relaunch",
+        "passed": true,
+        "detail": "100 Hz native automation; idle 0.010493 RMS; launch 0.032506 RMS; shift 0.019440 RMS; post-shift 0.032344 RMS; stopped-idle 0.010444 RMS; relaunch 0.032516 RMS"
+      },
+      {
+        "name": "48000: braking returns engine pitch and level to idle",
+        "passed": true,
+        "detail": "initial/stopped 46.9/46.9 Hz; 0.010493/0.010444 RMS"
+      },
+      {
+        "name": "48000/loop-boundaries/headphones/four-wheels: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.09848; finite true"
+      },
+      {
+        "name": "48000/headphones: all noise loops stay finite and audible after repeated wraps",
+        "passed": true,
+        "detail": "7.2-second native render; first-pass 0.024370 RMS; after-first-wrap 0.024016 RMS; after-second-wrap 0.024287 RMS; after-third-wrap 0.024766 RMS"
+      },
+      {
+        "name": "48000/loop-boundaries/stereo/four-wheels: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.09121; finite true"
+      },
+      {
+        "name": "48000/stereo: all noise loops stay finite and audible after repeated wraps",
+        "passed": true,
+        "detail": "7.2-second native render; first-pass 0.025051 RMS; after-first-wrap 0.025166 RMS; after-second-wrap 0.025304 RMS; after-third-wrap 0.025242 RMS"
+      },
+      {
+        "name": "48000/loop-boundaries/mono/four-wheels: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.09673; finite true"
+      },
+      {
+        "name": "48000/mono: all noise loops stay finite and audible after repeated wraps",
+        "passed": true,
+        "detail": "7.2-second native render; first-pass 0.026911 RMS; after-first-wrap 0.027077 RMS; after-second-wrap 0.027225 RMS; after-third-wrap 0.027180 RMS"
+      },
+      {
+        "name": "48000: overrun contributes a distinct rendered layer",
+        "passed": true,
+        "detail": "phase-aligned difference 3.1658e-4 RMS / -30.52 dB relative to coast; design minimum -35 dB and RMS > 1e-5; human audibility unmeasured"
+      },
+      {
+        "name": "48000/lifecycle/interrupted-resume: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.07849; finite true"
+      },
+      {
+        "name": "48000: interrupted resume waits silently for fresh controls",
+        "passed": true,
+        "detail": "270–370 ms gate RMS 0.000e+0; original watchdog would still be open"
+      },
+      {
+        "name": "48000/warning/near-limit: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.01474; finite true"
+      },
+      {
+        "name": "48000/warning/full-slip: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.05275; finite true"
+      },
+      {
+        "name": "48000: warning and slip are audible with escalation",
+        "passed": true,
+        "detail": "near-limit/slip 0.002253/0.009846 RMS"
+      },
+      {
+        "name": "48000/maximum/four-wheels-engine-impact: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.20904; finite true"
+      },
+      {
+        "name": "48000: worst-case sum retains digital headroom",
+        "passed": true,
+        "detail": "peak 0.209044"
+      },
+      {
+        "name": "48000/lifecycle/pause: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.07849; finite true"
+      },
+      {
+        "name": "48000: pause reaches silence",
+        "passed": true,
+        "detail": "tail 720–850 ms 0.000e+0 RMS"
+      },
+      {
+        "name": "48000/lifecycle/watchdog: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.08387; finite true"
+      },
+      {
+        "name": "48000: watchdog reaches silence",
+        "passed": true,
+        "detail": "tail 720–850 ms 0.000e+0 RMS"
+      },
+      {
+        "name": "48000/lifecycle/mute: finite and bounded",
+        "passed": true,
+        "detail": "peak 0.00000; finite true"
+      },
+      {
+        "name": "48000: mute reaches silence",
+        "passed": true,
+        "detail": "tail 720–850 ms 0.000e+0 RMS"
+      }
+    ],
+    "renders": [
+      {
+        "name": "stereo/fl",
+        "sampleRate": 44100,
+        "output": "stereo",
+        "finite": true,
+        "peak": 0.026866761967539787,
+        "leftRms": 0.007507086606337493,
+        "rightRms": 0.0014935062943495726,
+        "monoRms": 0.004500296445292068,
+        "centroidHz": 2686.917459674265,
+        "dominantHz": 1819.5556640625,
+        "resumeGateRms": 0.004522917544566182,
+        "tailRms": 0.004480961093346777
+      },
+      {
+        "name": "stereo/fr",
+        "sampleRate": 44100,
+        "output": "stereo",
+        "finite": true,
+        "peak": 0.026621418073773384,
+        "leftRms": 0.0014940126596669487,
+        "rightRms": 0.007509647885163304,
+        "monoRms": 0.004501830268883748,
+        "centroidHz": 2610.9155137492403,
+        "dominantHz": 1819.5556640625,
+        "resumeGateRms": 0.004302919524258294,
+        "tailRms": 0.004545698766421572
+      },
+      {
+        "name": "stereo/rl",
+        "sampleRate": 44100,
+        "output": "stereo",
+        "finite": true,
+        "peak": 0.025886811316013336,
+        "leftRms": 0.006902574396578594,
+        "rightRms": 0.0013732040742066723,
+        "monoRms": 0.004137889235140957,
+        "centroidHz": 1799.784453971357,
+        "dominantHz": 1044.3603515625,
+        "resumeGateRms": 0.004024707696804603,
+        "tailRms": 0.00415201730142886
+      },
+      {
+        "name": "stereo/rr",
+        "sampleRate": 44100,
+        "output": "stereo",
+        "finite": true,
+        "peak": 0.02551400475203991,
+        "leftRms": 0.0013614251918996627,
+        "rightRms": 0.006843374949238278,
+        "monoRms": 0.004102400069159462,
+        "centroidHz": 1907.99434518424,
+        "dominantHz": 1044.3603515625,
+        "resumeGateRms": 0.004015965812695637,
+        "tailRms": 0.004065129548987747
+      },
+      {
+        "name": "headphones/fl",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.02946220152080059,
+        "leftRms": 0.007862668454943343,
+        "rightRms": 0.002858611961072209,
+        "monoRms": 0.004188554398740527,
+        "centroidHz": 2631.748912147375,
+        "dominantHz": 1819.5556640625,
+        "resumeGateRms": 0.004246924308086557,
+        "tailRms": 0.004279711796480118
+      },
+      {
+        "name": "headphones/fr",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.028990840539336205,
+        "leftRms": 0.0029392415814557776,
+        "rightRms": 0.00798114957878833,
+        "monoRms": 0.004283629645831653,
+        "centroidHz": 2493.192996225547,
+        "dominantHz": 1819.5556640625,
+        "resumeGateRms": 0.004137093866647612,
+        "tailRms": 0.004348304599938888
+      },
+      {
+        "name": "headphones/rl",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.022676855325698853,
+        "leftRms": 0.0061916607195401175,
+        "rightRms": 0.0025666007175455595,
+        "monoRms": 0.0027954837115909065,
+        "centroidHz": 1322.5485431649558,
+        "dominantHz": 1044.3603515625,
+        "resumeGateRms": 0.0026746263345202304,
+        "tailRms": 0.0028477228237786404
+      },
+      {
+        "name": "headphones/rr",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.020359832793474197,
+        "leftRms": 0.0025094919245144034,
+        "rightRms": 0.006055689310797458,
+        "monoRms": 0.0027540933074697575,
+        "centroidHz": 1365.9986838883071,
+        "dominantHz": 1044.3603515625,
+        "resumeGateRms": 0.0026809741331690435,
+        "tailRms": 0.002762486631189322
+      },
+      {
+        "name": "mono/fl-axle-tone",
+        "sampleRate": 44100,
+        "output": "mono",
+        "finite": true,
+        "peak": 0.021332476288080215,
+        "leftRms": 0.005434115913617982,
+        "rightRms": 0.005434115913617982,
+        "monoRms": 0.005434115913617982,
+        "centroidHz": 2703.4306280028295,
+        "dominantHz": 1927.2216796875,
+        "resumeGateRms": 0.005452363695127872,
+        "tailRms": 0.005522905737063125
+      },
+      {
+        "name": "mono/rl-axle-tone",
+        "sampleRate": 44100,
+        "output": "mono",
+        "finite": true,
+        "peak": 0.01842452958226204,
+        "leftRms": 0.004959617894469032,
+        "rightRms": 0.004959617894469032,
+        "monoRms": 0.004959617894469032,
+        "centroidHz": 1683.1522754955358,
+        "dominantHz": 968.994140625,
+        "resumeGateRms": 0.004925093681402921,
+        "tailRms": 0.005054245558643943
+      },
+      {
+        "name": "mono/four-wheel",
+        "sampleRate": 44100,
+        "output": "mono",
+        "finite": true,
+        "peak": 0.10215379297733307,
+        "leftRms": 0.02737421082301048,
+        "rightRms": 0.02737421082301048,
+        "monoRms": 0.02737421082301048,
+        "centroidHz": 1100.2923056403054,
+        "dominantHz": 215.33203125,
+        "resumeGateRms": 0.027849303971241447,
+        "tailRms": 0.02728169844441605
+      },
+      {
+        "name": "engine/idle",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.016056546941399574,
+        "leftRms": 0.010443476405283455,
+        "rightRms": 0.010443476405283455,
+        "monoRms": 0.010443476405283455,
+        "centroidHz": 63.970589497164354,
+        "dominantHz": 53.8330078125,
+        "resumeGateRms": 0.01044322231146027,
+        "tailRms": 0.010534223479262327
+      },
+      {
+        "name": "engine/same-rpm-low-load",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.017293959856033325,
+        "leftRms": 0.010623498536857613,
+        "rightRms": 0.010623498536857613,
+        "monoRms": 0.010623498536857613,
+        "centroidHz": 245.7693682977733,
+        "dominantHz": 204.5654296875,
+        "resumeGateRms": 0.010621188143526271,
+        "tailRms": 0.01062407363773669
+      },
+      {
+        "name": "engine/loaded",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.04915609583258629,
+        "leftRms": 0.03142964399349818,
+        "rightRms": 0.03142964399349818,
+        "monoRms": 0.03142964399349818,
+        "centroidHz": 302.17312594576526,
+        "dominantHz": 204.5654296875,
+        "resumeGateRms": 0.031262280165608676,
+        "tailRms": 0.031506382072304585
+      },
+      {
+        "name": "engine/shift-cut",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.028938354924321175,
+        "leftRms": 0.018810589855367044,
+        "rightRms": 0.018810589855367044,
+        "monoRms": 0.018810589855367044,
+        "centroidHz": 255.6782089822973,
+        "dominantHz": 204.5654296875,
+        "resumeGateRms": 0.01880793194807169,
+        "tailRms": 0.01881274414643482
+      },
+      {
+        "name": "engine/high-rpm",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.04979028180241585,
+        "leftRms": 0.03142713217614889,
+        "rightRms": 0.03142713217614889,
+        "monoRms": 0.03142713217614889,
+        "centroidHz": 510.3223853177761,
+        "dominantHz": 355.2978515625,
+        "resumeGateRms": 0.031267205329180654,
+        "tailRms": 0.03152071316711534
+      },
+      {
+        "name": "engine/neutral-free-rev",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.02788659557700157,
+        "leftRms": 0.017346315795438858,
+        "rightRms": 0.017346315795438858,
+        "monoRms": 0.017346315795438858,
+        "centroidHz": 394.0875418273274,
+        "dominantHz": 301.46484375,
+        "resumeGateRms": 0.017311435669988266,
+        "tailRms": 0.01736785838520537
+      },
+      {
+        "name": "engine/overrun",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.017537197098135948,
+        "leftRms": 0.010623483435892771,
+        "rightRms": 0.010623483435892771,
+        "monoRms": 0.010623483435892771,
+        "centroidHz": 248.7095016384073,
+        "dominantHz": 204.5654296875,
+        "resumeGateRms": 0.010598047891129284,
+        "tailRms": 0.010621632560700154,
+        "comparison": {
+          "baseline": "engine/same-rpm-low-load",
+          "differenceRms": 0.00033901275918768833,
+          "differenceRelativeDb": -29.921030373348863,
+          "minimumRelativeDb": -35,
+          "windowSeconds": [
+            0.3,
+            0.6
+          ]
+        }
+      },
+      {
+        "name": "engine/launch-shift-stop-relaunch",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.050965599715709686,
+        "leftRms": 0.015360487969761407,
+        "rightRms": 0.015360487969761407,
+        "monoRms": 0.015360487969761407,
+        "centroidHz": 63.97113775532416,
+        "dominantHz": 53.8330078125,
+        "resumeGateRms": 0.010443221159826776,
+        "tailRms": 0.025928322302148983,
+        "transitionWindows": [
+          {
+            "name": "idle",
+            "start": 0.2,
+            "end": 0.45,
+            "rms": 0.010490364783048954,
+            "dominantHz": 53.8330078125
+          },
+          {
+            "name": "launch",
+            "start": 1.1,
+            "end": 1.4,
+            "rms": 0.03250009126408333,
+            "dominantHz": 258.3984375
+          },
+          {
+            "name": "shift",
+            "start": 1.54,
+            "end": 1.69,
+            "rms": 0.019429850469435902,
+            "dominantHz": 301.46484375
+          },
+          {
+            "name": "post-shift",
+            "start": 1.9,
+            "end": 2.4,
+            "rms": 0.03233448893528236,
+            "dominantHz": 204.5654296875
+          },
+          {
+            "name": "stopped-idle",
+            "start": 3.8,
+            "end": 4.1,
+            "rms": 0.010445020716409344,
+            "dominantHz": 53.8330078125
+          },
+          {
+            "name": "relaunch",
+            "start": 4.8,
+            "end": 5.2,
+            "rms": 0.032489584715056447,
+            "dominantHz": 236.865234375
+          }
+        ]
+      },
+      {
+        "name": "loop-boundaries/headphones/four-wheels",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.0958385095000267,
+        "leftRms": 0.02568914278212891,
+        "rightRms": 0.02591238626771642,
+        "monoRms": 0.023768200619811268,
+        "centroidHz": 854.6187084545478,
+        "dominantHz": 204.5654296875,
+        "resumeGateRms": 0.023192410436796145,
+        "tailRms": 0.02385315965784885,
+        "transitionWindows": [
+          {
+            "name": "first-pass",
+            "start": 0.3,
+            "end": 0.6,
+            "rms": 0.023768200619811268,
+            "dominantHz": 215.33203125
+          },
+          {
+            "name": "after-first-wrap",
+            "start": 2.6,
+            "end": 2.9,
+            "rms": 0.024058741472276792,
+            "dominantHz": 204.5654296875
+          },
+          {
+            "name": "after-second-wrap",
+            "start": 4.8,
+            "end": 5.1,
+            "rms": 0.02406399182354864,
+            "dominantHz": 204.5654296875
+          },
+          {
+            "name": "after-third-wrap",
+            "start": 6.8,
+            "end": 7.1,
+            "rms": 0.02325749703060997,
+            "dominantHz": 215.33203125
+          }
+        ]
+      },
+      {
+        "name": "loop-boundaries/stereo/four-wheels",
+        "sampleRate": 44100,
+        "output": "stereo",
+        "finite": true,
+        "peak": 0.09817413985729218,
+        "leftRms": 0.02630884418586514,
+        "rightRms": 0.026684901430385374,
+        "monoRms": 0.025403160158679494,
+        "centroidHz": 939.7969854208295,
+        "dominantHz": 215.33203125,
+        "resumeGateRms": 0.025830410382078308,
+        "tailRms": 0.025455209198781296,
+        "transitionWindows": [
+          {
+            "name": "first-pass",
+            "start": 0.3,
+            "end": 0.6,
+            "rms": 0.025403160158679494,
+            "dominantHz": 204.5654296875
+          },
+          {
+            "name": "after-first-wrap",
+            "start": 2.6,
+            "end": 2.9,
+            "rms": 0.025280608800527092,
+            "dominantHz": 215.33203125
+          },
+          {
+            "name": "after-second-wrap",
+            "start": 4.8,
+            "end": 5.1,
+            "rms": 0.025438570749671024,
+            "dominantHz": 215.33203125
+          },
+          {
+            "name": "after-third-wrap",
+            "start": 6.8,
+            "end": 7.1,
+            "rms": 0.025681733205088247,
+            "dominantHz": 215.33203125
+          }
+        ]
+      },
+      {
+        "name": "loop-boundaries/mono/four-wheels",
+        "sampleRate": 44100,
+        "output": "mono",
+        "finite": true,
+        "peak": 0.10269554704427719,
+        "leftRms": 0.0273742108994583,
+        "rightRms": 0.0273742108994583,
+        "monoRms": 0.0273742108994583,
+        "centroidHz": 1100.2923247342262,
+        "dominantHz": 215.33203125,
+        "resumeGateRms": 0.027849303966943843,
+        "tailRms": 0.027434041185950005,
+        "transitionWindows": [
+          {
+            "name": "first-pass",
+            "start": 0.3,
+            "end": 0.6,
+            "rms": 0.0273742108994583,
+            "dominantHz": 204.5654296875
+          },
+          {
+            "name": "after-first-wrap",
+            "start": 2.6,
+            "end": 2.9,
+            "rms": 0.02723875311600442,
+            "dominantHz": 215.33203125
+          },
+          {
+            "name": "after-second-wrap",
+            "start": 4.8,
+            "end": 5.1,
+            "rms": 0.02742146660923758,
+            "dominantHz": 215.33203125
+          },
+          {
+            "name": "after-third-wrap",
+            "start": 6.8,
+            "end": 7.1,
+            "rms": 0.027676647634969,
+            "dominantHz": 215.33203125
+          }
+        ]
+      },
+      {
+        "name": "lifecycle/interrupted-resume",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.07622842490673065,
+        "leftRms": 0,
+        "rightRms": 0,
+        "monoRms": 0,
+        "centroidHz": 0,
+        "dominantHz": 0,
+        "resumeGateRms": 0,
+        "tailRms": 0
+      },
+      {
+        "name": "warning/near-limit",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.01440561842173338,
+        "leftRms": 0.0030724629635144962,
+        "rightRms": 0.003160859798753336,
+        "monoRms": 0.0021426586329493444,
+        "centroidHz": 2487.03407166999,
+        "dominantHz": 215.33203125,
+        "resumeGateRms": 0.002147955550508877,
+        "tailRms": 0.0022226198291775854
+      },
+      {
+        "name": "warning/full-slip",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.052420150488615036,
+        "leftRms": 0.012277033296468481,
+        "rightRms": 0.012404742096659788,
+        "monoRms": 0.009331809402093896,
+        "centroidHz": 2182.3366678251223,
+        "dominantHz": 1819.5556640625,
+        "resumeGateRms": 0.009388856265721748,
+        "tailRms": 0.009574331305630054
+      },
+      {
+        "name": "maximum/four-wheels-engine-impact",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.19108383357524872,
+        "leftRms": 0.06272553406842148,
+        "rightRms": 0.06301372920864261,
+        "monoRms": 0.06061331085703269,
+        "centroidHz": 1136.9932029556414,
+        "dominantHz": 721.3623046875,
+        "resumeGateRms": 0.061312720865845556,
+        "tailRms": 0.061416636886361044
+      },
+      {
+        "name": "lifecycle/pause",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.07622842490673065,
+        "leftRms": 0.000004545795538356668,
+        "rightRms": 0.000004545795538356668,
+        "monoRms": 0.000004545795538356668,
+        "centroidHz": 0,
+        "dominantHz": 0,
+        "resumeGateRms": 0.00035865212157373713,
+        "tailRms": 0
+      },
+      {
+        "name": "lifecycle/watchdog",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.07623166590929031,
+        "leftRms": 0.009448402699121115,
+        "rightRms": 0.0096441127732132,
+        "monoRms": 0.008789386763267373,
+        "centroidHz": 871.457449180715,
+        "dominantHz": 204.5654296875,
+        "resumeGateRms": 0.019909421953846054,
+        "tailRms": 0
+      },
+      {
+        "name": "lifecycle/mute",
+        "sampleRate": 44100,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0,
+        "leftRms": 0,
+        "rightRms": 0,
+        "monoRms": 0,
+        "centroidHz": 0,
+        "dominantHz": 0,
+        "resumeGateRms": 0,
+        "tailRms": 0
+      },
+      {
+        "name": "stereo/fl",
+        "sampleRate": 48000,
+        "output": "stereo",
+        "finite": true,
+        "peak": 0.025512753054499626,
+        "leftRms": 0.007294604873950313,
+        "rightRms": 0.0014512241562885685,
+        "monoRms": 0.004372914510351775,
+        "centroidHz": 2632.9314444839565,
+        "dominantHz": 1816.40625,
+        "resumeGateRms": 0.004341521955190466,
+        "tailRms": 0.004445064973471633
+      },
+      {
+        "name": "stereo/fr",
+        "sampleRate": 48000,
+        "output": "stereo",
+        "finite": true,
+        "peak": 0.026067867875099182,
+        "leftRms": 0.00148753634786003,
+        "rightRms": 0.007477130796355933,
+        "monoRms": 0.00448233357121453,
+        "centroidHz": 2660.3280812834137,
+        "dominantHz": 1816.40625,
+        "resumeGateRms": 0.004408633315249741,
+        "tailRms": 0.004441043775960265
+      },
+      {
+        "name": "stereo/rl",
+        "sampleRate": 48000,
+        "output": "stereo",
+        "finite": true,
+        "peak": 0.02439042739570141,
+        "leftRms": 0.006553461253153206,
+        "rightRms": 0.0013037344036631756,
+        "monoRms": 0.003928597824306897,
+        "centroidHz": 1837.8182699814372,
+        "dominantHz": 1042.96875,
+        "resumeGateRms": 0.0038591774709699203,
+        "tailRms": 0.004044908134298176
+      },
+      {
+        "name": "stereo/rr",
+        "sampleRate": 48000,
+        "output": "stereo",
+        "finite": true,
+        "peak": 0.02479078434407711,
+        "leftRms": 0.0013779080707907807,
+        "rightRms": 0.006926224073978452,
+        "monoRms": 0.004152066070768868,
+        "centroidHz": 1814.1424051952217,
+        "dominantHz": 1042.96875,
+        "resumeGateRms": 0.0041275941940373635,
+        "tailRms": 0.003980136016250062
+      },
+      {
+        "name": "headphones/fl",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.03032158687710762,
+        "leftRms": 0.008390573035199942,
+        "rightRms": 0.0030026406318643256,
+        "monoRms": 0.004453635359159629,
+        "centroidHz": 2636.5160389347225,
+        "dominantHz": 1816.40625,
+        "resumeGateRms": 0.004435326222241739,
+        "tailRms": 0.004573068390670396
+      },
+      {
+        "name": "headphones/fr",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.03104395791888237,
+        "leftRms": 0.003164645490207024,
+        "rightRms": 0.008601296183446936,
+        "monoRms": 0.0046307418375730325,
+        "centroidHz": 2532.2081077295657,
+        "dominantHz": 1816.40625,
+        "resumeGateRms": 0.0045956513253264724,
+        "tailRms": 0.0046322592475642995
+      },
+      {
+        "name": "headphones/rl",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.02288025990128517,
+        "leftRms": 0.00638524091078281,
+        "rightRms": 0.002593961497511219,
+        "monoRms": 0.0029139963031099467,
+        "centroidHz": 1283.7779311422037,
+        "dominantHz": 1042.96875,
+        "resumeGateRms": 0.002828377278002381,
+        "tailRms": 0.0029203155590127225
+      },
+      {
+        "name": "headphones/rr",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.024493234232068062,
+        "leftRms": 0.0026952286523174674,
+        "rightRms": 0.006797994881422855,
+        "monoRms": 0.003051314226734975,
+        "centroidHz": 1344.5736139701735,
+        "dominantHz": 1042.96875,
+        "resumeGateRms": 0.0030384943926953906,
+        "tailRms": 0.0029290640395768885
+      },
+      {
+        "name": "mono/fl-axle-tone",
+        "sampleRate": 48000,
+        "output": "mono",
+        "finite": true,
+        "peak": 0.01961827278137207,
+        "leftRms": 0.005303515105892481,
+        "rightRms": 0.005303515105892481,
+        "monoRms": 0.005303515105892481,
+        "centroidHz": 2770.6013510366897,
+        "dominantHz": 1933.59375,
+        "resumeGateRms": 0.005414593698894079,
+        "tailRms": 0.005282760028538465
+      },
+      {
+        "name": "mono/rl-axle-tone",
+        "sampleRate": 48000,
+        "output": "mono",
+        "finite": true,
+        "peak": 0.01629778742790222,
+        "leftRms": 0.0048443897410540395,
+        "rightRms": 0.0048443897410540395,
+        "monoRms": 0.0048443897410540395,
+        "centroidHz": 1669.5602023508034,
+        "dominantHz": 960.9375,
+        "resumeGateRms": 0.004729293786240441,
+        "tailRms": 0.00469035880767069
+      },
+      {
+        "name": "mono/four-wheel",
+        "sampleRate": 48000,
+        "output": "mono",
+        "finite": true,
+        "peak": 0.0882347971200943,
+        "leftRms": 0.026910600951360407,
+        "rightRms": 0.026910600951360407,
+        "monoRms": 0.026910600951360407,
+        "centroidHz": 1091.2289069494834,
+        "dominantHz": 210.9375,
+        "resumeGateRms": 0.027232669261946674,
+        "tailRms": 0.02675293048094958
+      },
+      {
+        "name": "engine/idle",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.016004303470253944,
+        "leftRms": 0.01044667873165954,
+        "rightRms": 0.01044667873165954,
+        "monoRms": 0.01044667873165954,
+        "centroidHz": 63.9855873293973,
+        "dominantHz": 46.875,
+        "resumeGateRms": 0.010448575946057873,
+        "tailRms": 0.01053225083435856
+      },
+      {
+        "name": "engine/same-rpm-low-load",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.017402321100234985,
+        "leftRms": 0.010625478689068726,
+        "rightRms": 0.010625478689068726,
+        "monoRms": 0.010625478689068726,
+        "centroidHz": 245.9910788705252,
+        "dominantHz": 199.21875,
+        "resumeGateRms": 0.010618728978961751,
+        "tailRms": 0.010622448307834008
+      },
+      {
+        "name": "engine/loaded",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.04889892041683197,
+        "leftRms": 0.03143996472666643,
+        "rightRms": 0.03143996472666643,
+        "monoRms": 0.03143996472666643,
+        "centroidHz": 304.3411106396223,
+        "dominantHz": 199.21875,
+        "resumeGateRms": 0.03124572102802062,
+        "tailRms": 0.03149059868926608
+      },
+      {
+        "name": "engine/shift-cut",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.029029473662376404,
+        "leftRms": 0.018815279298007786,
+        "rightRms": 0.018815279298007786,
+        "monoRms": 0.018815279298007786,
+        "centroidHz": 256.494690266365,
+        "dominantHz": 199.21875,
+        "resumeGateRms": 0.01880238253656633,
+        "tailRms": 0.01880833445907974
+      },
+      {
+        "name": "engine/high-rpm",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.050098005682229996,
+        "leftRms": 0.03141006798047609,
+        "rightRms": 0.03141006798047609,
+        "monoRms": 0.03141006798047609,
+        "centroidHz": 513.4217951022032,
+        "dominantHz": 351.5625,
+        "resumeGateRms": 0.031253073240844496,
+        "tailRms": 0.03152163841830706
+      },
+      {
+        "name": "engine/neutral-free-rev",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.027722254395484924,
+        "leftRms": 0.017360246652414695,
+        "rightRms": 0.017360246652414695,
+        "monoRms": 0.017360246652414695,
+        "centroidHz": 395.5048738519657,
+        "dominantHz": 304.6875,
+        "resumeGateRms": 0.017328247778954028,
+        "tailRms": 0.017392903890186176
+      },
+      {
+        "name": "engine/overrun",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.018010424450039864,
+        "leftRms": 0.010635631569498748,
+        "rightRms": 0.010635631569498748,
+        "monoRms": 0.010635631569498748,
+        "centroidHz": 250.31389541747075,
+        "dominantHz": 199.21875,
+        "resumeGateRms": 0.01057352129979942,
+        "tailRms": 0.010610347722777821,
+        "comparison": {
+          "baseline": "engine/same-rpm-low-load",
+          "differenceRms": 0.00031658488107426337,
+          "differenceRelativeDb": -30.51716667739673,
+          "minimumRelativeDb": -35,
+          "windowSeconds": [
+            0.3,
+            0.6
+          ]
+        }
+      },
+      {
+        "name": "engine/launch-shift-stop-relaunch",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.05113214626908302,
+        "leftRms": 0.015369533035174021,
+        "rightRms": 0.015369533035174021,
+        "monoRms": 0.015369533035174021,
+        "centroidHz": 63.98639145374837,
+        "dominantHz": 46.875,
+        "resumeGateRms": 0.01044857766042236,
+        "tailRms": 0.025926729930584914,
+        "transitionWindows": [
+          {
+            "name": "idle",
+            "start": 0.2,
+            "end": 0.45,
+            "rms": 0.010493049114802602,
+            "dominantHz": 46.875
+          },
+          {
+            "name": "launch",
+            "start": 1.1,
+            "end": 1.4,
+            "rms": 0.03250569080204281,
+            "dominantHz": 257.8125
+          },
+          {
+            "name": "shift",
+            "start": 1.54,
+            "end": 1.69,
+            "rms": 0.019440493171055156,
+            "dominantHz": 304.6875
+          },
+          {
+            "name": "post-shift",
+            "start": 1.9,
+            "end": 2.4,
+            "rms": 0.032344352317705286,
+            "dominantHz": 199.21875
+          },
+          {
+            "name": "stopped-idle",
+            "start": 3.8,
+            "end": 4.1,
+            "rms": 0.010443536816322995,
+            "dominantHz": 46.875
+          },
+          {
+            "name": "relaunch",
+            "start": 4.8,
+            "end": 5.2,
+            "rms": 0.032516128761035365,
+            "dominantHz": 234.375
+          }
+        ]
+      },
+      {
+        "name": "loop-boundaries/headphones/four-wheels",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.09847988188266754,
+        "leftRms": 0.02666961950545007,
+        "rightRms": 0.026437328043849028,
+        "monoRms": 0.02436989400640683,
+        "centroidHz": 813.4494693623153,
+        "dominantHz": 210.9375,
+        "resumeGateRms": 0.024056467185254417,
+        "tailRms": 0.024280348952991172,
+        "transitionWindows": [
+          {
+            "name": "first-pass",
+            "start": 0.3,
+            "end": 0.6,
+            "rms": 0.02436989400640683,
+            "dominantHz": 210.9375
+          },
+          {
+            "name": "after-first-wrap",
+            "start": 2.6,
+            "end": 2.9,
+            "rms": 0.02401594988009039,
+            "dominantHz": 210.9375
+          },
+          {
+            "name": "after-second-wrap",
+            "start": 4.8,
+            "end": 5.1,
+            "rms": 0.024287203656101097,
+            "dominantHz": 210.9375
+          },
+          {
+            "name": "after-third-wrap",
+            "start": 6.8,
+            "end": 7.1,
+            "rms": 0.02476630897455362,
+            "dominantHz": 210.9375
+          }
+        ]
+      },
+      {
+        "name": "loop-boundaries/stereo/four-wheels",
+        "sampleRate": 48000,
+        "output": "stereo",
+        "finite": true,
+        "peak": 0.09120751917362213,
+        "leftRms": 0.026036775278193525,
+        "rightRms": 0.02612431355845912,
+        "monoRms": 0.025050872754229778,
+        "centroidHz": 931.3702521600063,
+        "dominantHz": 210.9375,
+        "resumeGateRms": 0.02536954648223862,
+        "tailRms": 0.02523426273222576,
+        "transitionWindows": [
+          {
+            "name": "first-pass",
+            "start": 0.3,
+            "end": 0.6,
+            "rms": 0.025050872754229778,
+            "dominantHz": 210.9375
+          },
+          {
+            "name": "after-first-wrap",
+            "start": 2.6,
+            "end": 2.9,
+            "rms": 0.025166261703063315,
+            "dominantHz": 210.9375
+          },
+          {
+            "name": "after-second-wrap",
+            "start": 4.8,
+            "end": 5.1,
+            "rms": 0.025303864412336723,
+            "dominantHz": 210.9375
+          },
+          {
+            "name": "after-third-wrap",
+            "start": 6.8,
+            "end": 7.1,
+            "rms": 0.025241940553560372,
+            "dominantHz": 210.9375
+          }
+        ]
+      },
+      {
+        "name": "loop-boundaries/mono/four-wheels",
+        "sampleRate": 48000,
+        "output": "mono",
+        "finite": true,
+        "peak": 0.09672956168651581,
+        "leftRms": 0.02691060106972706,
+        "rightRms": 0.02691060106972706,
+        "monoRms": 0.02691060106972706,
+        "centroidHz": 1091.2288894855,
+        "dominantHz": 210.9375,
+        "resumeGateRms": 0.02723266924583204,
+        "tailRms": 0.027141499155731264,
+        "transitionWindows": [
+          {
+            "name": "first-pass",
+            "start": 0.3,
+            "end": 0.6,
+            "rms": 0.02691060106972706,
+            "dominantHz": 210.9375
+          },
+          {
+            "name": "after-first-wrap",
+            "start": 2.6,
+            "end": 2.9,
+            "rms": 0.02707713256003509,
+            "dominantHz": 210.9375
+          },
+          {
+            "name": "after-second-wrap",
+            "start": 4.8,
+            "end": 5.1,
+            "rms": 0.02722492428935113,
+            "dominantHz": 210.9375
+          },
+          {
+            "name": "after-third-wrap",
+            "start": 6.8,
+            "end": 7.1,
+            "rms": 0.0271795097280342,
+            "dominantHz": 210.9375
+          }
+        ]
+      },
+      {
+        "name": "lifecycle/interrupted-resume",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.07849299907684326,
+        "leftRms": 0,
+        "rightRms": 0,
+        "monoRms": 0,
+        "centroidHz": 0,
+        "dominantHz": 0,
+        "resumeGateRms": 0,
+        "tailRms": 0
+      },
+      {
+        "name": "warning/near-limit",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.014737684279680252,
+        "leftRms": 0.0032425552381885876,
+        "rightRms": 0.003310762158864555,
+        "monoRms": 0.002252661829126126,
+        "centroidHz": 2387.3989935087798,
+        "dominantHz": 328.125,
+        "resumeGateRms": 0.0022711641272723025,
+        "tailRms": 0.0023138981566953065
+      },
+      {
+        "name": "warning/full-slip",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.052753958851099014,
+        "leftRms": 0.013035333945787573,
+        "rightRms": 0.012958717860672438,
+        "monoRms": 0.009845525494819207,
+        "centroidHz": 2087.225297897428,
+        "dominantHz": 1816.40625,
+        "resumeGateRms": 0.009841934726625987,
+        "tailRms": 0.010162890885591348
+      },
+      {
+        "name": "maximum/four-wheels-engine-impact",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.20904390513896942,
+        "leftRms": 0.06299176105792596,
+        "rightRms": 0.06308984402959893,
+        "monoRms": 0.060554062569871725,
+        "centroidHz": 1148.6572965579257,
+        "dominantHz": 726.5625,
+        "resumeGateRms": 0.06038015547135112,
+        "tailRms": 0.06075657106020433
+      },
+      {
+        "name": "lifecycle/pause",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.07849299907684326,
+        "leftRms": 0.0000045366357275111,
+        "rightRms": 0.0000045366357275111,
+        "monoRms": 0.0000045366357275111,
+        "centroidHz": 0,
+        "dominantHz": 0,
+        "resumeGateRms": 0.00035697063496960074,
+        "tailRms": 0
+      },
+      {
+        "name": "lifecycle/watchdog",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0.08387209475040436,
+        "leftRms": 0.010028835803340639,
+        "rightRms": 0.010134103961440336,
+        "monoRms": 0.009296150242015725,
+        "centroidHz": 848.5935242517179,
+        "dominantHz": 210.9375,
+        "resumeGateRms": 0.020751772522012452,
+        "tailRms": 0
+      },
+      {
+        "name": "lifecycle/mute",
+        "sampleRate": 48000,
+        "output": "headphones",
+        "finite": true,
+        "peak": 0,
+        "leftRms": 0,
+        "rightRms": 0,
+        "monoRms": 0,
+        "centroidHz": 0,
+        "dominantHz": 0,
+        "resumeGateRms": 0,
+        "tailRms": 0
+      }
+    ],
+    "passed": 131,
+    "failed": 0
+  },
+  "controls": {
+    "low": [
+      {
+        "id": "fl",
+        "warning": 0,
+        "slip": 0,
+        "demand": 0.2
+      },
+      {
+        "id": "fr",
+        "warning": 0,
+        "slip": 0,
+        "demand": 0.2
+      },
+      {
+        "id": "rl",
+        "warning": 0,
+        "slip": 0,
+        "demand": 0.2
+      },
+      {
+        "id": "rr",
+        "warning": 0,
+        "slip": 0,
+        "demand": 0.2
+      }
+    ],
+    "warning": [
+      {
+        "id": "fl",
+        "warning": 0.5994074074074072,
+        "slip": 0,
+        "demand": 0.82
+      },
+      {
+        "id": "fr",
+        "warning": 0.5994074074074072,
+        "slip": 0,
+        "demand": 0.82
+      },
+      {
+        "id": "rl",
+        "warning": 0.5994074074074072,
+        "slip": 0,
+        "demand": 0.82
+      },
+      {
+        "id": "rr",
+        "warning": 0.5994074074074072,
+        "slip": 0,
+        "demand": 0.82
+      }
+    ],
+    "sliding": [
+      {
+        "id": "fl",
+        "warning": 1,
+        "slip": 0.683845536596224,
+        "demand": 1.6
+      },
+      {
+        "id": "fr",
+        "warning": 1,
+        "slip": 0.683845536596224,
+        "demand": 1.6
+      },
+      {
+        "id": "rl",
+        "warning": 1,
+        "slip": 0.683845536596224,
+        "demand": 1.6
+      },
+      {
+        "id": "rr",
+        "warning": 1,
+        "slip": 0.683845536596224,
+        "demand": 1.6
+      }
+    ],
+    "stopped": [
+      {
+        "id": "fl",
+        "warning": 0,
+        "slip": 0,
+        "demand": 2
+      },
+      {
+        "id": "fr",
+        "warning": 0,
+        "slip": 0,
+        "demand": 2
+      },
+      {
+        "id": "rl",
+        "warning": 0,
+        "slip": 0,
+        "demand": 2
+      },
+      {
+        "id": "rr",
+        "warning": 0,
+        "slip": 0,
+        "demand": 2
+      }
+    ],
+    "airborne": [
+      {
+        "id": "fl",
+        "warning": 0,
+        "slip": 0,
+        "demand": 0
+      },
+      {
+        "id": "fr",
+        "warning": 0,
+        "slip": 0,
+        "demand": 0
+      },
+      {
+        "id": "rl",
+        "warning": 0,
+        "slip": 0,
+        "demand": 0
+      },
+      {
+        "id": "rr",
+        "warning": 0,
+        "slip": 0,
+        "demand": 0
+      }
+    ]
+  },
+  "stress": null,
+  "runtimeSmoke": null,
+  "humanListening": "not performed",
+  "listening": null,
+  "endToEndLatency": null,
+  "limitations": [
+    "Digital sample peaks are not acoustic levels or true-peak measurements.",
+    "HRTF channel balance and axle spectral differences do not establish human front/rear recognition.",
+    "Browser base/output latency is a device estimate. Acoustic end-to-end latency has not been measured.",
+    "A browser analyser can find invalid samples and sustained silence; it cannot prove an absence of output-device underruns."
+  ]
+}

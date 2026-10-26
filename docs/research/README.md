@@ -13,7 +13,9 @@ them merely because a newer milestone or release exists.
 
 - [Circuit research](circuit-design.md)
 - [Synthesized driving audio research and implementation plan](audio-system.md)
-  and [separate implementation qualification](audio-qualification.json)
+  with [native audio qualification](audio-qualification.json) and
+  [actual-app driving qualification](audio-driving-qualification.json), plus
+  [the loop-fix native regression export](audio-loop-regression.json)
 - [M4 portfolio](m4-v2-portfolio.html) and [qualification](m4-v2-qualification.json)
 - [M5 construction qualification](m5-qualification.json) and
   [browser measurements](m5-browser-budget.json)

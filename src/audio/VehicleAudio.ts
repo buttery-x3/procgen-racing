@@ -238,6 +238,14 @@ export class VehicleAudio {
       outputLatencySeconds: this.context && "outputLatency" in this.context ? this.context.outputLatency : null,
     };
   }
+  /** Opt-in native PCM observation for the driving diagnostic; never used by normal play. */
+  signalDiagnostics() {
+    try {
+      return { ...this.diagnostics(), settings: { ...this.settings }, signal: this.graph?.sampleSignals() ?? null, meterError: null as string | null };
+    } catch (error) {
+      return { ...this.diagnostics(), settings: { ...this.settings }, signal: null, meterError: error instanceof Error ? error.message : String(error) };
+    }
+  }
   dispose() {
     if (this.disposed) return;
     this.disposed = true;

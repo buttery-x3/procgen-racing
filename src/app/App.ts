@@ -77,9 +77,12 @@ export class App {
         telemetry: VehicleTelemetry,
         setup: VehicleSetup,
         circuit: CompiledCircuit,
-      ) => VehicleControls;
+      ) => VehicleControls | undefined;
       onLap?: (lap: CompletedLap) => void;
       storage?: SoloStorage;
+      /** Dedicated diagnostic pages may select a repeatable setup and existing test pad. */
+      setup?: VehicleSetup;
+      experiment?: Experiment;
     },
   ) {
     this.soloStorage = diagnostics?.storage ?? new SoloStorage();
@@ -88,10 +91,11 @@ export class App {
   async initialize(root: HTMLElement) {
     await initializePhysics();
     if (this.disposed) return;
-    const setup = this.savedSetup ?? DEFAULT_SETUP;
+    const setup = this.diagnostics?.setup ?? this.savedSetup ?? DEFAULT_SETUP;
+    const experiment = this.diagnostics?.experiment ?? "circuit";
     this.rig = new SuspensionRig(setup);
     this.surfaceAudio.setSetup(setup);
-    this.rig.setExperiment("circuit");
+    this.rig.setExperiment(experiment);
     // Open on a settled chassis; the drop button remains a repeatable explicit test.
     for (let i = 0; i < 360; i++) this.rig.step();
     this.workbench = new Workbench(
@@ -117,7 +121,7 @@ export class App {
       !!this.savedSetup,
     );
     if (this.savedSetup) this.workbench.setSetup(setup);
-    this.workbench.setExperiment("circuit");
+    this.workbench.setExperiment(experiment);
     this.view = new SceneView(this.workbench.viewport, setup, getTestCircuit());
     this.view.remember(this.rig.telemetry, true);
     this.view.setCamera("chase");
@@ -811,7 +815,7 @@ export class App {
             this.rig.telemetry,
             this.rig.setup,
             this.rig.circuit,
-          )
+          ) ?? this.input.read(dt)
         : this.input.read(dt);
     const start = performance.now();
     if (!effectivePause) {
@@ -864,6 +868,18 @@ export class App {
 
   audioDiagnostics() {
     return this.surfaceAudio.diagnostics();
+  }
+
+  /** Snapshot the production RAF/physics/audio path without replacing its control publication. */
+  audioDrivingDiagnostics() {
+    const t = this.rig.telemetry;
+    return {
+      sampledAt: performance.now(), frameAgeMs: this.lastFrame ? performance.now() - this.lastFrame : null,
+      paused: this.previousEffectivePause || this.paused || document.hidden,
+      visibility: document.visibilityState, experiment: this.rig.experiment,
+      telemetry: { time: t.time, speed: t.speed, rpm: t.powertrain.rpm, gear: t.powertrain.gear, shifting: t.powertrain.shifting, grounded: t.groundedCount },
+      audio: this.surfaceAudio.signalDiagnostics(),
+    };
   }
 
   dispose() {

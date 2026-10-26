@@ -5,6 +5,25 @@ import { createNoise, smoothParam, stopAndDisconnect } from "./nodes";
 import { WHEEL_IDS } from "../vehicle/types";
 import type { AudioControlFrame, AudioSettings, EngineAudioProfile } from "./types";
 
+export interface AudioSignalMeasurement {
+  finite: boolean;
+  rms: number;
+  peak: number;
+}
+
+export interface VehicleAudioSignalSample {
+  warmedUp: boolean;
+  audioTime: number;
+  outputGain: number;
+  engineGain: number;
+  output: AudioSignalMeasurement;
+  engine: AudioSignalMeasurement;
+  mix: AudioSignalMeasurement;
+  ceiling: AudioSignalMeasurement;
+  impact: AudioSignalMeasurement;
+  wheels: { id: string; signals: Record<string, AudioSignalMeasurement> }[];
+}
+
 /** The same bounded native graph is used live and by OfflineAudioContext QA. */
 export class VehicleAudioGraph {
   readonly output: GainNode;
@@ -18,6 +37,7 @@ export class VehicleAudioGraph {
   private readonly impactGain: GainNode;
   private settings: AudioSettings;
   private stopped = false;
+  private meters?: { output: AnalyserNode; engine: AnalyserNode; mix: AnalyserNode; ceiling: AnalyserNode; impact: AnalyserNode; pcm: Float32Array<ArrayBuffer>; started: number };
   constructor(
     readonly context: BaseAudioContext,
     destination: AudioNode,
@@ -97,9 +117,48 @@ export class VehicleAudioGraph {
     smoothParam(this.impactGain.gain, 0, time, 0.002);
     for (const wheel of this.wheels) wheel.voice.reset(time);
   }
+  /** Explicit diagnostics only: the normal graph has no analyser allocation or sampling. */
+  sampleSignals(): VehicleAudioSignalSample | undefined {
+    if (this.stopped) return undefined;
+    if (!this.meters) {
+      const output = this.context.createAnalyser(), engine = this.context.createAnalyser(), mix = this.context.createAnalyser(), ceiling = this.context.createAnalyser(), impact = this.context.createAnalyser();
+      output.fftSize = engine.fftSize = mix.fftSize = ceiling.fftSize = impact.fftSize = 2048;
+      this.output.connect(output);
+      this.engineBus.connect(engine);
+      this.mix.connect(mix);
+      this.ceiling.connect(ceiling);
+      this.impactGain.connect(impact);
+      this.meters = { output, engine, mix, ceiling, impact, pcm: new Float32Array(2048), started: this.context.currentTime };
+    }
+    const meters = this.meters;
+    const measure = (analyser: AnalyserNode): AudioSignalMeasurement => {
+      analyser.getFloatTimeDomainData(meters.pcm);
+      let finite = true, energy = 0, peak = 0;
+      for (const value of meters.pcm) {
+        finite &&= Number.isFinite(value);
+        if (Number.isFinite(value)) { energy += value * value; peak = Math.max(peak, Math.abs(value)); }
+      }
+      return { finite, rms: Math.sqrt(energy / meters.pcm.length), peak };
+    };
+    return {
+      warmedUp: this.context.currentTime - meters.started >= 0.15,
+      audioTime: this.context.currentTime,
+      outputGain: this.output.gain.value,
+      engineGain: this.engineBus.gain.value,
+      output: measure(meters.output), engine: measure(meters.engine),
+      mix: measure(meters.mix), ceiling: measure(meters.ceiling), impact: measure(meters.impact),
+      wheels: this.wheels.map((wheel, index) => ({ id: WHEEL_IDS[index], signals: wheel.spatial.sampleSignals() })),
+    };
+  }
   dispose() {
     if (this.stopped) return;
     this.stopped = true;
+    this.meters?.output.disconnect();
+    this.meters?.engine.disconnect();
+    this.meters?.mix.disconnect();
+    this.meters?.ceiling.disconnect();
+    this.meters?.impact.disconnect();
+    this.meters = undefined;
     this.engine.dispose();
     for (const w of this.wheels) {
       w.voice.dispose(); w.spatial.dispose(); w.tyre.disconnect(); w.surface.disconnect();

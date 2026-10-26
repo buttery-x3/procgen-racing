@@ -50,6 +50,14 @@ not pause driving.
 The system uses native Web Audio nodes with generated periodic waves and seeded
 noise. It downloads no recordings and adds no audio dependency or worklet.
 
+Noise buffer lengths have an exact frames → seconds → frames round trip.
+Chromium 152 has a [loop-boundary regression](https://issues.chromium.org/issues/561828152)
+that can turn a fractional residue above the last frame into persistent buzz,
+invalid samples or silence. The original rear-left loop had 100,368 frames at
+48 kHz, which round-trips to 100368.00000000001. Selecting a nearby exact frame
+count avoids that native bug while preserving playback rate, seeded generation
+and essentially the same loop duration. This fixes the reported Vivaldi cut-out.
+
 - `AudioControls` derives finite, bounded engine and per-wheel controls. It
   calculates wheel slip with the generated car's resolved radius and normalizes
   combined demand to the existing tyre peaks. Warning onset is authored around
@@ -91,40 +99,58 @@ npm run dev
 Open `http://127.0.0.1:5173/audio-lab.html` (use the server's actual port).
 **Run offline qualification** renders at 44.1/48 kHz. **Check live lifecycle**
 exercises actual context activation, mute, profile replacement and disposal.
-**Start 20-minute stress run** uses a 1920×1080 production SceneView and 120 Hz
-reference-car physics. It first samples 8 seconds without an audio graph and
-then runs a full 1,200 seconds with synthetic four-wheel slip and high engine load.
-Keep the tab visible and leave its source unchanged.
+Also open `/audio-driving.html` and select **Run launch / shift / stop**. It
+uses the production App, real physics, the collector and the actual native graph:
+idle → launch → observed first automatic upshift → recovery → brake to rest →
+three seconds idle → three seconds relaunch throttle → final stop. Keep the app
+visible and unpaused; focus loss interrupts the automatic sequence. The live
+readout identifies invalid engine, wheel, spatial, mix and output samples.
 
-The stress audio is an intentionally demanding synthetic frame, independent of
-the actual car telemetry. Real telemetry is separately derived to measure control
-extraction cost. The initial sequential audio-off/on comparison includes
-activation and ordinary GPU/OS variation; it is not a statistical performance
-study. The reference circuit scope excludes a full generated-venue campaign and
-the complete workbench DOM.
+The 20-minute endurance tool is optional and is excluded from required checks.
+Run it only on an explicit user request. Routine fixes use the short native-loop,
+lifecycle and actual driving checks above.
 
 In development the lab saves bounded JSON to
-`artifacts/audio-browser.json` through a same-origin local endpoint. Production
-builds provide Copy/Download JSON instead. To publish a completed report:
+`artifacts/audio-browser.json` through a same-origin local endpoint. The actual
+driving page saves its compact stage/node report separately to
+`artifacts/audio-driving-browser.json`; its full downloaded report can also
+include up to 600 rolling observations. Production builds provide Copy/Download
+JSON instead. To publish completed reports:
 
 ```sh
 npm run report:audio
 # Or: npm run report:audio -- --browser=path/to/downloaded-report.json
+#       --driving=path/to/downloaded-driving-report.json
 ```
 
-The publisher rejects stale source fingerprints, failed offline/lifecycle
-checks, incomplete audio-on duration, hidden runs and the wrong render size.
+The publisher rejects stale source fingerprints and failed offline/lifecycle
+checks. It does not require a stress run.
+It also requires a source-matching actual-app report with every driving stage,
+an observed upshift, meaningful eligible samples, no interruption/error events,
+and finite engine/wheel/output signals without sampled silence or app stalls.
 Fingerprint inputs include audio sources, App/workbench integration and the lab
 itself. Restart Vite after source edits before measuring. The result is
 [the separate audio qualification report](research/audio-qualification.json);
+the real App result is [the driving audio report](research/audio-driving-qualification.json).
 M8 and historical generation evidence retain their original source hashes.
+The loop-fix delivery also saves its actual
+[native regression export](research/audio-loop-regression.json) directly. Its
+`runtimeSmoke` and `stress` fields remain null: these checks were not rerun for
+that export after the user asked to stop repeating validation. The earlier full
+feature report remains historical evidence rather than being relabeled.
 
 ## Validation scope
 
-The feature passes **305 regression tests**, including **61 audio tests**.
+The feature passes **307 regression tests**, including **63 audio tests**.
 The production build and strict TypeScript check pass; the existing large-chunk
-warning remains. Real Chromium OfflineAudioContext testing passes **113 checks
-across 50 rendered cases**, and **4 live lifecycle checks** pass.
+warning remains. Chromium OfflineAudioContext testing passes **131 checks across
+58 rendered cases**. Four live lifecycle checks also passed earlier in the
+session, before the validation-policy edits; the final export does not claim a
+new lifecycle run. Native coverage includes dynamic
+launch/shift/stop/relaunch transitions and 7.2-second loop renders in Headphones,
+Stereo and Mono at both sample rates. The old 850 ms steady renders could not
+exercise a two-second loop boundary. The regression test for the actual failing
+rear-left length fails before the fix and passes with the new frame count.
 
 The browser report records both sample rates, per-wheel stereo/HRTF channel
 balance, mono fold-down, axle spectra, engine load/shift/rev/overrun differences,
@@ -132,19 +158,22 @@ near-limit/sliding escalation, bounded samples and pause/watchdog/mute tails.
 Overrun is checked by the actual waveform difference from an otherwise identical
 coast render, not by assuming additive noise must increase total RMS.
 
-Source fingerprint `2f3c9fbeec2d729f` completed 1,200.01 seconds of audio-on
-stress (1,208.01 seconds including the audio-off baseline), across 120,564 frames
-with the tab visible throughout. Total audio-control time, including physics-step
-capture and graph publication, was 0.2 ms at p95 against the 0.5 ms target. Frame
-time was 10.1 ms at p95. All sampled output remained finite, with zero unexpected
-silent frames or observed non-running context frames. The initial sequential
-8-second comparisons had the same 10.1 ms frame p95; their mean variation does
-not establish an isolated audio-rendering cost.
+The user's Vivaldi/Chromium 152 live diagnostic reproduced a healthy engine bus
+but 165/165 invalid rear-left input and final-output observations, with no app
+stall or JavaScript error. After the loop fix, the user confirmed playback and
+the same browser recorded finite wheel/mix/output signals through launch, the
+first upshift and braking. The production bundle is also checked through the
+complete actual-app sequence, including stopped idle and relaunch. Digital
+signal measurements remain separate from human spatial-recognition testing.
+
+The original feature's long Chromium 155 run is historical evidence in Git. It
+did not establish Chromium 152 compatibility. The current report uses the short
+loop regressions and actual-app sequence; no new endurance result is claimed.
 
 The reference hardware is AMD Ryzen 5 5600X (12 logical processors), 32 GiB RAM
-and NVIDIA GeForce RTX 3060, using Chromium 155 on Windows at 1920×1080 balanced
-rendering. Production HTTP smoke checks passed for the app, audio lab and their
-bundled assets. The physics compatibility fingerprint remains
+and NVIDIA GeForce RTX 3060, using Chromium 155 on Windows. Production-bundle
+driving checks cover the full launch/shift/stop/relaunch sequence. The physics
+compatibility fingerprint remains
 `3915c9277118cf78`. Browser device latency estimates are not measured action-to-ear
 delay.
 
