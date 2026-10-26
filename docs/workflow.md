@@ -10,11 +10,12 @@ instructions for coding agents.
 | Branch or tag                                              | Purpose                                                                          |
 | ---------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | `main`                                                     | Released baseline, updated only on an explicit release/promotion request.        |
+| `v0.2.0`                                                   | Current baseline release: M0–M8, including the tyre-feedback sensitivity fix.    |
 | `v0.1.0`                                                   | First baseline release: the implemented M0–M5 browser sandbox.                   |
 | `development` / `origin/development`                       | Shared integration branch pushed to the remote for testing completed milestones. |
 | `codex/m6-car-generation`, `codex/m7-track-families`, etc. | A separate branch for each future milestone, created from current `development`. |
 
-The first baseline initializes both `main` and `development` at the same commit.
+The first baseline initialized both `main` and `development` at the same commit.
 Future milestone work, including its planning, prototypes, fixes, tests and docs,
 must take place in its own branch. Do not implement milestones directly on either
 shared branch. Follow-up fixes should use the relevant milestone branch or a
@@ -73,13 +74,24 @@ report any concrete block; do not bypass protection.
 automatically promote it to `main`. On an explicit release request, verify the
 tested development state, update release notes/version as needed, promote that
 state to `main`, and push the requested release/tag. Preserve the previous
-baseline tags.
+baseline tags. Prepare version/docs changes on a dedicated `codex/release-<version>`
+branch from current `development`, run the relevant checks, commit and push that
+branch, then integrate it into `development`. Fast-forward `main` to the validated
+development commit when its history permits; otherwise preserve both histories
+with a merge and validate the result. Create an annotated version tag on the exact
+released `main` commit and push both refs. Synchronize `development` with that
+release commit so future milestone branches include its version and notes. Do not
+move an existing release tag.
 
-The **v0.1.0 baseline** is described in [release notes](releases/v0.1.0.md).
-M6 procedural cars and the full workbench are delivered through
-`codex/m6-car-generation` into `development` for testing. M7 expanded circuit families
-use `codex/m7-track-families`, merged and pushed to `development` for testing.
-M8 solo sessions, ghosts, rules and the circuit library use
-`codex/m8-solo-sessions`, also merged and pushed to `development` for testing.
-The baseline does not claim these later milestones. See the
+The current **v0.2.0 baseline** promotes the user-approved M8 development state
+`c885073` plus release metadata/documentation and fresh release checks. It includes
+M0–M8, the tyre-feedback sensitivity fix, and the documentation-only audio proposal.
+See [v0.2.0 release notes](releases/v0.2.0.md). The first **v0.1.0 M0–M5 baseline**
+remains available at its original tag and [release notes](releases/v0.1.0.md).
+
+M6, M7 and M8 were developed on `codex/m6-car-generation`,
+`codex/m7-track-families` and `codex/m8-solo-sessions`, then tested on
+`development`. These branches and `codex/m8-tyre-feedback-sensitivity` remain
+available for comparison. Future work continues to use its own branches and
+`development` testing before another explicitly requested release. See the
 [M6 delivery notes](m6.md), [M7 delivery notes](m7.md) and [M8 delivery notes](m8.md).

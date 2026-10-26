@@ -1,6 +1,6 @@
 # procgen-racing
 
-**Baseline release: [v0.1.0](docs/releases/v0.1.0.md), M0–M5.** `main` is the
+**Baseline release: [v0.2.0](docs/releases/v0.2.0.md), M0–M8.** `main` is the
 released baseline; `development` is the remote testing branch. Every future
 milestone must be implemented on its own branch from `development`, then merged
 and pushed to `development` on completion for testing. Promote to `main` only
@@ -8,14 +8,17 @@ when a release is explicitly requested. See the [branch workflow](docs/workflow.
 and [agent instructions](AGENTS.md).
 
 A browser racing sandbox built with TypeScript, Three.js and Rapier. The current
-**M8 development build** completes solo practice/time trials, lap rules, compatible
+**v0.2.0 release** completes solo practice/time trials, lap rules, compatible
 ghosts and a circuit library around the procedural cars, circuits and tuning lab.
+The earlier [v0.1.0 baseline](docs/releases/v0.1.0.md) remains tagged separately.
 
 **M8** adds directional 3D timing gates, three sectors, track limits, keyed personal
 bests, non-colliding pose ghosts and durable session import/export. The circuit
 library keeps named/favourite accepted routes and variants. Engine/tyre/impact
 audio, bounded skid/dust/smoke effects, a bonnet camera and quality controls complete
-the solo presentation. See the [M8 guide](docs/m8.md).
+the solo presentation. The release includes the reduced tyre-squeal and rubber-mark
+sensitivity, preserving full-slip intensity. See the [M8 guide](docs/m8.md) and
+[release/upgrade notes](docs/releases/v0.2.0.md).
 
 **M7** adds fixed road networks with route alternatives/provenance, dedicated
 progressive oval banking and aprons, full/club/speedway variants, family-specific

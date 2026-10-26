@@ -5,7 +5,9 @@
 The user established this workflow on 26 October 2026. It applies to all future
 milestones, including planning, prototypes, fixes, tests and documentation.
 
-- `main` holds released baselines. The first baseline is `v0.1.0`, containing M0–M5.
+- `main` holds released baselines. The current baseline is `v0.2.0`, containing
+  M0–M8 and the tyre-feedback sensitivity fix. Preserve the first M0–M5 baseline
+  at `v0.1.0`.
 - `development` is the shared integration and testing branch and must also exist
   on `origin`.
 - Before starting a future milestone, fetch `origin`, update local `development`

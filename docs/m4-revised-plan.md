@@ -1,6 +1,6 @@
 # M4 revised — designing circuits instead of perimeter loops
 
-> **Branch policy:** `main` holds the M0–M5 `v0.1.0` baseline. Each future
+> **Branch policy:** `main` holds the M0–M8 `v0.2.0` baseline. Each future
 > milestone uses its own branch from `development`, then is merged and pushed
 > to remote `development` on completion for testing. Later releases to `main`
 > require an explicit request. See the [release workflow](workflow.md).

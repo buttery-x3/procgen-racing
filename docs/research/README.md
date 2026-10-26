@@ -1,9 +1,9 @@
 # Research and qualification records
 
 The [release and milestone workflow](../workflow.md) applies to this directory.
-`main` holds the `v0.1.0` M0–M5 baseline. Work for each future milestone belongs
-on its own branch from `development`, then is merged and pushed to remote
-`development` on completion for testing. Later promotion to `main` requires an
+`main` holds the `v0.2.0` M0–M8 baseline; `v0.1.0` preserves M0–M5. Work for each
+future milestone belongs on its own branch from `development`, then is merged and
+pushed to remote `development` on completion for testing. Later promotion to `main` requires an
 explicit release request.
 
 The Markdown research, HTML portfolios/benchmarks, SVG plots and JSON qualification
