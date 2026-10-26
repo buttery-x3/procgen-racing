@@ -7,6 +7,7 @@ const files = new Map([
   ["/reconstruction.wav", "audio/wav"],
   ["/frozen.wav", "audio/wav"],
   ["/previous.wav", "audio/wav"],
+  ["/control-model.json", "application/json"],
 ]);
 
 /** Serve only prepared local audition files. No hook runs during production builds. */

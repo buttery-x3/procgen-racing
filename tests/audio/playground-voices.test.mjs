@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
 import { describe, expect, it } from "vitest";
-import { DEFAULT_PRESET } from "../../src/audio/playground-model";
+import { TONAL_PRESET } from "../../src/audio/playground-model";
 
 const source = readFileSync(new URL("../../public/audio/playground-voices.js", import.meta.url), "utf8");
 
@@ -18,8 +18,8 @@ function render(sampleRate, changes) {
   expect(Type).toBeDefined();
   const processor = new Type();
   const send = (type, value) => processor.port.onmessage?.({ data: { type, value } });
-  processor.port.onmessage?.({ data: { type: "reset", seed: DEFAULT_PRESET.seed } });
-  send("tuning", { ...DEFAULT_PRESET.tuning, ...changes, onset: 0, release: 0 });
+  processor.port.onmessage?.({ data: { type: "reset", seed: TONAL_PRESET.seed } });
+  send("tuning", { ...TONAL_PRESET.tuning, ...changes, onset: 0, release: 0 });
   const active = { id: "fl", grounded: true, load: 0.8, speed: 22, slipSpeed: 15, warning: 0.32, slip: 0.85, rolling: 0 };
   send("control", active);
   const samples = [];
@@ -43,7 +43,7 @@ describe("tonal playground tyre", () => {
     const sustained = dry.slice(Math.floor(rate * 0.3), Math.floor(rate * 0.8));
     expect(sustained.every((sample) => Number.isFinite(sample) && Math.abs(sample) < 0.25)).toBe(true);
     expect(rms(sustained)).toBeGreaterThan(0.01);
-    const period = Math.round(rate / (1470 + 690 * DEFAULT_PRESET.tuning.pitch));
+    const period = Math.round(rate / (1470 + 690 * TONAL_PRESET.tuning.pitch));
     const coherent = sustained.slice(period).reduce((sum, value, i) => sum + value * sustained[i], 0);
     const energy = sustained.reduce((sum, value) => sum + value * value, 0);
     expect(coherent / energy).toBeGreaterThan(0.7);

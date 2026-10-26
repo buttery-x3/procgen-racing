@@ -5,3 +5,4 @@ dist/
 coverage/
 artifacts/
 *.local
+__pycache__/

@@ -3,7 +3,7 @@ import { TyreVoice } from "../audio/TyreVoice";
 import { SpatialAudio } from "../audio/SpatialAudio";
 import { smoothParam } from "../audio/nodes";
 import type { AudioSettings } from "../audio/types";
-import { DEFAULT_PRESET, LEGACY_PRESET, FIXTURES, ENGINE_TUNING_KEYS, LEGACY_TYRE_TUNING_KEYS, TONAL_TYRE_TUNING_KEYS,
+import { DEFAULT_PRESET, TONAL_PRESET, LEGACY_PRESET, FIXTURES, REFERENCE_MODEL_ID, ENGINE_TUNING_KEYS, LEGACY_TYRE_TUNING_KEYS, TONAL_TYRE_TUNING_KEYS, REFERENCE_TYRE_TUNING_KEYS,
   fixtureControls, parsePreset,
   type FixtureId, type ManualControls, type PlaygroundPreset, type RouteMode } from "../audio/playground-model";
 
@@ -26,6 +26,9 @@ let committed: PlaygroundPreset = structuredClone(DEFAULT_PRESET);
 let choice: "a" | "b" = "b";
 let graph: Graph | undefined;
 let opening = 0;
+const acceptedReference = new Audio("/__audio-reference/reconstruction.wav");
+acceptedReference.preload = "none"; acceptedReference.volume = 0.4;
+acceptedReference.onended = () => { if (!graph) { stopButton.disabled = true; setStatus("Accepted reference finished. Press Play example for the live voice."); } };
 
 interface Graph {
   context: AudioContext;
@@ -74,10 +77,12 @@ for (const [id, definition] of Object.entries(FIXTURES)) {
 const engineLabels: Record<string, string> = { body: "Body / low rumble", openness: "Exhaust openness", rasp: "Exhaust rasp", unevenness: "Pulse unevenness", mechanical: "Intake / mechanical" };
 const legacyTyreLabels: Record<string, string> = { scrape: "Broad scrape", screech: "Modal resonance", roughness: "Roughness", brightness: "Brightness", onset: "Onset time", release: "Release time" };
 const tonalTyreLabels: Record<string, string> = { tone: "Squeal strength", edge: "Harmonic edge", pitch: "Pitch character", roughness: "Irregular roughness", scrape: "Optional scrape", onset: "Onset time", release: "Release time" };
+const referenceTyreLabels: Record<string, string> = { character: "Lower / higher character", texture: "Texture balance", pitch: "Pitch character", movement: "Character movement", onset: "Level attack", release: "Level release" };
 function renderTuningControls(): void {
   const engine = element("engine-controls"), tyre = element("tyre-controls");
   engine.replaceChildren(); tyre.replaceChildren();
   const legacy = preset.backend === "pulse-exhaust-friction-v1";
+  const reference = preset.backend === "pulse-exhaust-reference-v3";
   const tuning = preset.tuning as unknown as Record<string, number>;
   for (const key of ENGINE_TUNING_KEYS) {
     range(engine, engineLabels[key], key, 0, 1, 0.01, tuning[key], (v) => {
@@ -85,17 +90,19 @@ function renderTuningControls(): void {
       graph?.engineB.port.postMessage({ type: "tuning", value: preset.tuning });
     });
   }
-  for (const key of legacy ? LEGACY_TYRE_TUNING_KEYS : TONAL_TYRE_TUNING_KEYS) {
-    range(tyre, (legacy ? legacyTyreLabels : tonalTyreLabels)[key], key, 0, 1, 0.01, tuning[key], (v) => {
+  for (const key of reference ? REFERENCE_TYRE_TUNING_KEYS : legacy ? LEGACY_TYRE_TUNING_KEYS : TONAL_TYRE_TUNING_KEYS) {
+    range(tyre, (reference ? referenceTyreLabels : legacy ? legacyTyreLabels : tonalTyreLabels)[key], key, 0, 1, 0.01, tuning[key], (v) => {
       (preset.tuning as unknown as Record<string, number>)[key] = v;
       graph?.tyreB.port.postMessage({ type: "tuning", value: preset.tuning });
     });
   }
-  element("tyre-description").textContent = legacy
+  element("tyre-description").textContent = reference
+    ? "The accepted screech direction, generated continuously. Slip history changes its character through build, sliding and recovery; load and slip change its level."
+    : legacy
     ? "First prototype: broadband scrape and noise-excited resonances. Kept for saved preset comparisons."
     : "A sustained tonal squeal with a rough harmonic edge. Scrape starts at zero and can be added separately.";
-  bButton.textContent = legacy ? "B · First tyre prototype" : "B · Tonal squeal";
-  element("meter-b-label").textContent = legacy ? "B · first" : "B · tonal";
+  bButton.textContent = reference ? "B · Live screech" : legacy ? "B · First tyre prototype" : "B · Tonal squeal";
+  element("meter-b-label").textContent = reference ? "B · live" : legacy ? "B · first" : "B · tonal";
 }
 const manualControls: { key: keyof ManualControls; label: string; min: number; max: number; step: number }[] = [
   { key: "rpm", label: "RPM", min: 700, max: 7500, step: 25 },
@@ -162,12 +169,21 @@ function applyMix(): void {
 async function start(): Promise<void> {
   stop();
   const generation = ++opening;
-  playButton.disabled = true; setStatus("Opening the audition voices…");
+  playButton.disabled = true; stopButton.disabled = false; setStatus("Opening the audition voices…");
   let context: AudioContext | undefined;
   try {
     context = new AudioContext({ latencyHint: "interactive" });
     await context.resume();
     await context.audioWorklet.addModule("/audio/playground-voices.js");
+    const reference = preset.backend === "pulse-exhaust-reference-v3";
+    let profile: unknown;
+    if (reference) {
+      await context.audioWorklet.addModule("/audio/reference-tyre.js");
+      const response = await fetch("/__audio-reference/control-model.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Prepare the local tyre control model first; see the live screech notes.");
+      profile = await response.json();
+      if ((profile as { id?: string }).id !== REFERENCE_MODEL_ID) throw new Error("The local tyre model does not match this preset's reference.");
+    }
     if (generation !== opening) { await context.close(); return; }
     const nodes: AudioNode[] = [];
     const aBus = gain(context, nodes), bBus = gain(context, nodes);
@@ -194,17 +210,35 @@ async function start(): Promise<void> {
     const engineA = new EngineVoice(context, aEngine, { id: "deep", cylinders: 8, body: 1.15, brightness: 0.85, irregularity: 0.28, seed: preset.seed }, startTime);
     const tyreA = new TyreVoice(context, preset.wheel, aTyre, aSurface, startTime);
     const engineB = new AudioWorkletNode(context, "playground-pulse-exhaust", { numberOfInputs: 0, numberOfOutputs: 1, outputChannelCount: [1] });
-    const tyreProcessor = preset.backend === "pulse-exhaust-tonal-v2" ? "playground-tonal-tyre" : "playground-friction-tyre";
+    const tyreProcessor = reference ? "playground-reference-tyre" : preset.backend === "pulse-exhaust-tonal-v2" ? "playground-tonal-tyre" : "playground-friction-tyre";
     const tyreB = new AudioWorkletNode(context, tyreProcessor, { numberOfInputs: 0, numberOfOutputs: 2, outputChannelCount: [1, 1] });
     engineB.connect(bEngine); tyreB.connect(bTyre, 0, 0); tyreB.connect(bSurface, 1, 0); nodes.push(engineB, tyreB);
     const failure = () => { setStatus("The candidate audio processor stopped. Stop and replay to retry."); stop(); };
     engineB.onprocessorerror = failure; tyreB.onprocessorerror = failure;
+    if (reference) {
+      await new Promise<void>((resolve, reject) => {
+        const timeout = window.setTimeout(() => reject(new Error("The live tyre processor did not finish opening.")), 10000);
+        tyreB.port.onmessage = ({ data }) => {
+          if (data?.type === "profile-ready" || data?.type === "profile-error") {
+            window.clearTimeout(timeout);
+            if (data.type === "profile-ready") resolve(); else reject(new Error(data.message));
+          }
+        };
+        tyreB.port.postMessage({ type: "profile", value: profile });
+      });
+      if (generation !== opening) { await context.close(); return; }
+      tyreB.port.onmessage = ({ data }) => {
+        if (generation !== opening || data?.type !== "state") return;
+        const labels: Record<string, string> = { quiet: "Quiet", entering: "Building into a slide", sliding: "Sustained sliding", recovering: "Recovering grip" };
+        element("tyre-state").textContent = `Tyre: ${labels[data.state] ?? "Ready"}`;
+      };
+    }
     engineB.port.postMessage({ type: "reset", seed: preset.seed }); tyreB.port.postMessage({ type: "reset", seed: preset.seed ^ 0x4af18b65 });
     engineB.port.postMessage({ type: "tuning", value: preset.tuning }); tyreB.port.postMessage({ type: "tuning", value: preset.tuning });
     graph = { context, nodes, engineA, tyreA, engineB, tyreB, spatial, dry, feeds,
       engineGains: [aEngine, bEngine], tyreGains: [aTyre, bTyre], surfaceGains: [aSurface, bSurface],
       trim: [aTrim, bTrim], gate: [aGate, bGate], meter: [aMeter, bMeter], pcm: new Float32Array(2048),
-      startTime, timer: 0, meterTimer: 0, lastRms: [0, 0] };
+      startTime: context.currentTime, timer: 0, meterTimer: 0, lastRms: [0, 0] };
     applyRoute(); applyMix(); tick();
     graph.timer = window.setInterval(tick, 25);
     graph.meterTimer = window.setInterval(measure, 100);
@@ -212,6 +246,7 @@ async function start(): Promise<void> {
     setStatus(`Playing ${FIXTURES[preset.fixture].label} · ${choice.toUpperCase()}. Switch A/B at any time.`);
   } catch (error) {
     if (context && context.state !== "closed") void context.close();
+    if (generation !== opening) return;
     graph = undefined; playButton.disabled = false; stopButton.disabled = true;
     setStatus(`Could not start audio: ${error instanceof Error ? error.message : String(error)}`);
   }
@@ -219,6 +254,8 @@ async function start(): Promise<void> {
 
 function stop(): void {
   opening++;
+  acceptedReference.pause(); acceptedReference.currentTime = 0;
+  element("tyre-state").textContent = "";
   const g = graph; graph = undefined;
   if (g) {
     window.clearInterval(g.timer); window.clearInterval(g.meterTimer);
@@ -297,12 +334,23 @@ function saveAs(suggested: string): void {
 playButton.addEventListener("click", () => { void start(); });
 stopButton.addEventListener("click", () => { stop(); setStatus("Playback stopped."); });
 aButton.addEventListener("click", () => { choice = "a"; applyMix(); setStatus("A · original production voice."); });
-bButton.addEventListener("click", () => { choice = "b"; applyMix(); setStatus(preset.backend === "pulse-exhaust-tonal-v2" ? "B · tonal tyre and pulse/exhaust engine." : "B · first noise-driven tyre and pulse/exhaust engine."); });
+bButton.addEventListener("click", () => { choice = "b"; applyMix(); setStatus(preset.backend === "pulse-exhaust-reference-v3"
+  ? "B · live reference screech and accepted pulse/exhaust engine."
+  : preset.backend === "pulse-exhaust-tonal-v2" ? "B · tonal tyre and pulse/exhaust engine." : "B · first noise-driven tyre and pulse/exhaust engine."); });
+element("hear-accepted-reference").addEventListener("click", () => {
+  stop(); const generation = opening;
+  void acceptedReference.play().then(() => {
+    if (generation !== opening) return;
+    stopButton.disabled = false; setStatus("Playing the accepted 1.87-second reconstruction reference.");
+  }).catch(() => { if (generation === opening) setStatus("The local accepted reference is unavailable. Prepare the reference audition files first."); });
+});
 fixtureSelect.addEventListener("change", () => {
   preset.fixture = fixtureSelect.value as FixtureId;
-  preset.solo = FIXTURES[preset.fixture].kind === "tyre" ? "tyre" : "engine"; soloSelect.value = preset.solo;
+  const kind = FIXTURES[preset.fixture].kind;
+  if (kind !== "both") preset.solo = kind === "tyre" ? "tyre" : "engine";
+  soloSelect.value = preset.solo;
   syncManualAvailability();
-  if (graph) void start(); else setStatus(`${FIXTURES[preset.fixture].label} selected. Press Play.`);
+  if (graph || playButton.disabled) void start(); else setStatus(`${FIXTURES[preset.fixture].label} selected. Press Play.`);
 });
 soloSelect.addEventListener("change", () => { preset.solo = soloSelect.value as PlaygroundPreset["solo"]; applyMix(); });
 routeSelect.addEventListener("change", () => { preset.route = routeSelect.value as RouteMode; applyRoute(); });
@@ -318,17 +366,18 @@ element("save-preset").addEventListener("click", () => saveAs(presetName.value))
 element("duplicate-preset").addEventListener("click", () => saveAs(`${presetName.value.trim()} copy`));
 function loadBuiltIn(builtIn: PlaygroundPreset): void {
   preset = structuredClone(builtIn); committed = structuredClone(builtIn); syncForm();
-  if (graph) void start(); else setStatus(`Loaded “${builtIn.name}”. Press Play.`);
+  if (graph || playButton.disabled) void start(); else setStatus(`Loaded “${builtIn.name}”. Press Play.`);
 }
-element("load-tonal-default").addEventListener("click", () => loadBuiltIn(DEFAULT_PRESET));
+element("load-reference-default").addEventListener("click", () => loadBuiltIn(DEFAULT_PRESET));
+element("load-tonal-default").addEventListener("click", () => loadBuiltIn(TONAL_PRESET));
 element("load-first-prototype").addEventListener("click", () => loadBuiltIn(LEGACY_PRESET));
 element("load-preset").addEventListener("click", () => {
   const found = stored().find((item) => item.name === savedSelect.value);
   if (!found) { setStatus("Select a saved preset to load."); return; }
   preset = structuredClone(found); committed = structuredClone(found); syncForm();
-  if (graph) void start(); else setStatus(`Loaded “${found.name}”.`);
+  if (graph || playButton.disabled) void start(); else setStatus(`Loaded “${found.name}”.`);
 });
-element("revert-preset").addEventListener("click", () => { preset = structuredClone(committed); syncForm(); if (graph) void start(); else setStatus("Reverted to the last loaded or saved preset."); });
+element("revert-preset").addEventListener("click", () => { preset = structuredClone(committed); syncForm(); if (graph || playButton.disabled) void start(); else setStatus("Reverted to the last loaded or saved preset."); });
 element("export-preset").addEventListener("click", () => {
   const valid = parsePreset(preset);
   const url = URL.createObjectURL(new Blob([JSON.stringify(valid, null, 2)], { type: "application/json" }));
@@ -341,7 +390,7 @@ element("import-preset").addEventListener("click", () => {
     if (input.length > 20_000) throw new Error("Preset JSON is too large.");
     const valid = parsePreset(JSON.parse(input));
     preset = valid; committed = structuredClone(valid); syncForm();
-    if (graph) void start(); else setStatus(`Imported “${valid.name}”. Save it to retain it in this browser.`);
+    if (graph || playButton.disabled) void start(); else setStatus(`Imported “${valid.name}”. Save it to retain it in this browser.`);
   } catch (error) { setStatus(`Import failed: ${error instanceof Error ? error.message : String(error)}`); }
 });
 document.addEventListener("visibilitychange", () => { if (document.hidden && graph) { stop(); setStatus("Playback stopped because the page is hidden."); } });

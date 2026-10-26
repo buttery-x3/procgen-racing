@@ -29,6 +29,7 @@ describe("local reference audition files", () => {
     expect(result.headers.get("Content-Type")).toBe("audio/wav");
     expect(result.headers.get("Cache-Control")).toBe("no-store");
     expect((await request("/reference.wav", "HEAD")).body).toBeUndefined();
+    expect((await request("/control-model.json")).headers.get("Content-Type")).toBe("application/json");
   });
 
   it("never reads arbitrary files or traversal paths", async () => {

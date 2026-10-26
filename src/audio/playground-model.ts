@@ -1,6 +1,6 @@
 import type { EngineAudioControl, TyreAudioControl } from "./types";
 
-export type FixtureId = "engine-idle" | "engine-light" | "engine-full" | "engine-sweep" | "engine-shift" | "tyre-scrub" | "tyre-onset" | "tyre-slide" | "tyre-recovery" | "manual";
+export type FixtureId = "engine-idle" | "engine-light" | "engine-full" | "engine-sweep" | "engine-shift" | "tyre-scrub" | "tyre-onset" | "tyre-slide" | "tyre-recovery" | "tyre-cycle" | "manual";
 export type SoloMode = "engine" | "tyre" | "surface" | "mix";
 export type RouteMode = "dry" | "headphones" | "stereo" | "mono";
 
@@ -31,6 +31,16 @@ export interface TonalTyrePlaygroundTuning {
   release: number;
 }
 
+export interface ReferenceTyrePlaygroundTuning {
+  character: number;
+  texture: number;
+  pitch: number;
+  movement: number;
+  onset: number;
+  release: number;
+}
+export const REFERENCE_MODEL_ID = "local:tyre-spectrum-v1:2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0";
+
 interface BasePlaygroundPreset {
   format: "procgen-racing:audio-playground-preset";
   version: 1;
@@ -48,18 +58,21 @@ interface BasePlaygroundPreset {
 
 export type PlaygroundPreset = BasePlaygroundPreset & (
   { backend: "pulse-exhaust-friction-v1"; tuning: EnginePlaygroundTuning & LegacyTyrePlaygroundTuning } |
-  { backend: "pulse-exhaust-tonal-v2"; tuning: EnginePlaygroundTuning & TonalTyrePlaygroundTuning }
+  { backend: "pulse-exhaust-tonal-v2"; tuning: EnginePlaygroundTuning & TonalTyrePlaygroundTuning } |
+  { backend: "pulse-exhaust-reference-v3"; tuning: EnginePlaygroundTuning & ReferenceTyrePlaygroundTuning }
 );
 
 export const ENGINE_TUNING_KEYS = ["body", "openness", "rasp", "unevenness", "mechanical"] as const;
 export const LEGACY_TYRE_TUNING_KEYS = ["scrape", "screech", "roughness", "brightness", "onset", "release"] as const;
 export const TONAL_TYRE_TUNING_KEYS = ["tone", "edge", "pitch", "roughness", "scrape", "onset", "release"] as const;
+export const REFERENCE_TYRE_TUNING_KEYS = ["character", "texture", "pitch", "movement", "onset", "release"] as const;
 
 export function tuningKeys(backend: PlaygroundPreset["backend"]): readonly string[] {
-  return [...ENGINE_TUNING_KEYS, ...(backend === "pulse-exhaust-tonal-v2" ? TONAL_TYRE_TUNING_KEYS : LEGACY_TYRE_TUNING_KEYS)];
+  return [...ENGINE_TUNING_KEYS, ...(backend === "pulse-exhaust-reference-v3" ? REFERENCE_TYRE_TUNING_KEYS
+    : backend === "pulse-exhaust-tonal-v2" ? TONAL_TYRE_TUNING_KEYS : LEGACY_TYRE_TUNING_KEYS)];
 }
 
-export const DEFAULT_PRESET: PlaygroundPreset = {
+export const TONAL_PRESET: PlaygroundPreset = {
   format: "procgen-racing:audio-playground-preset", version: 1, name: "Tonal tyre starting point",
   backend: "pulse-exhaust-tonal-v2", seed: 0x51a3d207, assetIds: [], fixture: "tyre-slide",
   solo: "tyre", route: "dry", wheel: "fl", aTrim: 1, bTrim: 1,
@@ -68,8 +81,15 @@ export const DEFAULT_PRESET: PlaygroundPreset = {
     tone: 0.74, edge: 0.7, pitch: 0.47, roughness: 0.64, scrape: 0, onset: 0.22, release: 0.36 },
 };
 
+export const DEFAULT_PRESET: PlaygroundPreset = {
+  ...TONAL_PRESET, name: "Accepted screech · live control", backend: "pulse-exhaust-reference-v3",
+  assetIds: [REFERENCE_MODEL_ID], fixture: "tyre-cycle",
+  tuning: { body: 0.78, openness: 0.35, rasp: 0.28, unevenness: 0.35, mechanical: 0.16,
+    character: 0.5, texture: 0.5, pitch: 0.5, movement: 0.65, onset: 0.22, release: 0.36 },
+};
+
 export const LEGACY_PRESET: PlaygroundPreset = {
-  ...DEFAULT_PRESET, name: "First noise tyre prototype", backend: "pulse-exhaust-friction-v1",
+  ...TONAL_PRESET, name: "First noise tyre prototype", backend: "pulse-exhaust-friction-v1",
   tuning: { body: 0.78, openness: 0.35, rasp: 0.28, unevenness: 0.35, mechanical: 0.16,
     scrape: 0.78, screech: 0.42, roughness: 0.7, brightness: 0.5, onset: 0.22, release: 0.36 },
 };
@@ -78,7 +98,7 @@ export function parsePreset(value: unknown): PlaygroundPreset {
   if (!value || typeof value !== "object") throw new Error("Preset must be a JSON object.");
   const v = value as Record<string, unknown>;
   if (v.format !== DEFAULT_PRESET.format || v.version !== 1 ||
-    (v.backend !== "pulse-exhaust-friction-v1" && v.backend !== "pulse-exhaust-tonal-v2"))
+    (v.backend !== "pulse-exhaust-friction-v1" && v.backend !== "pulse-exhaust-tonal-v2" && v.backend !== "pulse-exhaust-reference-v3"))
     throw new Error("Unsupported preset format, version or sound backend.");
   const fixture = v.fixture as FixtureId;
   if (!(fixture in FIXTURES)) throw new Error("Unknown fixture.");
@@ -87,7 +107,9 @@ export function parsePreset(value: unknown): PlaygroundPreset {
   if (!["fl", "fr", "rl", "rr"].includes(String(v.wheel))) throw new Error("Unknown wheel.");
   if (typeof v.name !== "string" || !v.name.trim() || v.name.length > 80) throw new Error("Preset name must be 1–80 characters.");
   if (!Number.isInteger(v.seed) || (v.seed as number) < 0 || (v.seed as number) > 0xffffffff) throw new Error("Invalid seed.");
-  if (!Array.isArray(v.assetIds) || v.assetIds.length !== 0) throw new Error("This procedural backend uses no audio assets.");
+  if (!Array.isArray(v.assetIds) || (v.backend === "pulse-exhaust-reference-v3"
+    ? v.assetIds.length !== 1 || v.assetIds[0] !== REFERENCE_MODEL_ID : v.assetIds.length !== 0))
+    throw new Error("Invalid assets or local reference model identity.");
   const trim = (value: unknown) => typeof value === "number" && Number.isFinite(value) && value >= 0.25 && value <= 4;
   if (!trim(v.aTrim) || !trim(v.bTrim)) throw new Error("Audition trims must be between 0.25 and 4.");
   if (!v.manual || typeof v.manual !== "object") throw new Error("Missing manual controls.");
@@ -104,11 +126,13 @@ export function parsePreset(value: unknown): PlaygroundPreset {
     if (typeof n !== "number" || !Number.isFinite(n) || n < 0 || n > 1) throw new Error(`Invalid ${key} control.`);
   }
   const common: BasePlaygroundPreset = { format: DEFAULT_PRESET.format, version: 1, name: v.name.trim(),
-    seed: v.seed as number, assetIds: [], fixture, solo: v.solo as SoloMode, route: v.route as RouteMode,
+    seed: v.seed as number, assetIds: [...v.assetIds] as string[], fixture, solo: v.solo as SoloMode, route: v.route as RouteMode,
     wheel: v.wheel as PlaygroundPreset["wheel"], aTrim: v.aTrim as number, bTrim: v.bTrim as number,
     manual: Object.fromEntries(["rpm", "load", "slip", "slipSpeed", "wheelLoad"].map((key) => [key, manual[key]])) as unknown as ManualControls };
   const selectedTuning = Object.fromEntries(tuningKeys(backend).map((key) => [key, tuning[key]]));
-  return backend === "pulse-exhaust-tonal-v2"
+  return backend === "pulse-exhaust-reference-v3"
+    ? { ...common, backend, tuning: selectedTuning as unknown as EnginePlaygroundTuning & ReferenceTyrePlaygroundTuning }
+    : backend === "pulse-exhaust-tonal-v2"
     ? { ...common, backend, tuning: selectedTuning as unknown as EnginePlaygroundTuning & TonalTyrePlaygroundTuning }
     : { ...common, backend, tuning: selectedTuning as unknown as EnginePlaygroundTuning & LegacyTyrePlaygroundTuning };
 }
@@ -124,6 +148,7 @@ export const FIXTURES: Record<FixtureId, Fixture> = {
   "tyre-onset": { label: "Sliding onset", duration: 8, kind: "tyre" },
   "tyre-slide": { label: "Sustained slide", duration: 7, kind: "tyre" },
   "tyre-recovery": { label: "Slide and recovery", duration: 8, kind: "tyre" },
+  "tyre-cycle": { label: "Build → slide → recover → slide", duration: 10.5, kind: "tyre" },
   manual: { label: "Manual controls", duration: Infinity, kind: "both" },
 };
 
@@ -156,6 +181,12 @@ export function fixtureControls(id: FixtureId, seconds: number, manual = DEFAULT
     case "tyre-onset": speed = 23; slip = 0.8 * ramp(s, 0.8, 4.7); warning = 0.4 * ramp(s, 0.4, 2.4); slipSpeed = 12 * ramp(s, 1.2, 5); break;
     case "tyre-slide": speed = 22; slip = 0.85; warning = 0.32; slipSpeed = 15; break;
     case "tyre-recovery": speed = 22; slip = 0.86 * ramp(s, 0.5, 2) * (1 - ramp(s, 4.5, 7.4)); warning = slip * 0.38; slipSpeed = slip * 15; break;
+    case "tyre-cycle": {
+      const first = ramp(s, .7, 2.1) * (1 - ramp(s, 4.2, 5.6));
+      const second = ramp(s, 6.2, 7.3) * (1 - ramp(s, 9.1, 10.1));
+      speed = 22; slip = .86 * Math.max(first, second); warning = slip * .38; slipSpeed = slip * 16;
+      wheelLoad = s < 6 ? .8 : .6; break;
+    }
     case "manual": rpm = manual.rpm; load = manual.load; slip = manual.slip; warning = Math.min(0.5, slip * 0.4); slipSpeed = manual.slipSpeed; speed = 20; wheelLoad = manual.wheelLoad; break;
   }
   return {
