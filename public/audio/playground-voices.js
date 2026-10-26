@@ -162,5 +162,83 @@ class FrictionTyre extends SeededVoice {
   }
 }
 
+// Second audition candidate. A coherent squeal carries the slide; scrape is optional.
+// Keep FrictionTyre registered so first-generation saved presets keep their sound.
+class TonalTyre extends SeededVoice {
+  constructor() {
+    super();
+    this.target = { id: 'fl', warning: 0, slip: 0, rolling: 0, load: 1, speed: 0, slipSpeed: 0, grounded: true };
+    this.tuning = { tone: 0.74, edge: 0.7, pitch: 0.47, roughness: 0.64, scrape: 0, onset: 0.22, release: 0.36 };
+    this.phase = 0; this.activity = 0; this.flutter = 0; this.flutterTarget = 0;
+    this.flutterCount = 0; this.wander = 0; this.scrapeLow = 0; this.surfaceLow = 0;
+    this.tone = this.tuning.tone; this.edge = this.tuning.edge;
+    this.pitch = this.tuning.pitch; this.scrape = this.tuning.scrape;
+  }
+
+  reset(seed) {
+    super.reset(seed);
+    this.phase = 0; this.activity = 0; this.flutter = 0; this.flutterTarget = 0;
+    this.flutterCount = 0; this.wander = 0; this.scrapeLow = 0; this.surfaceLow = 0;
+  }
+
+  process(_inputs, outputs) {
+    const tyre = outputs[0][0], surface = outputs[1][0];
+    if (!tyre || !surface) return true;
+    const t = this.target || {}, p = this.tuning || {};
+    const tone = bounded(p.tone), edge = bounded(p.edge), pitch = bounded(p.pitch);
+    const roughness = bounded(p.roughness), scrape = bounded(p.scrape);
+    const onset = bounded(p.onset), release = bounded(p.release);
+    const contact = !!t.grounded && bounded(t.load) > 0.001 &&
+      (bounded(t.speed, 0, 150) > 0.2 || bounded(t.slipSpeed, 0, 150) > 0.15);
+    const slip = contact ? bounded(t.slip) : 0, warning = contact ? bounded(t.warning) : 0;
+    const sliding = bounded(t.slipSpeed, 0, 50) / 50;
+    const target = Math.min(1, warning * 0.3 + slip * (0.7 + sliding * 0.3));
+    const seconds = target > this.activity ? 0.012 + onset * 0.15 : 0.025 + release * 0.45;
+    const activityPole = Math.exp(-1 / (sampleRate * seconds));
+    const tuningPole = Math.exp(-1 / (sampleRate * 0.014));
+    const flutterPole = Math.exp(-1 / (sampleRate * 0.0025));
+    const wanderPole = Math.exp(-1 / (sampleRate * 0.03));
+    const scrapePole = Math.exp(-2 * Math.PI * 850 / sampleRate);
+    const surfacePole = Math.exp(-2 * Math.PI * 310 / sampleRate);
+    const axle = t.id === 'rl' || t.id === 'rr' ? 0.86 : 1;
+    for (let i = 0; i < tyre.length; i++) {
+      this.activity = target + activityPole * (this.activity - target);
+      this.tone = tone + tuningPole * (this.tone - tone);
+      this.edge = edge + tuningPole * (this.edge - edge);
+      this.pitch = pitch + tuningPole * (this.pitch - pitch);
+      this.scrape = scrape + tuningPole * (this.scrape - scrape);
+      if (--this.flutterCount <= 0) {
+        this.flutterCount = Math.max(1, Math.round(sampleRate * (0.009 + this.random() * 0.015)));
+        this.flutterTarget = this.random() * 2 - 1;
+      }
+      this.flutter = this.flutterTarget + flutterPole * (this.flutter - this.flutterTarget);
+      this.wander = this.flutter + wanderPole * (this.wander - this.flutter);
+      const baseHz = (1470 + 690 * this.pitch) * axle;
+      const frequency = Math.min(sampleRate * 0.42 / 5, baseHz *
+        (1 + roughness * (this.wander * 0.012 + this.flutter * 0.003) + sliding * 0.006));
+      this.phase += frequency / sampleRate;
+      if (this.phase >= 1) this.phase -= Math.floor(this.phase);
+      const a = 2 * Math.PI * this.phase;
+      // Fixed harmonic phases yield a continuous, band-limited squeal with an
+      // adjustable ragged edge. Slip changes energy/texture, not musical pitch.
+      const body = Math.sin(a) * 0.62;
+      const bite = Math.sin(2 * a + 0.48) * (0.12 + this.edge * 0.27) +
+        Math.sin(3 * a + 1.3) * (0.06 + this.edge * 0.24) +
+        Math.sin(4 * a + 2.1) * (0.025 + this.edge * 0.15) +
+        Math.sin(5 * a + 2.9) * (0.015 + this.edge * 0.09);
+      const noise = this.random() * 2 - 1;
+      this.scrapeLow = (1 - scrapePole) * noise + scrapePole * this.scrapeLow;
+      const highNoise = noise - this.scrapeLow;
+      const texture = 1 + roughness * this.flutter * 0.37;
+      const level = this.activity * (0.15 + 0.85 * slip) * texture;
+      tyre[i] = bounded(((body + bite) * this.tone * 0.05 + highNoise * this.scrape * 0.009) * level, -0.9, 0.9);
+      this.surfaceLow = (1 - surfacePole) * noise + surfacePole * this.surfaceLow;
+      surface[i] = bounded(this.surfaceLow * bounded(t.rolling) * 0.02, -0.2, 0.2);
+    }
+    return true;
+  }
+}
+
 registerProcessor('playground-pulse-exhaust', PulseExhaust);
 registerProcessor('playground-friction-tyre', FrictionTyre);
+registerProcessor('playground-tonal-tyre', TonalTyre);

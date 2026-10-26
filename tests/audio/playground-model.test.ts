@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_PRESET, FIXTURES, fixtureControls, parsePreset } from "../../src/audio/playground-model";
+import { DEFAULT_PRESET, LEGACY_PRESET, FIXTURES, fixtureControls, parsePreset } from "../../src/audio/playground-model";
 
 describe("audio playground fixtures and presets", () => {
   it("has bounded, finite controls through every short synthetic example", () => {
@@ -29,10 +29,15 @@ describe("audio playground fixtures and presets", () => {
     expect(fixtureControls("tyre-scrub", 3).tyre.slip).toBeLessThan(fixtureControls("tyre-slide", 3).tyre.slip);
   });
 
-  it("round trips a preset and rejects non-finite or incompatible imported controls", () => {
+  it("round trips both sound backends without reinterpreting first-generation controls", () => {
     expect(parsePreset(JSON.parse(JSON.stringify(DEFAULT_PRESET)))).toEqual(DEFAULT_PRESET);
+    expect(parsePreset(JSON.parse(JSON.stringify(LEGACY_PRESET)))).toEqual(LEGACY_PRESET);
+    expect(parsePreset({ ...LEGACY_PRESET, tuning: { ...LEGACY_PRESET.tuning, scrape: 0 } }).tuning.scrape).toBe(0);
+    expect(() => parsePreset({ ...LEGACY_PRESET, backend: DEFAULT_PRESET.backend })).toThrow(/tone/);
+    expect(() => parsePreset({ ...DEFAULT_PRESET, backend: LEGACY_PRESET.backend })).toThrow(/screech/);
     expect(() => parsePreset({ ...DEFAULT_PRESET, version: 2 })).toThrow(/Unsupported/);
     expect(() => parsePreset({ ...DEFAULT_PRESET, tuning: { ...DEFAULT_PRESET.tuning, body: Infinity } })).toThrow(/body/);
+    expect(() => parsePreset({ ...DEFAULT_PRESET, tuning: { ...DEFAULT_PRESET.tuning, pitch: -0.1 } })).toThrow(/pitch/);
     expect(() => parsePreset({ ...DEFAULT_PRESET, bTrim: -1 })).toThrow(/trims/);
     expect(() => parsePreset({ ...DEFAULT_PRESET, manual: { ...DEFAULT_PRESET.manual, rpm: Infinity } })).toThrow(/rpm/);
   });
