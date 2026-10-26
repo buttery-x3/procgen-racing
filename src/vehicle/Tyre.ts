@@ -15,10 +15,14 @@ export const createTyreState = (): TyreState => ({
   fx: 0,
   fy: 0,
 });
-export function slipRatio(omega: number, velocity: number) {
+export function slipRatio(
+  omega: number,
+  velocity: number,
+  radius = WHEEL_RADIUS,
+) {
   return (
-    (omega * WHEEL_RADIUS - velocity) /
-    Math.max(Math.abs(velocity), Math.abs(omega * WHEEL_RADIUS), 1.5)
+    (omega * radius - velocity) /
+    Math.max(Math.abs(velocity), Math.abs(omega * radius), 1.5)
   );
 }
 export function gripCapacity(
@@ -70,12 +74,14 @@ export function integrateTyre(
   cornerMass: number,
   setup: VehicleSetup,
   dt: number,
+  radius = WHEEL_RADIUS,
+  inertia = WHEEL_INERTIA,
 ) {
-  const freeOmega = state.omega + (driveTorque * dt) / WHEEL_INERTIA;
-  const brakeDelta = (Math.max(0, brakeTorque) * dt) / WHEEL_INERTIA;
+  const freeOmega = state.omega + (driveTorque * dt) / inertia;
+  const brakeDelta = (Math.max(0, brakeTorque) * dt) / inertia;
   const predictedOmega =
     Math.sign(freeOmega) * Math.max(0, Math.abs(freeOmega) - brakeDelta);
-  const ratio = slipRatio(predictedOmega, longitudinal);
+  const ratio = slipRatio(predictedOmega, longitudinal, radius);
   const angle = Math.atan2(lateral, Math.max(Math.abs(longitudinal), 1.5));
   const force = tyreForces(ratio, angle, capacity, setup);
   const relaxation =
@@ -84,9 +90,8 @@ export function integrateTyre(
   let fy = state.fy + (force.fy - state.fy) * relaxation;
   // Contact impulse must not reverse the wheel/road relative velocity in a single step.
   // This avoids stiff low-speed wheel oscillation without overriding chassis velocity.
-  const relative = predictedOmega * WHEEL_RADIUS - longitudinal;
-  const maximumFx =
-    relative / ((WHEEL_RADIUS ** 2 * dt) / WHEEL_INERTIA + dt / cornerMass);
+  const relative = predictedOmega * radius - longitudinal;
+  const maximumFx = relative / ((radius ** 2 * dt) / inertia + dt / cornerMass);
   fx =
     relative >= 0
       ? clamp(fx, 0, Math.max(0, maximumFx))
@@ -98,12 +103,12 @@ export function integrateTyre(
     fx /= utilization;
     fy /= utilization;
   }
-  const unbrakedOmega = freeOmega - (fx * WHEEL_RADIUS * dt) / WHEEL_INERTIA;
+  const unbrakedOmega = freeOmega - (fx * radius * dt) / inertia;
   state.omega =
     Math.sign(unbrakedOmega) *
     Math.max(0, Math.abs(unbrakedOmega) - brakeDelta);
   state.spin += state.omega * dt;
   state.fx = fx;
   state.fy = fy;
-  return { fx, fy, ratio: slipRatio(state.omega, longitudinal), angle };
+  return { fx, fy, ratio: slipRatio(state.omega, longitudinal, radius), angle };
 }

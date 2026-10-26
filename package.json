@@ -15,7 +15,8 @@
     "qualify:m4:driving": "node scripts/qualify-m4-driving.mjs",
     "qualify:m5": "node scripts/qualify-m5.mjs",
     "report:m5": "node scripts/report-m5.mjs",
-    "preview": "vite preview --host 127.0.0.1"
+    "preview": "vite preview --host 127.0.0.1",
+    "qualify:m6": "node scripts/qualify-m6.mjs"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.21.0",

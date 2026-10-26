@@ -76,5 +76,7 @@ state to `main`, and push the requested release/tag. Preserve the previous
 baseline tags.
 
 The **v0.1.0 baseline** is described in [release notes](releases/v0.1.0.md).
-M6 onward remain planned; the baseline does not claim the complete M8 time-trial
-release scope.
+M6 procedural cars and the full workbench are delivered through
+`codex/m6-car-generation` into `development` for testing. M7 onward remain planned;
+the baseline does not claim the complete M8 time-trial release scope. See the
+[M6 delivery notes](m6.md).
