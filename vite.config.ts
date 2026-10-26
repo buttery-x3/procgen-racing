@@ -23,6 +23,7 @@ export default defineConfig({
         soloBenchmark: "m8-benchmark.html",
         audioLab: "audio-lab.html",
         audioDriving: "audio-driving.html",
+        audioPlayground: "audio-playground.html",
       },
     },
   },
