@@ -58,8 +58,13 @@ npm run dev
 
 Open the local address printed by Vite, normally <http://127.0.0.1:5173>.
 
+For development commits, choose checks relevant to the changed behavior; the
+full regression suite is required before merging into `main`. These commands
+are available tools, not a checklist to repeat for every feature. See the
+[validation policy](docs/workflow.md#validation-scope--revised-26-october-2026).
+
 ```sh
-npm test          # Physics integration and configuration checks
+npm test -- --maxWorkers=2 # Full regression: required before promotion to main
 npm run build    # Type checking and production build
 npm run preview  # Serve the production build locally
 npm run study:report # Reproduce the 24-case design study and comparison SVG
@@ -271,6 +276,13 @@ See the [implementation plan](docs/implementation-plan.md),
 [archived M4 v1 notes](docs/m4.md).
 
 ## Synthesized driving audio on development
+
+The channel/control system is the working foundation. The user's listening
+review found the engine too thin/buzzy and the tyres whistle-like; their timbre
+is not accepted as final. See the [sound-quality research and playground
+proposal](docs/research/audio-timbre.md) for the next tuning workflow. Development
+commits use [targeted validation](docs/workflow.md#validation-scope--revised-26-october-2026);
+the full suite is required before merging into `main`.
 
 The separate [audio feature](docs/audio.md) adds RPM/load/shift engine synthesis,
 four independent tyre warning/slip voices, headphone spatialization and distinct

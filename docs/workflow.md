@@ -41,7 +41,8 @@ the previous milestone's branch.
 
 ## Completing a milestone for testing
 
-1. Complete the work and relevant checks, including the production build. Update
+1. Complete the work and targeted checks relevant to the commit, using the scope
+   policy below. Build when code/assets/build integration warrant it. Update
    the milestone notes, README, implementation plan and qualification evidence as
    appropriate. Record known limitations and what was actually verified.
 2. Commit and push the milestone branch to `origin`.
@@ -70,6 +71,13 @@ report any concrete block; do not bypass protection.
 
 ## Promoting a release
 
+Before merging/promoting into `main`, run the full regression suite
+(`npm test -- --maxWorkers=2`) and strict TypeScript/production build
+(`npm run build`) on the release candidate, plus qualification relevant to the
+changed subsystems. Record the tested commit and results. If integration changes
+executable content, validate the affected result before promotion; a merge that
+preserves the already tested tree does not require a duplicate run.
+
 `development` is the testing destination. Completion of a milestone does not
 automatically promote it to `main`. On an explicit release request, verify the
 tested development state, update release notes/version as needed, promote that
@@ -82,6 +90,45 @@ with a merge and validate the result. Create an annotated version tag on the exa
 released `main` commit and push both refs. Synchronize `development` with that
 release commit so future milestone branches include its version and notes. Do not
 move an existing release tag.
+
+## Validation scope — revised 26 October 2026
+
+The owner requested targeted validation for each development commit, with the
+full regression suite reserved as required work before merging into `main`.
+This supersedes older blanket instructions in milestone plans to run all tests
+at each feature completion. Existing milestone qualification procedures still
+apply when their generation, construction or session behavior changes; unrelated
+features do not invalidate those records.
+
+| Change | Relevant development checks |
+| --- | --- |
+| Research, documentation or policy only | Review content, local links and `git diff --check`; no application tests/build. |
+| Audio preset or voice timbre | Short level-matched listening comparisons, affected voice tests and short native renders for changed DSP; no whole-app regression or channel recertification. |
+| Audio telemetry/control mapping | Affected control/collector tests and the relevant short replay/driving scenario. |
+| Audio context, routing or source lifecycle | Affected lifecycle/channel tests and a short native-browser check of the changed boundary. |
+| Other feature or fix | Tests for changed behavior and direct dependants; focused UI/integration checks, type checking/build as applicable. |
+| Release candidate for `main` | Full regression suite and production build, plus relevant subsystem qualification. |
+
+State the chosen scope before running checks. Once they pass, proceed to commit
+and integration. Repeat only when a subsequent meaningful change, failure or
+merge conflict affects the checked behavior. Do not use a broad hash change,
+new report formatting or documentation edit as a reason to restart successful
+tests. Do not add tests that merely restate a tuning constant.
+
+Keep baseline evidence attached to the source and environment actually measured.
+A targeted result may reference that baseline and describe its changed scope;
+it must not claim a new full qualification. If a publisher requires a complete
+fresh report, preserve targeted evidence separately until that report is needed;
+do not fabricate missing stages or bypass its validity checks.
+
+The audio 20-minute endurance run remains excluded from required checks,
+including release checks, and runs only on explicit user request. Existing
+channel/runtime evidence is the audio foundation; changes to the sound sources
+do not by themselves require repeating the spatial-recognition study. Short
+listening review of the new timbre and masking remains distinct from routing
+correctness. See [audio sound-quality research](research/audio-timbre.md).
+
+## Released baselines
 
 The current **v0.2.0 baseline** promotes the user-approved M8 development state
 `c885073` plus release metadata/documentation and fresh release checks. It includes
