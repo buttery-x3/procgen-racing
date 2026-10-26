@@ -1,6 +1,6 @@
 # Procedural Racing — implementation plan
 
-> **Branch policy:** `main` holds the M0–M5 `v0.1.0` baseline. Each future
+> **Branch policy:** `main` holds the M0–M8 `v0.2.0` baseline. Each future
 > milestone uses its own branch from `development`, then is merged and pushed
 > to remote `development` on completion for testing. Later releases to `main`
 > require an explicit request. See the [release workflow](workflow.md).
@@ -11,12 +11,13 @@ revised M4 v2 generator, [M5 venue construction](m5.md) and
 compiler, section/anchor route design, joint profile fitting and workbench. The
 [approved M4/M7 revision](m4-revised-plan.md) and [circuit research](research/circuit-design.md)
 supersede conflicting generation details below. V1 and the research lab remain
-archived baselines. [M8 solo sessions, ghosts and the circuit library](m8.md) complete the planned solo feature set for development testing; optional M7-D racing bridges remain deferred. Generation qualification uses the
+archived baselines. [M8 solo sessions, ghosts and the circuit library](m8.md) complete the planned solo feature set, released in [v0.2.0](releases/v0.2.0.md); optional M7-D racing bridges remain deferred. Generation qualification uses the
 development desktop's Ryzen 5 5600X / 32 GiB; broader hardware testing is still needed.
 
-The first repository baseline release is **v0.1.0 (M0–M5)** on `main`.
-The complete solo/time-trial feature set is delivered by M8 on `development` for testing.
-M6 and every following milestone start from `development` on a separate
+The current repository baseline is **v0.2.0 (M0–M8)** on `main`; the first
+**v0.1.0 (M0–M5)** baseline remains tagged. The complete solo/time-trial feature
+set has passed development testing and been approved for this release.
+Every future milestone starts from `development` on a separate
 `codex/m<number>-<name>` branch and finish by merging and pushing to
 `origin/development` for testing; they do not automatically update `main`.
 
@@ -467,8 +468,8 @@ body meshes; seeded preview with physical acceptance checks; the full tuning,
 garage/A/B comparison, recorder and input workbench. Qualification passed 11,000
 car seeds, 33 physical acceptance cases and 22 dressed circuit laps; the complete
 suite passes 188 tests. See [delivery details and limits](m6.md) and the
-[source-hashed report](research/m6-qualification.json). It is integrated into
-`development` for testing; `main` retains the released M0–M5 baseline.
+[source-hashed report](research/m6-qualification.json). It was integrated into
+`development` for testing and is included in the released v0.2.0 baseline.
 
 **M7 delivered:** inherited urban/rural/mountain/airfield road networks, dedicated
 oval/tri-oval/asymmetric speedways, progressive lane/apron banking, road/oval
@@ -487,8 +488,9 @@ bonnet/chase camera controls and quality fallback complete the solo presentation
 The physical campaign qualifies 25 timed laps and ghost round trips across all
 seven expanded track families and eleven procedural archetypes. Browser and
 performance evidence have separate scopes. See [M8 delivery notes](m8.md).
-The milestone is integrated into `development` for testing; promotion to `main`
-still requires an explicit release request.
+The milestone and tyre-feedback follow-up were tested on `development`, then
+approved for promotion to `main` as v0.2.0. The release retains the existing
+branch/testing policy for future work.
 
 Start UI work in M1 and develop it alongside physics; do not leave the workbench as a final skin over debug controls. M2 is the first handling-review build. M5 is the first convincing procedural circuit build. M8 is the complete first-release scope.
 

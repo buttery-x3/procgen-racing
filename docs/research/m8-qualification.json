@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "sourceHash": "eda0572759b0d72e",
-  "physicsVersion": "3b519332fd726112",
-  "date": "2026-10-26T07:15:12.186Z",
+  "sourceHash": "05ddbc2d8655f19b",
+  "physicsVersion": "3915c9277118cf78",
+  "date": "2026-10-26T07:31:49.980Z",
   "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
   "memoryGiB": 32,
   "workers": 3,
-  "elapsedSeconds": 92.42638219999999,
+  "elapsedSeconds": 90.6694206,
   "scope": "25 real 120 Hz four-wheel timed laps: FR on all seven expanded circuit families (including 24 km), four references and all eleven procedural archetypes on the authored proving circuit, plus stock low/middle/high oval lanes. Each lap must pass production gate order and tyre-centre limits, create a keyed PB/ghost and round-trip its poses and controls. Conservative caps, not maximum-speed or every car/track combination certification. Generation itself is unchanged; M7/M6 campaign reports remain historical evidence.",
   "attempted": 25,
   "passed": 25,
@@ -19,7 +19,7 @@
       "cap": 18,
       "id": 0,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "recipe": {
         "version": 3,
         "seed": "m8-driving-101",
@@ -39,13 +39,13 @@
         "car": "86b2c8c486ae2530",
         "setup": "3366d2eebc8969da",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "efb93ad1f6540f65"
+        "key": "3ecfceac95cb8b30"
       },
       "result": {
-        "id": "mvox7mtj-1",
+        "id": "mvoxt40p-1",
         "lap": 1,
         "duration": 235.57270215467335,
         "sectors": [
@@ -61,12 +61,12 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "efb93ad1f6540f65"
+          "key": "3ecfceac95cb8b30"
         },
-        "finishedAt": "2026-10-26T07:13:54.248Z"
+        "finishedAt": "2026-10-26T07:30:36.313Z"
       },
       "ghost": {
         "samples": 4713,
@@ -79,7 +79,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.27236706629429663,
       "peakSurfaceChunks": 40,
-      "ms": 11408.2918
+      "ms": 13238.0814
     },
     {
       "family": "rural",
@@ -88,7 +88,7 @@
       "cap": 18,
       "id": 1,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "recipe": {
         "version": 3,
         "seed": "m8-driving-101",
@@ -108,13 +108,13 @@
         "car": "86b2c8c486ae2530",
         "setup": "3366d2eebc8969da",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "20b0e23bef049657"
+        "key": "81fc8502b4592f1e"
       },
       "result": {
-        "id": "mvox7w90-1",
+        "id": "mvoxtct9-1",
         "lap": 1,
         "duration": 430.247227683259,
         "sectors": [
@@ -130,12 +130,12 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "20b0e23bef049657"
+          "key": "81fc8502b4592f1e"
         },
-        "finishedAt": "2026-10-26T07:14:06.468Z"
+        "finishedAt": "2026-10-26T07:30:47.709Z"
       },
       "ghost": {
         "samples": 8606,
@@ -148,7 +148,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.3236358138552982,
       "peakSurfaceChunks": 34,
-      "ms": 23725.9155
+      "ms": 24504.897599999997
     },
     {
       "family": "mountain",
@@ -157,7 +157,7 @@
       "cap": 18,
       "id": 2,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "recipe": {
         "version": 3,
         "seed": "m8-driving-101",
@@ -177,13 +177,13 @@
         "car": "86b2c8c486ae2530",
         "setup": "3366d2eebc8969da",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "81084712f1c8d49e"
+        "key": "f24bdcab0bea3847"
       },
       "result": {
-        "id": "mvox7s1a-1",
+        "id": "mvoxt9rj-1",
         "lap": 1,
         "duration": 334.5981353602767,
         "sectors": [
@@ -199,12 +199,12 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "81084712f1c8d49e"
+          "key": "f24bdcab0bea3847"
         },
-        "finishedAt": "2026-10-26T07:14:01.006Z"
+        "finishedAt": "2026-10-26T07:30:43.759Z"
       },
       "ghost": {
         "samples": 6693,
@@ -217,7 +217,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.33907286883389065,
       "peakSurfaceChunks": 38,
-      "ms": 18214.4604
+      "ms": 20456.989700000002
     },
     {
       "family": "airfield",
@@ -226,7 +226,7 @@
       "cap": 18,
       "id": 3,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "recipe": {
         "version": 3,
         "seed": "m8-driving-101",
@@ -246,13 +246,13 @@
         "car": "86b2c8c486ae2530",
         "setup": "3366d2eebc8969da",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "d2752e2615d13b4a"
+        "key": "b6dbc027ca788b1b"
       },
       "result": {
-        "id": "mvox7wsm-1",
+        "id": "mvoxtdpo-1",
         "lap": 1,
         "duration": 254.12339861067375,
         "sectors": [
@@ -268,12 +268,12 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "d2752e2615d13b4a"
+          "key": "b6dbc027ca788b1b"
         },
-        "finishedAt": "2026-10-26T07:14:07.174Z"
+        "finishedAt": "2026-10-26T07:30:48.876Z"
       },
       "ghost": {
         "samples": 5084,
@@ -286,7 +286,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.30305796240855,
       "peakSurfaceChunks": 41,
-      "ms": 12917.654100000002
+      "ms": 12472.095999999998
     },
     {
       "family": "oval",
@@ -295,7 +295,7 @@
       "cap": 18,
       "id": 4,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "recipe": {
         "version": 3,
         "seed": "m8-driving-101",
@@ -315,13 +315,13 @@
         "car": "86b2c8c486ae2530",
         "setup": "3366d2eebc8969da",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "568ce76645a0ea6a"
+        "key": "52adf71fd082c063"
       },
       "result": {
-        "id": "mvox7xp4-1",
+        "id": "mvoxtf67-1",
         "lap": 1,
         "duration": 137.73148080933197,
         "sectors": [
@@ -337,12 +337,12 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "568ce76645a0ea6a"
+          "key": "52adf71fd082c063"
         },
-        "finishedAt": "2026-10-26T07:14:08.344Z"
+        "finishedAt": "2026-10-26T07:30:50.767Z"
       },
       "ghost": {
         "samples": 2756,
@@ -355,7 +355,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.6100257721345486,
       "peakSurfaceChunks": 29,
-      "ms": 7200.665300000001
+      "ms": 6860.627600000003
     },
     {
       "family": "hybrid",
@@ -364,7 +364,7 @@
       "cap": 18,
       "id": 5,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "recipe": {
         "version": 3,
         "seed": "m8-driving-101",
@@ -384,13 +384,13 @@
         "car": "86b2c8c486ae2530",
         "setup": "3366d2eebc8969da",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "bb4b2468f2287f14"
+        "key": "1dd4431dbf46e429"
       },
       "result": {
-        "id": "mvox86yj-1",
+        "id": "mvoxtmwe-1",
         "lap": 1,
         "duration": 267.58755249209565,
         "sectors": [
@@ -406,12 +406,12 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "bb4b2468f2287f14"
+          "key": "1dd4431dbf46e429"
         },
-        "finishedAt": "2026-10-26T07:14:20.347Z"
+        "finishedAt": "2026-10-26T07:31:00.782Z"
       },
       "ghost": {
         "samples": 5353,
@@ -424,7 +424,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.6695851407086473,
       "peakSurfaceChunks": 36,
-      "ms": 13786.614400000002
+      "ms": 12956.641200000002
     },
     {
       "family": "endurance",
@@ -433,7 +433,7 @@
       "cap": 18,
       "id": 6,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "recipe": {
         "version": 3,
         "seed": "m8-driving-101",
@@ -453,13 +453,13 @@
         "car": "86b2c8c486ae2530",
         "setup": "3366d2eebc8969da",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "4bf400fe6d2129f2"
+        "key": "d7538dd3d07880c7"
       },
       "result": {
-        "id": "mvox9aed-1",
+        "id": "mvoxuoaz-1",
         "lap": 1,
         "duration": 1383.4672032466385,
         "sectors": [
@@ -475,12 +475,12 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "4bf400fe6d2129f2"
+          "key": "d7538dd3d07880c7"
         },
-        "finishedAt": "2026-10-26T07:15:11.461Z"
+        "finishedAt": "2026-10-26T07:31:49.259Z"
       },
       "ghost": {
         "samples": 27671,
@@ -493,26 +493,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.32578797296919204,
       "peakSurfaceChunks": 34,
-      "ms": 64847.322100000005
+      "ms": 60934.721000000005
     },
     {
       "car": "ff",
       "cap": 14,
       "id": 7,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "6c818608eb0e734c",
         "setup": "6ba52874ad0801e0",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "f3abe1f2bf874056"
+        "key": "ceb8d3ab9fccd8bf"
       },
       "result": {
-        "id": "mvox7z6e-1",
+        "id": "mvoxtggr-1",
         "lap": 1,
         "duration": 62.52231238394505,
         "sectors": [
@@ -528,12 +528,12 @@
           "car": "6c818608eb0e734c",
           "setup": "6ba52874ad0801e0",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "f3abe1f2bf874056"
+          "key": "ceb8d3ab9fccd8bf"
         },
-        "finishedAt": "2026-10-26T07:14:10.262Z"
+        "finishedAt": "2026-10-26T07:30:52.443Z"
       },
       "ghost": {
         "samples": 1252,
@@ -546,26 +546,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.49501279764927764,
       "peakSurfaceChunks": 0,
-      "ms": 1842.9537999999993
+      "ms": 1621.0429999999978
     },
     {
       "car": "fr",
       "cap": 14,
       "id": 8,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "86b2c8c486ae2530",
         "setup": "3366d2eebc8969da",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "861afca5db1f6dc9"
+        "key": "b358acf416905768"
       },
       "result": {
-        "id": "mvox80cm-1",
+        "id": "mvoxthm1-1",
         "lap": 1,
         "duration": 61.196877879876745,
         "sectors": [
@@ -581,12 +581,12 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "861afca5db1f6dc9"
+          "key": "b358acf416905768"
         },
-        "finishedAt": "2026-10-26T07:14:11.782Z"
+        "finishedAt": "2026-10-26T07:30:53.929Z"
       },
       "ghost": {
         "samples": 1225,
@@ -599,26 +599,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4881551454452957,
       "peakSurfaceChunks": 0,
-      "ms": 1528.2600999999995
+      "ms": 1491.4714999999997
     },
     {
       "car": "mr",
       "cap": 14,
       "id": 9,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "b0ddfc038641571f",
         "setup": "fb4e666d9b2535b1",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "76d372cd9508b169"
+        "key": "48fba020375f3ebc"
       },
       "result": {
-        "id": "mvox81k4-1",
+        "id": "mvoxtitf-1",
         "lap": 1,
         "duration": 60.77262242793734,
         "sectors": [
@@ -634,12 +634,12 @@
           "car": "b0ddfc038641571f",
           "setup": "fb4e666d9b2535b1",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "76d372cd9508b169"
+          "key": "48fba020375f3ebc"
         },
-        "finishedAt": "2026-10-26T07:14:13.348Z"
+        "finishedAt": "2026-10-26T07:30:55.491Z"
       },
       "ghost": {
         "samples": 1217,
@@ -652,26 +652,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4528918511097211,
       "peakSurfaceChunks": 0,
-      "ms": 1547.0038000000022
+      "ms": 1557.906299999995
     },
     {
       "car": "awd",
       "cap": 14,
       "id": 10,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "19345806120d8952",
         "setup": "fb6a3c348a0aa260",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "585047a3c8ca7957"
+        "key": "cf9e2dbaca7894be"
       },
       "result": {
-        "id": "mvox82x0-1",
+        "id": "mvoxtk9o-1",
         "lap": 1,
         "duration": 60.7476246832933,
         "sectors": [
@@ -687,12 +687,12 @@
           "car": "19345806120d8952",
           "setup": "fb6a3c348a0aa260",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "585047a3c8ca7957"
+          "key": "cf9e2dbaca7894be"
         },
-        "finishedAt": "2026-10-26T07:14:15.108Z"
+        "finishedAt": "2026-10-26T07:30:57.372Z"
       },
       "ghost": {
         "samples": 1216,
@@ -705,26 +705,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.5091564582594352,
       "peakSurfaceChunks": 0,
-      "ms": 1769.671699999999
+      "ms": 1867.912400000001
     },
     {
       "carFamily": "hatch",
       "cap": 14,
       "id": 11,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "289a6f657da67ac1",
         "setup": "bef62909cf065955",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "9891893e6c566552"
+        "key": "a70864fbe41ab9af"
       },
       "result": {
-        "id": "mvox84ie-1",
+        "id": "mvoxtlsy-1",
         "lap": 1,
         "duration": 62.33876663939387,
         "sectors": [
@@ -740,12 +740,12 @@
           "car": "289a6f657da67ac1",
           "setup": "bef62909cf065955",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "9891893e6c566552"
+          "key": "a70864fbe41ab9af"
         },
-        "finishedAt": "2026-10-26T07:14:17.174Z"
+        "finishedAt": "2026-10-26T07:30:59.362Z"
       },
       "ghost": {
         "samples": 1248,
@@ -758,26 +758,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.47552191473263805,
       "peakSurfaceChunks": 0,
-      "ms": 2066.6164000000063
+      "ms": 1983.0944000000018
     },
     {
       "carFamily": "coupe",
       "cap": 14,
       "id": 12,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "1df93e2a352a28f6",
         "setup": "e2d0e45d328120c1",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "35aeecc81c40f9c4"
+        "key": "c96c3c395fc37785"
       },
       "result": {
-        "id": "mvox85xz-1",
+        "id": "mvoxtn8i-1",
         "lap": 1,
         "duration": 60.9619546727133,
         "sectors": [
@@ -793,12 +793,12 @@
           "car": "1df93e2a352a28f6",
           "setup": "e2d0e45d328120c1",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "35aeecc81c40f9c4"
+          "key": "c96c3c395fc37785"
         },
-        "finishedAt": "2026-10-26T07:14:19.031Z"
+        "finishedAt": "2026-10-26T07:31:01.218Z"
       },
       "ghost": {
         "samples": 1221,
@@ -811,26 +811,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.5249160146561275,
       "peakSurfaceChunks": 0,
-      "ms": 1848.696600000003
+      "ms": 1863.6319000000003
     },
     {
       "carFamily": "sedan",
       "cap": 14,
       "id": 13,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "5e426381be475af5",
         "setup": "5dc6d0acae3a2420",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "ac4daf82c88903ae"
+        "key": "e4640cdbf29f98a7"
       },
       "result": {
-        "id": "mvox879h-1",
+        "id": "mvoxtocb-1",
         "lap": 1,
         "duration": 61.011908299065155,
         "sectors": [
@@ -846,12 +846,12 @@
           "car": "5e426381be475af5",
           "setup": "5dc6d0acae3a2420",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "ac4daf82c88903ae"
+          "key": "e4640cdbf29f98a7"
         },
-        "finishedAt": "2026-10-26T07:14:20.741Z"
+        "finishedAt": "2026-10-26T07:31:02.651Z"
       },
       "ghost": {
         "samples": 1222,
@@ -864,26 +864,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.5580369417629034,
       "peakSurfaceChunks": 0,
-      "ms": 1707.8470000000016
+      "ms": 1748.633299999994
     },
     {
       "carFamily": "sports",
       "cap": 14,
       "id": 14,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "7c3bada87292cb44",
         "setup": "c695395fe60917c3",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "4c6aa9eb8243fcaf"
+        "key": "81a66beaa327138e"
       },
       "result": {
-        "id": "mvox88jm-1",
+        "id": "mvoxtoj8-1",
         "lap": 1,
         "duration": 60.76725266345649,
         "sectors": [
@@ -899,12 +899,12 @@
           "car": "7c3bada87292cb44",
           "setup": "c695395fe60917c3",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "4c6aa9eb8243fcaf"
+          "key": "81a66beaa327138e"
         },
-        "finishedAt": "2026-10-26T07:14:22.402Z"
+        "finishedAt": "2026-10-26T07:31:02.900Z"
       },
       "ghost": {
         "samples": 1217,
@@ -917,26 +917,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4647949148455812,
       "peakSurfaceChunks": 0,
-      "ms": 1914.834799999997
+      "ms": 1674.487500000003
     },
     {
       "carFamily": "hypercar",
       "cap": 14,
       "id": 15,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "0d73b1b2160716ae",
         "setup": "3325d78cacdab920",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "b3e0108ad0300bf6"
+        "key": "489e12677bbdf8c3"
       },
       "result": {
-        "id": "mvox88lg-1",
+        "id": "mvoxtpkx-1",
         "lap": 1,
         "duration": 60.07941119852609,
         "sectors": [
@@ -952,12 +952,12 @@
           "car": "0d73b1b2160716ae",
           "setup": "3325d78cacdab920",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "b3e0108ad0300bf6"
+          "key": "489e12677bbdf8c3"
         },
-        "finishedAt": "2026-10-26T07:14:22.468Z"
+        "finishedAt": "2026-10-26T07:31:04.258Z"
       },
       "ghost": {
         "samples": 1203,
@@ -970,26 +970,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4827702066836267,
       "peakSurfaceChunks": 0,
-      "ms": 1724.4881999999998
+      "ms": 1613.8873999999996
     },
     {
       "carFamily": "rear-coupe",
       "cap": 14,
       "id": 16,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "a908da9c957801f8",
         "setup": "2921b55454531b98",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "ade44eadbb957371"
+        "key": "fbc86750c0a48134"
       },
       "result": {
-        "id": "mvox89yx-1",
+        "id": "mvoxtpww-1",
         "lap": 1,
         "duration": 60.772831413448245,
         "sectors": [
@@ -1005,12 +1005,12 @@
           "car": "a908da9c957801f8",
           "setup": "2921b55454531b98",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "ade44eadbb957371"
+          "key": "fbc86750c0a48134"
         },
-        "finishedAt": "2026-10-26T07:14:24.249Z"
+        "finishedAt": "2026-10-26T07:31:04.688Z"
       },
       "ghost": {
         "samples": 1217,
@@ -1023,26 +1023,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4198798848387352,
       "peakSurfaceChunks": 0,
-      "ms": 1854.1198999999979
+      "ms": 1791.158899999995
     },
     {
       "carFamily": "awd",
       "cap": 14,
       "id": 17,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "7ced8f48797c9f4c",
         "setup": "acc8ee4dab919a69",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "148e4a8d49bb5471"
+        "key": "c4d595549e3a6e98"
       },
       "result": {
-        "id": "mvox89zi-1",
+        "id": "mvoxtqut-1",
         "lap": 1,
         "duration": 60.650080700058886,
         "sectors": [
@@ -1058,12 +1058,12 @@
           "car": "7ced8f48797c9f4c",
           "setup": "acc8ee4dab919a69",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "148e4a8d49bb5471"
+          "key": "c4d595549e3a6e98"
         },
-        "finishedAt": "2026-10-26T07:14:24.270Z"
+        "finishedAt": "2026-10-26T07:31:05.909Z"
       },
       "ghost": {
         "samples": 1214,
@@ -1076,26 +1076,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.5559081571215583,
       "peakSurfaceChunks": 0,
-      "ms": 1805.123900000006
+      "ms": 1653.9784
     },
     {
       "carFamily": "gt",
       "cap": 14,
       "id": 18,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "3cc394ab9198c17f",
         "setup": "5d9f481c531abf78",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "e9799256cfe94122"
+        "key": "e6fcf343adaef40f"
       },
       "result": {
-        "id": "mvox8bef-1",
+        "id": "mvoxtr81-1",
         "lap": 1,
         "duration": 60.065290299747616,
         "sectors": [
@@ -1111,12 +1111,12 @@
           "car": "3cc394ab9198c17f",
           "setup": "5d9f481c531abf78",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "e9799256cfe94122"
+          "key": "e6fcf343adaef40f"
         },
-        "finishedAt": "2026-10-26T07:14:26.104Z"
+        "finishedAt": "2026-10-26T07:31:06.385Z"
       },
       "ghost": {
         "samples": 1203,
@@ -1129,26 +1129,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.6133072014220344,
       "peakSurfaceChunks": 0,
-      "ms": 1852.4010999999955
+      "ms": 1691.2166999999972
     },
     {
       "carFamily": "prototype",
       "cap": 14,
       "id": 19,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "d7cccec0659a4874",
         "setup": "7ce953adefd03fd1",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "88b41535ce0659b9"
+        "key": "596e1a84f86c71d8"
       },
       "result": {
-        "id": "mvox8bf1-1",
+        "id": "mvoxts5a-1",
         "lap": 1,
         "duration": 59.98588910569663,
         "sectors": [
@@ -1164,12 +1164,12 @@
           "car": "d7cccec0659a4874",
           "setup": "7ce953adefd03fd1",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "88b41535ce0659b9"
+          "key": "596e1a84f86c71d8"
         },
-        "finishedAt": "2026-10-26T07:14:26.125Z"
+        "finishedAt": "2026-10-26T07:31:07.582Z"
       },
       "ghost": {
         "samples": 1201,
@@ -1182,26 +1182,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.6269036345711878,
       "peakSurfaceChunks": 0,
-      "ms": 1849.2834000000003
+      "ms": 1654.8067999999985
     },
     {
       "carFamily": "open-wheel",
       "cap": 14,
       "id": 20,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "bb85ebec6945a8e8",
         "setup": "dd9c77db516849a7",
         "assists": "959e549de9f58951",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "fc6f18dbbe1b04a7"
+        "key": "77035a3a594a6f86"
       },
       "result": {
-        "id": "mvox8cwv-1",
+        "id": "mvoxtsmo-1",
         "lap": 1,
         "duration": 60.191796240819755,
         "sectors": [
@@ -1217,12 +1217,12 @@
           "car": "bb85ebec6945a8e8",
           "setup": "dd9c77db516849a7",
           "assists": "959e549de9f58951",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "fc6f18dbbe1b04a7"
+          "key": "77035a3a594a6f86"
         },
-        "finishedAt": "2026-10-26T07:14:28.063Z"
+        "finishedAt": "2026-10-26T07:31:08.208Z"
       },
       "ghost": {
         "samples": 1205,
@@ -1235,26 +1235,26 @@
       "fourContactFraction": 1,
       "maxLineError": 0.648459986152641,
       "peakSurfaceChunks": 0,
-      "ms": 1972.2019
+      "ms": 1840.8202999999994
     },
     {
       "carFamily": "stock",
       "cap": 14,
       "id": 21,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "identity": {
         "track": "01813f533f1672b7",
         "car": "97bcbe5a2b513ae6",
         "setup": "fa78b11c8c671878",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "9d9e2ccd7f7c1fc9"
+        "key": "85cd0a68445d8ce4"
       },
       "result": {
-        "id": "mvox8cyf-1",
+        "id": "mvoxtthk-1",
         "lap": 1,
         "duration": 60.098392901435304,
         "sectors": [
@@ -1270,12 +1270,12 @@
           "car": "97bcbe5a2b513ae6",
           "setup": "fa78b11c8c671878",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "9d9e2ccd7f7c1fc9"
+          "key": "85cd0a68445d8ce4"
         },
-        "finishedAt": "2026-10-26T07:14:28.119Z"
+        "finishedAt": "2026-10-26T07:31:09.320Z"
       },
       "ghost": {
         "samples": 1203,
@@ -1288,7 +1288,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.6672825529477362,
       "peakSurfaceChunks": 0,
-      "ms": 2000.9313000000038
+      "ms": 1737.5771999999997
     },
     {
       "family": "oval",
@@ -1298,7 +1298,7 @@
       "lane": "low",
       "id": 22,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "recipe": {
         "version": 3,
         "seed": "m8-driving-101",
@@ -1318,13 +1318,13 @@
         "car": "97bcbe5a2b513ae6",
         "setup": "fa78b11c8c671878",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "834ae5e86ceae434"
+        "key": "5ee61529458e5205"
       },
       "result": {
-        "id": "mvox8jv2-1",
+        "id": "mvoxtzua-1",
         "lap": 1,
         "duration": 148.98925137593483,
         "sectors": [
@@ -1340,12 +1340,12 @@
           "car": "97bcbe5a2b513ae6",
           "setup": "fa78b11c8c671878",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "834ae5e86ceae434"
+          "key": "5ee61529458e5205"
         },
-        "finishedAt": "2026-10-26T07:14:37.070Z"
+        "finishedAt": "2026-10-26T07:31:17.554Z"
       },
       "ghost": {
         "samples": 2981,
@@ -1358,7 +1358,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.3745307504357811,
       "peakSurfaceChunks": 29,
-      "ms": 9032.189600000005
+      "ms": 9358.679199999999
     },
     {
       "family": "oval",
@@ -1368,7 +1368,7 @@
       "lane": "middle",
       "id": 23,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "recipe": {
         "version": 3,
         "seed": "m8-driving-101",
@@ -1388,13 +1388,13 @@
         "car": "97bcbe5a2b513ae6",
         "setup": "fa78b11c8c671878",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "834ae5e86ceae434"
+        "key": "5ee61529458e5205"
       },
       "result": {
-        "id": "mvox8jza-1",
+        "id": "mvoxu0b5-1",
         "lap": 1,
         "duration": 150.24238915751783,
         "sectors": [
@@ -1410,12 +1410,12 @@
           "car": "97bcbe5a2b513ae6",
           "setup": "fa78b11c8c671878",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "834ae5e86ceae434"
+          "key": "5ee61529458e5205"
         },
-        "finishedAt": "2026-10-26T07:14:37.222Z"
+        "finishedAt": "2026-10-26T07:31:18.161Z"
       },
       "ghost": {
         "samples": 3006,
@@ -1428,7 +1428,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.3637736200600664,
       "peakSurfaceChunks": 29,
-      "ms": 9141.149300000005
+      "ms": 8894.257599999997
     },
     {
       "family": "oval",
@@ -1438,7 +1438,7 @@
       "lane": "high",
       "id": 24,
       "ok": true,
-      "physicsVersion": "3b519332fd726112",
+      "physicsVersion": "3915c9277118cf78",
       "recipe": {
         "version": 3,
         "seed": "m8-driving-101",
@@ -1458,13 +1458,13 @@
         "car": "97bcbe5a2b513ae6",
         "setup": "fa78b11c8c671878",
         "assists": "3bb75e77fc24fdbb",
-        "physics": "3b519332fd726112",
+        "physics": "3915c9277118cf78",
         "rules": "solo-1",
         "variant": "full",
-        "key": "834ae5e86ceae434"
+        "key": "5ee61529458e5205"
       },
       "result": {
-        "id": "mvox8qnr-1",
+        "id": "mvoxu6w8-1",
         "lap": 1,
         "duration": 151.54463689965306,
         "sectors": [
@@ -1480,12 +1480,12 @@
           "car": "97bcbe5a2b513ae6",
           "setup": "fa78b11c8c671878",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "834ae5e86ceae434"
+          "key": "5ee61529458e5205"
         },
-        "finishedAt": "2026-10-26T07:14:45.879Z"
+        "finishedAt": "2026-10-26T07:31:26.696Z"
       },
       "ghost": {
         "samples": 3032,
@@ -1498,7 +1498,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4904343802785016,
       "peakSurfaceChunks": 29,
-      "ms": 8812.971799999992
+      "ms": 9139.359400000001
     }
   ]
 }

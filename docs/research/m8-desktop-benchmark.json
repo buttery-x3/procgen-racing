@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "physicsVersion": "3b519332fd726112",
+  "physicsVersion": "3915c9277118cf78",
   "scope": "Visible browser RAF; production SceneView, GenerationClient, SuspensionRig and RaceSession at 1920x1080, pixel ratio 1, PCF shadows, 120 Hz physics, timing gates, 20 Hz working recorder, bounded effects and a synthetic trailing ghost for render load. FR reference car. This renderer/session benchmark excludes the workbench DOM and does not substitute for actual ghost playback or full-lap tests. Generation/setup precede warm-up. Browser scheduling and other desktop load affect results. GPU bytes are not measurable.",
-  "date": "2026-10-26T07:16:52.917Z",
+  "date": "2026-10-26T07:35:35.919Z",
   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
   "hardwareConcurrency": 12,
   "deviceMemory": 32,
@@ -23,8 +23,8 @@
         "endurance": false
       },
       "fingerprint": "v3-3c530dff/m7-venue-9877a01",
-      "workerMs": 1566.5,
-      "setupMs": 304.40000009536743,
+      "workerMs": 1427.2999999523163,
+      "setupMs": 321.39999997615814,
       "geometry": {
         "inheritedShare": 1,
         "connectorShare": 0,
@@ -53,33 +53,33 @@
       "visibility": "visible",
       "frameIntervalMs": {
         "p50": 10,
-        "p95": 10.10000000000582,
-        "max": 10.10000000000582,
+        "p95": 10.100000000000364,
+        "max": 10.199999999998909,
         "over33ms": 0
       },
-      "meanFps": 100.00138890817935,
+      "meanFps": 100.00277785494042,
       "simulationMs": {
-        "p50": 0.5999999046325684,
+        "p50": 0.5,
         "p95": 0.8999999761581421
       },
       "renderSubmissionMs": {
-        "p50": 1.2000000476837158,
-        "p95": 1.6999999284744263
+        "p50": 1.2999999523162842,
+        "p95": 1.9000000953674316
       },
       "distanceDriven": 152.4641057935355,
       "grounded": 4,
       "heap": {
         "before": {
-          "usedMiB": 62.34287071228027,
-          "totalMiB": 74.93646812438965,
+          "usedMiB": 69.62063217163086,
+          "totalMiB": 92.14642333984375,
           "limitMiB": 4192
         },
         "after": {
-          "usedMiB": 73.55942916870117,
-          "totalMiB": 106.0068473815918,
+          "usedMiB": 75.92337989807129,
+          "totalMiB": 107.66291618347168,
           "limitMiB": 4192
         },
-        "peakUsedMiB": 84.39502716064453
+        "peakUsedMiB": 85.71021461486816
       },
       "renderer": {
         "vendor": "Google Inc. (NVIDIA)",
@@ -121,10 +121,10 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "f082155489d831f8"
+          "key": "9677a73d10e33801"
         },
         "state": "running",
         "recordingBytes": 6912192
@@ -146,8 +146,8 @@
         "endurance": false
       },
       "fingerprint": "v3-c219dbd1/m7-venue-de96d65d",
-      "workerMs": 1550.6999999284744,
-      "setupMs": 140.5,
+      "workerMs": 1457.7000000476837,
+      "setupMs": 121.39999997615814,
       "geometry": {
         "inheritedShare": 1,
         "connectorShare": 0,
@@ -176,33 +176,33 @@
       "visibility": "visible",
       "frameIntervalMs": {
         "p50": 10,
-        "p95": 10.10000000000582,
-        "max": 10.299999999988358,
+        "p95": 10.100000000002183,
+        "max": 10.100000000002183,
         "over33ms": 0
       },
-      "meanFps": 100.00277785494059,
+      "meanFps": 100.00277785494042,
       "simulationMs": {
-        "p50": 0.5,
-        "p95": 0.8999999761581421
+        "p50": 0.40000009536743164,
+        "p95": 0.8000000715255737
       },
       "renderSubmissionMs": {
-        "p50": 1.1999999284744263,
+        "p50": 1.0999999046325684,
         "p95": 1.7000000476837158
       },
       "distanceDriven": 152.2613048553476,
       "grounded": 4,
       "heap": {
         "before": {
-          "usedMiB": 118.01578617095947,
-          "totalMiB": 151.53811359405518,
+          "usedMiB": 114.74080753326416,
+          "totalMiB": 147.85012531280518,
           "limitMiB": 4192
         },
         "after": {
-          "usedMiB": 84.09120273590088,
-          "totalMiB": 145.91286182403564,
+          "usedMiB": 84.06693267822266,
+          "totalMiB": 147.1620330810547,
           "limitMiB": 4192
         },
-        "peakUsedMiB": 118.01578617095947
+        "peakUsedMiB": 114.74080753326416
       },
       "renderer": {
         "vendor": "Google Inc. (NVIDIA)",
@@ -244,10 +244,10 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "216532f3cc44b70f"
+          "key": "29fb99125c1725ae"
         },
         "state": "running",
         "recordingBytes": 6912192
@@ -269,8 +269,8 @@
         "endurance": true
       },
       "fingerprint": "v3-85a195b2/m7-venue-3dde371c",
-      "workerMs": 9381.799999952316,
-      "setupMs": 237.89999997615814,
+      "workerMs": 9170.300000071526,
+      "setupMs": 272.2000000476837,
       "geometry": {
         "inheritedShare": 0.9376247504990021,
         "connectorShare": 0.06237524950099793,
@@ -299,33 +299,33 @@
       "visibility": "visible",
       "frameIntervalMs": {
         "p50": 10,
-        "p95": 10.100000000034925,
-        "max": 10.100000000034925,
+        "p95": 10.10000000000582,
+        "max": 10.200000000004366,
         "over33ms": 0
       },
-      "meanFps": 100.00277785494059,
+      "meanFps": 100.00416684028504,
       "simulationMs": {
-        "p50": 0.5999999046325684,
+        "p50": 0.5,
         "p95": 1
       },
       "renderSubmissionMs": {
-        "p50": 2,
-        "p95": 2.6999999284744263
+        "p50": 1.600000023841858,
+        "p95": 2.299999952316284
       },
-      "distanceDriven": 152.2170473320548,
+      "distanceDriven": 152.46100469187513,
       "grounded": 4,
       "heap": {
         "before": {
-          "usedMiB": 176.66392517089844,
-          "totalMiB": 222.54671096801758,
+          "usedMiB": 176.42545127868652,
+          "totalMiB": 210.45619010925293,
           "limitMiB": 4192
         },
         "after": {
-          "usedMiB": 185.43182182312012,
-          "totalMiB": 239.02295875549316,
+          "usedMiB": 172.2270050048828,
+          "totalMiB": 231.68243789672852,
           "limitMiB": 4192
         },
-        "peakUsedMiB": 198.326078414917
+        "peakUsedMiB": 191.76965713500977
       },
       "renderer": {
         "vendor": "Google Inc. (NVIDIA)",
@@ -358,7 +358,7 @@
         }
       },
       "queries": {
-        "calls": 6871,
+        "calls": 6877,
         "maxCandidates": 155
       },
       "session": {
@@ -367,20 +367,20 @@
           "car": "86b2c8c486ae2530",
           "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3b519332fd726112",
+          "physics": "3915c9277118cf78",
           "rules": "solo-1",
           "variant": "full",
-          "key": "74cc85582eeea67c"
+          "key": "b7e3b16d94275b11"
         },
         "state": "running",
         "recordingBytes": 6912192
       }
     }
   ],
-  "sourceHash": "eda0572759b0d72e",
+  "sourceHash": "05ddbc2d8655f19b",
   "desktop": {
     "cpu": "AMD Ryzen 5 5600X 6-Core Processor",
     "installedMemoryGiB": 32,
-    "note": "Actual WebGL GPU is recorded per case. Other desktop activity was not controlled; the qualification/test commands had completed before this measurement."
+    "note": "Actual WebGL GPU is recorded per case. Other desktop activity was not controlled. Regression and physical qualification commands completed before this release sample."
   }
 }
