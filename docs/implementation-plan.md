@@ -513,3 +513,14 @@ Working defaults that can be changed during implementation without reopening the
 - Select a specific reference desktop/GPU in M0. Until then 1080p/60 fps is a design target, not a measured claim.
 
 No further user decision is required to begin M0–M1. Handling feel should be reviewed on the M2 driving build, where the alternatives can be compared rather than settled only in prose.
+
+## 15. Audio follow-up research — 26 October 2026
+
+The [audio system plan](research/audio-system.md) develops the initial M8 audio
+into RPM/load/shift engine synthesis and per-wheel near-limit/slip feedback.
+The user confirmed headphones as the main output and accepted distinct front/rear
+tyre timbres for clarity. The proposal combines HRTF spatialization with these
+axle cues and includes a stereo fallback, telemetry audit, staged implementation
+and perceptual/performance gates. It is planning only, with no milestone number
+assigned and no claim of completed audio validation. Reconcile with integrated
+M8 before implementing it on a separate branch from development.
