@@ -12,7 +12,9 @@ are rejected: the first sounds like rain, and the tonal revision still sounds
 like an isolated tone. The [user-recording analysis](research/tyre-recording-comparison.md)
 shows broader, moving spectral structure and different early/middle/late
 character in the real reference. It proposes a short reference reconstruction
-before another playground backend; further implementation awaits approval. The original
+before another playground backend. That approved reconstruction is now
+[ready for hearing](research/tyre-reference-audition.md) at `/audio-reference.html`.
+The original
 production voices remain the infrastructure/comparison baseline; existing
 qualification records are preserved.
 

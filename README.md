@@ -281,7 +281,8 @@ The channel/control system is the working foundation. The user likes the new
 playground engine. Both tyre sources have been rejected: the first sounds like
 rain, the second like a tone. The [recording comparison](docs/research/tyre-recording-comparison.md)
 measures the missing spectral evolution and proposes a short reference
-reconstruction; further implementation awaits approval.
+reconstruction. The approved [short reference audition](docs/research/tyre-reference-audition.md)
+is ready at `/audio-reference.html`: start with **Hear reference → reconstruction**.
 Development commits use [targeted validation](docs/workflow.md#validation-scope--revised-26-october-2026);
 the full suite is required before merging into `main`.
 
