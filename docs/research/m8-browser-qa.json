@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "sourceHash": "9c85951dd0d8cac2",
+  "physicsVersion": "3b519332fd726112",
+  "date": "2026-10-26T06:37:12.259Z",
+  "scope": "IAB browser checks on the production App and Workbench, using the isolated M8 qualification database on localhost:5318. Physical gamepad hardware and subjective audio quality were not assessed.",
+  "failed": 0,
+  "physicalLap": {
+    "scope": "Production App, Workbench, 120 Hz four-wheel physics, conservative scripted VehicleControls, real gates and limits, isolated qualification IndexedDB.",
+    "result": {
+      "id": "mvovteu0-1",
+      "lap": 1,
+      "duration": 61.198341771610046,
+      "sectors": [
+        17.852987691142207,
+        20.348126817480406,
+        22.99722726298743
+      ],
+      "valid": true,
+      "reasons": [],
+      "mode": "time-trial",
+      "identity": {
+        "track": "01813f533f1672b7",
+        "car": "86b2c8c486ae2530",
+        "setup": "3366d2eebc8969da",
+        "assists": "3bb75e77fc24fdbb",
+        "physics": "3b519332fd726112",
+        "rules": "solo-1",
+        "variant": "full",
+        "key": "861afca5db1f6dc9"
+      },
+      "finishedAt": "2026-10-26T06:34:51.096Z"
+    },
+    "sourceHash": "9c85951dd0d8cac2"
+  },
+  "firstBest": {
+    "duration": 61.19834005900411,
+    "ghost": {
+      "samples": 1225,
+      "bytes": 117600,
+      "duration": 61.19834005900411
+    }
+  },
+  "checks": [
+    {
+      "name": "Real 120 Hz physical lap through production timing gates and HUD",
+      "pass": true
+    },
+    {
+      "name": "Three sector times sum to the valid finish and personal best",
+      "pass": true
+    },
+    {
+      "name": "Compatible pose ghost validates and persists in IndexedDB",
+      "pass": true
+    },
+    {
+      "name": "Personal best and ghost restore after page reload",
+      "pass": true
+    },
+    {
+      "name": "Imported compatible ghost preserves the earned personal best",
+      "pass": true
+    },
+    {
+      "name": "FF change hides the FR best; FR restores its own best",
+      "pass": true
+    },
+    {
+      "name": "FR ghost import is rejected for FF with an explicit compatibility message",
+      "pass": true
+    },
+    {
+      "name": "Opening a modal invalidates an active timed lap",
+      "pass": true
+    },
+    {
+      "name": "Vehicle reset persists an invalid recent lap immediately",
+      "pass": true,
+      "observed": "Vehicle reset · 16.816 s"
+    },
+    {
+      "name": "Quality and ghost display controls preserve compatible saved records",
+      "pass": true
+    },
+    {
+      "name": "Bonnet view renders; chase/top/orbit controls remain available",
+      "pass": true
+    },
+    {
+      "name": "Driving sound starts through the UI and can be silenced",
+      "pass": true
+    },
+    {
+      "name": "Import and drive an existing accepted 24 km M7 circuit",
+      "pass": true
+    },
+    {
+      "name": "Library naming, favourite filter and search operate",
+      "pass": true
+    },
+    {
+      "name": "Library removal is recoverable through Trash and Restore",
+      "pass": true
+    },
+    {
+      "name": "Library entries and favourite persist after reload",
+      "pass": true
+    },
+    {
+      "name": "Saving an existing active accepted route deduplicates the entry",
+      "pass": true
+    },
+    {
+      "name": "Loading the library route retains the FR vehicle",
+      "pass": true
+    },
+    {
+      "name": "Session and library export controls complete without an error",
+      "pass": true
+    }
+  ],
+  "notes": [
+    "The final browser lap matched the existing 61.198 s best, so its already validated ghost was retained rather than replaced. The original browser-created ghost has 1,225 poses / 117,600 bytes.",
+    "Library and record QA data use an isolated diagnostic store. Normal-user personal bests and circuit entries were not populated by the scripted controller.",
+    "Byte/checksum round trips and malformed-data cases are additionally covered by Node tests and the 25-lap campaign.",
+    "The final library restore was repeated after removing its unrelated legacy-workshop-save side effect; it loaded the accepted 24 km definition and retained the FR car."
+  ]
+}
