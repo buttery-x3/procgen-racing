@@ -30,12 +30,21 @@ import { copySetup } from "../storage/GarageStorage";
 import type { InputSettings } from "../input/settings";
 import { loadInputSettings } from "../input/settings";
 import { fingerprint } from "../vehicle/CarDefinition";
+import { SessionPanel } from "./SessionPanel";
+import { CircuitLibraryPanel } from "./CircuitLibraryPanel";
+import { SoloStorage } from "../storage/SoloStorage";
+import type { PresentationSettings } from "../rendering/settings";
 
 export interface WorkbenchCallbacks {
   action: (action: string) => void;
   setup: (setup: VehicleSetup, rebuild: boolean, group?: string) => void;
   generate: (recipe: GenerationRecipe, archive?: CircuitArchive) => void;
   input: (settings: InputSettings) => void;
+  sessionExport: () => Promise<string>;
+  sessionImport: (raw: string) => void;
+  presentation: (settings: PresentationSettings) => void;
+  driveArchive: (archive: CircuitArchive) => Promise<void>;
+  storage: SoloStorage;
 }
 
 interface Field {
@@ -388,6 +397,8 @@ export class Workbench {
   readonly garage: GaragePanel;
   readonly trace: TracePanel;
   readonly inputSettings: InputPanel;
+  readonly sessions: SessionPanel;
+  readonly library: CircuitLibraryPanel;
   private circuit = getTestCircuit();
   private map = mapProjection(this.circuit, 220, 150);
   private setup: VehicleSetup;
@@ -418,19 +429,19 @@ export class Workbench {
     root.innerHTML = `
       <header class="app-header">
         <a class="brand" href="#" aria-label="Procgen Racing home" data-action="home"><span class="brand-mark">P<span>R</span></span><span>PROCGEN<span class="brand-light">RACING</span></span></a>
-        <div class="header-divider"></div><span class="header-title">DYNAMICS LAB <span>/ 07</span></span>
-        <div class="header-right"><button class="button subtle header-workshop" data-action="car-workshop">Car workshop</button><button class="button subtle header-workshop" data-action="garage">Garage / Compare</button><span class="live-badge" id="live-badge"><i></i>LIVE SIMULATION</span><button class="button subtle" id="pause-button" data-action="pause">${icon("pause")}<span>Pause</span></button><button class="button subtle surface-sound-button" id="surface-sound-button" data-action="surface-sound" aria-pressed="false">Surface sound off</button><button class="button save-button" data-action="save">${icon("save")}Save setup</button></div>
+        <div class="header-divider"></div><span class="header-title">DYNAMICS LAB <span>/ 08</span></span>
+        <div class="header-right"><button class="button subtle header-workshop" data-action="car-workshop">Car workshop</button><button class="button subtle header-workshop" data-action="garage">Garage / Compare</button><span class="live-badge" id="live-badge"><i></i>LIVE SIMULATION</span><button class="button subtle" id="pause-button" data-action="pause">${icon("pause")}<span>Pause</span></button><button class="button subtle surface-sound-button" id="surface-sound-button" data-action="surface-sound" aria-pressed="false">Driving sound off</button><button class="button save-button" data-action="save">${icon("save")}Save setup</button></div>
       </header>
       <div class="workspace">
-        <nav class="tool-rail" aria-label="Workbench tools"><div class="rail-tools"><button class="rail-button" data-action="car-workshop" title="Car workshop" aria-label="Open car workshop">${icon("rig")}</button><button class="rail-button" data-action="garage" title="Garage and A/B comparison" aria-label="Open garage and comparison">${icon("compare")}</button><button class="rail-button active" data-action="home" title="Suspension rig" aria-label="Suspension rig">${icon("rig")}</button><button class="rail-button" data-action="generator" title="Circuit workshop" aria-label="Open circuit workshop">${icon("layers")}</button><button class="rail-button" data-action="inspector" title="Toggle setup panel" aria-label="Toggle setup panel">${icon("sliders")}</button><button class="rail-button" data-action="telemetry" title="Expand response trace" aria-label="Expand response trace">${icon("chart")}</button></div><button class="rail-button" data-action="input-settings" title="Input settings" aria-label="Open input settings">${icon("sliders")}</button><button class="rail-button" data-action="help" title="Controls and guide" aria-label="Controls and guide">${icon("help")}</button><span class="rail-version">M7</span></nav>
+        <nav class="tool-rail" aria-label="Workbench tools"><div class="rail-tools"><button class="rail-button" data-action="car-workshop" title="Car workshop" aria-label="Open car workshop">${icon("rig")}</button><button class="rail-button" data-action="garage" title="Garage and A/B comparison" aria-label="Open garage and comparison">${icon("compare")}</button><button class="rail-button active" data-action="home" title="Suspension rig" aria-label="Suspension rig">${icon("rig")}</button><button class="rail-button" data-action="generator" title="Circuit workshop" aria-label="Open circuit workshop">${icon("layers")}</button><button class="rail-button" data-action="inspector" title="Toggle setup panel" aria-label="Toggle setup panel">${icon("sliders")}</button><button class="rail-button" data-action="telemetry" title="Expand response trace" aria-label="Expand response trace">${icon("chart")}</button></div><button class="rail-button" data-action="input-settings" title="Input settings" aria-label="Open input settings">${icon("sliders")}</button><button class="rail-button" data-action="help" title="Controls and guide" aria-label="Controls and guide">${icon("help")}</button><span class="rail-version">M8</span></nav>
         <main class="lab-main">
           <div class="scene-toolbar"><div class="experiment-selector" role="group" aria-label="Test surface"><button data-experiment="circuit" data-action="experiment:circuit">3D circuit</button><button class="selected" data-experiment="level" data-action="experiment:level">Level pad</button><button data-experiment="bump" data-action="experiment:bump">Single-wheel bump</button><button data-experiment="pitch" data-action="experiment:pitch">Incline</button><button data-experiment="bank" data-action="experiment:bank">Bank</button><button data-experiment="handling" data-action="experiment:handling">Drive pad</button><button data-experiment="split" data-action="experiment:split">Split grip</button></div><div class="toolbar-actions"><button class="button toolbar-test" data-action="drop">${icon("drop")}Drop test</button><button class="icon-button" data-action="reset" title="Reset vehicle (R)" aria-label="Reset vehicle">${icon("reset")}</button></div></div>
-          <div class="circuit-controls" id="circuit-controls" hidden><div><span class="eyebrow" id="circuit-name">RIDGE / PROVING CIRCUIT</span><label for="circuit-start-select">Test start</label><select id="circuit-start-select">${circuit.definition.starts.map((start) => `<option value="${start.id}">${start.name}</option>`).join("")}</select><button class="button subtle" data-action="camera:overview">Circuit overview</button><button class="button generator-open" data-action="generator">Circuit workshop ↗</button></div><p id="circuit-start-description">${circuit.definition.starts[0].description}</p></div>
-          <section class="scene-stage" aria-label="Suspension test scene">
+          <div class="circuit-controls" id="circuit-controls" hidden><div><span class="eyebrow" id="circuit-name">RIDGE / PROVING CIRCUIT</span><label for="circuit-start-select">Test start</label><select id="circuit-start-select">${circuit.definition.starts.map((start) => `<option value="${start.id}">${start.name}</option>`).join("")}</select><button class="button subtle" data-action="camera:overview">Circuit overview</button><button class="button subtle" data-action="circuit-library">Circuit library</button><button class="button generator-open" data-action="generator">Circuit workshop ↗</button></div><p id="circuit-start-description">${circuit.definition.starts[0].description}</p></div>
+          <div id="session-strip"></div><section class="scene-stage" aria-label="Suspension test scene">
             <div class="scene-heading"><div class="eyebrow">VEHICLE DEVELOPMENT / TEST FACILITY</div><h1>Suspension lab<span class="heading-dot">.</span></h1><p id="experiment-description">Four contact patches. One connected chassis.</p></div>
             <div id="viewport"></div>
             <div class="scene-top-right"><span class="scene-chip"><i></i><span id="scene-status">4 WHEELS GROUNDED</span></span></div>
-            <div class="scene-view-controls"><button class="view-button selected" data-camera="orbit" data-action="camera:orbit">Orbit</button><button class="view-button" data-camera="chase" data-action="camera:chase">Chase</button><button class="view-button" data-camera="top" data-action="camera:top">Top</button><span></span><button class="view-button" id="forces-button" data-action="forces" aria-pressed="false">${icon("layers")}Forces</button></div>
+            <div class="scene-view-controls"><button class="view-button selected" data-camera="orbit" data-action="camera:orbit">Orbit</button><button class="view-button" data-camera="chase" data-action="camera:chase">Chase</button><button class="view-button" data-camera="bonnet" data-action="camera:bonnet">Bonnet</button><button class="view-button" data-camera="top" data-action="camera:top">Top</button><span></span><button class="view-button" id="forces-button" data-action="forces" aria-pressed="false">${icon("layers")}Forces</button></div>
             <div class="scene-corner-label"><span>03</span><span id="reference-name">FR / COUPE</span> <b id="vehicle-label">RWD · 1,250 KG</b></div>
             <div class="powertrain-hud"><div class="gear-selector" role="group" aria-label="Driving direction"><button data-action="gear:reverse" data-direction="reverse">R</button><button data-action="gear:neutral" data-direction="neutral">N</button><button data-action="gear:drive" data-direction="drive" class="selected">D</button></div><strong id="gear-value">1</strong><span id="rpm-value">1,000 RPM</span><div class="rpm-track"><i id="rpm-fill"></i></div><small>V REVERSE · Q / E SHIFT</small></div><div class="assist-badges"><span id="tc-status">TC</span><span id="abs-status">ABS</span><span id="esc-status">ESC</span><span id="hold-status">HOLD</span></div><div class="drive-readout"><strong id="speed-value">0</strong><span>KM/H</span><div><i id="throttle-meter"></i><i id="brake-meter"></i></div></div>
             <div class="circuit-map" id="circuit-map" hidden><header><strong id="circuit-section">01 / Start straight</strong><span id="circuit-distance">0 / ${Math.round(circuit.distance)} m</span></header><svg viewBox="0 0 220 150" role="img" aria-label="Circuit map and vehicle position"><path id="circuit-route-edge" class="map-route-edge" d="${route}"/><path id="circuit-route" class="map-route" d="${route}"/><path id="circuit-car-heading" d="M10 0 L-4 -5 L-1 0 L-4 5Z"/><circle id="circuit-car-dot" r="4" cx="60" cy="105"/></svg><p id="circuit-advisory" class="circuit-advisory" hidden></p><svg class="elevation-profile" viewBox="0 0 220 35" role="img" aria-label="Circuit elevation profile"><path id="circuit-elevation-path" d="${elevation}"/><line id="elevation-cursor" x1="0" y1="0" x2="0" y2="35"/></svg><div class="circuit-metrics"><span>GRADE <b id="circuit-grade">0%</b></span><span>BANK <b id="circuit-bank">0°</b></span><span>WIDTH <b id="circuit-width">15 m</b></span><span>HEIGHT <b id="circuit-altitude">1.2 m</b></span></div></div>
@@ -463,7 +474,7 @@ export class Workbench {
       </div>
       <footer class="status-bar"><span class="status-health"><i></i><span id="simulation-status">120 HZ PHYSICS</span></span><span id="performance-status">60 FPS</span><span class="status-controls"><kbd>W A S D</kbd> Drive <kbd>R</kbd> Reset <kbd>SPACE</kbd> Pause <button data-action="help">All controls ${icon("arrow")}</button></span><span id="input-status">KEYBOARD / GAMEPAD READY</span></footer>
       <div class="toast" id="toast" role="status" hidden></div>
-      <dialog id="help-dialog"><div class="dialog-top"><span class="eyebrow">DYNAMICS LAB / QUICK START</span><button class="icon-button" data-action="close-help" aria-label="Close guide">×</button></div><h2>Feel what the wheels feel.</h2><p>Four wheels share the work. Choose a reference car, try a repeatable test, then tune suspension, tyres, drivetrain and assists.</p><div class="help-steps"><div><b>01</b><span><strong>Choose a surface</strong>Choose the 3D circuit and a Test start, or use the original pads for isolated suspension tests.</span></div><div><b>02</b><span><strong>Change the response</strong>Spring rate supports the body. Damping controls how quickly it settles. Anti-roll links the two sides.</span></div><div><b>03</b><span><strong>Read the diagrams</strong>Roll and pitch default to the local road reference. Switch to World to include the road's slope.</span></div></div><dl class="controls-list"><dt>W / ↑</dt><dd>Throttle · gamepad right trigger</dd><dt>S / ↓</dt><dd>Brake · gamepad left trigger</dd><dt>A D / ← →</dt><dd>Steer · gamepad left stick</dd><dt>R / Space / C</dt><dd>Reset / Pause / Cycle camera</dd><dt>Mouse drag / scroll</dt><dd>Orbit / Zoom</dd></dl><p class="help-scope">W / right trigger accelerates in the selected direction. S / left trigger brakes. Stop, then select R or press V to reverse. Q/E shift gears, Shift or gamepad A applies the rear handbrake. Gamepad D-pad up/down selects D/R; shoulder buttons shift. Tyres share grip between acceleration, braking and cornering.</p><button class="button save-button" data-action="close-help">Back to the lab ${icon("arrow")}</button></dialog>`;
+      <dialog id="help-dialog"><div class="dialog-top"><span class="eyebrow">DYNAMICS LAB / QUICK START</span><button class="icon-button" data-action="close-help" aria-label="Close guide">×</button></div><h2>Feel what the wheels feel.</h2><p>Four wheels share the work. Choose a reference car, try a repeatable test, then tune suspension, tyres, drivetrain and assists.</p><div class="help-steps"><div><b>01</b><span><strong>Choose a surface or time trial</strong>Choose the 3D circuit and Start time trial, or use the original pads for suspension tests. Session & records explains lap validity and ghosts.</span></div><div><b>02</b><span><strong>Change the response</strong>Spring rate supports the body. Damping controls how quickly it settles. Anti-roll links the two sides.</span></div><div><b>03</b><span><strong>Read the diagrams</strong>Roll and pitch default to the local road reference. Switch to World to include the road's slope.</span></div></div><dl class="controls-list"><dt>W / ↑</dt><dd>Throttle · gamepad right trigger</dd><dt>S / ↓</dt><dd>Brake · gamepad left trigger</dd><dt>A D / ← →</dt><dd>Steer · gamepad left stick</dd><dt>R / Space / C</dt><dd>Reset / Pause / Cycle camera</dd><dt>Mouse drag / scroll</dt><dd>Orbit / Zoom</dd></dl><p class="help-scope">W / right trigger accelerates in the selected direction. S / left trigger brakes. Stop, then select R or press V to reverse. Q/E shift gears, Shift or gamepad A applies the rear handbrake. Gamepad D-pad up/down selects D/R; shoulder buttons shift. Tyres share grip between acceleration, braking and cornering.</p><button class="button save-button" data-action="close-help">Back to the lab ${icon("arrow")}</button></dialog>`;
     this.viewport = this.node("viewport");
     this.diagrams = new Diagrams(root);
     this.renderSettings();
@@ -472,6 +483,17 @@ export class Workbench {
       generate: callbacks.generate,
       action: callbacks.action,
     });
+    this.sessions = new SessionPanel(root, this.node("session-strip"), {
+      action: callbacks.action,
+      export: callbacks.sessionExport,
+      import: callbacks.sessionImport,
+      presentation: callbacks.presentation,
+    });
+    this.library = new CircuitLibraryPanel(
+      root,
+      callbacks.storage,
+      callbacks.driveArchive,
+    );
     this.cars = new CarWorkshopPanel(root, (next, rebuild) => {
       this.callbacks.setup(next, rebuild);
       this.setSetup(next);
@@ -579,6 +601,14 @@ export class Workbench {
     }
     if (action === "generator") {
       this.generator.open();
+      return;
+    }
+    if (action === "sessions") {
+      this.sessions.open();
+      return;
+    }
+    if (action === "circuit-library") {
+      void this.library.open();
       return;
     }
     if (action === "apply-chassis") {
@@ -994,6 +1024,8 @@ export class Workbench {
       `${Math.round(derived.powerToWeight)} kW/t · ${Math.round(derived.clearance * 1000)} mm floor · ${(this.setup.frontWeight * 100).toFixed(1)}% front`;
   }
   setExperiment(experiment: string) {
+    this.root.classList.toggle("on-circuit", experiment === "circuit");
+    this.node("session-strip").hidden = experiment !== "circuit";
     this.trace?.setCondition(
       `Manual / ${experiment}${experiment === "circuit" ? ` / ${this.circuit.definition.id}` : ""}`,
     );
@@ -1071,7 +1103,7 @@ export class Workbench {
   }
   setSound(enabled: boolean) {
     const button = this.node("surface-sound-button");
-    button.textContent = enabled ? "Surface sound on" : "Surface sound off";
+    button.textContent = enabled ? "Driving sound on" : "Driving sound off";
     button.setAttribute("aria-pressed", String(enabled));
   }
   setCamera(mode: string) {
@@ -1264,6 +1296,8 @@ export class Workbench {
     this.garage.dispose();
     this.trace.dispose();
     this.inputSettings.dispose();
+    this.sessions.dispose();
+    this.library.dispose();
     this.abort.abort();
     clearTimeout(this.toastTimeout);
   }

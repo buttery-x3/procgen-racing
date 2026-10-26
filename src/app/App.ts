@@ -9,7 +9,12 @@ import {
   STRUCTURAL_KEYS,
 } from "../vehicle/setup";
 import { FIXED_STEP } from "../vehicle/types";
-import type { Experiment, VehicleSetup } from "../vehicle/types";
+import type {
+  Experiment,
+  VehicleSetup,
+  VehicleControls,
+  VehicleTelemetry,
+} from "../vehicle/types";
 import { Workbench } from "../workbench/Workbench";
 import { REFERENCE_CARS } from "../vehicle/referenceCars";
 import { signedForwardSpeed } from "../vehicle/coordinates";
@@ -27,6 +32,18 @@ import { venueGeometrySettings } from "../track/venue/types";
 import { SetupHistory, copySetup } from "../storage/GarageStorage";
 import { generateCar } from "../vehicle/generateCar";
 import type { CircuitArchive } from "../storage/CircuitStorage";
+import { circuitArchive } from "../storage/CircuitStorage";
+import {
+  SoloStorage,
+  decodeSession,
+  exportSession,
+} from "../storage/SoloStorage";
+import { sessionIdentity } from "../race/identity";
+import { RaceSession } from "../race/RaceSession";
+import type { CompletedLap, SavedSession, SessionMode } from "../race/types";
+import type { GhostData } from "../race/Ghost";
+import type { PresentationSettings } from "../rendering/settings";
+import { DEFAULT_VENUE } from "../track/venue/types";
 
 export class App {
   private rig!: SuspensionRig;
@@ -49,6 +66,24 @@ export class App {
   private preview?: GenerationResult;
   private previewVersion = 0;
   private readonly previewCache = new Map<string, GenerationResult>();
+  private session!: RaceSession;
+  private readonly soloStorage: SoloStorage;
+  private contextVersion = 0;
+  private storageQueue: Promise<void> = Promise.resolve();
+  private importedReference?: { record: SavedSession; ghost: GhostData };
+  constructor(
+    private diagnostics?: {
+      driver?: (
+        telemetry: VehicleTelemetry,
+        setup: VehicleSetup,
+        circuit: CompiledCircuit,
+      ) => VehicleControls;
+      onLap?: (lap: CompletedLap) => void;
+      storage?: SoloStorage;
+    },
+  ) {
+    this.soloStorage = diagnostics?.storage ?? new SoloStorage();
+  }
 
   async initialize(root: HTMLElement) {
     await initializePhysics();
@@ -68,6 +103,11 @@ export class App {
         generate: (recipe, archive) =>
           void this.generatePreview(recipe, archive),
         input: (settings) => this.input.configure(settings),
+        sessionExport: () => this.exportSession(),
+        sessionImport: (raw) => this.importSession(raw),
+        presentation: (settings) => this.presentation(settings),
+        driveArchive: (archive) => this.driveArchive(archive),
+        storage: this.soloStorage,
       },
       !!this.savedSetup,
     );
@@ -77,6 +117,8 @@ export class App {
     this.view.remember(this.rig.telemetry, true);
     this.view.setCamera("chase");
     this.workbench.setCamera("chase");
+    this.configureSession("practice");
+    this.presentation(this.workbench.sessions.settings);
     this.input = new Input((action) =>
       this.action(
         {
@@ -90,6 +132,7 @@ export class App {
       ),
     );
     document.addEventListener("visibilitychange", this.visibility);
+    window.addEventListener("blur", this.blur);
     this.frame = requestAnimationFrame(this.animate);
   }
 
@@ -165,11 +208,12 @@ export class App {
     }
   }
 
-  private loadCircuit(circuit: CompiledCircuit) {
+  private loadCircuit(circuit: CompiledCircuit, archive?: CircuitArchive) {
     // Build the view before changing physics. Both preparation failures keep the
     // current scene; successful replacement releases all previous mesh/colliders.
     const nextView = new CircuitView(circuit);
     try {
+      this.session?.abandon("Circuit changed");
       this.rig.setCircuit(circuit);
     } catch (error) {
       nextView.dispose();
@@ -180,6 +224,8 @@ export class App {
     this.view.remember(this.rig.telemetry, true);
     this.view.setCamera("chase");
     this.workbench.setCamera("chase");
+    this.configureSession();
+    this.workbench.library.setCurrent(archive, circuit.distance);
     this.accumulator = 0;
     this.paused = false;
     this.workbench.setPaused(false);
@@ -205,6 +251,7 @@ export class App {
     const next = sanitizeSetup(setup);
     const identical = JSON.stringify(next) === JSON.stringify(this.rig.setup);
     if (identical && !rebuild) return;
+    this.session?.abandon("Car or setup changed");
     if (remember) {
       if (!identical) this.setupHistory.record(this.rig.setup, group);
     }
@@ -226,6 +273,7 @@ export class App {
         (key) => next[key] !== this.rig.setup[key],
       );
     this.rig.updateSetup(next, structural);
+    this.configureSession();
     if (structural || visual) {
       this.view.buildCar(next);
     }
@@ -277,6 +325,7 @@ export class App {
           action.endsWith("authored")
             ? getTestCircuit()
             : hydrateCircuit(result!.circuit),
+          action.endsWith("authored") ? undefined : circuitArchive(result!),
         );
         if (action.endsWith("drive"))
           this.workbench.generator.rememberRecipe(result!.recipe);
@@ -286,7 +335,9 @@ export class App {
         );
       }
     } else if (action.startsWith("circuit-start:")) {
+      this.session.abandon("Test start changed");
       this.rig.setCircuitStart(action.slice(14));
+      this.configureSession();
       this.view.remember(this.rig.telemetry, true);
       this.workbench.setExperiment("circuit");
       this.workbench.setCircuitStart(this.rig.circuitStart);
@@ -367,10 +418,13 @@ export class App {
       }
     } else if (action === "pause") {
       this.paused = !this.paused;
+      if (this.paused) this.session.invalidate("Session paused");
       this.workbench.setPaused(this.paused);
       this.accumulator = 0;
     } else if (action === "reset" || action === "home") {
+      this.session.abandon("Vehicle reset");
       this.rig.reset();
+      this.session.restart(this.session.mode, this.rig.telemetry);
       this.view.remember(this.rig.telemetry, true);
       this.accumulator = 0;
       if (action === "home") {
@@ -379,13 +433,16 @@ export class App {
       }
       this.workbench.toast("Vehicle reset on the current test surface.");
     } else if (action === "drop") {
+      this.session.abandon("Drop test used");
       this.rig.drop();
+      this.session.restart(this.session.mode, this.rig.telemetry);
       this.view.remember(this.rig.telemetry, true);
       this.accumulator = 0;
       this.paused = false;
       this.workbench.setPaused(false);
       this.workbench.toast("Drop test running · 0.6 m release");
     } else if (action === "roll-pulse" || action === "pitch-pulse") {
+      this.session.invalidate("Test impulse used");
       this.rig.impulse(action === "roll-pulse" ? "roll" : "pitch");
       this.paused = false;
       this.workbench.setPaused(false);
@@ -393,8 +450,10 @@ export class App {
         `${action === "roll-pulse" ? "Roll" : "Pitch"} impulse applied. Watch the body settle.`,
       );
     } else if (action.startsWith("experiment:")) {
+      this.session.abandon("Test surface changed");
       const experiment = action.slice(11) as Experiment;
       this.rig.setExperiment(experiment);
+      this.configureSession();
       this.view.remember(this.rig.telemetry, true);
       this.workbench.setExperiment(experiment);
       if (experiment === "circuit") {
@@ -408,14 +467,47 @@ export class App {
       this.paused = false;
       this.workbench.setPaused(false);
     } else if (action.startsWith("camera:")) {
-      const mode = action.slice(7) as "orbit" | "chase" | "top" | "overview";
+      const mode = action.slice(7) as
+        | "orbit"
+        | "chase"
+        | "bonnet"
+        | "top"
+        | "overview";
       this.view.setCamera(mode);
       this.workbench.setCamera(mode);
     } else if (action === "cycle-camera") {
-      const modes = ["orbit", "chase", "top"] as const;
+      const modes = ["chase", "bonnet", "top", "orbit"] as const;
       this.action(
         `camera:${modes[(modes.findIndex((mode) => mode === this.view.cameraMode) + 1) % 3]}`,
       );
+    } else if (action === "session:trial" || action === "session:practice") {
+      if (this.workbench.hasPendingChanges) {
+        this.workbench.toast(
+          "Apply or discard pending chassis changes before starting a session.",
+        );
+        return;
+      }
+      this.session.abandon("New session started");
+      this.rig.setCircuitStart(this.rig.circuit.definition.starts[0].id);
+      this.workbench.setExperiment("circuit");
+      this.workbench.setCircuitStart(this.rig.circuitStart);
+      this.configureSession(
+        action.endsWith("trial") ? "time-trial" : "practice",
+      );
+      this.view.remember(this.rig.telemetry, true);
+      this.view.setCamera("chase");
+      this.workbench.setCamera("chase");
+      this.accumulator = 0;
+      this.paused = false;
+      this.workbench.setPaused(false);
+      this.workbench.toast(
+        action.endsWith("trial")
+          ? "Time trial ready. Cross the chequered line ahead to start the clock."
+          : "Practice started. Laps are timed without setting personal bests.",
+      );
+    } else if (action === "session:local-reference") {
+      this.importedReference = undefined;
+      void this.loadSessionReference(this.contextVersion);
     } else if (action === "forces") {
       this.view.forcesVisible = !this.view.forcesVisible;
       this.workbench.setForces(this.view.forcesVisible);
@@ -495,14 +587,180 @@ export class App {
     }
   }
 
+  private configureSession(
+    mode: SessionMode = this.session?.mode ?? "practice",
+  ) {
+    const version = ++this.contextVersion,
+      circuit = this.rig.circuit,
+      setup = this.rig.setup;
+    const identity = sessionIdentity(circuit, setup),
+      oldCourse = this.session?.course;
+    this.importedReference = undefined;
+    const trackName = circuit.definition.name,
+      carName = setup.vehicle?.name ?? REFERENCE_CARS[setup.referenceCar].name;
+    this.session = new RaceSession(
+      circuit,
+      identity,
+      (lap) => this.persistLap(lap, trackName, carName),
+      oldCourse,
+    );
+    this.session.restart(mode, this.rig.telemetry);
+    this.view.setTimingCourse(this.session.course);
+    this.workbench.sessions.update(
+      this.session.snapshot(),
+      this.rig.experiment === "circuit",
+    );
+    void this.loadSessionReference(version);
+  }
+  private async loadSessionReference(version: number) {
+    try {
+      const session = this.session,
+        { record, ghost } = await this.soloStorage.load(session.identity);
+      if (
+        this.disposed ||
+        version !== this.contextVersion ||
+        session !== this.session ||
+        this.importedReference
+      )
+        return;
+      if (record) {
+        if (
+          !session.best ||
+          (record.best && record.best.duration < session.best.duration)
+        )
+          session.setReference(record.best, ghost);
+        else if (!session.reference && !this.importedReference)
+          session.setReference(session.best, ghost);
+        session.recent = [
+          ...session.recent,
+          ...record.recent.filter(
+            (r) => !session.recent.some((x) => x.id === r.id),
+          ),
+        ].slice(0, 8);
+      } else session.setReference(session.best);
+      this.workbench.sessions.setStatus(
+        record?.best
+          ? ghost
+            ? "Personal best and its compatible ghost restored."
+            : "Personal best restored. Its older ghost is no longer retained."
+          : "No personal best for this circuit, car, setup and assists yet.",
+      );
+    } catch (error) {
+      if (version === this.contextVersion)
+        this.workbench.sessions.setStatus(
+          `Local results unavailable: ${error instanceof Error ? error.message : String(error)}. Driving remains available.`,
+        );
+    }
+  }
+  private persistLap(lap: CompletedLap, trackName: string, carName: string) {
+    this.diagnostics?.onLap?.(lap);
+    if (lap.personalBest)
+      this.workbench.toast(
+        `Personal best · ${lap.result.duration.toFixed(3)} s. Saving lap and ghost…`,
+      );
+    this.storageQueue = this.storageQueue
+      .then(async () => {
+        await this.soloStorage.save(lap, trackName, carName);
+        if (
+          !this.disposed &&
+          this.session.identity.key === lap.result.identity.key
+        ) {
+          this.session.recent = [
+            lap.result,
+            ...this.session.recent.filter((r) => r.id !== lap.result.id),
+          ].slice(0, 8);
+          this.workbench.sessions.setStatus(
+            lap.personalBest
+              ? "Personal best and ghost saved in this browser."
+              : "Lap result saved.",
+          );
+        }
+      })
+      .catch((error) => {
+        if (!this.disposed)
+          this.workbench.sessions.setStatus(
+            `Lap kept in memory; browser storage failed: ${error instanceof Error ? error.message : String(error)}. Export it before reloading.`,
+          );
+      });
+  }
+  private async exportSession() {
+    await this.storageQueue;
+    const session = this.session,
+      ghost = session.reference?.data;
+    if (!ghost)
+      throw new Error(
+        "Complete a valid timed lap or import a compatible reference before exporting a ghost.",
+      );
+    if (this.importedReference)
+      return exportSession(this.importedReference.record, ghost);
+    const snapshot = session.snapshot();
+    if (!snapshot.best)
+      throw new Error("There is no personal best for this session.");
+    const record: SavedSession = {
+      version: 1,
+      identity: session.identity,
+      trackName: this.rig.circuit.definition.name,
+      carName: this.rig.setup.vehicle?.name ?? this.rig.setup.referenceCar,
+      best: snapshot.best,
+      recent: snapshot.recent,
+      updatedAt: new Date().toISOString(),
+      ghostAvailable: true,
+    };
+    return exportSession(record, ghost);
+  }
+  private importSession(raw: string) {
+    try {
+      const reference = decodeSession(raw, this.session.identity);
+      this.session.setReference(this.session.best, reference.ghost, true);
+      this.importedReference = reference;
+      this.workbench.sessions.setStatus(
+        "Imported ghost reference loaded. Your locally earned personal best is unchanged.",
+      );
+    } catch (error) {
+      this.workbench.sessions.setStatus(
+        error instanceof Error ? error.message : String(error),
+      );
+    }
+  }
+  private presentation(settings: PresentationSettings) {
+    this.view.configure(settings);
+    this.surfaceAudio.volume = settings.volume;
+  }
+  private async driveArchive(archive: CircuitArchive) {
+    const version = ++this.previewVersion;
+    const result = await this.generation.generate(
+      archive.recipe,
+      (progress) => this.workbench.library.status(progress.stage),
+      archive.definition.venue?.settings ?? DEFAULT_VENUE,
+      undefined,
+      archive,
+    );
+    if (this.disposed || version !== this.previewVersion) return;
+    if (
+      !result.report.valid ||
+      result.report.checks.some((c) => c.status === "fail")
+    )
+      throw new Error("Saved circuit failed current construction validation.");
+    this.loadCircuit(hydrateCircuit(result.circuit), circuitArchive(result));
+  }
+
   private visibility = () => {
     this.accumulator = 0;
     this.lastFrame = 0;
     if (document.hidden) {
       this.surfaceAudio.silence();
+      this.session?.invalidate("Session paused");
       this.paused = true;
       this.workbench.setPaused(true);
     }
+  };
+  private blur = () => {
+    this.accumulator = 0;
+    this.lastFrame = 0;
+    this.paused = true;
+    this.session?.invalidate("Window focus lost");
+    this.surfaceAudio.silence();
+    this.workbench?.setPaused(true);
   };
 
   private animate = (now: number) => {
@@ -512,17 +770,27 @@ export class App {
       : FIXED_STEP;
     this.lastFrame = now;
     const dt = Math.min(rawDelta, 0.08);
+    if (rawDelta > 0.25 && !this.paused)
+      this.session.invalidate("Long frame or suspended browser");
     this.fps += (1 / Math.max(rawDelta, 0.001) - this.fps) * 0.05;
     const modal = !!document.querySelector("dialog[open]");
     const effectivePause = this.paused || modal;
     if (effectivePause !== this.previousEffectivePause) {
+      if (effectivePause) this.session.invalidate("Session paused");
       this.workbench.setPaused(effectivePause);
       this.accumulator = 0;
       this.view.remember(this.rig.telemetry);
       this.previousEffectivePause = effectivePause;
     }
     this.input.enabled = !effectivePause;
-    const controls = this.input.read(dt);
+    const controls =
+      this.diagnostics?.driver && !effectivePause
+        ? this.diagnostics.driver(
+            this.rig.telemetry,
+            this.rig.setup,
+            this.rig.circuit,
+          )
+        : this.input.read(dt);
     this.surfaceAudio.update(
       this.rig.telemetry,
       effectivePause || document.hidden,
@@ -534,6 +802,8 @@ export class App {
       while (this.accumulator >= FIXED_STEP && steps < 10) {
         this.view.remember(this.rig.telemetry);
         this.rig.step(controls);
+        if (this.rig.experiment === "circuit")
+          this.session.step(this.rig.telemetry);
         this.workbench.recordTelemetry(
           this.rig.telemetry,
           this.rig.body.angvel().y,
@@ -551,7 +821,19 @@ export class App {
         this.input.gamepadName,
       );
       this.lastUIUpdate = now;
+      this.workbench.sessions.update(
+        this.session.snapshot(),
+        this.rig.experiment === "circuit",
+      );
     }
+    this.view.showGhost(
+      this.rig.experiment === "circuit" &&
+        this.workbench.sessions.settings.ghostVisible
+        ? this.session.ghostPose(
+            effectivePause ? 1 : this.accumulator / FIXED_STEP,
+          )
+        : null,
+    );
     this.view.render(
       this.rig,
       effectivePause ? 1 : this.accumulator / FIXED_STEP,
@@ -564,6 +846,8 @@ export class App {
     this.disposed = true;
     cancelAnimationFrame(this.frame);
     document.removeEventListener("visibilitychange", this.visibility);
+    window.removeEventListener("blur", this.blur);
+    this.contextVersion++;
     this.generation.dispose();
     this.surfaceAudio.dispose();
     this.previewCache.clear();

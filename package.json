@@ -19,7 +19,10 @@
     "qualify:m6": "node scripts/qualify-m6.mjs",
     "qualify:m7": "node scripts/qualify-m7.mjs",
     "qualify:m7:driving": "node scripts/qualify-m7-driving.mjs",
-    "report:m7": "node scripts/report-m7.mjs"
+    "report:m7": "node scripts/report-m7.mjs",
+    "qualify:m8": "node scripts/qualify-m8.mjs",
+    "qualify:m8:stress": "node scripts/qualify-m8-stress.mjs",
+    "report:m8": "node scripts/report-m8.mjs"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.21.0",

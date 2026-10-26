@@ -5,17 +5,17 @@
 > to remote `development` on completion for testing. Later releases to `main`
 > require an explicit request. See the [release workflow](workflow.md).
 
-Prepared 25 October 2026; updated 26 October. M0–M7 are implemented, including the
+Prepared 25 October 2026; updated 26 October. M0–M8 are implemented, including the
 revised M4 v2 generator, [M5 venue construction](m5.md) and
 [M6 procedural cars/full workbench](m6.md) and [M7 expanded circuit families](m7.md). See [M4 v2 delivery notes](m4-v2.md) for the non-radial
 compiler, section/anchor route design, joint profile fitting and workbench. The
 [approved M4/M7 revision](m4-revised-plan.md) and [circuit research](research/circuit-design.md)
 supersede conflicting generation details below. V1 and the research lab remain
-archived baselines. M8 remains planned; optional M7-D racing bridges remain deferred. Generation qualification uses the
+archived baselines. [M8 solo sessions, ghosts and the circuit library](m8.md) complete the planned solo feature set for development testing; optional M7-D racing bridges remain deferred. Generation qualification uses the
 development desktop's Ryzen 5 5600X / 32 GiB; broader hardware testing is still needed.
 
 The first repository baseline release is **v0.1.0 (M0–M5)** on `main`.
-The complete solo/time-trial release described below remains the M8 target.
+The complete solo/time-trial feature set is delivered by M8 on `development` for testing.
 M6 and every following milestone start from `development` on a separate
 `codex/m<number>-<name>` branch and finish by merging and pushing to
 `origin/development` for testing; they do not automatically update `main`.
@@ -476,8 +476,19 @@ hybrids and 8–24 km endurance venues. The workshop adds provenance, variants,
 cross-sections, class/lane estimates and accepted-definition import/restore.
 Collision, surface GPU buffers and scenery use local residency; long-lap,
 multi-lane and named-desktop measurements are recorded separately. See
-[delivery details and limits](m7.md). M8 timing/ghosts/rules/library and optional
-M7-D racing bridges remain future work.
+[delivery details and limits](m7.md). Optional M7-D racing bridges remain future work.
+
+**M8 delivered:** simulation-time laps and three sectors through ordered directional
+3D gates; tyre-centre limits, pit/wrong-way warnings and interruption validity;
+car/setup/assist/physics-keyed personal bests and non-colliding 20 Hz pose ghosts;
+versioned session import/export and a named/favourite accepted-definition circuit
+library. Bounded skid/dust/smoke effects, synthesized engine/tyre/impact audio,
+bonnet/chase camera controls and quality fallback complete the solo presentation.
+The physical campaign qualifies 25 timed laps and ghost round trips across all
+seven expanded track families and eleven procedural archetypes. Browser and
+performance evidence have separate scopes. See [M8 delivery notes](m8.md).
+The milestone is integrated into `development` for testing; promotion to `main`
+still requires an explicit release request.
 
 Start UI work in M1 and develop it alongside physics; do not leave the workbench as a final skin over debug controls. M2 is the first handling-review build. M5 is the first convincing procedural circuit build. M8 is the complete first-release scope.
 
