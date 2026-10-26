@@ -1,0 +1,368 @@
+{
+  "scope": "Analysis of two user-supplied recordings; no synthesis, acoustic source separation or listening acceptance.",
+  "analysis_script_sha256": "fe652f8e71d00f2ef1b6042241b7041e9b70aa86a53072dc443b05e00d708343",
+  "method": {
+    "window_ms": 40,
+    "hop_ms_approx": 5,
+    "fft_points": 4096,
+    "window": "Hann",
+    "stereo": "mean channel power; no mono cancellation",
+    "active_frame_gate_db_below_clip_max": -25,
+    "analysis_band_hz": [
+      500,
+      8000
+    ],
+    "dominant_peak_search_hz": [
+      500,
+      4000
+    ],
+    "peak_aperture_half_width_hz": 40,
+    "peak_count": 5,
+    "normalization": "Per-clip display references; per-frame unit energy for spectral-change metrics. No input audio modified."
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2"
+  },
+  "clips": {
+    "Real recording": {
+      "filename": "good screech (real recording).wav",
+      "sha256": "2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0",
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "frames": 89775,
+      "pcm_bits": 16,
+      "duration_seconds": 1.8703125,
+      "rms_dbfs": -17.12616084322088,
+      "peak_dbfs": -3.280416942240331,
+      "full_scale_sample_count": 0,
+      "stereo_correlation": 0.9999999739349551,
+      "whole": {
+        "range_seconds": [
+          0,
+          1.8703125
+        ],
+        "active_frames": 353,
+        "band_energy_fraction_500_8000": {
+          "500-1000": 0.3555177361170278,
+          "1000-2000": 0.5584372943319098,
+          "2000-4000": 0.08107719478834388,
+          "4000-8000": 0.004967774762718526
+        },
+        "dominant_500_4000_hz_p10_median_p90": [
+          902.34375,
+          1007.8125,
+          1134.3750000000002
+        ],
+        "centroid_500_8000_hz_median": 1268.8917719366418,
+        "five_fixed_peak_apertures_energy_fraction": 0.5616870438751764,
+        "peaks_hz": [
+          996.09375,
+          1136.71875,
+          1933.59375,
+          1792.96875,
+          2250.0
+        ],
+        "normalized_spectral_change_median": 0.18744514611789898,
+        "normalized_spectral_change_p90": 0.25340141574737574
+      },
+      "thirds": [
+        {
+          "range_seconds": [
+            0.0,
+            0.6234375
+          ],
+          "active_frames": 115,
+          "band_energy_fraction_500_8000": {
+            "500-1000": 0.4433237057280955,
+            "1000-2000": 0.4551150022173158,
+            "2000-4000": 0.09606549654304862,
+            "4000-8000": 0.005495795511540127
+          },
+          "dominant_500_4000_hz_p10_median_p90": [
+            890.625,
+            984.375,
+            1042.96875
+          ],
+          "centroid_500_8000_hz_median": 1177.7290338922303,
+          "five_fixed_peak_apertures_energy_fraction": 0.6471368340526196,
+          "peaks_hz": [
+            1019.53125,
+            902.34375,
+            1769.53125,
+            1875.0,
+            2238.28125
+          ],
+          "normalized_spectral_change_median": 0.1923700932320594,
+          "normalized_spectral_change_p90": 0.261460365931113
+        },
+        {
+          "range_seconds": [
+            0.6234375,
+            1.246875
+          ],
+          "active_frames": 125,
+          "band_energy_fraction_500_8000": {
+            "500-1000": 0.43458379417689635,
+            "1000-2000": 0.4979927737116765,
+            "2000-4000": 0.06271111028049584,
+            "4000-8000": 0.0047123218309313725
+          },
+          "dominant_500_4000_hz_p10_median_p90": [
+            902.34375,
+            996.09375,
+            1113.28125
+          ],
+          "centroid_500_8000_hz_median": 1248.9275190250592,
+          "five_fixed_peak_apertures_energy_fraction": 0.5863286223432814,
+          "peaks_hz": [
+            972.65625,
+            1125.0,
+            1933.59375,
+            1792.96875,
+            2238.28125
+          ],
+          "normalized_spectral_change_median": 0.18399958859129362,
+          "normalized_spectral_change_p90": 0.2400206717325426
+        },
+        {
+          "range_seconds": [
+            1.246875,
+            1.8703125
+          ],
+          "active_frames": 113,
+          "band_energy_fraction_500_8000": {
+            "500-1000": 0.1469237217723346,
+            "1000-2000": 0.7510873903381039,
+            "2000-4000": 0.09709132845863518,
+            "4000-8000": 0.004897559430926325
+          },
+          "dominant_500_4000_hz_p10_median_p90": [
+            1042.96875,
+            1101.5625,
+            1148.4375
+          ],
+          "centroid_500_8000_hz_median": 1403.6950883086704,
+          "five_fixed_peak_apertures_energy_fraction": 0.5909933188032075,
+          "peaks_hz": [
+            1136.71875,
+            949.21875,
+            1886.71875,
+            2156.25,
+            2261.71875
+          ],
+          "normalized_spectral_change_median": 0.18037203189865728,
+          "normalized_spectral_change_p90": 0.26582023318886683
+        }
+      ],
+      "matched_interior_0_4_to_1_4_seconds": {
+        "range_seconds": [
+          0.4,
+          1.4
+        ],
+        "active_frames": 200,
+        "band_energy_fraction_500_8000": {
+          "500-1000": 0.37739361681791406,
+          "1000-2000": 0.5430830999826715,
+          "2000-4000": 0.07445306982402351,
+          "4000-8000": 0.005070213375391119
+        },
+        "dominant_500_4000_hz_p10_median_p90": [
+          902.34375,
+          1007.8125,
+          1136.71875
+        ],
+        "centroid_500_8000_hz_median": 1256.2940093412628,
+        "five_fixed_peak_apertures_energy_fraction": 0.5938638899052456,
+        "peaks_hz": [
+          1136.71875,
+          996.09375,
+          1933.59375,
+          1792.96875,
+          2250.0
+        ],
+        "normalized_spectral_change_median": 0.18532447436143487,
+        "normalized_spectral_change_p90": 0.2410645354750814
+      },
+      "matched_interior_envelope": {
+        "range_seconds": [
+          0.4,
+          1.4
+        ],
+        "envelope_rms_window_ms": 10,
+        "envelope_cv": 0.23802911622995537,
+        "above_5hz_envelope_rms_relative_to_mean": 0.20018012200178661
+      }
+    },
+    "Playground recording": {
+      "filename": "bad screech.wav",
+      "sha256": "a6080a6b9aea894a14a11b1b25ff9b290196cf03e6d9ab1ab2c5a49e33d9d042",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "frames": 223848,
+      "pcm_bits": 16,
+      "duration_seconds": 5.075918367346938,
+      "rms_dbfs": -20.1648830193339,
+      "peak_dbfs": -11.550620646238752,
+      "full_scale_sample_count": 0,
+      "stereo_correlation": 0.9999996024075347,
+      "whole": {
+        "range_seconds": [
+          0,
+          5.075918367346938
+        ],
+        "active_frames": 1010,
+        "band_energy_fraction_500_8000": {
+          "500-1000": 4.3390130700883896e-05,
+          "1000-2000": 0.8362072343690011,
+          "2000-4000": 0.10284149100975878,
+          "4000-8000": 0.060907884490539056
+        },
+        "dominant_500_4000_hz_p10_median_p90": [
+          1614.990234375,
+          1614.990234375,
+          1625.7568359375
+        ],
+        "centroid_500_8000_hz_median": 2003.9558257267245,
+        "five_fixed_peak_apertures_energy_fraction": 0.9810978905601867,
+        "peaks_hz": [
+          1614.990234375,
+          3240.7470703125,
+          4855.7373046875,
+          6470.7275390625,
+          4715.771484375
+        ],
+        "normalized_spectral_change_median": 0.029708847963422692,
+        "normalized_spectral_change_p90": 0.060213475546454606
+      },
+      "thirds": [
+        {
+          "range_seconds": [
+            0.0,
+            1.6919727891156462
+          ],
+          "active_frames": 336,
+          "band_energy_fraction_500_8000": {
+            "500-1000": 3.923714484140951e-05,
+            "1000-2000": 0.8361170792450074,
+            "2000-4000": 0.10298621140367406,
+            "4000-8000": 0.060857472206477296
+          },
+          "dominant_500_4000_hz_p10_median_p90": [
+            1614.990234375,
+            1614.990234375,
+            1625.7568359375
+          ],
+          "centroid_500_8000_hz_median": 2004.2707203326618,
+          "five_fixed_peak_apertures_energy_fraction": 0.9791977935556273,
+          "peaks_hz": [
+            1614.990234375,
+            3240.7470703125,
+            4855.7373046875,
+            6470.7275390625,
+            1431.9580078125
+          ],
+          "normalized_spectral_change_median": 0.029889846982135728,
+          "normalized_spectral_change_p90": 0.061616191777345605
+        },
+        {
+          "range_seconds": [
+            1.6919727891156462,
+            3.3839455782312924
+          ],
+          "active_frames": 339,
+          "band_energy_fraction_500_8000": {
+            "500-1000": 5.1297148395987596e-05,
+            "1000-2000": 0.8361920223459376,
+            "2000-4000": 0.10282089592454763,
+            "4000-8000": 0.06093578458111895
+          },
+          "dominant_500_4000_hz_p10_median_p90": [
+            1614.990234375,
+            1614.990234375,
+            1625.7568359375
+          ],
+          "centroid_500_8000_hz_median": 2003.9642224401643,
+          "five_fixed_peak_apertures_energy_fraction": 0.9826066271447309,
+          "peaks_hz": [
+            1614.990234375,
+            3240.7470703125,
+            4855.7373046875,
+            6470.7275390625,
+            1927.2216796875
+          ],
+          "normalized_spectral_change_median": 0.0281130069668818,
+          "normalized_spectral_change_p90": 0.05928191902667193
+        },
+        {
+          "range_seconds": [
+            3.3839455782312924,
+            5.075918367346938
+          ],
+          "active_frames": 335,
+          "band_energy_fraction_500_8000": {
+            "500-1000": 3.975082519015505e-05,
+            "1000-2000": 0.8363134825884648,
+            "2000-4000": 0.10271556365866708,
+            "4000-8000": 0.060931202927677945
+          },
+          "dominant_500_4000_hz_p10_median_p90": [
+            1614.990234375,
+            1614.990234375,
+            1625.7568359375
+          ],
+          "centroid_500_8000_hz_median": 2003.788275048876,
+          "five_fixed_peak_apertures_energy_fraction": 0.9815355916550268,
+          "peaks_hz": [
+            1614.990234375,
+            3240.7470703125,
+            4855.7373046875,
+            6470.7275390625,
+            4726.5380859375
+          ],
+          "normalized_spectral_change_median": 0.03117991048606341,
+          "normalized_spectral_change_p90": 0.05929243516419042
+        }
+      ],
+      "matched_interior_0_4_to_1_4_seconds": {
+        "range_seconds": [
+          0.4,
+          1.4
+        ],
+        "active_frames": 200,
+        "band_energy_fraction_500_8000": {
+          "500-1000": 4.193619643723239e-05,
+          "1000-2000": 0.8362304828101745,
+          "2000-4000": 0.1029357086408999,
+          "4000-8000": 0.06079187235248802
+        },
+        "dominant_500_4000_hz_p10_median_p90": [
+          1614.990234375,
+          1614.990234375,
+          1625.7568359375
+        ],
+        "centroid_500_8000_hz_median": 2004.2707203326618,
+        "five_fixed_peak_apertures_energy_fraction": 0.9796656692509235,
+        "peaks_hz": [
+          1614.990234375,
+          3240.7470703125,
+          4855.7373046875,
+          6481.494140625,
+          4715.771484375
+        ],
+        "normalized_spectral_change_median": 0.0286559121262475,
+        "normalized_spectral_change_p90": 0.05865184715732452
+      },
+      "matched_interior_envelope": {
+        "range_seconds": [
+          0.4,
+          1.4
+        ],
+        "envelope_rms_window_ms": 10,
+        "envelope_cv": 0.12503358307284837,
+        "above_5hz_envelope_rms_relative_to_mean": 0.10550850232107312
+      }
+    }
+  }
+}
