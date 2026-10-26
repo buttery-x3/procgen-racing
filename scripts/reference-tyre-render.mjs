@@ -5,13 +5,13 @@ const source = readFileSync(new URL("../public/audio/reference-tyre.js", import.
 const script = new vm.Script(source);
 
 /** Host render of the exact worklet source; excludes browser/device rendering. */
-export function referenceTyreRenderer(model, rate = 48000, tuning = {}, seed = 0x51a3d207) {
+export function referenceTyreRenderer(model, rate = 48000, tuning = {}, seed = 0x51a3d207, processorOptions) {
   const messages = [], registrations = new Map();
   class BaseProcessor { port = { onmessage: undefined, postMessage: (message) => { messages.push(message); } }; }
   script.runInNewContext({ AudioWorkletProcessor: BaseProcessor, sampleRate: rate,
     registerProcessor: (name, type) => registrations.set(name, type), Math, Number, Float32Array, Float64Array, Uint16Array });
   const Processor = registrations.get("playground-reference-tyre");
-  const processor = new Processor();
+  const processor = new Processor({ processorOptions });
   const send = (type, value) => processor.port.onmessage({ data: { type, value } });
   send("profile", model);
   if (messages.at(-1)?.type !== "profile-ready") throw new Error("Profile failed to load");

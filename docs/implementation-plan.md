@@ -561,9 +561,11 @@ source, then a rejected tonal tyre source. The [supplied-WAV comparison](researc
 now measures moving spectral bands and changing early/middle/late character
 missing from the tuned synthetic recording. The user accepted the resulting
 [reconstruction comparison](research/tyre-reference-audition.md), and the approved
-[live-control screech](research/controlled-tyre-screech.md) is now ready in the
-playground for its next hearing decision.
-Keep the engine and channel foundation. Accept the live tyre's character before
-expanding profiles or production integration. Validation for this prototype uses
-focused source/control checks and a short browser review, preserving the
-established infrastructure evidence.
+[live-control screech](research/controlled-tyre-screech.md) was subsequently accepted.
+The authorized [driving integration](research/reference-audio-integration.md) now
+uses those engine/tyre defaults with real per-wheel controls and the established
+surface/spatial/mixer foundation. The next step is owner listening in the
+simulation, with vehicle voicing and further tuning still open. Only targeted
+adapter/runtime/worklet tests, type checking and a short actual-app driving
+sequence are required for this development pass. Full regression/release
+verification and promotion to main remain deferred at the owner's request.

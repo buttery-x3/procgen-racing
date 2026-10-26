@@ -2,8 +2,9 @@
 
 27 October 2026. The user accepted the short reconstruction with “yes perfectly,
 this is the direction” and approved making it respond to slip/load in the
-playground. **The controllable version is now ready for the next hearing step.**
-Acceptance of its dynamic timbre and production integration remain later decisions.
+playground. **The owner has now accepted the controllable version and authorized
+driving integration.** The [integration notes](reference-audio-integration.md)
+describe its use in the simulation; driving mix/tuning is the next listening step.
 
 ## Hear it
 
@@ -18,7 +19,7 @@ dry/centred, with **Build → slide → recover → slide** selected.
    slip, sliding speed and wheel load. Sustained sliding continues until Stop;
    it does not reach the end of a recording. Zero wheel load removes contact.
 
-A remains the old production source. It is a historical comparison, not the
+A remains the original production source. It is a historical comparison, not the
 accepted target. The two-second reference plays separately and stops the live
 graph; starting a live example stops that reference. Reference volume is fixed
 near the default steady-slide level, not normalized dynamically to every input.
@@ -124,7 +125,9 @@ the short cycle completing, manual slip/load changes entering recovery, zero
 load becoming quiet, reference/live mutual exclusion and Stop. The user's next
 listen decides whether this live version retains the accepted character.
 
-Production driving audio, the collector, physics and existing channel/runtime
-qualification were not changed. No full regression suite, driving campaign,
-channel-recognition study or endurance run was repeated. Production integration
-and broader profiles follow this hearing decision.
+At this prototype's delivery, production driving audio, the collector, physics
+and existing channel/runtime qualification were unchanged. No full regression
+suite, driving campaign, channel-recognition study or endurance run was repeated.
+The owner's subsequent acceptance now leads to the separate
+[driving integration](reference-audio-integration.md). The render record above
+remains evidence for the original prototype source hash.

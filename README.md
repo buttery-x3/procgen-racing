@@ -277,27 +277,27 @@ See the [implementation plan](docs/implementation-plan.md),
 
 ## Synthesized driving audio on development
 
-The channel/control system is the working foundation. The user likes the new
-playground engine. Both tyre sources have been rejected: the first sounds like
-rain, the second like a tone. The [recording comparison](docs/research/tyre-recording-comparison.md)
-measures the missing spectral evolution and proposes a short reference
-reconstruction. The approved [short reference audition](docs/research/tyre-reference-audition.md)
-was accepted at `/audio-reference.html`. The approved
-[controllable version](docs/research/controlled-tyre-screech.md) is now ready in
-`/audio-playground.html`: B starts on a short build/slide/recovery/re-entry example.
+The accepted pulse/exhaust engine and evolving reference-model tyre screech now
+run in the simulation on development. They use actual RPM/load/shift and
+independent per-wheel slip/contact controls, retaining the established surface,
+spatial and mixer foundation. Open the normal app and drive for the next listening
+review. See [integration and local profile setup](docs/research/reference-audio-integration.md).
 Development commits use [targeted validation](docs/workflow.md#validation-scope--revised-26-october-2026);
-the full suite is required before merging into `main`.
+the full suite is reserved for release promotion into `main`, which is deferred
+while driving feedback and further tuning remain open.
 
 The [audio playground](audio-playground.html) is the first audible A/B prototype:
 short engine and tyre examples, perceptual controls and local JSON presets. It
 starts on the live reference-model tyre, with both earlier tyre sources available
-for comparison. The engine and reconstructed screech directions are accepted;
-the live tyre dynamics are the next listening decision. Production driving audio remains unchanged.
+for comparison. The engine and live screech are accepted; the next step reviews
+their response and mix in the simulation. Audition presets remain separate from
+the game's persistent mixer preferences.
 
 The separate [audio feature](docs/audio.md) adds RPM/load/shift engine synthesis,
 four independent tyre warning/slip voices, headphone spatialization and distinct
 front/rear cues. Sound is enabled by default and starts with the first browser
 interaction. **Sound settings** provides the mixer, listening modes and labeled
 wheel/channel checks. Explicit mute persists. The standalone
-[Audio lab](audio-lab.html) supplies auditions, rendered-audio qualification,
-a real listening test and the sustained driving benchmark.
+[Audio lab](audio-lab.html) retains the original native-source foundation checks;
+[the short driving diagnostic](audio-driving.html) observes the actual integrated
+voices. The 20-minute benchmark runs only on explicit request.

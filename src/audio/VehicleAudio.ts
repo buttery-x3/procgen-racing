@@ -3,6 +3,8 @@ import { DEFAULT_SETUP } from "../vehicle/setup";
 import { AudioControlCollector } from "./AudioControls";
 import { engineAudioProfile } from "./profiles";
 import { VehicleAudioGraph } from "./VehicleAudioGraph";
+import { loadDrivingAudio } from "./ReferenceAudio";
+import { REFERENCE_MODEL_ID } from "./reference-tuning";
 import { loadAudioSettings, normalizeAudioSettings } from "./settings";
 import { auditionFrame } from "./audition";
 import type { AudioSettings, EngineAudioProfile } from "./types";
@@ -37,6 +39,7 @@ export class VehicleAudio {
   get state() {
     if (!this.enabled) return "muted";
     if (this.error) return "unavailable";
+    if (this.graph?.isReady === false) return "loading";
     return this.context?.state === "running" ? "running" : "ready";
   }
   attach() {
@@ -89,6 +92,20 @@ export class VehicleAudio {
     }
     this.context = undefined;
   }
+  private createGraph(context: AudioContext, startTime = context.currentTime) {
+    const graph = new VehicleAudioGraph(context, context.destination, this.settings, this.profile, startTime, loadDrivingAudio(context));
+    const failCurrent = (error: unknown) => {
+      if (!this.disposed && this.context === context && this.graph === graph) this.fail(error);
+    };
+    graph.onError = failCurrent;
+    void graph.ready?.then(() => {
+      if (this.disposed || this.graph !== graph || context !== this.context) return;
+      this.collector.reset();
+      if (this.audition) this.auditionUntil = context.currentTime + 1.44;
+      this.onStatus?.();
+    }, failCurrent);
+    return graph;
+  }
   unlock() {
     if (this.disposed || !this.enabled) return;
     if (this.suspendTimer !== undefined) clearTimeout(this.suspendTimer);
@@ -100,7 +117,7 @@ export class VehicleAudio {
         this.context = new AudioContext({ latencyHint: "interactive" });
         created = true;
         this.context.onstatechange = () => this.onStatus?.();
-        this.graph = new VehicleAudioGraph(this.context, this.context.destination, this.settings, this.profile);
+        this.graph = this.createGraph(this.context);
       }
       if (this.context.state === "running" && this.suspendPending === 0 && !this.error) {
         if (created) this.onStatus?.();
@@ -154,7 +171,7 @@ export class VehicleAudio {
     if (changed && this.context && this.graph) {
       try {
         const old = this.graph, time = this.context.currentTime;
-        const replacement = new VehicleAudioGraph(this.context, this.context.destination, this.settings, this.profile, time + 0.025);
+        const replacement = this.createGraph(this.context, time + 0.025);
         this.graph = replacement;
         old.silence(time);
         const retired = { graph: old, timer: setTimeout(() => {
@@ -179,7 +196,7 @@ export class VehicleAudio {
     if (this.disposed) return;
     const start = performance.now();
     const now = this.context?.currentTime ?? 0;
-    if (this.audition && now >= this.auditionUntil) this.stopAudition();
+    if (this.audition && this.graph?.isReady !== false && now >= this.auditionUntil) this.stopAudition();
     if (this.context && now < this.quietUntil) {
       this.graph?.silence();
       if (paused) this.collector.reset();
@@ -231,6 +248,7 @@ export class VehicleAudio {
     return {
       enabled: this.enabled, state: this.state, contextState: this.context?.state ?? "not-created",
       error: this.error || null, profile: this.profile.id, output: this.settings.output,
+      sourceBackend: "pulse-exhaust-reference-v3", sourceReady: this.graph?.isReady ?? false, tyreModelId: REFERENCE_MODEL_ID,
       liveGraphs: this.graph ? 1 : 0, retiringGraphs: this.retired.length, updates: this.frames,
       controlP95Ms: recent.length ? recent[Math.floor((recent.length - 1) * 0.95)] : 0,
       controlTimingScope: "All captures plus graph publication per animation frame; excludes browser audio rendering",

@@ -1,4 +1,4 @@
-// Prototype voices for human audition. Kept outside the production graph.
+// Accepted pulse/exhaust engine shared by driving and audition; older tyre comparisons remain here.
 const bounded = (value, low = 0, high = 1) => Number.isFinite(value) ? Math.max(low, Math.min(high, value)) : low;
 
 class SeededVoice extends AudioWorkletProcessor {
@@ -9,6 +9,7 @@ class SeededVoice extends AudioWorkletProcessor {
       if (data?.type === 'reset') this.reset(data.seed);
       if (data?.type === 'control') this.target = data.value;
       if (data?.type === 'tuning') this.tuning = data.value;
+      if (data?.type === 'dispose') this.disposed = true;
     };
   }
 
@@ -43,6 +44,7 @@ class PulseExhaust extends SeededVoice {
   }
 
   process(_inputs, outputs) {
+    if (this.disposed) return false;
     const out = outputs[0][0];
     if (!out) return true;
     const t = this.target || {};

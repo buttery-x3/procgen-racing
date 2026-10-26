@@ -69,6 +69,8 @@ export class AudioPanel {
   setRuntimeStatus(state: string) {
     this.runtimeState = state;
     if (state === "unavailable") this.node("audio-status").textContent = "Audio is unavailable. Toggle sound to retry.";
+    else if (state === "loading") this.node("audio-status").textContent = "Loading driving sounds…";
+    else if (this.node("audio-status").textContent === "Loading driving sounds…") this.node("audio-status").textContent = "Driving sounds ready.";
   }
 
   setEnabled(enabled: boolean) {

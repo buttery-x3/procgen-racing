@@ -1,0 +1,348 @@
+{
+  "format": "procgen-racing:reference-audio-integration",
+  "version": 1,
+  "branch": "codex/reference-audio-integration",
+  "scope": "Targeted development integration only. App RAF, actual SuspensionRig controls, accepted pulse/exhaust engine plus four reference-model tyre worklets through preserved spatial/mixer and surface nodes. No full qualification or release verification.",
+  "sourceHash": "831d192a146e669f",
+  "recordedAt": "2026-10-26T14:43:54.382Z",
+  "modelId": "local:tyre-spectrum-v1:2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0",
+  "modelSha256": "0f640d311e0f7c9297bb30b9784880553ac67275b433705b9629b291d6ec6082",
+  "engineWorkletSha256": "9413fbb9ed457ba227044738b19fd89eee7de2da5e0c0aff2e764370270c486b",
+  "tyreWorkletSha256": "b365264addc8115b7cefcda427197275176cfbd198fa44922d5a6785556b028e",
+  "automated": {
+    "tests": 38,
+    "files": [
+      "tests/audioIntegration.test.ts",
+      "tests/audioRuntime.test.ts",
+      "tests/audio/reference-tyre.test.mjs",
+      "tests/audio/playground-model.test.ts"
+    ],
+    "result": "passed",
+    "typecheck": "passed"
+  },
+  "driving": {
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "completed": true,
+    "sourceBackend": "pulse-exhaust-reference-v3",
+    "sourceReady": true,
+    "sampleRate": 48000,
+    "sampleIntervalMs": 100,
+    "samples": 216,
+    "durationSeconds": 21.553899999976156,
+    "firstActualUpshiftObserved": true,
+    "events": [
+      {
+        "seconds": 6.374299999952316,
+        "stage": "launch",
+        "kind": "first-upshift",
+        "detail": "Actual gear 1 → 2 at 6273 RPM"
+      }
+    ],
+    "errors": [],
+    "stages": [
+      {
+        "stage": "idle",
+        "beganSeconds": 0.00010000002384185791,
+        "endedSeconds": 2.504399999976158,
+        "samples": 25,
+        "eligibleSamples": 21,
+        "minimumEngineRms": 0.01721590701951561,
+        "minimumOutputRms": 0.012073669575602082,
+        "maximumRpm": 990.7695879324392,
+        "maximumSpeed": 0.008837724104523659,
+        "engineSilentSamples": 0,
+        "outputSilentSamples": 0,
+        "nonFiniteSamples": 0,
+        "contextNotRunningSamples": 0,
+        "appStalledSamples": 0
+      },
+      {
+        "stage": "launch",
+        "beganSeconds": 2.504399999976158,
+        "endedSeconds": 6.374299999952316,
+        "samples": 39,
+        "eligibleSamples": 35,
+        "minimumEngineRms": 0.016809091767546584,
+        "minimumOutputRms": 0.011756533487468872,
+        "maximumRpm": 6166.938036170832,
+        "maximumSpeed": 16.078876495361328,
+        "engineSilentSamples": 0,
+        "outputSilentSamples": 0,
+        "nonFiniteSamples": 0,
+        "contextNotRunningSamples": 0,
+        "appStalledSamples": 0
+      },
+      {
+        "stage": "shift recovery",
+        "beganSeconds": 6.374299999952316,
+        "endedSeconds": 8.374299999952317,
+        "samples": 20,
+        "eligibleSamples": 16,
+        "minimumEngineRms": 0.012840517740795258,
+        "minimumOutputRms": 0.012804120442313195,
+        "maximumRpm": 6957.12271083316,
+        "maximumSpeed": 22.460582733154297,
+        "engineSilentSamples": 0,
+        "outputSilentSamples": 0,
+        "nonFiniteSamples": 0,
+        "contextNotRunningSamples": 0,
+        "appStalledSamples": 0
+      },
+      {
+        "stage": "braking",
+        "beganSeconds": 8.374299999952317,
+        "endedSeconds": 13.124100000023843,
+        "samples": 48,
+        "eligibleSamples": 44,
+        "minimumEngineRms": 0.009483166613095433,
+        "minimumOutputRms": 0.007980065614045245,
+        "maximumRpm": 5511.843306488847,
+        "maximumSpeed": 22.274173736572266,
+        "engineSilentSamples": 0,
+        "outputSilentSamples": 0,
+        "nonFiniteSamples": 0,
+        "contextNotRunningSamples": 0,
+        "appStalledSamples": 0
+      },
+      {
+        "stage": "stopped idle",
+        "beganSeconds": 13.124100000023843,
+        "endedSeconds": 16.134,
+        "samples": 30,
+        "eligibleSamples": 27,
+        "minimumEngineRms": 0.017114903465239292,
+        "minimumOutputRms": 0.012002987957535089,
+        "maximumRpm": 967.9128080001639,
+        "maximumSpeed": 0.004574379418045282,
+        "engineSilentSamples": 0,
+        "outputSilentSamples": 0,
+        "nonFiniteSamples": 0,
+        "contextNotRunningSamples": 0,
+        "appStalledSamples": 0
+      },
+      {
+        "stage": "relaunch",
+        "beganSeconds": 16.134,
+        "endedSeconds": 19.143799999952318,
+        "samples": 30,
+        "eligibleSamples": 27,
+        "minimumEngineRms": 0.011820060799377745,
+        "minimumOutputRms": 0.008929477572881714,
+        "maximumRpm": 3882.8342319749518,
+        "maximumSpeed": 6.466709136962891,
+        "engineSilentSamples": 0,
+        "outputSilentSamples": 0,
+        "nonFiniteSamples": 0,
+        "contextNotRunningSamples": 0,
+        "appStalledSamples": 0
+      },
+      {
+        "stage": "final braking",
+        "beganSeconds": 19.143799999952318,
+        "endedSeconds": 21.553899999976156,
+        "samples": 24,
+        "eligibleSamples": 21,
+        "minimumEngineRms": 0.011674422197765625,
+        "minimumOutputRms": 0.00910707738677608,
+        "maximumRpm": 3373.003794299464,
+        "maximumSpeed": 6.496509552001953,
+        "engineSilentSamples": 0,
+        "outputSilentSamples": 0,
+        "nonFiniteSamples": 0,
+        "contextNotRunningSamples": 0,
+        "appStalledSamples": 0
+      }
+    ],
+    "nodeHealth": {
+      "engine": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0.009483166613095433,
+        "maximumRms": 0.035108264716582065
+      },
+      "impact": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "mix": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0.010914663108866898,
+        "maximumRms": 0.05962824327111254
+      },
+      "ceiling": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0.012767850760324594,
+        "maximumRms": 0.06905778403310425
+      },
+      "output": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0.007660710734832715,
+        "maximumRms": 0.0414346721001767
+      },
+      "fl/input": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.03537166577235237
+      },
+      "fl/hrtf": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.01631584768805427
+      },
+      "fl/hrtf-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.01631584768805427
+      },
+      "fl/stereo": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.020796339359360257
+      },
+      "fl/stereo-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fl/mono-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fr/input": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.04078191067168478
+      },
+      "fr/hrtf": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.01821876724789652
+      },
+      "fr/hrtf-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.01821876724789652
+      },
+      "fr/stereo": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.02397722691145777
+      },
+      "fr/stereo-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fr/mono-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rl/input": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.06231420091108265
+      },
+      "rl/hrtf": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.0276199551472946
+      },
+      "rl/hrtf-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.0276199551472946
+      },
+      "rl/stereo": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.03663687423515154
+      },
+      "rl/stereo-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rl/mono-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rr/input": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.08567318929200146
+      },
+      "rr/hrtf": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.03835506539908934
+      },
+      "rr/hrtf-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.03835506539908934
+      },
+      "rr/stereo": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0.05037050643730636
+      },
+      "rr/stereo-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rr/mono-routed": {
+        "samples": 216,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      }
+    },
+    "controlP95Ms": 0.2999999523162842
+  },
+  "limitations": [
+    "Digital analyser windows can overlap; this is not an audio hardware underrun or human listening test.",
+    "Control p95 excludes browser audio rendering; this short run is not a performance campaign.",
+    "Chromium 155 at 48 kHz only; historical Vivaldi/44.1 kHz evidence retains its original source hashes.",
+    "Reference-derived model stays local and is not a distributable release asset.",
+    "Full regression suite, release build/qualification and promotion to main explicitly deferred."
+  ],
+  "afterMeasurementChanges": [
+    {
+      "path": "audio-lab.html",
+      "scope": "Caption identifies legacy native auditions/offline renders. No driving executable or voice changed."
+    }
+  ],
+  "finalAudioFingerprint": "d6172fc44f8ca740"
+}
