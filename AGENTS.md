@@ -38,7 +38,11 @@ Historical milestone notes and qualification reports do not override this policy
   [docs/m5.md](docs/m5.md) for venue campaigns and [docs/m6.md](docs/m6.md) for
   procedural car/workbench qualification. For car construction changes run
   `npm run qualify:m6 -- --count=1000 --driving`; keep its report in
-  `docs/research/m6-qualification.json` with the tested source hash. Historical
-  M4/M5 reports remain evidence for those implementations.
+  `docs/research/m6-qualification.json` with the tested source hash.
+  M7 track changes use `npm run qualify:m7 -- --count=1000 --construction=32`,
+  `npm run qualify:m7:driving` and the visible browser benchmark; publish matching
+  evidence with `npm run report:m7`. See [docs/m7.md](docs/m7.md) for scope and
+  reproduction, including the distinction between planning and full construction.
+  Historical M4/M5/M6 reports remain evidence for those implementations.
 - Keep installed dependencies, build output and local screenshots/traces out of
   commits according to `.gitignore`.

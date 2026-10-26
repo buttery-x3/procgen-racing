@@ -68,6 +68,16 @@ export class Alignment {
       definition.bankStrength,
       definition.crown,
       ...(definition.bank ? [definition.bank] : []),
+      ...(definition.familyDesign?.oval
+        ? [
+            definition.familyDesign.oval.innerBank,
+            definition.familyDesign.oval.outerBank,
+            definition.familyDesign.oval.blend,
+          ]
+        : []),
+      ...(definition.venue
+        ? [definition.venue.leftRunoff, definition.venue.rightRunoff]
+        : []),
     ]) {
       if (
         keys.length < 2 ||
@@ -84,7 +94,29 @@ export class Alignment {
           throw new Error("Profile keys must be finite and strictly ordered.");
       });
     }
-    const count = definition.controlPoints.length * 128;
+    const polygonLength = definition.familyDesign
+      ? definition.controlPoints.reduce(
+          (sum, p, i) =>
+            sum +
+            Math.hypot(
+              p.x -
+                definition.controlPoints[
+                  (i + 1) % definition.controlPoints.length
+                ].x,
+              p.z -
+                definition.controlPoints[
+                  (i + 1) % definition.controlPoints.length
+                ].z,
+            ),
+          0,
+        )
+      : 0;
+    const count = definition.familyDesign
+      ? Math.max(
+          definition.controlPoints.length * 8,
+          Math.ceil(polygonLength / 0.75),
+        )
+      : definition.controlPoints.length * 128;
     let previous = this.curve(0).position,
       total = 0;
     for (let i = 1; i <= count; i++) {
@@ -164,9 +196,11 @@ export class Alignment {
       ? profile(this.definition.bank, fraction).value
       : 0;
     const bank = this.definition.bank
-      ? explicitBank * curvature <= 0
-        ? explicitBank * smooth((Math.abs(curvature) - 0.0005) / 0.001)
-        : 0
+      ? this.definition.familyDesign
+        ? explicitBank
+        : explicitBank * curvature <= 0
+          ? explicitBank * smooth((Math.abs(curvature) - 0.0005) / 0.001)
+          : 0
       : ((-Math.tanh(curvature * 55) * strength * Math.PI) / 180) *
         smooth((Math.abs(curvature) - 0.002) / 0.006);
     const kerb = (side: "left" | "right") =>
@@ -202,6 +236,23 @@ export class Alignment {
       kerbLeft: kerb("left"),
       kerbRight: kerb("right"),
       section,
+      ...(this.definition.familyDesign?.oval
+        ? {
+            oval: {
+              ...this.definition.familyDesign.oval,
+              innerBank: profile(
+                this.definition.familyDesign.oval.innerBank,
+                fraction,
+              ).value,
+              outerBank: profile(
+                this.definition.familyDesign.oval.outerBank,
+                fraction,
+              ).value,
+              blend: profile(this.definition.familyDesign.oval.blend, fraction)
+                .value,
+            },
+          }
+        : {}),
       ...(this.definition.venue
         ? {
             kerbHeight:

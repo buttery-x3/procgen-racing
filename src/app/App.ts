@@ -26,6 +26,7 @@ import { SurfaceAudio } from "../audio/SurfaceAudio";
 import { venueGeometrySettings } from "../track/venue/types";
 import { SetupHistory, copySetup } from "../storage/GarageStorage";
 import { generateCar } from "../vehicle/generateCar";
+import type { CircuitArchive } from "../storage/CircuitStorage";
 
 export class App {
   private rig!: SuspensionRig;
@@ -64,7 +65,8 @@ export class App {
         action: (action) => this.action(action),
         setup: (next, rebuild, group) =>
           this.applySetup(next, false, true, rebuild, group),
-        generate: (recipe) => void this.generatePreview(recipe),
+        generate: (recipe, archive) =>
+          void this.generatePreview(recipe, archive),
         input: (settings) => this.input.configure(settings),
       },
       !!this.savedSetup,
@@ -91,12 +93,19 @@ export class App {
     this.frame = requestAnimationFrame(this.animate);
   }
 
-  private async generatePreview(recipe: GenerationRecipe) {
+  private async generatePreview(
+    recipe: GenerationRecipe,
+    archive?: CircuitArchive,
+  ) {
     const version = ++this.previewVersion;
     this.preview = undefined;
     try {
       const venue = this.workbench.generator.venueSettings();
-      const key = JSON.stringify({ recipe, venue });
+      const key = JSON.stringify({
+        recipe,
+        venue,
+        archive: archive?.definitionHash,
+      });
       const cached = [...this.previewCache.values()]
         .reverse()
         .find(
@@ -117,12 +126,30 @@ export class App {
           },
           venue,
           cached,
+          archive,
         ));
       if (version !== this.previewVersion || this.disposed) return;
       this.preview = result;
       this.previewCache.delete(key);
       this.previewCache.set(key, result);
-      while (this.previewCache.size > 3)
+      while (
+        this.previewCache.size > 1 &&
+        (this.previewCache.size > 3 ||
+          [...this.previewCache.values()].reduce(
+            (n, r) =>
+              n +
+              r.circuit.chunks.reduce(
+                (s, c) =>
+                  s +
+                  c.vertices.byteLength +
+                  c.indices.byteLength +
+                  c.colors.byteLength,
+                0,
+              ),
+            0,
+          ) >
+            48 * 1024 * 1024)
+      )
         this.previewCache.delete(this.previewCache.keys().next().value!);
       this.workbench.generator.ready(result);
     } catch (error) {

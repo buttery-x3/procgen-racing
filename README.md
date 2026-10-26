@@ -8,8 +8,15 @@ when a release is explicitly requested. See the [branch workflow](docs/workflow.
 and [agent instructions](AGENTS.md).
 
 A browser racing sandbox built with TypeScript, Three.js and Rapier. The current
-**M6 development build** adds procedural cars and a complete tuning/comparison
-workbench to the seeded touring/GP venues and four-wheel driving/suspension lab.
+**M7 development build** adds inherited-road, street, airfield, mountain, oval,
+road/oval hybrid and 8–24 km endurance venues to the procedural car and tuning lab.
+
+**M7** adds fixed road networks with route alternatives/provenance, dedicated
+progressive oval banking and aprons, full/club/speedway variants, family-specific
+facilities and locally streamed collision/rendering. The circuit workshop includes
+lane cross-sections, stock-car high/low reference lines and accepted-definition
+JSON import/restore. A named desktop benchmark and uncurated 35-seed portfolio
+accompany the generation and full-lap checks. See the [M7 guide](docs/m7.md).
 
 **M6** supplies 11 seeded car families, FF/FR/MR/RR/AWD packaging, component-derived
 COM/inertia and matching sectioned body geometry. Car workshop previews validate
@@ -53,6 +60,9 @@ npm run report:m4         # Rebuild the 32-distinct-seed portfolio and summary
 npm run qualify:m5 -- --count=128 --workers=4
 npm run report:m5
 npm run qualify:m6 -- --count=1000 --driving
+npm run qualify:m7 -- --count=1000 --construction=32
+npm run qualify:m7:driving
+npm run report:m7 # Publish matching generation, driving and browser evidence
 ```
 
 ## Available now
@@ -158,8 +168,8 @@ This is a semi-arcade model with physical contact forces and torques, simplified
 combined-slip tyres and a simplified powertrain. It does not replace the chassis
 velocity to create traction. Unsprung bodies, tyre temperature/wear, detailed
 suspension linkages, authentic manufacturer data and engine stalling are outside
-this build. Physical gamepad hardware and a named 1080p reference machine have
-not yet been verified.
+this build. Physical gamepad hardware has not yet been verified. M7 adds a named
+1920×1080 desktop browser benchmark with explicit renderer and measurement scope.
 
 The automated suite covers settled suspension, weight transfer, airborne behaviour,
 steering direction, centred chase geometry, all four drivetrains, reverse/neutral,
@@ -177,7 +187,19 @@ lines, profile continuity, technical rhythm and FF/FR/MR/AWD laps. M5 adds map
 handedness, construction continuity, barrier impacts, material footprints, soil
 drag, pit merges, kerb profiles and resource tests. M6 adds generated geometry,
 mass/inertia and all-family physics checks, storage/history, inputs, traces and
-repeatable comparisons: **188 tests** currently pass.
+repeatable comparisons. M7 adds network/variant provenance, progressive-bank/apron
+contact, long-venue localization, bounded collision/GPU residency and durable
+circuit archives: **216 tests** currently pass.
+
+M7's [named desktop benchmark](docs/research/m7-desktop-benchmark.json) measured
+about 100 fps at 1920×1080 on street, oval and 24 km endurance samples, with
+10.1 ms p95 frame intervals on the Ryzen 5 5600X / RTX 3060 desktop. Those are
+short foreground samples capped near 100 Hz; full laps are checked separately.
+
+The [M7 campaign](docs/research/m7-qualification.json) passed **7,000 planning
+checks and 224 complete constructions**, with zero failures or seed substitutions.
+All **31 full-lap driving checks** passed, including FF/FR/MR/AWD on every family
+and three stock-car oval lanes. See the [measurement scope](docs/m7.md).
 
 The [M6 campaign](docs/research/m6-qualification.json) qualifies **11,000/11,000 cars**,
 33 physical acceptance cases and 22 complete dressed touring/GP laps, with zero
@@ -205,14 +227,16 @@ Open **Circuit workshop**, choose a seed/style/landscape/length, then **Preview 
 **Drive circuit** loads the validated preview. Editing settings disables loading until
 the new recipe is generated. The workshop remembers the last loaded recipe; launch
 still opens the authored proving circuit, also available from the workshop.
+M7 also saves the accepted definition and active variant in IndexedDB; use
+**Restore / import a circuit** to restore it after reload or import its JSON.
 
-Street/oval layouts and time trials remain later milestones.
-M5 supplies run-off envelopes, barriers, pits and facilities. M4 v2 supports arbitrary
-non-crossing folded courses; racing overpasses and inherited street/rural networks
-belong to later M7 work. Open rally/hill-climb routes remain out of scope.
+M7 supplies street, rural, mountain, airfield, speedway, road/oval hybrid and extended
+endurance layouts alongside the M4 touring/GP generator. Time trials, ghosts,
+race rules and a full circuit library remain M8 work; racing overpasses remain an
+optional extension. Open rally/hill-climb routes remain out of scope.
 
 See the [implementation plan](docs/implementation-plan.md),
 [M1 foundation notes](docs/foundation.md), [M2 model notes](docs/m2.md) and
 [M3 surface compiler notes](docs/m3.md), [M4 v2 notes](docs/m4-v2.md),
-[M5 venue notes](docs/m5.md), [M6 car/workbench notes](docs/m6.md) and
+[M5 venue notes](docs/m5.md), [M6 car/workbench notes](docs/m6.md), [M7 expanded-family notes](docs/m7.md) and
 [archived M4 v1 notes](docs/m4.md).

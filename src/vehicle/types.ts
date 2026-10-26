@@ -137,6 +137,9 @@ export interface VehicleTelemetry {
     hold: boolean;
   };
   track?: {
+    branchId?: "main" | "pit";
+    variantId?: string;
+    layer?: 0;
     station: number;
     distance: number;
     length: number;

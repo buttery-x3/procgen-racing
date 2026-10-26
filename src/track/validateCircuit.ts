@@ -1,6 +1,7 @@
 import { Alignment } from "./Alignment";
 import { roadPoint } from "./SurfaceCompiler";
 import { naturalHeight } from "./Terrain";
+import { validateFamily } from "./families/validateFamily";
 import type { CircuitDefinition } from "./types";
 import type { GenerationRecipe, ValidationReport } from "./generationTypes";
 import {
@@ -14,6 +15,7 @@ export function validateCircuit(
   definition: CircuitDefinition,
   recipe: GenerationRecipe,
 ): ValidationReport {
+  if (recipe.version === 3) return validateFamily(definition, recipe);
   const alignment = new Alignment(definition),
     step = alignment.length / Math.ceil(alignment.length / 4),
     count = Math.round(alignment.length / step),

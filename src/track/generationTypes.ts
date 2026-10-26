@@ -1,4 +1,7 @@
 import type { CircuitBake } from "./SurfaceCompiler";
+import { normalizeFamilyRecipe } from "./families/types";
+import type { FamilyRecipe, FamilyDiagnostics } from "./families/types";
+export type { FamilyRecipe } from "./families/types";
 
 export type CircuitFamily = "touring" | "gp";
 export interface LegacyRecipe {
@@ -19,7 +22,7 @@ export interface DesignRecipe {
   /** Separate deterministic alternatives on the same land. */
   layout: number;
 }
-export type GenerationRecipe = LegacyRecipe | DesignRecipe;
+export type GenerationRecipe = LegacyRecipe | DesignRecipe | FamilyRecipe;
 export const DEFAULT_RECIPE: LegacyRecipe = {
   version: 1,
   seed: "ridge-104",
@@ -38,6 +41,7 @@ export const DEFAULT_DESIGN_RECIPE: DesignRecipe = {
   layout: 0,
 };
 export function normalizeRecipe(input: GenerationRecipe): GenerationRecipe {
+  if (input.version === 3) return normalizeFamilyRecipe(input);
   if (input.version !== 1 && input.version !== 2)
     throw new Error("Unsupported circuit recipe version.");
   const family = input.family === "gp" ? "gp" : "touring";
@@ -121,6 +125,7 @@ export interface GenerationResult {
   fallback: boolean;
   fingerprint: string;
   design?: DesignReport;
+  family?: FamilyDiagnostics;
 }
 export interface SiteFeature {
   id: string;
@@ -132,11 +137,12 @@ export interface SiteFeature {
 }
 export interface DesignReport {
   referenceLines?: {
-    vehicle: "touring" | "gt" | "prototype";
+    vehicle: "touring" | "gt" | "prototype" | "stock";
+    lane?: "racing" | "low" | "middle" | "high";
     points: { at: number; lateral: number; speed: number }[];
   }[];
   generator: string;
-  mode: "sequence" | "anchors";
+  mode: "sequence" | "anchors" | "network" | "oval" | "hybrid";
   proposalCount: number;
   feasibleCount: number;
   closureShare: number;

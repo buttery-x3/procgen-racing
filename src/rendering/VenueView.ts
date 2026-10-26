@@ -3,6 +3,8 @@ import type { CompiledCircuit } from "../track/SurfaceCompiler";
 import { roadPoint } from "../track/SurfaceCompiler";
 import { barrierGeometry, pitOffset } from "../track/venue/geometry";
 import type { BarrierPath, VenueProp } from "../track/venue/types";
+import { tileMesh } from "../track/ChunkIndex";
+import type { Vec3 } from "../vehicle/types";
 
 interface Instance {
   p: THREE.Vector3;
@@ -31,28 +33,35 @@ export class VenueView {
   private readonly plane = new THREE.PlaneGeometry(1, 1);
   private readonly materials = new Map<number, THREE.MeshStandardMaterial>();
   private readonly labels = new Map<string, THREE.Material>();
+  private pendingTiles = new Map<string, Batch[]>();
+  private residentTiles = new Map<string, THREE.LOD>();
+  private disposed = false;
   constructor(readonly circuit: CompiledCircuit) {
     const venue = circuit.definition.venue!;
     for (const barrier of venue.barriers) {
-      const data = barrierGeometry(barrier),
-        geometry = new THREE.BufferGeometry();
-      geometry.setAttribute(
-        "position",
-        new THREE.BufferAttribute(data.vertices, 3),
-      );
-      geometry.setIndex(new THREE.BufferAttribute(data.indices, 1));
-      geometry.computeVertexNormals();
-      const material = this.mat(
-        {
-          guardrail: 0x89928a,
-          wall: 0xc9cebc,
-          tyres: 0x303833,
-          impact: 0xd2d6c3,
-        }[barrier.kind],
-      );
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.castShadow = mesh.receiveShadow = true;
-      this.group.add(mesh);
+      const data = barrierGeometry(barrier);
+      for (const part of circuit.definition.familyDesign
+        ? tileMesh(data)
+        : [data]) {
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(part.vertices, 3),
+        );
+        geometry.setIndex(new THREE.BufferAttribute(part.indices, 1));
+        geometry.computeVertexNormals();
+        const material = this.mat(
+          {
+            guardrail: 0x89928a,
+            wall: 0xc9cebc,
+            tyres: 0x303833,
+            impact: 0xd2d6c3,
+          }[barrier.kind],
+        );
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.castShadow = mesh.receiveShadow = true;
+        this.group.add(mesh);
+      }
       if (barrier.kind === "tyres")
         for (let i = 1; i < barrier.points.length; i++) {
           const a = barrier.points[i - 1],
@@ -296,6 +305,43 @@ export class VenueView {
         prop.heading,
         true,
       );
+    } else if (prop.kind === "building") {
+      const size = prop.size ?? { x: 30, y: 15, z: 24 },
+        color = 0x8b978e;
+      this.box(prop, 0, size.y / 2, 0, size.x, size.y, size.z, color);
+      this.box(
+        prop,
+        0,
+        size.y + 0.18,
+        0,
+        size.x + 1,
+        0.36,
+        size.z + 1,
+        0x53665d,
+      );
+      for (let y = 3; y < size.y - 1; y += 3.4) {
+        this.box(
+          prop,
+          0,
+          y,
+          size.z / 2 + 0.03,
+          size.x * 0.84,
+          0.8,
+          0.06,
+          0x45616a,
+        );
+        this.box(
+          prop,
+          size.x / 2 + 0.03,
+          y,
+          0,
+          0.06,
+          0.8,
+          size.z * 0.84,
+          0x45616a,
+        );
+      }
+      this.box(prop, 0, size.y / 2, 0, size.x, size.y, size.z, color, true);
     } else if (prop.kind === "garage") {
       this.box(prop, 0, 3, 0, 11, 6, 12, 0xb4b8a4);
       this.box(prop, 0, 6.15, 0, 11.8, 0.3, 12.5, 0x7c8a7b);
@@ -356,6 +402,14 @@ export class VenueView {
     }
   }
   private flush() {
+    if (this.circuit.definition.familyDesign) {
+      for (const b of this.batches.values()) {
+        if (!this.pendingTiles.has(b.tile)) this.pendingTiles.set(b.tile, []);
+        this.pendingTiles.get(b.tile)!.push(b);
+      }
+      this.batches.clear();
+      return;
+    }
     const tiles = new Map<string, { near: THREE.Group; far: THREE.Group }>(),
       object = new THREE.Object3D();
     for (const batch of this.batches.values()) {
@@ -400,6 +454,105 @@ export class VenueView {
       this.group.add(lod);
     }
     this.batches.clear();
+  }
+  update(position: Vec3, overview = false) {
+    if (!this.circuit.definition.familyDesign) return;
+    if (overview) {
+      for (const lod of this.residentTiles.values()) lod.visible = false;
+      return;
+    }
+    const needed = [...this.pendingTiles.keys()]
+        .map((key) => {
+          const [x, z] = key.split(",").map(Number);
+          return {
+            key,
+            d: Math.hypot(position.x - x * 128 - 64, position.z - z * 128 - 64),
+          };
+        })
+        .filter((t) => t.d < 650)
+        .sort((a, b) => a.d - b.d)
+        .slice(0, 96),
+      keys = new Set(needed.map((t) => t.key));
+    for (const [key, lod] of this.residentTiles)
+      if (!keys.has(key)) {
+        lod.removeFromParent();
+        lod.traverse((o) => {
+          if (o instanceof THREE.InstancedMesh) o.dispose();
+        });
+        this.residentTiles.delete(key);
+      }
+    for (const { key } of needed) {
+      let lod = this.residentTiles.get(key);
+      if (!lod) {
+        lod = new THREE.LOD();
+        const near = new THREE.Group(),
+          far = new THREE.Group(),
+          object = new THREE.Object3D(),
+          [x, z] = key.split(",").map(Number),
+          origin = new THREE.Vector3(x * 128 + 64, 0, z * 128 + 64);
+        for (const b of this.pendingTiles.get(key)!) {
+          const mesh = new THREE.InstancedMesh(
+            b.geometry,
+            b.material,
+            b.instances.length,
+          );
+          b.instances.forEach((i, index) => {
+            object.position.copy(i.p);
+            object.scale.copy(i.s);
+            object.rotation.set(i.pitch, i.heading, 0, "YXZ");
+            object.updateMatrix();
+            mesh.setMatrixAt(index, object.matrix);
+          });
+          mesh.computeBoundingBox();
+          mesh.computeBoundingSphere();
+          mesh.castShadow = !b.far;
+          mesh.receiveShadow = true;
+          (b.far ? far : near).add(mesh);
+        }
+        near.position.copy(origin).negate();
+        far.position.copy(origin).negate();
+        lod.position.copy(origin);
+        lod.addLevel(near, 0);
+        lod.addLevel(far, 160);
+        lod.addLevel(new THREE.Group(), 700);
+        this.group.add(lod);
+        this.residentTiles.set(key, lod);
+      }
+      lod.visible = true;
+    }
+  }
+  dispose() {
+    if (this.disposed) return;
+    this.disposed = true;
+    const geometries = new Set<THREE.BufferGeometry>([
+        this.cube,
+        this.cone,
+        this.lowCone,
+        this.cylinder,
+        this.bush,
+        this.plane,
+      ]),
+      materials = new Set<THREE.Material>([
+        ...this.materials.values(),
+        ...this.labels.values(),
+      ]);
+    this.group.traverse((o) => {
+      if (o instanceof THREE.Mesh) {
+        geometries.add(o.geometry);
+        for (const m of Array.isArray(o.material) ? o.material : [o.material])
+          materials.add(m);
+        if (o instanceof THREE.InstancedMesh) o.dispose();
+      }
+    });
+    geometries.forEach((g) => g.dispose());
+    for (const m of materials) {
+      for (const v of Object.values(m))
+        if (v instanceof THREE.Texture) v.dispose();
+      m.dispose();
+    }
+    this.group.clear();
+    this.pendingTiles.clear();
+    this.residentTiles.clear();
   }
   private paint() {
     const positions: number[] = [],

@@ -568,6 +568,8 @@ export class SceneView {
     const driving = rig.experiment === "handling" || rig.experiment === "split";
     const onCircuit = rig.experiment === "circuit";
     this.circuitView.group.visible = onCircuit;
+    if (onCircuit)
+      this.circuitView.update(pose.position, this.cameraMode === "overview");
     this.baseGround.visible = !onCircuit;
     this.labScenery.visible = !onCircuit;
     const fog = this.scene.fog as THREE.Fog;
@@ -707,6 +709,9 @@ export class SceneView {
   toggleGrid() {
     this.grid.visible = !this.grid.visible;
     return this.grid.visible;
+  }
+  get circuitStreamingStats() {
+    return this.circuitView.streamStats;
   }
   private resize() {
     const { clientWidth: w, clientHeight: h } = this.container;

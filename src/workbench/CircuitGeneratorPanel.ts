@@ -12,6 +12,17 @@ import { elevationPath, mapProjection } from "./CircuitMap";
 import { DEFAULT_VENUE, normalizeVenue } from "../track/venue/types";
 import type { VenueSettings } from "../track/venue/types";
 import { SURFACES } from "../track/types";
+import { FAMILY_PRESETS } from "../track/families/types";
+import type { ExpandedFamily } from "../track/families/types";
+import { Alignment } from "../track/Alignment";
+import { roadPoint } from "../track/SurfaceCompiler";
+import {
+  circuitArchive,
+  decodeCircuitArchive,
+  loadLastCircuit,
+  saveLastCircuit,
+} from "../storage/CircuitStorage";
+import type { CircuitArchive } from "../storage/CircuitStorage";
 
 const escape = (value: string) =>
   value.replace(
@@ -21,7 +32,8 @@ const escape = (value: string) =>
         c
       ]!,
   );
-const STORAGE_KEY = "procgen-racing:circuit-recipe:v2";
+const STORAGE_KEY = "procgen-racing:circuit-recipe:v3";
+const PREVIOUS_STORAGE_KEY = "procgen-racing:circuit-recipe:v2";
 const VENUE_KEY = "procgen-racing:venue:v1";
 
 export class CircuitGeneratorPanel {
@@ -29,41 +41,50 @@ export class CircuitGeneratorPanel {
   private readonly exportDialog = document.createElement("dialog");
   private result?: GenerationResult;
   private busy = false;
+  private previewAlignment?: Alignment;
   private readonly abort = new AbortController();
   constructor(
     root: HTMLElement,
     private callbacks: {
-      generate: (recipe: GenerationRecipe) => void;
+      generate: (recipe: GenerationRecipe, archive?: CircuitArchive) => void;
       action: (action: string) => void;
     },
   ) {
     this.dialog.id = "circuit-generator";
     this.dialog.setAttribute("aria-labelledby", "generator-title");
-    this.dialog.innerHTML = `<div class="generator-top"><div><span class="eyebrow">CIRCUIT WORKSHOP / M5</span><h2 id="generator-title">A new place to drive<span>.</span></h2></div><button type="button" class="icon-button" data-generator="close" aria-label="Close circuit workshop">×</button></div>
+    this.dialog.innerHTML = `<div class="generator-top"><div><span class="eyebrow">CIRCUIT WORKSHOP / M7</span><h2 id="generator-title">A new place to drive<span>.</span></h2></div><button type="button" class="icon-button" data-generator="close" aria-label="Close circuit workshop">×</button></div>
       <div class="generator-layout"><form id="generator-form" class="generator-form">
         <p class="generator-intro">Design a lap through the landscape. Compare routes on the same land, then take your car out.</p>
         <label for="generator-seed">WORLD SEED</label><div class="seed-field"><input id="generator-seed" name="seed" maxlength="64" required spellcheck="false" autocomplete="off"><button type="button" data-generator="shuffle" title="Choose a new seed" aria-label="Shuffle seed">↻</button></div>
-        <label for="generator-family">CIRCUIT STYLE</label><select id="generator-family" name="family"><option value="touring">Touring circuit</option><option value="gp">Grand Prix circuit</option></select>
+        <label for="generator-family">CIRCUIT STYLE</label><select id="generator-family" name="family"><option value="touring">Touring circuit</option><option value="gp">Grand Prix circuit</option><optgroup label="M7 · network & speedway venues">${Object.entries(
+          FAMILY_PRESETS,
+        )
+          .map(([id, p]) => `<option value="${id}">${p.name}</option>`)
+          .join("")}</optgroup></select>
         <p id="generator-style-note" class="generator-field-note"></p>
         <label for="generator-relief">LANDSCAPE</label><select id="generator-relief" name="relief"><option value="gentle">Gentle terrain</option><option value="rolling">Rolling hills</option></select>
         <label for="generator-character">CORNER RHYTHM</label><select id="generator-character"><option value="mixed">Mixed circuit</option><option value="flowing">Fast & flowing</option><option value="technical">Technical complexes</option></select>
         <label for="generator-layout">ROUTE ALTERNATIVE · SAME LAND</label><select id="generator-layout"><option value="0">Route A</option><option value="1">Route B</option><option value="2">Route C</option></select>
-        <div class="generator-range-label"><label for="generator-length">LAP LENGTH</label><output id="generator-length-value" for="generator-length"></output></div><input id="generator-length" name="length" type="range" step="100">
+        <div id="generator-family-controls" class="generator-family-controls" hidden><label for="generator-variant">VENUE LAYOUT</label><select id="generator-variant"><option value="full">Full venue</option><option value="club">Club / infield sprint</option><option value="speedway">Speedway oval</option></select><div id="generator-oval-settings"><label for="generator-oval">SPEEDWAY SHAPE</label><select id="generator-oval"><option value="oval">Oval</option><option value="tri-oval">Tri-oval</option><option value="asymmetric">Asymmetric ends</option></select><label for="generator-banking">LANE BANKING</label><select id="generator-banking"><option value="mild">Progressive · moderate</option><option value="fast">Progressive · high speed</option></select></div><label class="venue-check"><input type="checkbox" id="generator-endurance">Endurance pit facilities</label></div><div class="generator-range-label"><label for="generator-length">LAP LENGTH</label><output id="generator-length-value" for="generator-length"></output></div><input id="generator-length" name="length" type="range" step="100">
         <details class="generator-advanced generator-venue"><summary>Venue & surroundings · M5</summary><label class="venue-check"><input type="checkbox" id="venue-enabled" checked>Build circuit facilities</label><label for="venue-theme">VENUE THEME</label><select id="venue-theme"><option value="club">Club · grass & gravel</option><option value="traditional">Traditional · gravel traps</option><option value="modern">Modern · paved escapes</option><option value="desert">Desert · tarmac & sand</option></select><label for="venue-kerb">KERB PROFILE</label><select id="venue-kerb"><option value="low">Forgiving · 35 mm</option><option value="raised">Raised · 75 mm</option></select><label class="venue-check"><input type="checkbox" id="venue-pits" checked>Pit lane & service access</label><label for="venue-scenery">SCENERY DENSITY</label><select id="venue-scenery"><option value="sparse">Sparse</option><option value="standard">Standard</option><option value="dense">Dense</option></select><label for="venue-seed">SCENERY SEED</label><input id="venue-seed" maxlength="64" spellcheck="false" autocomplete="off"><p class="generator-field-note">Scenery has its own seed. The circuit and collision layout stay fixed when only its surroundings change.</p></details>
-        <details class="generator-advanced"><summary>Advanced design settings</summary><label for="generator-envelope">TERRAIN ENVELOPE</label><select id="generator-envelope"><option value="comfortable">Comfortable · grades up to 6%</option><option value="terrain">Terrain challenge · grades up to 10%</option></select><label for="generator-version">GENERATOR VERSION</label><select id="generator-version"><option value="2">V2 · circuit design</option><option value="1">V1 · legacy recipes</option></select><p class="generator-field-note">Challenge routes retain tyre-load and crest checks. V1 reproduces the original radial layouts.</p></details>
-        <button type="submit" class="button save-button generator-preview-button" id="generator-preview-button">Preview seed <span>↗</span></button>
+        <details class="generator-advanced"><summary>Advanced design settings</summary><label for="generator-envelope">TERRAIN ENVELOPE</label><select id="generator-envelope"><option value="comfortable">Comfortable · grades up to 6%</option><option value="terrain">Terrain challenge · grades up to 10%</option></select><label for="generator-version">GENERATOR VERSION</label><select id="generator-version"><option value="3">V3 · network / oval design</option><option value="2">V2 · circuit design</option><option value="1">V1 · legacy recipes</option></select><p class="generator-field-note">Challenge routes retain tyre-load and crest checks. V1 reproduces the original radial layouts.</p></details>
+        <details class="generator-advanced"><summary>Restore / import a circuit</summary><p class="generator-field-note">The last loaded definition and route variant are saved in this browser. JSON keeps the accepted design with its recipe.</p><button type="button" class="button subtle" data-generator="restore">Restore saved circuit</button><label for="generator-file">IMPORT CIRCUIT JSON</label><input id="generator-file" type="file" accept=".json,application/json"><label for="generator-import">OR PASTE CIRCUIT JSON</label><textarea id="generator-import" spellcheck="false" rows="3"></textarea><button type="button" class="button subtle" data-generator="import">Preview imported circuit</button></details><button type="submit" class="button save-button generator-preview-button" id="generator-preview-button">Preview seed <span>↗</span></button>
         <button type="button" class="button subtle" id="generator-cancel-button" data-generator="cancel" hidden>Cancel generation</button>
         <div class="generator-progress"><p id="generator-status" role="status" aria-live="polite">Ready to explore.</p><progress id="generator-progress" max="1" value="0" hidden></progress></div>
         <div class="generator-current"><span class="eyebrow">CURRENT CIRCUIT</span><strong id="generator-active-name">Ridge proving circuit</strong><small>Previewing pauses driving. Your car and setup stay in place until you load a circuit.</small><button type="button" class="generator-authored" data-generator="authored">Load M3 proving circuit ↗</button></div>
       </form><section class="generator-preview" aria-label="Seed preview and validation"><div class="generator-preview-heading"><span class="eyebrow">SITE / LAYOUT PREVIEW</span><span id="generator-fingerprint">VERSION 2</span></div>
-        <div class="generator-overlays" aria-label="Map overlays"><label><input type="checkbox" data-overlay="motifs" checked>Sections</label><label><input type="checkbox" data-overlay="speed">Speed</label><label><input type="checkbox" data-overlay="line">Reference line</label><label><input type="checkbox" data-overlay="earthwork">Cut/fill</label><label><input type="checkbox" data-overlay="clearance">Corridors</label><label><input type="checkbox" data-overlay="runoff" checked>Run-off</label><label><input type="checkbox" data-overlay="barriers" checked>Barriers</label><label><input type="checkbox" data-overlay="escapes">Escapes</label><label><input type="checkbox" data-overlay="facilities" checked>Facilities</label><label><input type="checkbox" data-overlay="land">Site survey</label></div>
+        <div class="generator-overlays" aria-label="Map overlays"><label><input type="checkbox" data-overlay="motifs" checked>Sections</label><label><input type="checkbox" data-overlay="speed">Speed</label><label><input type="checkbox" data-overlay="line">Reference line</label><label><input type="checkbox" data-overlay="earthwork">Cut/fill</label><label><input type="checkbox" data-overlay="clearance">Corridors</label><label><input type="checkbox" data-overlay="runoff" checked>Run-off</label><label><input type="checkbox" data-overlay="barriers" checked>Barriers</label><label><input type="checkbox" data-overlay="escapes">Escapes</label><label><input type="checkbox" data-overlay="facilities" checked>Facilities</label><label><input type="checkbox" data-overlay="land">Site survey</label><label><input type="checkbox" data-overlay="network" checked>Road network</label><label><input type="checkbox" data-overlay="properties">Properties</label></div>
         <div class="generator-map-wrap"><canvas id="generator-map" width="1000" height="430" role="img" aria-label="Seeded terrain and circuit layout preview"></canvas><div class="generator-empty" id="generator-empty"><span>01 / FIND YOUR RHYTHM</span><strong>A landscape.<br>A lap to learn.</strong><p>Terrain, corners and elevation, from one repeatable seed.</p></div><div class="generator-map-key"><i></i> TARMAC <i></i> LEVEL PADDOCK <span>N ↑</span></div></div>
         <div class="generator-elevation"><span>ELEVATION</span><svg viewBox="0 0 600 48" role="img" aria-label="Road and natural terrain elevation"><path id="generator-natural-path" style="stroke:#7c8a72"/><path id="generator-elevation-path"/><line x1="0" y1="47" x2="600" y2="47"/></svg><span id="generator-height-range">—</span></div>
-        <div class="generator-diagnostics" id="generator-diagnostics" hidden><label for="generator-model">SPEED MODEL</label><select id="generator-model"><option value="touring">Touring / road</option><option value="gt">GT / hypercar</option><option value="prototype">Prototype / open-wheel</option></select><label for="generator-trace">INSPECT ALONG LAP</label><select id="generator-trace"><option value="speed">Reference speed (km/h)</option><option value="grade">Grade (%)</option><option value="bank">Corner banking (degrees)</option><option value="width">Road width (m)</option><option value="curvature">Signed curvature (1/km)</option><option value="cutFill">Centreline cut / fill (m)</option></select><svg viewBox="0 0 600 60" role="img" aria-label="Circuit design diagnostic trace"><path id="generator-trace-path"/><text id="generator-trace-range" x="4" y="12"/></svg></div>
-        <div class="generator-metrics" id="generator-metrics"><p>Generate a preview to see circuit dimensions and validation.</p></div>
+        <div class="generator-diagnostics" id="generator-diagnostics" hidden><label for="generator-model">SPEED MODEL</label><select id="generator-model"><option value="touring">Touring / road</option><option value="gt">GT / hypercar</option><option value="prototype">Prototype / open-wheel</option><option value="stock">Oval stock car</option></select><label for="generator-trace">INSPECT ALONG LAP</label><select id="generator-trace"><option value="speed">Reference speed (km/h)</option><option value="grade">Grade (%)</option><option value="bank">Corner banking (degrees)</option><option value="width">Road width (m)</option><option value="curvature">Signed curvature (1/km)</option><option value="cutFill">Centreline cut / fill (m)</option></select><svg viewBox="0 0 600 60" role="img" aria-label="Circuit design diagnostic trace"><path id="generator-trace-path"/><text id="generator-trace-range" x="4" y="12"/></svg></div>
+        <section id="generator-cross-section" class="generator-cross-section" hidden><header><span class="eyebrow">ROAD CROSS-SECTION</span><label>Station<input id="generator-cross-station" type="range" min="0" max="1000" value="250" aria-label="Cross-section station"></label></header><svg viewBox="0 0 600 140" role="img" aria-label="Road banking, lanes and apron cross-section"><path id="generator-cross-ground" fill="none" stroke="#cad2b2" stroke-width="3"/><g id="generator-cross-lanes"></g></svg><p id="generator-cross-readout"></p></section><div id="generator-family-evidence" class="generator-family-evidence" hidden></div><div class="generator-metrics" id="generator-metrics"><p>Generate a preview to see circuit dimensions and validation.</p></div>
         <div class="generator-validation" id="generator-validation"></div>
       </section></div>
       <div class="generator-footer"><p id="generator-drive-note">Only a validated preview can be loaded.</p><div><button type="button" class="button subtle" id="generator-copy" data-generator="copy" disabled>Export recipe</button><button type="button" class="button save-button" id="generator-drive" data-generator="drive" disabled>Drive circuit <span>→</span></button></div></div>`;
+    this.node("generator-model").insertAdjacentHTML(
+      "afterend",
+      '<label for="generator-lane">SPEEDWAY LINE</label><select id="generator-lane"><option value="racing">Class racing line</option><option value="low">Stock · low lane</option><option value="middle">Stock · middle lane</option><option value="high">Stock · high lane</option></select>',
+    );
     root.append(this.dialog);
     this.exportDialog.className = "generator-export";
     this.exportDialog.setAttribute("aria-labelledby", "generator-export-title");
@@ -71,7 +92,11 @@ export class CircuitGeneratorPanel {
     root.append(this.exportDialog);
     let recipe: GenerationRecipe = DEFAULT_DESIGN_RECIPE;
     try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+      const saved = JSON.parse(
+        localStorage.getItem(STORAGE_KEY) ??
+          localStorage.getItem(PREVIOUS_STORAGE_KEY) ??
+          "null",
+      );
       if (saved) recipe = normalizeRecipe(saved);
     } catch {
       /* optional browser storage */
@@ -81,12 +106,18 @@ export class CircuitGeneratorPanel {
     this.field("generator-relief").value = recipe.relief;
     this.field("generator-version").value = String(recipe.version);
     this.field("generator-character").value =
-      recipe.version === 2 ? recipe.character : "mixed";
+      recipe.version !== 1 ? recipe.character : "mixed";
     this.field("generator-envelope").value =
-      recipe.version === 2 ? recipe.envelope : "comfortable";
-    this.field("generator-layout").value = String(
-      recipe.version === 2 ? Math.min(2, recipe.layout) : 0,
-    );
+      recipe.version !== 1 ? recipe.envelope : "comfortable";
+    this.setRouteAlternative(recipe.version !== 1 ? recipe.layout : 0);
+    this.field("generator-variant").value =
+      recipe.version === 3 ? recipe.variant : "full";
+    this.field("generator-oval").value =
+      recipe.version === 3 ? recipe.oval : "oval";
+    this.field("generator-banking").value =
+      recipe.version === 3 ? recipe.banking : "mild";
+    this.node<HTMLInputElement>("generator-endurance").checked =
+      recipe.version === 3 && recipe.endurance;
     let venue = DEFAULT_VENUE;
     try {
       venue = normalizeVenue(
@@ -157,21 +188,71 @@ export class CircuitGeneratorPanel {
       "input",
       (event) => {
         const field = event.target as HTMLInputElement;
+        if (field.id === "generator-file" || field.id === "generator-import")
+          return;
+        if (field.id === "generator-cross-station") {
+          this.drawCrossSection();
+          return;
+        }
         if (field.dataset.overlay) {
           if (this.result) this.drawMap(this.result);
           return;
         }
-        if (field.id === "generator-trace" || field.id === "generator-model") {
+        if (
+          field.id === "generator-trace" ||
+          field.id === "generator-model" ||
+          field.id === "generator-lane"
+        ) {
           this.drawTrace();
           if (this.result) this.drawMap(this.result);
           return;
         }
-        if (field.id === "generator-family")
-          this.updateFamily(field.value === "gp" ? 4000 : 2400);
-        if (field.id === "generator-version")
+        if (field.id === "generator-family") {
+          const preset = FAMILY_PRESETS[field.value as ExpandedFamily];
+          this.field("generator-version").value = preset
+            ? "3"
+            : this.field("generator-version").value === "1"
+              ? "1"
+              : "2";
+          this.updateFamily(
+            preset?.length ?? (field.value === "gp" ? 4000 : 2400),
+          );
+        }
+        if (field.id === "generator-version") {
+          const expanded =
+            this.field("generator-family").value in FAMILY_PRESETS;
+          if (field.value === "3" && !expanded)
+            this.field("generator-family").value = "street";
+          if (field.value !== "3" && expanded)
+            this.field("generator-family").value = "touring";
+          this.updateFamily(Number(this.field("generator-length").value));
+        }
+        if (field.id === "generator-variant")
           this.updateFamily(Number(this.field("generator-length").value));
         this.updateLength();
         this.invalidate();
+      },
+      options,
+    );
+    this.dialog.addEventListener(
+      "change",
+      (event) => {
+        const input = event.target as HTMLInputElement;
+        if (input.id === "generator-file" && input.files?.[0])
+          void (async () => {
+            try {
+              if (input.files![0].size > 4_000_000)
+                throw new Error("Circuit files must be smaller than 4 MB.");
+              this.importArchive(
+                decodeCircuitArchive(await input.files![0].text()),
+              );
+              input.value = "";
+            } catch (error) {
+              this.error(
+                error instanceof Error ? error.message : String(error),
+              );
+            }
+          })();
       },
       options,
     );
@@ -209,6 +290,32 @@ export class CircuitGeneratorPanel {
           case "authored":
             this.callbacks.action("generator:authored");
             break;
+          case "import":
+            try {
+              this.importArchive(
+                decodeCircuitArchive(
+                  this.node<HTMLTextAreaElement>("generator-import").value,
+                ),
+              );
+            } catch (error) {
+              this.error(
+                error instanceof Error ? error.message : String(error),
+              );
+            }
+            break;
+          case "restore":
+            void loadLastCircuit()
+              .then((archive) => {
+                if (!archive)
+                  throw new Error("Load a circuit once before restoring it.");
+                this.importArchive(archive);
+              })
+              .catch((error) =>
+                this.error(
+                  error instanceof Error ? error.message : String(error),
+                ),
+              );
+            break;
           case "copy":
             this.exportRecipe();
             break;
@@ -223,10 +330,30 @@ export class CircuitGeneratorPanel {
   private field(id: string) {
     return this.node<HTMLInputElement | HTMLSelectElement>(id);
   }
+  private setRouteAlternative(layout: number) {
+    const field = this.field("generator-layout") as HTMLSelectElement;
+    if (
+      layout > 2 &&
+      !Array.from(field.options).some((o) => o.value === String(layout))
+    )
+      field.add(new Option(`Route ${layout + 1}`, String(layout)));
+    field.value = String(layout);
+  }
   private updateFamily(length: number) {
     const gp = this.field("generator-family").value === "gp",
       field = this.field("generator-length") as HTMLInputElement;
+    const kind = this.field("generator-family").value as ExpandedFamily,
+      preset = FAMILY_PRESETS[kind],
+      expanded = !!preset;
     const legacy = this.field("generator-version").value === "1";
+    this.dialog.querySelector('label[for="generator-length"]')!.textContent =
+      expanded && this.field("generator-variant").value !== "full"
+        ? "FULL VENUE TARGET"
+        : "LAP LENGTH";
+    this.node("generator-family-controls").hidden = !expanded;
+    this.node("generator-oval-settings").hidden =
+      !expanded || !["oval", "hybrid"].includes(kind);
+    this.field("generator-variant").disabled = kind === "oval";
     for (const id of [
       "generator-character",
       "generator-layout",
@@ -242,12 +369,44 @@ export class CircuitGeneratorPanel {
       "venue-seed",
     ])
       this.field(id).disabled = legacy;
-    field.min = legacy ? (gp ? "3200" : "1800") : gp ? "4000" : "2000";
-    field.max = legacy ? (gp ? "5200" : "3200") : gp ? "7500" : "4500";
+    const speedwayOption = this.dialog.querySelector<HTMLOptionElement>(
+      '#generator-variant option[value="speedway"]',
+    )!;
+    speedwayOption.disabled = kind !== "hybrid";
+    if (
+      kind === "oval" ||
+      (kind !== "hybrid" &&
+        this.field("generator-variant").value === "speedway")
+    )
+      this.field("generator-variant").value = "full";
+    this.node<HTMLInputElement>("generator-endurance").disabled =
+      kind === "endurance";
+    if (kind === "endurance")
+      this.node<HTMLInputElement>("generator-endurance").checked = true;
+    field.min = expanded
+      ? String(preset.min)
+      : legacy
+        ? gp
+          ? "3200"
+          : "1800"
+        : gp
+          ? "4000"
+          : "2000";
+    field.max = expanded
+      ? String(preset.max)
+      : legacy
+        ? gp
+          ? "5200"
+          : "3200"
+        : gp
+          ? "7500"
+          : "4500";
     field.value = String(length);
-    this.node("generator-style-note").textContent = gp
-      ? "Longer straights, faster sweepers and a wider racing surface."
-      : "Compact straights, technical bends and a tighter corner rhythm.";
+    this.node("generator-style-note").textContent = expanded
+      ? `${preset.note}${this.field("generator-variant").value !== "full" ? " Variants reuse the same site; the actual lap length appears after preview." : ""}`
+      : gp
+        ? "Longer straights, faster sweepers and a wider racing surface."
+        : "Compact straights, technical bends and a tighter corner rhythm.";
     this.updateLength();
   }
   private updateLength() {
@@ -266,6 +425,10 @@ export class CircuitGeneratorPanel {
       character: this.field("generator-character").value,
       envelope: this.field("generator-envelope").value,
       layout: Number(this.field("generator-layout").value),
+      variant: this.field("generator-variant").value,
+      oval: this.field("generator-oval").value,
+      banking: this.field("generator-banking").value,
+      endurance: this.node<HTMLInputElement>("generator-endurance").checked,
     } as GenerationRecipe);
   }
   isCurrent(result: GenerationResult) {
@@ -312,14 +475,46 @@ export class CircuitGeneratorPanel {
     this.dialog.classList.add("preview-stale");
     this.node("generator-fingerprint").textContent = "PREVIEW OUT OF DATE";
   }
-  private generate() {
+  private generate(archive?: CircuitArchive) {
     if (!this.node<HTMLFormElement>("generator-form").reportValidity()) return;
     const recipe = this.recipe();
     this.field("generator-seed").value = recipe.seed;
     this.invalidate();
     this.setBusy(true);
     this.progress({ stage: "Preparing terrain", fraction: 0.01 });
-    this.callbacks.generate(recipe);
+    this.callbacks.generate(recipe, archive);
+  }
+  private importArchive(archive: CircuitArchive) {
+    const recipe = archive.recipe,
+      venue = archive.definition.venue?.settings ?? {
+        ...DEFAULT_VENUE,
+        enabled: false,
+      };
+    this.field("generator-version").value = String(recipe.version);
+    this.field("generator-family").value = recipe.family;
+    this.field("generator-seed").value = recipe.seed;
+    this.field("generator-relief").value = recipe.relief;
+    this.field("generator-character").value =
+      recipe.version === 1 ? "mixed" : recipe.character;
+    this.field("generator-envelope").value =
+      recipe.version === 1 ? "comfortable" : recipe.envelope;
+    this.setRouteAlternative(recipe.version === 1 ? 0 : recipe.layout);
+    this.field("generator-variant").value =
+      recipe.version === 3 ? recipe.variant : "full";
+    this.field("generator-oval").value =
+      recipe.version === 3 ? recipe.oval : "oval";
+    this.field("generator-banking").value =
+      recipe.version === 3 ? recipe.banking : "mild";
+    this.node<HTMLInputElement>("generator-endurance").checked =
+      recipe.version === 3 && recipe.endurance;
+    this.node<HTMLInputElement>("venue-enabled").checked = venue.enabled;
+    this.node<HTMLInputElement>("venue-pits").checked = venue.pits;
+    this.field("venue-theme").value = venue.theme;
+    this.field("venue-kerb").value = venue.kerb;
+    this.field("venue-scenery").value = venue.scenery;
+    this.field("venue-seed").value = venue.scenerySeed;
+    this.updateFamily(recipe.targetLength);
+    this.generate(archive);
   }
   private cancel() {
     this.callbacks.action("generator:cancel");
@@ -333,6 +528,10 @@ export class CircuitGeneratorPanel {
   }
   ready(result: GenerationResult) {
     this.result = result;
+    this.previewAlignment =
+      result.recipe.version === 3
+        ? new Alignment(result.circuit.definition)
+        : undefined;
     this.setBusy(false);
     this.dialog.classList.remove("preview-stale");
     this.node("generator-empty").hidden = true;
@@ -368,15 +567,36 @@ export class CircuitGeneratorPanel {
       elevationPath(result.circuit, 600, 48),
     );
     this.node("generator-drive-note").textContent =
-      `${result.recipe.seed} · ${result.recipe.family === "gp" ? "Grand Prix" : "Touring"} · ${result.fallback ? "FALLBACK · " : ""}Ready to load. Your vehicle setup will be retained.`;
-    this.drawMap(result);
+      `${result.recipe.seed} · ${result.recipe.version === 3 ? FAMILY_PRESETS[result.recipe.family].name : result.recipe.family === "gp" ? "Grand Prix" : "Touring"} · ${result.fallback ? "FALLBACK · " : ""}Ready to load. Your vehicle setup will be retained.`;
     this.node("generator-diagnostics").hidden = !result.design;
+    const meta = result.circuit.definition.familyDesign;
+    this.node("generator-family-evidence").hidden = !meta;
+    this.node("generator-cross-section").hidden = !meta;
+    const stock = this.dialog.querySelector<HTMLOptionElement>(
+      '#generator-model option[value="stock"]',
+    )!;
+    stock.disabled = !meta;
+    if (!meta && this.field("generator-model").value === "stock")
+      this.field("generator-model").value = "touring";
     this.drawTrace();
+    this.drawMap(result);
+    if (meta && result.family) {
+      const f = result.family,
+        peak = result.design?.diagnostics.reduce((a, b) =>
+          Math.abs(a.bank) > Math.abs(b.bank) ? a : b,
+        );
+      this.field("generator-cross-station").value = String(
+        Math.round((peak?.at ?? 0.25) * 1000),
+      );
+      this.node("generator-family-evidence").innerHTML =
+        `<div><span>ROAD PROVENANCE</span><strong>${Math.round(f.inheritedShare * 100)}% inherited / ${100 - Math.round(f.inheritedShare * 100)}% new connector</strong></div><div><span>VENUE LAYOUTS</span><strong>${meta.variants.map((v) => `${escape(v.name)} ${(v.length / 1000).toFixed(2)} km`).join(" · ")}</strong></div><details><summary>Construction & streaming budget</summary><p>${f.networkNodes} graph nodes · ${f.networkEdges} road edges · ${f.junctions} fitted junction spans · branch IDs ${f.branchIds.join(" / ")}</p><p>${f.surfaceChunks} surface tiles · ${(f.transferBytes / 1048576).toFixed(1)} MiB shared geometry buffers · local collision window ${meta.streaming.radius} m with ${meta.streaming.maxSurfaceChunks} surface tiles maximum. The full-venue camera uses a coarse overview.</p><p>Natural terrain is retained independently of the fitted road. Layer 0; no racing overpasses.</p></details>`;
+      this.drawCrossSection();
+    }
     if (result.design) {
       const d = result.design;
       this.node("generator-validation").insertAdjacentHTML(
         "beforeend",
-        `<details><summary>Design evidence · ${d.mode === "anchors" ? "Anchor-led" : "Sequence-led"} route</summary><p>${d.proposalCount} proposals · ${d.feasibleCount} feasible routes · ${d.directionChanges} direction changes · ${d.longStraights} straights over 150 m</p><p>${(d.closureShare * 100).toFixed(0)}% closing section · ${d.fittingDeviation.toFixed(1)} m curve-fit deviation · ${(d.hullOccupancy * 100).toFixed(0)}% hull occupancy</p><p>${d.cutFillRms.toFixed(1)} m corridor cut/fill RMS · ${(d.retainedRelief * 100).toFixed(0)}% natural relief retained. ${result.circuit.definition.venue ? "M5 fits run-off and facilities to this accepted road." : "Facility and escape regions reserve construction space."} Reference speeds are estimates.</p></details>`,
+        `<details><summary>Design evidence · ${escape(d.mode)} route</summary><p>${d.proposalCount} proposals · ${d.feasibleCount} feasible routes · ${d.directionChanges} direction changes · ${d.longStraights} straight spans over 150 m</p>${meta ? "" : `<p>${(d.closureShare * 100).toFixed(0)}% closing section · ${d.fittingDeviation.toFixed(1)} m curve-fit deviation · ${(d.hullOccupancy * 100).toFixed(0)}% hull occupancy</p>`}<p>${d.cutFillRms.toFixed(1)} m centre/corridor cut/fill RMS · ${(d.retainedRelief * 100).toFixed(0)}% natural relief retained. ${result.circuit.definition.venue ? "Run-off and facilities fit the accepted road." : "Facility and escape regions reserve construction space."} Reference speeds are estimates.</p></details>`,
       );
     }
     const venue = result.circuit.definition.venue;
@@ -409,6 +629,16 @@ export class CircuitGeneratorPanel {
     } catch {
       /* optional */
     }
+    if (this.result)
+      void saveLastCircuit(circuitArchive(this.result))
+        .then(() => {
+          this.node("generator-status").textContent =
+            "Accepted circuit and active variant saved in this browser.";
+        })
+        .catch(() => {
+          this.node("generator-status").textContent =
+            "Browser circuit storage is unavailable. Export JSON to keep this venue.";
+        });
   }
   venueSettings(): VenueSettings {
     return normalizeVenue({
@@ -424,21 +654,23 @@ export class CircuitGeneratorPanel {
     if (!this.result) return;
     const { recipe, fingerprint, report, attempts, fallback, design, circuit } =
       this.result;
+    const pretty = JSON.stringify(
+      {
+        ...circuitArchive(this.result),
+        venue: circuit.definition.venue?.settings,
+        fingerprint,
+        fallback,
+        report,
+        attempts,
+        design,
+      },
+      null,
+      2,
+    );
+    // A 24 km accepted definition can be several megabytes when indented.
+    // Keep our own export inside the same import budget without dropping data.
     this.exportDialog.querySelector<HTMLTextAreaElement>("textarea")!.value =
-      JSON.stringify(
-        {
-          recipe,
-          venue: circuit.definition.venue?.settings,
-          fingerprint,
-          fallback,
-          report,
-          attempts,
-          design,
-          definition: circuit.definition,
-        },
-        null,
-        2,
-      );
+      pretty.length > 3_800_000 ? JSON.stringify(JSON.parse(pretty)) : pretty;
     this.exportDialog.querySelector<HTMLElement>(
       "#generator-export-status",
     )!.textContent =
@@ -448,6 +680,12 @@ export class CircuitGeneratorPanel {
   private drawTrace() {
     const result = this.result;
     if (!result?.design) return;
+    const lane = this.field("generator-lane");
+    lane.disabled = !(
+      result.circuit.definition.familyDesign?.oval &&
+      this.field("generator-model").value === "stock"
+    );
+    if (lane.disabled) lane.value = "racing";
     const data = result.design.diagnostics,
       key = this.field("generator-trace").value as
         | "speed"
@@ -467,7 +705,9 @@ export class CircuitGeneratorPanel {
               ? 1000
               : 1;
     const line = result.design.referenceLines?.find(
-      (l) => l.vehicle === this.field("generator-model").value,
+      (l) =>
+        l.vehicle === this.field("generator-model").value &&
+        (l.lane ?? "racing") === this.field("generator-lane").value,
     );
     const values =
         key === "speed" && line
@@ -505,6 +745,58 @@ export class CircuitGeneratorPanel {
       "d",
       plot(road, low, high, 48),
     );
+  }
+  private drawCrossSection() {
+    const path = this.previewAlignment;
+    if (!path) return;
+    const station =
+        (Number(this.field("generator-cross-station").value) / 1000) *
+        path.length,
+      row = path.sample(station),
+      low = -row.rightWidth - 9,
+      high = row.leftWidth + 9,
+      points = Array.from({ length: 121 }, (_, i) => {
+        const lateral = low + ((high - low) * i) / 120;
+        return { lateral, y: roadPoint(row, lateral).y - row.position.y };
+      }),
+      min = Math.min(...points.map((p) => p.y)),
+      max = Math.max(...points.map((p) => p.y)),
+      x = (l: number) => 30 + ((high - l) / (high - low)) * 540,
+      y = (v: number) => 112 - ((v - min) / Math.max(2, max - min)) * 85;
+    this.node("generator-cross-ground").setAttribute(
+      "d",
+      points
+        .map(
+          (p, i) =>
+            `${i ? "L" : "M"}${x(p.lateral).toFixed(1)},${y(p.y).toFixed(1)}`,
+        )
+        .join(" "),
+    );
+    const lanes = [
+      -row.rightWidth + 0.8,
+      -row.rightWidth * 0.5,
+      0,
+      row.leftWidth * 0.5,
+      row.leftWidth - 0.8,
+    ];
+    const banks = lanes.map(
+      (l) =>
+        (Math.atan(
+          (roadPoint(row, l + 0.05).y - roadPoint(row, l - 0.05).y) / 0.1,
+        ) *
+          180) /
+        Math.PI,
+    );
+    this.node("generator-cross-lanes").innerHTML =
+      lanes
+        .map(
+          (l, i) =>
+            `<circle cx="${x(l)}" cy="${y(roadPoint(row, l).y - row.position.y)}" r="4" fill="#ddedae"/><text x="${x(l)}" y="132" text-anchor="middle" fill="#bdc9b2" font-size="11">${banks[i].toFixed(1)}°</text>`,
+        )
+        .join("") +
+      `<text x="22" y="16" fill="#bdc9b2" font-size="11">LEFT</text><text x="540" y="16" fill="#bdc9b2" font-size="11">RIGHT</text>`;
+    this.node("generator-cross-readout").textContent =
+      `${(station / 1000).toFixed(2)} km · ${(row.leftWidth + row.rightWidth).toFixed(1)} m racing width · ${row.oval ? "Progressive banking with a blended inner apron" : "Designed crossfall and crown"}. Vertical scale expanded for inspection.`;
   }
   private drawMap(result: GenerationResult) {
     const canvas = this.node<HTMLCanvasElement>("generator-map"),
@@ -546,6 +838,54 @@ export class CircuitGeneratorPanel {
       }
     ctx.fillStyle = "#1b2b2460";
     ctx.fillRect(0, 0, w, h);
+    const network = circuit.definition.familyDesign?.network;
+    if (network && overlay("properties"))
+      for (const lot of network.lots) {
+        const c = Math.cos(lot.heading),
+          s = Math.sin(lot.heading);
+        ctx.beginPath();
+        [
+          [-1, -1],
+          [1, -1],
+          [1, 1],
+          [-1, 1],
+        ].forEach(([a, b], i) => {
+          const p = projection.point(
+            lot.centre.x + (a * c * lot.width) / 2 + (b * s * lot.length) / 2,
+            lot.centre.z - (a * s * lot.width) / 2 + (b * c * lot.length) / 2,
+          );
+          if (i) ctx.lineTo(p.x, p.y);
+          else ctx.moveTo(p.x, p.y);
+        });
+        ctx.closePath();
+        ctx.fillStyle =
+          lot.use === "exclusion"
+            ? "#cfa38228"
+            : lot.use === "road-easement"
+              ? "#8cb5c320"
+              : "#b9c3ab16";
+        ctx.fill();
+        ctx.strokeStyle = "#bdc6b640";
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+      }
+    if (network && overlay("network"))
+      for (const edge of network.edges) {
+        ctx.beginPath();
+        edge.points.forEach((p, i) => {
+          const q = projection.point(p.x, p.z);
+          if (i) ctx.lineTo(q.x, q.y);
+          else ctx.moveTo(q.x, q.y);
+        });
+        ctx.strokeStyle =
+          edge.origin === "new-connector"
+            ? "#d6a57fb0"
+            : edge.origin === "speedway"
+              ? "#9ac4c0a0"
+              : "#b9c3b778";
+        ctx.lineWidth = Math.max(0.8, edge.width * scale);
+        ctx.stroke();
+      }
     const venue = circuit.definition.venue;
     if (venue && overlay("runoff"))
       for (let i = 0; i < circuit.rows.length - 1; i += 8) {
@@ -676,7 +1016,9 @@ export class CircuitGeneratorPanel {
         return circuit.rows[low];
       };
       const reference = design.referenceLines?.find(
-        (l) => l.vehicle === this.field("generator-model").value,
+        (l) =>
+          l.vehicle === this.field("generator-model").value &&
+          (l.lane ?? "racing") === this.field("generator-lane").value,
       );
       if (overlay("line") && reference) {
         ctx.beginPath();
@@ -716,7 +1058,7 @@ export class CircuitGeneratorPanel {
           ctx.moveTo(pa.x, pa.y);
           ctx.lineTo(pb.x, pb.y);
           ctx.strokeStyle = overlay("speed")
-            ? `hsl(${15 + Math.min(1, d.speed / 55) * 135} 65% 64%)`
+            ? `hsl(${15 + Math.min(1, (reference?.points[Math.floor(d.at * reference.points.length)]?.speed ?? d.speed) / 55) * 135} 65% 64%)`
             : (
                 {
                   grid: "#e4f3bd",

@@ -40,7 +40,65 @@ export function compileTerrain(
     for (let i = 0; i < loop.length; i++)
       constraints.push([start + i, start + ((i + 1) % loop.length)]);
   };
-  const f32 = Math.fround;
+  // Trigonometric round-off near world axes must canonicalise identically in
+  // the road buffers and constrained terrain. Otherwise a mathematically flat
+  // axis can contain nanometre slivers despite both sides using Float32.
+  const f32 = (v: number) =>
+    Math.fround(definition.familyDesign && Math.abs(v) < 1e-8 ? 0 : v);
+  const networkSegments: {
+      ax: number;
+      az: number;
+      bx: number;
+      bz: number;
+      width: number;
+    }[] = [],
+    networkGrid = new Map<string, number[]>();
+  for (const edge of definition.familyDesign?.network.edges ?? [])
+    for (let i = 1; i < edge.points.length; i++) {
+      const a = edge.points[i - 1],
+        b = edge.points[i],
+        id = networkSegments.length;
+      networkSegments.push({
+        ax: a.x,
+        az: a.z,
+        bx: b.x,
+        bz: b.z,
+        width: edge.width,
+      });
+      for (
+        let x = Math.floor((Math.min(a.x, b.x) - edge.width) / 64);
+        x <= Math.floor((Math.max(a.x, b.x) + edge.width) / 64);
+        x++
+      )
+        for (
+          let z = Math.floor((Math.min(a.z, b.z) - edge.width) / 64);
+          z <= Math.floor((Math.max(a.z, b.z) + edge.width) / 64);
+          z++
+        ) {
+          const key = `${x},${z}`;
+          if (!networkGrid.has(key)) networkGrid.set(key, []);
+          networkGrid.get(key)!.push(id);
+        }
+    }
+  const onNetwork = (x: number, z: number) => {
+    for (const i of networkGrid.get(
+      `${Math.floor(x / 64)},${Math.floor(z / 64)}`,
+    ) ?? []) {
+      const s = networkSegments[i],
+        dx = s.bx - s.ax,
+        dz = s.bz - s.az,
+        t = Math.max(
+          0,
+          Math.min(
+            1,
+            ((x - s.ax) * dx + (z - s.az) * dz) / (dx * dx + dz * dz),
+          ),
+        );
+      if (Math.hypot(x - s.ax - dx * t, z - s.az - dz * t) < s.width / 2)
+        return true;
+    }
+    return false;
+  };
   for (const boundary of [left, right]) {
     const ring = boundary.slice(0, -1);
     addLoop(
@@ -174,8 +232,9 @@ export function compileTerrain(
   };
   // Interior grid points are allowed in the input PSLG; parity removes road faces.
   // Avoid points close to constraints so no grid vertex can create a T-junction.
-  for (let gx = minX + 12.17, ix = 0; gx < maxX - 1; gx += 18, ix++)
-    for (let gz = minZ + 12.31, iz = 0; gz < maxZ - 1; gz += 18, iz++) {
+  const spacing = definition.familyDesign?.streaming.terrainSpacing ?? 18;
+  for (let gx = minX + 12.17, ix = 0; gx < maxX - 1; gx += spacing, ix++)
+    for (let gz = minZ + 12.31, iz = 0; gz < maxZ - 1; gz += spacing, iz++) {
       // Perfect grid squares are cocircular, forcing expensive exact in-circle
       // predicates on almost every flip. A sub-metre deterministic jitter removes
       // that degeneracy without affecting the road seam or natural height field.
@@ -191,6 +250,57 @@ export function compileTerrain(
   // Small construction detail grids resolve the service-road edges and level
   // apron without adding an overlapping second collision plane.
   const access = definition.venue?.access;
+  const detailCoordinate = (v: number) =>
+    definition.familyDesign ? f32(Math.round(v * 10000) / 10000) : f32(v);
+  const detailGrid = new Map<string, number[][]>();
+  const rememberDetail = (p: number[]) => {
+    const k = `${Math.floor(p[0])},${Math.floor(p[1])}`;
+    if (!detailGrid.has(k)) detailGrid.set(k, []);
+    detailGrid.get(k)!.push(p);
+  };
+  if (definition.familyDesign) positions.forEach(rememberDetail);
+  const detailClear = (x: number, z: number) => {
+    for (let a = Math.floor(x) - 1; a <= Math.floor(x) + 1; a++)
+      for (let b = Math.floor(z) - 1; b <= Math.floor(z) + 1; b++)
+        for (const p of detailGrid.get(`${a},${b}`) ?? [])
+          if (Math.hypot(p[0] - x, p[1] - z) < 0.15) return false;
+    return true;
+  };
+  if (definition.familyDesign) {
+    const used = new Set(positions.map((p) => `${p[0]},${p[1]}`));
+    for (const [segment, s] of networkSegments.entries()) {
+      const dx = s.bx - s.ax,
+        dz = s.bz - s.az,
+        d = Math.hypot(dx, dz),
+        steps = Math.ceil(d / 14);
+      for (let i = 0; i <= steps; i++)
+        for (const offset of [-s.width / 2, 0, s.width / 2]) {
+          // Avoid collinear/cocircular detail rows at Float32 precision. This
+          // centimetre-scale offset affects terrain tessellation, not the road.
+          const jitter =
+              Math.sin((segment + 1) * 12.9898 + i * 78.233 + offset * 3.17) *
+              0.035,
+            x = f32(s.ax + (dx * i) / steps + (dz / d) * (offset + jitter)),
+            z = f32(s.az + (dz * i) / steps - (dx / d) * (offset + jitter)),
+            key = `${x},${z}`;
+          if (
+            x <= minX + 1 ||
+            x >= maxX - 1 ||
+            z <= minZ + 1 ||
+            z >= maxZ - 1 ||
+            used.has(key) ||
+            !detailClear(x, z)
+          )
+            continue;
+          const value = grade(x, z);
+          if (value.distance < 0.35) continue;
+          used.add(key);
+          positions.push([x, z]);
+          rememberDetail([x, z]);
+          heights.push(f32(value.height));
+        }
+    }
+  }
   if (access) {
     const used = new Set(positions.map((p) => `${p[0]},${p[1]}`));
     for (let i = 1; i < access.points.length; i++) {
@@ -202,13 +312,21 @@ export function compileTerrain(
         steps = Math.ceil(d / 3);
       for (let j = 0; j < steps; j++)
         for (const offset of [-5, -3, -1, 1, 3, 5]) {
-          const x = f32(a.x + (dx * j) / steps + (dz / d) * offset),
-            z = f32(a.z + (dz * j) / steps - (dx / d) * offset),
+          const x = detailCoordinate(
+              a.x + (dx * j) / steps + (dz / d) * offset,
+            ),
+            z = detailCoordinate(a.z + (dz * j) / steps - (dx / d) * offset),
             key = `${x},${z}`,
             value = grade(x, z);
-          if (value.distance < 0.35 || used.has(key)) continue;
+          if (
+            value.distance < 0.35 ||
+            used.has(key) ||
+            (definition.familyDesign && !detailClear(x, z))
+          )
+            continue;
           used.add(key);
           positions.push([x, z]);
+          if (definition.familyDesign) rememberDetail([x, z]);
           heights.push(f32(value.height));
         }
     }
@@ -232,7 +350,7 @@ export function compileTerrain(
       (pb[1] - pa[1]) * (pc[0] - pa[0]) - (pb[0] - pa[0]) * (pc[1] - pa[1]);
     if (!Number.isFinite(up) || Math.abs(up) < 1e-8)
       throw new Error(
-        "Constrained terrain contains a degenerate Float32 triangle.",
+        `Constrained terrain contains a degenerate Float32 triangle (${pa.join(",")}; ${pb.join(",")}; ${pc.join(",")}).`,
       );
     const key = `${Math.floor((pa[0] + pb[0] + pc[0]) / 3 / 192)},${Math.floor((pa[1] + pb[1] + pc[1]) / 3 / 192)}`;
     if (!tiles.has(key))
@@ -260,6 +378,7 @@ export function compileTerrain(
         z = (v[a + 2] + v[b + 2] + v[c + 2]) / 3;
       let surface: import("./types").SurfaceId =
         definition.venue?.settings.theme === "desert" ? "sand" : "grass";
+      if (onNetwork(x, z)) surface = "asphalt";
       if (
         definition.venue &&
         ((definition.site.paddock &&

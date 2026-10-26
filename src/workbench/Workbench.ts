@@ -17,6 +17,7 @@ import { getTestCircuit } from "../track/testCircuit";
 import { SURFACES } from "../track/types";
 import type { CompiledCircuit } from "../track/SurfaceCompiler";
 import type { GenerationRecipe } from "../track/generationTypes";
+import type { CircuitArchive } from "../storage/CircuitStorage";
 import { CircuitGeneratorPanel } from "./CircuitGeneratorPanel";
 import { elevationPath, mapProjection, routePath } from "./CircuitMap";
 import { pitOffset } from "../track/venue/geometry";
@@ -33,7 +34,7 @@ import { fingerprint } from "../vehicle/CarDefinition";
 export interface WorkbenchCallbacks {
   action: (action: string) => void;
   setup: (setup: VehicleSetup, rebuild: boolean, group?: string) => void;
-  generate: (recipe: GenerationRecipe) => void;
+  generate: (recipe: GenerationRecipe, archive?: CircuitArchive) => void;
   input: (settings: InputSettings) => void;
 }
 
@@ -417,11 +418,11 @@ export class Workbench {
     root.innerHTML = `
       <header class="app-header">
         <a class="brand" href="#" aria-label="Procgen Racing home" data-action="home"><span class="brand-mark">P<span>R</span></span><span>PROCGEN<span class="brand-light">RACING</span></span></a>
-        <div class="header-divider"></div><span class="header-title">DYNAMICS LAB <span>/ 06</span></span>
+        <div class="header-divider"></div><span class="header-title">DYNAMICS LAB <span>/ 07</span></span>
         <div class="header-right"><button class="button subtle header-workshop" data-action="car-workshop">Car workshop</button><button class="button subtle header-workshop" data-action="garage">Garage / Compare</button><span class="live-badge" id="live-badge"><i></i>LIVE SIMULATION</span><button class="button subtle" id="pause-button" data-action="pause">${icon("pause")}<span>Pause</span></button><button class="button subtle surface-sound-button" id="surface-sound-button" data-action="surface-sound" aria-pressed="false">Surface sound off</button><button class="button save-button" data-action="save">${icon("save")}Save setup</button></div>
       </header>
       <div class="workspace">
-        <nav class="tool-rail" aria-label="Workbench tools"><div class="rail-tools"><button class="rail-button" data-action="car-workshop" title="Car workshop" aria-label="Open car workshop">${icon("rig")}</button><button class="rail-button" data-action="garage" title="Garage and A/B comparison" aria-label="Open garage and comparison">${icon("compare")}</button><button class="rail-button active" data-action="home" title="Suspension rig" aria-label="Suspension rig">${icon("rig")}</button><button class="rail-button" data-action="generator" title="Circuit workshop" aria-label="Open circuit workshop">${icon("layers")}</button><button class="rail-button" data-action="inspector" title="Toggle setup panel" aria-label="Toggle setup panel">${icon("sliders")}</button><button class="rail-button" data-action="telemetry" title="Expand response trace" aria-label="Expand response trace">${icon("chart")}</button></div><button class="rail-button" data-action="input-settings" title="Input settings" aria-label="Open input settings">${icon("sliders")}</button><button class="rail-button" data-action="help" title="Controls and guide" aria-label="Controls and guide">${icon("help")}</button><span class="rail-version">M6</span></nav>
+        <nav class="tool-rail" aria-label="Workbench tools"><div class="rail-tools"><button class="rail-button" data-action="car-workshop" title="Car workshop" aria-label="Open car workshop">${icon("rig")}</button><button class="rail-button" data-action="garage" title="Garage and A/B comparison" aria-label="Open garage and comparison">${icon("compare")}</button><button class="rail-button active" data-action="home" title="Suspension rig" aria-label="Suspension rig">${icon("rig")}</button><button class="rail-button" data-action="generator" title="Circuit workshop" aria-label="Open circuit workshop">${icon("layers")}</button><button class="rail-button" data-action="inspector" title="Toggle setup panel" aria-label="Toggle setup panel">${icon("sliders")}</button><button class="rail-button" data-action="telemetry" title="Expand response trace" aria-label="Expand response trace">${icon("chart")}</button></div><button class="rail-button" data-action="input-settings" title="Input settings" aria-label="Open input settings">${icon("sliders")}</button><button class="rail-button" data-action="help" title="Controls and guide" aria-label="Controls and guide">${icon("help")}</button><span class="rail-version">M7</span></nav>
         <main class="lab-main">
           <div class="scene-toolbar"><div class="experiment-selector" role="group" aria-label="Test surface"><button data-experiment="circuit" data-action="experiment:circuit">3D circuit</button><button class="selected" data-experiment="level" data-action="experiment:level">Level pad</button><button data-experiment="bump" data-action="experiment:bump">Single-wheel bump</button><button data-experiment="pitch" data-action="experiment:pitch">Incline</button><button data-experiment="bank" data-action="experiment:bank">Bank</button><button data-experiment="handling" data-action="experiment:handling">Drive pad</button><button data-experiment="split" data-action="experiment:split">Split grip</button></div><div class="toolbar-actions"><button class="button toolbar-test" data-action="drop">${icon("drop")}Drop test</button><button class="icon-button" data-action="reset" title="Reset vehicle (R)" aria-label="Reset vehicle">${icon("reset")}</button></div></div>
           <div class="circuit-controls" id="circuit-controls" hidden><div><span class="eyebrow" id="circuit-name">RIDGE / PROVING CIRCUIT</span><label for="circuit-start-select">Test start</label><select id="circuit-start-select">${circuit.definition.starts.map((start) => `<option value="${start.id}">${start.name}</option>`).join("")}</select><button class="button subtle" data-action="camera:overview">Circuit overview</button><button class="button generator-open" data-action="generator">Circuit workshop ↗</button></div><p id="circuit-start-description">${circuit.definition.starts[0].description}</p></div>
@@ -1133,7 +1134,8 @@ export class Workbench {
         row.title += ` · footprint ${w.surfaceBlend.map((s) => `${s.surface} ${Math.round(s.weight * 100)}%`).join(" / ")}`;
     });
     if (t.track) {
-      this.node("circuit-section").textContent = t.track.section;
+      this.node("circuit-section").textContent =
+        `${t.track.branchId === "pit" ? "PIT / " : ""}${t.track.section}`;
       this.node("circuit-distance").textContent =
         `${Math.round(t.track.distance)} / ${Math.round(t.track.lapDistance)} m`;
       this.node("circuit-grade").textContent =

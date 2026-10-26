@@ -11,6 +11,9 @@ import type {
   SurfaceId,
 } from "./types";
 import type { Vec3 } from "../vehicle/types";
+import { ovalHeight } from "./families/OvalSurface";
+import type { CircuitHint } from "./families/types";
+import { BoundsTree } from "./ChunkIndex";
 
 export const KERB_WIDTH = 0.9;
 export const KERB_HEIGHT = 0.055;
@@ -31,7 +34,8 @@ export interface CircuitBake {
 
 export interface CompiledCircuit extends CircuitBake {
   alignment: Alignment;
-  locate(position: Vec3): CircuitLocation;
+  queryStats?: { calls: number; maxCandidates: number };
+  locate(position: Vec3, hint?: CircuitHint): CircuitLocation;
   frame(
     station: number,
     lateral?: number,
@@ -78,7 +82,12 @@ export function roadPoint(sample: RoadSample, lateral: number) {
       : 0;
   return new Vector3(
     sample.position.x + sample.left.x * lateral,
-    sample.position.y + effective * Math.tan(sample.bank) + crown + kerb,
+    sample.position.y +
+      (sample.oval
+        ? ovalHeight(sample, lateral) * sample.oval.blend +
+          (effective * Math.tan(sample.bank) + crown) * (1 - sample.oval.blend)
+        : effective * Math.tan(sample.bank) + crown) +
+      kerb,
     sample.position.z + sample.left.z * lateral,
   );
 }
@@ -161,7 +170,9 @@ function rowPoints(
   sample: RoadSample,
   insideLeft: boolean,
 ) {
-  const road = laterals(sample).map((v) => roadPoint(sample, v));
+  const road = (
+    definition.familyDesign ? familyLaterals(sample) : laterals(sample)
+  ).map((v) => roadPoint(sample, v));
   if (definition.site.mesh === "corridor") return road;
   const fractions = terrainFractions(definition);
   return insideLeft
@@ -175,6 +186,66 @@ function rowPoints(
           .reverse()
           .map((t) => terrainPoint(definition, sample, "left", t)),
       ];
+}
+
+function familyLaterals(sample: RoadSample) {
+  const { left, right } = limits(sample),
+    l = sample.leftWidth,
+    r = sample.rightWidth,
+    outside = (width: number, extent: number, sign: number) =>
+      [
+        extent,
+        0.9 + (extent - 0.9) * 0.75,
+        0.9 + (extent - 0.9) * 0.5,
+        0.9 + (extent - 0.9) * 0.25,
+        0.9,
+        0.65,
+        0.3,
+      ].map((d) => sign * (width + d));
+  return [
+    ...outside(r, right, -1),
+    -r,
+    -r + 0.13,
+    ...Array.from({ length: 15 }, (_, i) => -r + ((l + r) * (i + 1)) / 16),
+    l - 0.13,
+    l,
+    ...outside(l, left, 1).reverse(),
+  ];
+}
+function familyMaterial(
+  sample: RoadSample,
+  lateral: number,
+): { surface: SurfaceId; color: number } {
+  const edge = lateral >= 0 ? sample.leftWidth : sample.rightWidth,
+    out = Math.abs(lateral) - edge,
+    side = lateral >= 0 ? 1 : -1;
+  let surface: SurfaceId =
+    out <= 0
+      ? "asphalt"
+      : out < 0.9 && (side > 0 ? sample.kerbLeft : sample.kerbRight) > 0.001
+        ? "kerb"
+        : out < 0.9
+          ? "runoff"
+          : side > 0
+            ? (sample.materialLeft ?? sample.section.runoff)
+            : (sample.materialRight ?? sample.section.runoff);
+  if (
+    sample.oval &&
+    sample.oval.blend > 0.01 &&
+    side === sample.oval.inside &&
+    out > 0 &&
+    out < sample.oval.apronWidth
+  )
+    surface = "runoff";
+  if (sample.pitSide === side && out > 0) surface = "runoff";
+  let color =
+    surface === "kerb"
+      ? Math.floor(sample.station / 1.5) % 2
+        ? 0xf0ece0
+        : 0xc84737
+      : SURFACES[surface].color;
+  if (surface === "asphalt" && out > -0.14) color = 0xe8e8d7;
+  return { surface, color };
 }
 
 function bandMaterial(
@@ -279,7 +350,9 @@ export function compileCircuit(definition: CircuitDefinition): CompiledCircuit {
     }
     if (
       depth < 12 &&
-      (b - a > 1.5 || error > 0.012 || Math.abs(last.bank - first.bank) > 0.018)
+      (b - a > (definition.familyDesign?.streaming.roadStep ?? 1.5) + 1e-7 ||
+        error > 0.012 ||
+        Math.abs(last.bank - first.bank) > 0.018)
     ) {
       append(a, (a + b) / 2, depth + 1);
       append((a + b) / 2, b, depth + 1);
@@ -372,21 +445,30 @@ export function compileCircuit(definition: CircuitDefinition): CompiledCircuit {
           b = a + width,
           c = a + 1,
           d = b + 1;
-        const material = bandMaterial(
-          sample,
-          j,
-          insideLeft,
-          definition.site.mesh === "corridor"
-            ? 0
-            : terrainFractions(definition).length,
-        );
+        const lateral = definition.familyDesign
+          ? familyLaterals(sample)
+          : undefined;
+        const material = lateral
+          ? familyMaterial(sample, (lateral[j] + lateral[j + 1]) / 2)
+          : bandMaterial(
+              sample,
+              j,
+              insideLeft,
+              definition.site.mesh === "corridor"
+                ? 0
+                : terrainFractions(definition).length,
+            );
         triangle(a, b, c, material.surface, material.color);
         triangle(b, d, c, material.surface, material.color);
       }
     }
     chunks.push({
       kind: definition.site.mesh === "corridor" ? "road" : undefined,
-      vertices: new Float32Array(vertices),
+      vertices: new Float32Array(
+        definition.familyDesign
+          ? vertices.map((v) => (Math.abs(v) < 1e-8 ? 0 : v))
+          : vertices,
+      ),
       indices: new Uint32Array(indices),
       surfaces,
       colors: new Uint32Array(colors),
@@ -544,10 +626,23 @@ export function hydrateCircuit(
         grid.get(key)!.push(i);
       }
   }
+  const distantIndex = data.definition.familyDesign
+    ? new BoundsTree(
+        rows.slice(0, -1).map((a, i) => ({
+          minX: Math.min(a.position.x, rows[i + 1].position.x),
+          maxX: Math.max(a.position.x, rows[i + 1].position.x),
+          minZ: Math.min(a.position.z, rows[i + 1].position.z),
+          maxZ: Math.max(a.position.z, rows[i + 1].position.z),
+        })),
+      )
+    : undefined;
   const result: CompiledCircuit = {
     ...data,
     alignment,
-    locate(position) {
+    ...(data.definition.familyDesign
+      ? { queryStats: { calls: 0, maxCandidates: 0 } }
+      : {}),
+    locate(position, hint) {
       let best = Infinity,
         station = 0,
         lateral = 0,
@@ -574,22 +669,85 @@ export function hydrateCircuit(
         );
         const x = a.position.x + dx * t,
           z = a.position.z + dz * t,
-          d = (position.x - x) ** 2 + (position.z - z) ** 2;
+          horizontal = (position.x - x) ** 2 + (position.z - z) ** 2,
+          directionPenalty =
+            data.definition.familyDesign && hint?.forward && horizontal < 9
+              ? Math.max(
+                  0,
+                  -(
+                    hint.forward.x * a.forward.x +
+                    hint.forward.z * a.forward.z
+                  ),
+                ) * 0.2
+              : 0,
+          d =
+            horizontal + (data.definition.familyDesign ? directionPenalty : 0);
         if (d < best) {
           best = d;
           station = a.station + (b.station - a.station) * t;
           travel = a.distance + (b.distance - a.distance) * t;
           lateral = (position.x - x) * a.left.x + (position.z - z) * a.left.z;
         }
+        return d;
       };
       candidates.forEach(check);
-      if (best >= cellSize ** 2)
-        for (let i = 0; i < rows.length - 1; i++) check(i);
+      let tested = candidates.size;
+      if (best >= cellSize ** 2) {
+        if (distantIndex) tested += distantIndex.nearest(position, check, best);
+        else
+          for (let i = 0; i < rows.length - 1; i++) {
+            check(i);
+            tested++;
+          }
+      }
+      if (result.queryStats) {
+        result.queryStats.calls++;
+        result.queryStats.maxCandidates = Math.max(
+          result.queryStats.maxCandidates,
+          tested,
+        );
+      }
+      let branchId: "main" | "pit" = "main";
+      const pit = data.definition.venue?.pit;
+      if (
+        data.definition.familyDesign &&
+        pit &&
+        Math.min(station, alignment.length - station) < 300
+      ) {
+        for (let i = 1; i < pit.points.length; i++) {
+          const a = pit.points[i - 1],
+            b = pit.points[i],
+            dx = b.x - a.x,
+            dz = b.z - a.z,
+            t = Math.max(
+              0,
+              Math.min(
+                1,
+                ((position.x - a.x) * dx + (position.z - a.z) * dz) /
+                  (dx * dx + dz * dz),
+              ),
+            );
+          if (
+            Math.hypot(position.x - a.x - dx * t, position.z - a.z - dz * t) <
+            pit.width / 2
+          ) {
+            branchId = "pit";
+            break;
+          }
+        }
+      }
       return {
         station: wrap(station, alignment.length),
         distance: travel,
         lateral,
         sample: alignment.sample(station),
+        ...(data.definition.familyDesign
+          ? {
+              branchId,
+              variantId: data.definition.familyDesign.activeVariant,
+              layer: 0 as const,
+            }
+          : {}),
       };
     },
     frame(station, lateral = 0) {

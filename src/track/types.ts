@@ -1,5 +1,6 @@
 import type { Vec3 } from "../vehicle/types";
 import type { VenueDefinition } from "./venue/types";
+import type { FamilyDesign, OvalSample } from "./families/types";
 
 export type SurfaceId =
   | "asphalt"
@@ -117,6 +118,7 @@ export interface CircuitDefinition {
   sections: CircuitSection[];
   starts: CircuitStart[];
   venue?: VenueDefinition;
+  familyDesign?: FamilyDesign;
   site: {
     centre: { x: number; z: number };
     radius: number;
@@ -147,6 +149,7 @@ export interface RoadSample {
   materialLeft?: SurfaceId;
   materialRight?: SurfaceId;
   pitSide?: 1 | -1;
+  oval?: OvalSample;
   section: CircuitSection;
 }
 export interface SurfaceChunk {
@@ -163,4 +166,7 @@ export interface CircuitLocation {
   distance: number;
   lateral: number;
   sample: RoadSample;
+  branchId?: "main" | "pit";
+  variantId?: string;
+  layer?: 0;
 }
