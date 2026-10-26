@@ -132,10 +132,21 @@ near-limit/sliding escalation, bounded samples and pause/watchdog/mute tails.
 Overrun is checked by the actual waveform difference from an otherwise identical
 coast render, not by assuming additive noise must increase total RMS.
 
-The sustained-run measurements are recorded in the report and summarized here
-after qualification. The named reference hardware is AMD Ryzen 5 5600X
-(12 logical processors), 32 GiB RAM and NVIDIA GeForce RTX 3060, using Chromium 155
-on Windows. Browser device latency estimates are not measured action-to-ear delay.
+Source fingerprint `2f3c9fbeec2d729f` completed 1,200.01 seconds of audio-on
+stress (1,208.01 seconds including the audio-off baseline), across 120,564 frames
+with the tab visible throughout. Total audio-control time, including physics-step
+capture and graph publication, was 0.2 ms at p95 against the 0.5 ms target. Frame
+time was 10.1 ms at p95. All sampled output remained finite, with zero unexpected
+silent frames or observed non-running context frames. The initial sequential
+8-second comparisons had the same 10.1 ms frame p95; their mean variation does
+not establish an isolated audio-rendering cost.
+
+The reference hardware is AMD Ryzen 5 5600X (12 logical processors), 32 GiB RAM
+and NVIDIA GeForce RTX 3060, using Chromium 155 on Windows at 1920×1080 balanced
+rendering. Production HTTP smoke checks passed for the app, audio lab and their
+bundled assets. The physics compatibility fingerprint remains
+`3915c9277118cf78`. Browser device latency estimates are not measured action-to-ear
+delay.
 
 **Human wheel recognition, fatigue/comfort, acoustic end-to-end latency,
 hardware-underrun detection, Firefox and Safari remain unmeasured.** Digital
