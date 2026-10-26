@@ -4,6 +4,7 @@ import { SpatialAudio } from "./SpatialAudio";
 import { createNoise, smoothParam, stopAndDisconnect } from "./nodes";
 import { WHEEL_IDS } from "../vehicle/types";
 import type { AudioControlFrame, AudioSettings, EngineAudioProfile } from "./types";
+import type { AudioSourceFactory, EngineAudioSource, WheelAudioSource } from "./source-types";
 
 export interface AudioSignalMeasurement {
   finite: boolean;
@@ -24,19 +25,23 @@ export interface VehicleAudioSignalSample {
   wheels: { id: string; signals: Record<string, AudioSignalMeasurement> }[];
 }
 
-/** The same bounded native graph is used live and by OfflineAudioContext QA. */
+/** Established buses/spatial paths; driving supplies accepted sources, legacy QA keeps its native sources. */
 export class VehicleAudioGraph {
   readonly output: GainNode;
+  readonly ready: Promise<void>;
+  isReady = false;
+  onError?: (error: Error) => void;
   private readonly mix: GainNode;
   private readonly ceiling: WaveShaperNode;
   private readonly engineBus: GainNode;
-  private readonly engine: EngineVoice;
-  private readonly wheels: { voice: TyreVoice; spatial: SpatialAudio; tyre: GainNode; surface: GainNode }[];
+  private engine?: EngineAudioSource;
+  private readonly wheels: { voice?: WheelAudioSource; spatial: SpatialAudio; tyre: GainNode; surface: GainNode }[];
   private readonly impact: AudioBufferSourceNode;
   private readonly impactFilter: BiquadFilterNode;
   private readonly impactGain: GainNode;
   private settings: AudioSettings;
   private stopped = false;
+  private quiet = true;
   private meters?: { output: AnalyserNode; engine: AnalyserNode; mix: AnalyserNode; ceiling: AnalyserNode; impact: AnalyserNode; pcm: Float32Array<ArrayBuffer>; started: number };
   constructor(
     readonly context: BaseAudioContext,
@@ -44,6 +49,7 @@ export class VehicleAudioGraph {
     settings: AudioSettings,
     profile: EngineAudioProfile,
     startTime = context.currentTime,
+    sources?: Promise<AudioSourceFactory>,
   ) {
     this.settings = { ...settings };
     this.mix = context.createGain();
@@ -59,13 +65,12 @@ export class VehicleAudioGraph {
     this.mix.connect(this.ceiling).connect(this.output).connect(destination);
     this.engineBus = context.createGain();
     this.engineBus.connect(this.mix);
-    this.engine = new EngineVoice(context, this.engineBus, profile, startTime);
     this.wheels = WHEEL_IDS.map((id) => {
       const spatial = new SpatialAudio(context, id, this.mix);
       const tyre = context.createGain(), surface = context.createGain();
       tyre.connect(spatial.input);
       surface.connect(spatial.input);
-      return { voice: new TyreVoice(context, id, tyre, surface, startTime), spatial, tyre, surface };
+      return { spatial, tyre, surface };
     });
     this.impact = createNoise(context, 0x7c31, 2.17);
     this.impactFilter = context.createBiquadFilter();
@@ -76,6 +81,25 @@ export class VehicleAudioGraph {
     this.impact.connect(this.impactFilter).connect(this.impactGain).connect(this.mix);
     this.impact.start(startTime);
     this.configure(settings, startTime);
+    if (sources) {
+      this.ready = sources.then(async (factory) => {
+        if (this.stopped) return;
+        const onError = (error: Error) => { if (!this.stopped) this.onError?.(error); };
+        this.engine = factory.engine(this.engineBus, profile, onError);
+        for (const [index, wheel] of this.wheels.entries())
+          wheel.voice = factory.wheel(WHEEL_IDS[index], wheel.tyre, wheel.surface, onError);
+        await Promise.all(this.wheels.map((wheel) => wheel.voice?.ready));
+        if (!this.stopped) this.isReady = true;
+        // Never reopen from a frame received during loading. The next fresh
+        // telemetry publication is the only thing that opens the output gate.
+      });
+    } else {
+      // Retained for the original native/offline diagnostic and A/B foundation.
+      this.engine = new EngineVoice(context, this.engineBus, profile, startTime);
+      this.wheels.forEach((wheel, index) => { wheel.voice = new TyreVoice(context, WHEEL_IDS[index], wheel.tyre, wheel.surface, startTime); });
+      this.isReady = true;
+      this.ready = Promise.resolve();
+    }
   }
   configure(settings: AudioSettings, time = this.context.currentTime) {
     if (this.stopped) return;
@@ -94,14 +118,15 @@ export class VehicleAudioGraph {
     this.output.gain.setValueAtTime(0, time);
   }
   update(frame: AudioControlFrame, time = this.context.currentTime) {
-    if (this.stopped) return;
+    if (this.stopped || !this.isReady) return;
+    this.quiet = false;
     const s = this.settings;
-    this.engine.update(frame.engine, time);
+    this.engine?.update(frame.engine, time);
     let warning = 0;
     this.wheels.forEach((wheel, index) => {
       const control = frame.wheels.find((w) => w.id === WHEEL_IDS[index]);
       if (!control) return;
-      wheel.voice.update(control, s, time);
+      wheel.voice?.update(control, s, time);
       warning = Math.max(warning, control.warning, control.slip);
     });
     const duck = Math.pow(10, (-3 * warning * s.tyres) / 20);
@@ -115,7 +140,8 @@ export class VehicleAudioGraph {
     if (this.stopped) return;
     smoothParam(this.output.gain, 0, time, 0.008);
     smoothParam(this.impactGain.gain, 0, time, 0.002);
-    for (const wheel of this.wheels) wheel.voice.reset(time);
+    if (!this.quiet) for (const wheel of this.wheels) wheel.voice?.reset(time);
+    this.quiet = true;
   }
   /** Explicit diagnostics only: the normal graph has no analyser allocation or sampling. */
   sampleSignals(): VehicleAudioSignalSample | undefined {
@@ -159,9 +185,10 @@ export class VehicleAudioGraph {
     this.meters?.ceiling.disconnect();
     this.meters?.impact.disconnect();
     this.meters = undefined;
-    this.engine.dispose();
+    this.onError = undefined;
+    this.engine?.dispose();
     for (const w of this.wheels) {
-      w.voice.dispose(); w.spatial.dispose(); w.tyre.disconnect(); w.surface.disconnect();
+      w.voice?.dispose(); w.spatial.dispose(); w.tyre.disconnect(); w.surface.disconnect();
     }
     stopAndDisconnect([this.impact], []);
     for (const node of [this.impactFilter, this.impactGain, this.engineBus, this.mix, this.ceiling, this.output]) node.disconnect();

@@ -168,7 +168,7 @@ function sample() {
     samples++;
     const summary = summaries.at(-1)!;
     summary.samples++; summary.maximumRpm = Math.max(summary.maximumRpm, t.rpm); summary.maximumSpeed = Math.max(summary.maximumSpeed, t.speed);
-    const eligible = Boolean(signal?.warmedUp && !last.paused && audio.contextState === "running" && audio.enabled && audio.settings.master > 0.01 && audio.settings.engine > 0.01 && performance.now() - stageStarted >= 350);
+    const eligible = Boolean(signal?.warmedUp && audio.sourceReady && !last.paused && audio.contextState === "running" && audio.enabled && audio.settings.master > 0.01 && audio.settings.engine > 0.01 && performance.now() - stageStarted >= 350);
     if (audio.enabled && !last.paused && audio.contextState !== "running") summary.contextNotRunningSamples++;
     if (signal?.warmedUp) {
       const points = { engine: signal.engine, impact: signal.impact, mix: signal.mix, ceiling: signal.ceiling, output: signal.output,

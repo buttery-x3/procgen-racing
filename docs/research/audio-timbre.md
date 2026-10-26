@@ -16,11 +16,11 @@ is accepted as a promising base sound**; its **noise-driven tyre is rejected**.
 The second, tonal tyre pass (`cff62ae`, integrated at `bfbf475`) is also
 **rejected: it still sounds like a tone**. The user approved the next short
 reference reconstruction and then accepted its sound as the screech target.
-The approved [live-control version](controlled-tyre-screech.md) is now ready
-for the next hearing step.
+The owner accepted the [live-control version](controlled-tyre-screech.md) on
+27 October and authorized [driving integration](reference-audio-integration.md).
 The [recording comparison and revised proposal](tyre-recording-comparison.md)
 sets the next-step plan. The existing voices remain comparison material;
-the new backend's dynamic character is still awaiting the user's listen.
+the next listen is its mix and response while driving in the simulation.
 
 | Listening feedback | Decision for the next pass |
 | --- | --- |
@@ -30,7 +30,7 @@ the new backend's dynamic character is still awaiting the user's listen.
 | Present slider variation/modulation is good. | Retain the useful onset, release and changing roughness behavior while changing what produces the sound. Do not rebuild slip calculations to solve a source-timbre problem. |
 | Tonal revision still sounds like a tone; the supplied real screech changes character through its duration. | Measurements show broader moving bands and changing spectral balance in the reference, versus an almost fixed harmonic pattern in the playground. Stop tuning that fixed pattern. Propose a short reference reconstruction before another real-time backend. |
 
-## Current next step: hear the controllable screech in the playground
+## Current next step: driving mix and response
 
 The [WAV analysis](tyre-recording-comparison.md) includes spectrograms, evolving
 spectral shapes, envelope measurements and a reproducible analysis script. The
@@ -51,8 +51,8 @@ Reference-derived WAVs are local ignored files, served only in development.
 The user accepted that reconstruction. The [live version](controlled-tyre-screech.md)
 now uses its partial/residual representation with slip history, load and
 indefinite sustaining. Its source profile is also local ignored data; old presets
-and the accepted engine keep their original meaning. Compare the live cycle
-with the accepted reference before production integration.
+and the accepted engine keep their original meaning. The owner accepted the live
+cycle and requested full simulation integration while deferring main/release checks.
 
 If a compact reconstruction works, evolve several spectral families and their
 roughness independently of level. Later drive their transitions from current
@@ -63,7 +63,9 @@ asset handling and the distinction between audio history and tyre physics.
 
 The engine research and original playground requirements below remain background.
 Preserve the accepted engine, presets, channel/runtime evidence and current
-physics. Production integration remains a later listening decision.
+physics. The [integration pass](reference-audio-integration.md) connects the accepted
+sources to driving and reuses that foundation. Subsequent adjustments follow
+the owner's simulation listening feedback.
 
 ## Tonal tyre pass: completed and rejected
 

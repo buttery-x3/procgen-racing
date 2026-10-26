@@ -19,13 +19,17 @@ const graphMock = vi.hoisted(() => ({
   graphs: [] as GraphRecord[],
   failConstruction: false,
   events: [] as string[],
+  readiness: undefined as Promise<void> | undefined,
 }));
+vi.mock("../src/audio/ReferenceAudio", () => ({ loadDrivingAudio: () => Promise.resolve({}) }));
 
 // Exercise the real runtime/collector. The graph fake records only its public
 // lifecycle boundary; DSP and routing have separate rendered/voice tests.
 vi.mock("../src/audio/VehicleAudioGraph", () => ({
   VehicleAudioGraph: class {
     readonly record: GraphRecord;
+    ready?: Promise<void>;
+    isReady = true;
     constructor(_context: unknown, _destination: unknown, settings: AudioSettings) {
       if (graphMock.failConstruction) {
         graphMock.failConstruction = false;
@@ -36,6 +40,10 @@ vi.mock("../src/audio/VehicleAudioGraph", () => ({
         silenceCount: 0, preparations: 0, disposals: 0, audible: false,
       };
       graphMock.graphs.push(this.record);
+      if (graphMock.readiness) {
+        this.isReady = false;
+        this.ready = graphMock.readiness.then(() => { this.isReady = true; });
+      }
     }
     configure(settings: AudioSettings) {
       this.record.settings = { ...settings };
@@ -44,6 +52,7 @@ vi.mock("../src/audio/VehicleAudioGraph", () => ({
     }
     update(frame: AudioControlFrame) {
       if (this.record.disposals) throw new Error("Updating disposed graph");
+      if (!this.isReady) return;
       this.record.updates.push(frame);
       this.record.audible = this.record.settings.enabled && this.record.settings.master > 0;
     }
@@ -156,6 +165,7 @@ beforeEach(() => {
   graphMock.graphs = [];
   graphMock.failConstruction = false;
   graphMock.events = [];
+  graphMock.readiness = undefined;
   Context.instances = [];
   gestures = new GestureWindow();
   vi.stubGlobal("window", gestures);
@@ -170,6 +180,41 @@ afterEach(async () => {
 });
 
 describe("audio runtime activation and mute lifecycle", () => {
+  it("keeps a late source load muted and requires fresh telemetry when enabled again", async () => {
+    const pending = deferred(); graphMock.readiness = pending.promise;
+    const instance = audio(), context = await start(instance);
+    expect(instance.state).toBe("loading");
+    instance.capture(telemetry(1), DEFAULT_SETUP);
+    instance.configure({ ...instance.settings, enabled: false });
+    pending.resolve(); await settled();
+    instance.update(false);
+    expect(graphMock.graphs[0].audible).toBe(false);
+    expect(instance.state).toBe("muted");
+    instance.configure({ ...instance.settings, enabled: true });
+    context.currentTime = 0.1;
+    instance.update(false);
+    expect(graphMock.graphs[0].updates).toHaveLength(0);
+    instance.capture(telemetry(2), DEFAULT_SETUP); instance.update(false);
+    expect(graphMock.graphs[0].updates[0].time).toBe(2);
+  });
+
+  it("contains asynchronous source errors and ignores readiness from a retired setup", async () => {
+    const old = deferred(); graphMock.readiness = old.promise;
+    const instance = audio(); await start(instance);
+    const current = deferred(); graphMock.readiness = current.promise;
+    instance.setSetup({ ...DEFAULT_SETUP, referenceCar: "ff" });
+    old.reject(new Error("Retired source load failed")); await settled();
+    expect(instance.state).toBe("loading");
+    expect(instance.diagnostics().liveGraphs).toBe(1);
+    current.reject(new Error("Current tyre profile failed")); await settled();
+    expect(instance.state).toBe("unavailable");
+    expect(instance.diagnostics().error).toContain("Current tyre profile failed");
+    expect(instance.diagnostics().liveGraphs).toBe(0);
+    graphMock.readiness = undefined;
+    await start(instance);
+    expect(instance.state).toBe("running");
+  });
+
   it("defaults sound on while deferring the context until a trusted gesture", async () => {
     const instance = audio();
     expect(instance.enabled).toBe(true);

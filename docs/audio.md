@@ -14,21 +14,24 @@ shows broader, moving spectral structure and different early/middle/late
 character in the real reference. The user accepted the
 [reference reconstruction](research/tyre-reference-audition.md) at
 `/audio-reference.html` as the screech direction. The approved
-[live-control prototype](research/controlled-tyre-screech.md) is now ready in
-the playground, with onset, indefinite sliding, recovery and load response.
-The original production voices remain the infrastructure/comparison baseline; existing
-qualification records are preserved.
+[live-control prototype](research/controlled-tyre-screech.md) has also been accepted.
+**27 October: the accepted engine and screech are integrated into driving on
+development**, using real per-wheel controls and the existing surface/spatial/mixer
+foundation. Open the normal simulation for the next listening review. See
+[integration, local profile setup and targeted evidence](research/reference-audio-integration.md).
+Further mix/family tuning remains open. Main promotion and full release checks
+are deferred. Original qualification records retain their source hashes.
 
 ## Sound-quality playground
 
 Open `/audio-playground.html` on the running development server for the short
-audible A/B prototype. **A** is the existing production engine and tyre voice;
+audible A/B prototype. **A** is the original production engine and tyre voice;
 **B** is the accepted-direction combustion-pulse/exhaust-path engine and the new
 reference-model tyre candidate. Both get the same short synthetic RPM/load or
 slip controls. The page starts on B, solo tyre, dry/centred, with the 10.5-second
 build/slide/recovery/re-entry cycle. A separate button replays the accepted
 two-second screech reconstruction. Switch A/B during playback with a 60 ms fade.
-The comparison does not replace the driving game's audio.
+Driving now uses B's accepted engine and reference-model tyre with the live collector.
 
 Choose an idle, steady-load, sweep or shift engine example, or a scrub, onset,
 sustained slide or recovery tyre example. Each ends after 7–10.5 seconds unless
@@ -54,13 +57,14 @@ Saving or importing a preset never applies it to the game. The first
 listening review accepted B's engine direction but rejected its first tyre
 source; meters only check for an active, finite digital signal. The second review
 also rejected the tonal tyre candidate; it remains available as comparison
-material. The reference reconstruction was accepted, and the new live model's
-dynamic character is the next hearing decision. Real-control capture/replay and
-a mix review follow source selection before production integration.
+material. The reference reconstruction and live model have been accepted. The
+current hearing step reviews their mix and response with actual driving controls.
 
-This playground uses isolated AudioWorklet modules, loaded only after Play.
-The existing production `EngineVoice`, `TyreVoice`, collector, buses, preferences,
-and qualification reports are unchanged. The live pass has 15 focused checks
+The playground loads AudioWorklet modules after Play; driving shares those
+renderers, loading them after its first trusted interaction. `EngineVoice` and
+`TyreVoice` remain the historical A comparison/native lab sources. The collector,
+buses, preferences and original qualification reports retain their foundation.
+The original live prototype pass had 15 focused checks
 covering its worklet, all three preset backends, fixtures and the local-file
 service; short actual-model renders at 44.1/48 kHz; the strict build; and a brief
 native playback/manual-control check. No 20-minute endurance test or
@@ -82,14 +86,16 @@ resumes. Restoring defaults enables sound again.
 The engine keeps a quiet, uneven idle. Actual RPM controls pitch, while effective
 engine/clutch effort controls growl and brightness. A shift reduces the load
 layer without fabricating an RPM drop; downshifts and clutch-open rev flares
-follow physics. Compact, sport and deep profiles vary by car family and seed.
+follow physics. The accepted base tuning is currently common to vehicle families,
+with their cosmetic seeds retained. Family-specific retuning follows driving review.
 
-Each grounded, loaded tyre has a soft warning scrub near the model's grip peak
-and a stronger sliding texture beyond it. Wheelspin can sound while the car is
+Each grounded, loaded tyre builds excitation near the model's grip peak and a
+stronger evolving screech beyond it. Entry, holding and recovery can differ at
+the same instantaneous slip. Wheelspin can sound while the car is
 stationary. Unloaded/airborne tyres and a stopped held car stay quiet. Kerb,
 gravel, sand and grass textures blend independently at each contact.
 
-Front tyres have brighter, smoother character; rear tyres are lower and rougher.
+The accepted screech uses a lower rear pitch, adjustable with the axle-cue preference.
 Headphone HRTF processing supplies four driver-relative quadrants and the axle
 timbres provide a second cue. Positions stay attached to the car across camera
 changes and reversing. Stereo mode preserves side panning; Mono preserves axle
@@ -107,8 +113,11 @@ not pause driving.
 
 ## Implementation
 
-The system uses native Web Audio nodes with generated periodic waves and seeded
-noise. It downloads no recordings and adds no audio dependency or worklet.
+The driving system uses the accepted pulse/exhaust and spectral-reference
+AudioWorklet renderers, plus native surface/impact and spatial/mixer nodes.
+It loads the prepared local spectral model, with no source-WAV playback or new
+audio dependency. The [integration notes](research/reference-audio-integration.md)
+describe local development availability and release-profile packaging still due.
 
 Noise buffer lengths have an exact frames → seconds → frames round trip.
 Chromium 152 has a [loop-boundary regression](https://issues.chromium.org/issues/561828152)
@@ -125,9 +134,10 @@ and essentially the same loop duration. This fixes the reported Vivaldi cut-out.
 - `AudioControlCollector` captures each 120 Hz physics step and preserves brief
   shift/slip events until the frame publishes. Latest contact/load limits always
   win over retained peaks. Reset/time gaps clear pending history.
-- `EngineVoice` and `TyreVoice` generate the tones/noise, while `SpatialAudio`
-  selects HRTF, ordinary stereo or mono paths. Missing spatial APIs fall back
-  through stereo to mono.
+- `ReferenceAudio` prepares accepted sources once per context and separates the
+  collector's load-weighted level from spectral-character controls. `SurfaceVoice`
+  preserves road, loose-material and kerb textures. `SpatialAudio` selects HRTF,
+  ordinary stereo or mono paths; missing APIs fall back through stereo to mono.
 - `VehicleAudioGraph` mixes tyre and surface levels before each wheel's panner,
   reduces the engine by up to 3 dB during strong tyre feedback, and reserves
   digital headroom with a static symmetric output shaper.
@@ -170,8 +180,11 @@ npm run dev
 Open `http://127.0.0.1:5173/audio-lab.html` (use the server's actual port).
 **Run offline qualification** renders at 44.1/48 kHz. **Check live lifecycle**
 exercises actual context activation, mute, profile replacement and disposal.
+The lab's native auditions/offline renders retain the original comparison voices;
+they do not qualify the new worklet timbre. Its runtime smoke uses current driving
+sources. Use the normal app/playground to hear the accepted sounds.
 Also open `/audio-driving.html` and select **Run launch / shift / stop**. It
-uses the production App, real physics, the collector and the actual native graph:
+uses the production App, real physics, the collector and the actual driving graph:
 idle → launch → observed first automatic upshift → recovery → brake to rest →
 three seconds idle → three seconds relaunch throttle → final stop. Keep the app
 visible and unpaused; focus loss interrupts the automatic sequence. The live

@@ -14,6 +14,35 @@ const active = { id: "fl", grounded: true, speed: 22, slipSpeed: 15, load: .8, s
 const rms = (samples) => Math.sqrt(samples.reduce((sum, n) => sum + n * n, 0) / samples.length);
 
 describe("continuous reference tyre worklet", () => {
+  it("uses the driving level once while retaining independent spectral character", () => {
+    const a = referenceTyreRenderer(modelFixture()), b = referenceTyreRenderer(modelFixture());
+    for (let block = 0; block < 350; block++) {
+      a.block({ ...active, load: 1, level: .8 });
+      b.block({ ...active, load: .25, level: .2 });
+    }
+    expect(a.processor.position).toBe(b.processor.position);
+    expect(b.processor.level).toBeCloseTo(a.processor.level * .25, 6);
+  });
+
+  it("skips spectral transforms at rest, wakes on slip and retires explicitly", () => {
+    const renderer = referenceTyreRenderer(modelFixture(), 48000, {}, 27, { sleepWhenQuiet: true, reportState: false });
+    const original = renderer.processor.spectralNoise.bind(renderer.processor);
+    let grains = 0;
+    renderer.processor.spectralNoise = (...args) => { grains++; original(...args); };
+    for (let block = 0; block < 50; block++) renderer.block({ ...active, slip: 0, warning: 0 });
+    expect(grains).toBe(0);
+    let audible;
+    for (let block = 0; block < 150; block++) audible = renderer.block(active);
+    expect(grains).toBeGreaterThan(0); expect(rms(audible)).toBeGreaterThan(.001);
+    for (let block = 0; block < 100; block++) renderer.block({ ...active, grounded: false });
+    const afterRelease = grains;
+    for (let block = 0; block < 30; block++) renderer.block({ ...active, grounded: false });
+    expect(grains).toBe(afterRelease);
+    renderer.send("dispose");
+    expect(renderer.processor.process([], [[new Float32Array(128)], [new Float32Array(128)]])).toBe(false);
+    expect(renderer.messages.some((message) => message.type === "state")).toBe(false);
+  });
+
   it.each([44100,48000])("continues rendering beyond the reference phrase at %i Hz", (rate) => {
     const { pcm } = renderReferenceTyre(modelFixture(), rate, 5, () => active);
     expect(pcm.every(n => Number.isFinite(n) && Math.abs(n) < .5)).toBe(true);

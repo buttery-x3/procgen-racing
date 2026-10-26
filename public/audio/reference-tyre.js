@@ -1,4 +1,4 @@
-// Playground only. The locally prepared spectral model is never bundled here.
+// Accepted continuous screech shared by driving and audition. Model data is supplied separately.
 const clamp = (n, lo = 0, hi = 1) => Number.isFinite(n) ? Math.max(lo, Math.min(hi, n)) : lo;
 const mix = (a, b, t) => a + (b - a) * t;
 
@@ -38,8 +38,10 @@ class SpectralFFT {
 }
 
 class ReferenceTyre extends AudioWorkletProcessor {
-  constructor() {
+  constructor(options) {
     super();
+    this.sleepWhenQuiet = !!options?.processorOptions?.sleepWhenQuiet;
+    this.reportState = options?.processorOptions?.reportState !== false;
     this.fft = new SpectralFFT(2048);
     this.ring = new Float64Array(4096); this.window = new Float64Array(2048);
     for (let i = 0; i < 2048; i++) this.window[i] = Math.sqrt(.5 - .5 * Math.cos(2 * Math.PI * i / 2048));
@@ -49,6 +51,7 @@ class ReferenceTyre extends AudioWorkletProcessor {
       if (data?.type === 'reset') this.reset(data.seed);
       if (data?.type === 'control') this.target = data.value || {};
       if (data?.type === 'tuning') this.tuning = data.value || {};
+      if (data?.type === 'dispose') this.disposed = true;
       if (data?.type === 'profile') {
         try { this.loadProfile(data.value); this.port.postMessage({ type: 'profile-ready' }); }
         catch { this.port.postMessage({ type: 'profile-error', message: 'Invalid local tyre control model' }); }
@@ -124,11 +127,13 @@ class ReferenceTyre extends AudioWorkletProcessor {
     const goal = this.state === 'quiet' ? .07 : this.state === 'recovering' ? .9 + offset * .25
       : this.state === 'entering' ? mix(.07, sustained, clamp(this.age / .65)) : sustained;
     this.position += (clamp(goal, .05, .94) - this.position) * (1 - Math.exp(-dt / .12));
-    const target = this.open ? excitation * Math.sqrt(clamp(t.load)) : 0;
+    // Driving supplies the collector's already load-weighted level. Playground
+    // controls keep their original independent load-to-level behavior.
+    const target = this.open ? (Number.isFinite(t.level) ? clamp(t.level) : excitation * Math.sqrt(clamp(t.load))) : 0;
     const seconds = !contact ? .007 : target > this.level ? .012 + clamp(p.onset) * .15 : .025 + clamp(p.release) * .45;
     const next = target + (this.level - target) * Math.exp(-dt / seconds);
     const levelStep = (next - this.level) / (dt * sampleRate);
-    const pitch = 2 ** ((clamp(p.pitch) - .5) * .4) * ((t.id === 'rl' || t.id === 'rr') ? .94 : 1);
+    const pitch = 2 ** ((clamp(p.pitch) - .5) * .4) * ((t.id === 'rl' || t.id === 'rr') ? (Number.isFinite(t.rearPitch) ? clamp(t.rearPitch, .85, 1) : .94) : 1);
     this.pitch += (pitch - this.pitch) * (1 - Math.exp(-dt / .04));
     this.texture += (2 ** ((clamp(p.texture) - .5) * 2) - this.texture) * (1 - Math.exp(-dt / .03));
     return levelStep;
@@ -161,10 +166,15 @@ class ReferenceTyre extends AudioWorkletProcessor {
   }
 
   process(_inputs, outputs) {
+    if (this.disposed) return false;
     const tyre = outputs[0]?.[0], surface = outputs[1]?.[0];
     if (!tyre || !surface) return true;
     if (!this.model) { tyre.fill(0); surface.fill(0); return true; }
     const dt = tyre.length / sampleRate, step = this.updateState(dt), model = this.model;
+    if (this.sleepWhenQuiet && !this.open && this.level < .000001 && !clamp(this.target.rolling)) {
+      this.level = 0; this.ring.fill(0); this.grainCountdown = 0;
+      tyre.fill(0); surface.fill(0); return true;
+    }
     const at = clamp(this.position, .05, .94) * (model.frames - 1), frame = Math.floor(at), fraction = at - frame;
     const left = frame * model.slots * 3, right = (frame + 1) * model.slots * 3;
     for (let voice = 0; voice < model.slots; voice++) {
@@ -204,7 +214,7 @@ class ReferenceTyre extends AudioWorkletProcessor {
     }
     this.reportFrames += tyre.length;
     this.elapsedFrames += tyre.length;
-    if (this.reportFrames >= sampleRate * .1) {
+    if (this.reportState && this.reportFrames >= sampleRate * .1) {
       this.reportFrames = 0;
       this.port.postMessage({ type: 'state', state: this.state, position: this.position, level: this.level, seconds: this.elapsedFrames / sampleRate });
     }

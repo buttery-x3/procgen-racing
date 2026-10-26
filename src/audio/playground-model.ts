@@ -1,4 +1,6 @@
 import type { EngineAudioControl, TyreAudioControl } from "./types";
+import { ACCEPTED_ENGINE_TUNING, ACCEPTED_TYRE_TUNING, REFERENCE_MODEL_ID } from "./reference-tuning";
+export { REFERENCE_MODEL_ID } from "./reference-tuning";
 
 export type FixtureId = "engine-idle" | "engine-light" | "engine-full" | "engine-sweep" | "engine-shift" | "tyre-scrub" | "tyre-onset" | "tyre-slide" | "tyre-recovery" | "tyre-cycle" | "manual";
 export type SoloMode = "engine" | "tyre" | "surface" | "mix";
@@ -39,7 +41,6 @@ export interface ReferenceTyrePlaygroundTuning {
   onset: number;
   release: number;
 }
-export const REFERENCE_MODEL_ID = "local:tyre-spectrum-v1:2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0";
 
 interface BasePlaygroundPreset {
   format: "procgen-racing:audio-playground-preset";
@@ -84,8 +85,7 @@ export const TONAL_PRESET: PlaygroundPreset = {
 export const DEFAULT_PRESET: PlaygroundPreset = {
   ...TONAL_PRESET, name: "Accepted screech · live control", backend: "pulse-exhaust-reference-v3",
   assetIds: [REFERENCE_MODEL_ID], fixture: "tyre-cycle",
-  tuning: { body: 0.78, openness: 0.35, rasp: 0.28, unevenness: 0.35, mechanical: 0.16,
-    character: 0.5, texture: 0.5, pitch: 0.5, movement: 0.65, onset: 0.22, release: 0.36 },
+  tuning: { ...ACCEPTED_ENGINE_TUNING, ...ACCEPTED_TYRE_TUNING },
 };
 
 export const LEGACY_PRESET: PlaygroundPreset = {
