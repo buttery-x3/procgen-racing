@@ -1,6 +1,6 @@
 # procgen-racing
 
-**Baseline release: [v0.2.0](docs/releases/v0.2.0.md), M0–M8.** `main` is the
+**Baseline release: [v0.3.0](docs/releases/v0.3.0.md), driving audio update.** `main` is the
 released baseline; `development` is the remote testing branch. Every future
 milestone must be implemented on its own branch from `development`, then merged
 and pushed to `development` on completion for testing. Promote to `main` only
@@ -8,9 +8,12 @@ when a release is explicitly requested. See the [branch workflow](docs/workflow.
 and [agent instructions](AGENTS.md).
 
 A browser racing sandbox built with TypeScript, Three.js and Rapier. The current
-**v0.2.0 release** completes solo practice/time trials, lap rules, compatible
-ghosts and a circuit library around the procedural cars, circuits and tuning lab.
-The earlier [v0.1.0 baseline](docs/releases/v0.1.0.md) remains tagged separately.
+**v0.3.0 release** adds the accepted pulse/exhaust engine and evolving per-wheel
+tyre screech, spatial routing and sound mixer. It includes the numerical synthesis
+model and no source/comparison recordings. Solo practice/time trials, lap rules,
+ghosts, circuit library, procedural cars and tuning remain the M0–M8 foundation.
+The earlier [v0.2.0 solo baseline](docs/releases/v0.2.0.md) and
+[v0.1.0 baseline](docs/releases/v0.1.0.md) remain tagged separately.
 
 **M8** adds directional 3D timing gates, three sectors, track limits, keyed personal
 bests, non-colliding pose ghosts and durable session import/export. The circuit
@@ -275,18 +278,18 @@ See the [implementation plan](docs/implementation-plan.md),
 [M5 venue notes](docs/m5.md), [M6 car/workbench notes](docs/m6.md), [M7 expanded-family notes](docs/m7.md), [M8 solo-session notes](docs/m8.md) and
 [archived M4 v1 notes](docs/m4.md).
 
-## Synthesized driving audio on development
+## Synthesized driving audio
 
 The accepted pulse/exhaust engine and evolving reference-model tyre screech now
-run in the simulation on development. They use actual RPM/load/shift and
+run in the released simulation. They use actual RPM/load/shift and
 independent per-wheel slip/contact controls, retaining the established surface,
 spatial and mixer foundation. Open the normal app and drive for the next listening
 review. The synthesis parameter model is included; source and comparison recordings
 were removed before release. See [integration](docs/research/reference-audio-integration.md)
 and [recording cleanup](docs/research/audio-recording-cleanup.md).
 Development commits use [targeted validation](docs/workflow.md#validation-scope--revised-26-october-2026);
-the full suite is reserved for release promotion into `main`, which is deferred
-while driving feedback and further tuning remain open.
+the full suite is reserved for release promotion into `main`. The owner accepted
+the integrated sound for the separate [v0.3.0 audio release](docs/releases/v0.3.0.md).
 
 The [audio playground](audio-playground.html) is the first audible A/B prototype:
 short engine and tyre examples, perceptual controls and local JSON presets. It
