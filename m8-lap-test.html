@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>M8 physical lap qualification</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <details
+      id="qualification-output"
+      style="
+        position: fixed;
+        bottom: 32px;
+        left: 68px;
+        z-index: 90;
+        background: #182c22;
+        color: #cde3ad;
+        padding: 10px;
+        border: 1px solid #6a8354;
+        max-width: 550px;
+      "
+    >
+      <summary id="qualification-status">
+        M8 diagnostic · use Start time trial to run a scripted physical lap
+      </summary>
+      <p>
+        This page uses an isolated qualification database. The conservative test
+        controller supplies ordinary VehicleControls to the production app.
+        Normal driving is at the main app URL.
+      </p>
+      <textarea
+        id="qualification-json"
+        aria-label="Physical lap qualification JSON"
+        style="width: 500px; height: 160px"
+        readonly
+      ></textarea>
+    </details>
+    <script type="module" src="/src/diagnostics/M8LapTest.ts"></script>
+  </body>
+</html>

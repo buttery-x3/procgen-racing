@@ -18,6 +18,15 @@ import { VehicleSun } from "./VehicleSun";
 import { ChaseCamera } from "./ChaseCamera";
 import { CircuitView } from "./CircuitView";
 import type { CompiledCircuit } from "../track/SurfaceCompiler";
+import RAPIER from "@dimforge/rapier3d-compat";
+import { GhostView } from "./GhostView";
+import { TimingView } from "./TimingView";
+import { DrivingEffects } from "./DrivingEffects";
+import { safeCamera } from "./CameraSafety";
+import { DEFAULT_PRESENTATION, normalizePresentation } from "./settings";
+import type { PresentationSettings } from "./settings";
+import type { TimingCourse } from "../race/TimingCourse";
+import type { GhostPose } from "../race/Ghost";
 
 const materials = {
   body: new THREE.MeshStandardMaterial({
@@ -148,6 +157,10 @@ export class SceneView {
   private readonly sun = new VehicleSun();
   private readonly presentation = new VehiclePresentation();
   private readonly chaseCamera = new ChaseCamera();
+  private readonly ghost = new GhostView();
+  private readonly effects = new DrivingEffects();
+  private timingView?: TimingView;
+  private settings = { ...DEFAULT_PRESENTATION };
   private grid: THREE.GridHelper;
   private resizeObserver: ResizeObserver;
   private physicsPosition = new THREE.Vector3();
@@ -156,7 +169,7 @@ export class SceneView {
   private cameraDelta = new THREE.Vector3();
   private positioned = false;
   forcesVisible = false;
-  cameraMode: "orbit" | "chase" | "top" | "overview" = "orbit";
+  cameraMode: "orbit" | "chase" | "bonnet" | "top" | "overview" = "orbit";
   private setup: VehicleSetup;
   private carSpec!: ResolvedCar;
   private carArms: THREE.Mesh[] = [];
@@ -253,6 +266,7 @@ export class SceneView {
     this.addDrivingGround();
     this.circuitView = new CircuitView(circuit);
     this.scene.add(this.circuitView.group);
+    this.scene.add(this.ghost.group, this.effects.group);
     this.buildCar(setup);
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
@@ -356,7 +370,9 @@ export class SceneView {
             ? this.carSpec.dimensions.frontTyreWidth
             : this.carSpec.dimensions.rearTyreWidth;
       const wheel = new THREE.Group();
+      wheel.name = `wheel-${i}`;
       const spinner = new THREE.Group();
+      spinner.name = `spinner-${i}`;
       const tire = new THREE.Mesh(
         new THREE.CylinderGeometry(radius, radius, tyreWidth, 20),
         materials.tire,
@@ -409,6 +425,7 @@ export class SceneView {
         ? createControlArms(this.car, this.carSpec, materials.dark)
         : [];
     this.scene.add(this.car);
+    this.ghost.build(this.car, this.carSpec);
   }
 
   setCircuit(next: CircuitView) {
@@ -417,6 +434,7 @@ export class SceneView {
     this.scene.add(next.group);
     this.scene.remove(previous.group);
     previous.dispose();
+    this.effects.clear();
     if (this.cameraMode === "overview") this.setCamera("overview");
   }
 
@@ -568,6 +586,11 @@ export class SceneView {
     const driving = rig.experiment === "handling" || rig.experiment === "split";
     const onCircuit = rig.experiment === "circuit";
     this.circuitView.group.visible = onCircuit;
+    if (this.timingView) this.timingView.group.visible = onCircuit;
+    this.effects.update(
+      telemetry,
+      onCircuit && this.settings.effects && this.settings.quality !== "economy",
+    );
     if (onCircuit)
       this.circuitView.update(pose.position, this.cameraMode === "overview");
     this.baseGround.visible = !onCircuit;
@@ -621,10 +644,45 @@ export class SceneView {
         pose.rotation,
         dt,
       );
-      this.camera.position.copy(cameraPose.position);
+      this.camera.position.copy(
+        safeCamera(
+          pose.position,
+          cameraPose.position,
+          (origin, direction, distance) =>
+            rig.world.castRay(
+              new RAPIER.Ray(origin, direction),
+              distance,
+              true,
+              undefined,
+              undefined,
+              undefined,
+              rig.body,
+            )?.timeOfImpact ?? null,
+        ),
+      );
+      this.camera.up.set(0, 1, 0);
       this.controls.target.copy(cameraPose.target);
       this.camera.lookAt(cameraPose.target);
+    } else if (this.cameraMode === "bonnet") {
+      const forward = new THREE.Vector3(0, 0, 1).applyQuaternion(pose.rotation),
+        up = new THREE.Vector3(0, 1, 0).applyQuaternion(pose.rotation);
+      this.camera.position
+        .copy(pose.position)
+        .addScaledVector(forward, this.setup.wheelbase * 0.38)
+        .addScaledVector(up, 0.58);
+      this.camera.up.lerp(
+        new THREE.Vector3(0, 1, 0)
+          .lerp(up, this.settings.cameraRoll)
+          .normalize(),
+        1 - Math.exp(-8 * dt),
+      );
+      this.camera.lookAt(
+        this.cameraTarget
+          .copy(this.camera.position)
+          .addScaledVector(forward, 12 + this.settings.lookAhead),
+      );
     } else if (this.cameraMode === "top") {
+      this.camera.up.set(0, 0, 1);
       this.camera.position.copy(target);
       this.camera.position.y += 13;
       this.camera.position.z -= 0.01;
@@ -651,6 +709,7 @@ export class SceneView {
   }
 
   homeCamera() {
+    this.camera.up.set(0, 1, 0);
     this.cameraMode = "orbit";
     this.controls.enabled = true;
     this.controls.maxDistance = 32;
@@ -663,7 +722,9 @@ export class SceneView {
     this.controls.update();
     this.lastRenderPosition.copy(this.physicsPosition);
   }
-  setCamera(mode: "orbit" | "chase" | "top" | "overview") {
+  setCamera(mode: "orbit" | "chase" | "bonnet" | "top" | "overview") {
+    this.camera.fov = mode === "bonnet" ? 58 : 42;
+    this.camera.up.set(0, 1, 0);
     this.camera.far = mode === "overview" ? 1800 : 650;
     this.camera.updateProjectionMatrix();
     if (mode !== "overview") this.controls.maxDistance = 32;
@@ -713,6 +774,28 @@ export class SceneView {
   get circuitStreamingStats() {
     return this.circuitView.streamStats;
   }
+  setTimingCourse(course: TimingCourse) {
+    if (this.timingView?.course === course) return;
+    this.timingView?.dispose();
+    this.timingView = new TimingView(course);
+    this.scene.add(this.timingView.group);
+  }
+  showGhost(pose: GhostPose | null) {
+    this.ghost.update(pose);
+  }
+  configure(settings: PresentationSettings) {
+    this.settings = normalizePresentation(settings);
+    this.ghost.material.opacity = this.settings.ghostOpacity;
+    this.chaseCamera.lookAhead = this.settings.lookAhead;
+    this.renderer.setPixelRatio(
+      Math.min(
+        window.devicePixelRatio,
+        this.settings.quality === "high" ? 2 : 1,
+      ),
+    );
+    this.renderer.shadowMap.enabled = this.settings.quality !== "economy";
+    this.resize();
+  }
   private resize() {
     const { clientWidth: w, clientHeight: h } = this.container;
     this.camera.aspect = w / Math.max(h, 1);
@@ -720,6 +803,9 @@ export class SceneView {
     this.renderer.setSize(w, h);
   }
   dispose() {
+    this.ghost.dispose();
+    this.effects.dispose();
+    this.timingView?.dispose();
     this.resizeObserver.disconnect();
     this.controls.dispose();
     this.sun.dispose();

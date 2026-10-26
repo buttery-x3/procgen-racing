@@ -13,6 +13,7 @@
   --amber: #dba674;
   --blue: #98c6d2;
   --mono: "Cascadia Code", Consolas, monospace;
+  --sans: Inter, "Segoe UI", Arial, sans-serif;
 }
 * {
   box-sizing: border-box;
@@ -2838,4 +2839,425 @@ dialog > .save-button {
   color: #efd49b;
   font: 8px var(--mono);
   letter-spacing: 0.05em;
+}
+.on-circuit .scene-heading {
+  display: none;
+}
+.session-strip {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) auto auto auto;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
+  padding: 12px 24px;
+  background: #202c27;
+  border-bottom: 1px solid #465444;
+}
+.session-strip[hidden] {
+  display: none;
+}
+.session-state {
+  min-width: 0;
+}
+.session-state > .eyebrow {
+  display: block;
+  color: #c6df98;
+  font-size: 9px;
+  margin-bottom: 5px;
+}
+.session-state > strong {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  color: #bcc8b4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.session-sectors {
+  font: 9px var(--mono);
+  color: #8fa88d;
+  margin-top: 6px;
+}
+.session-clock {
+  min-width: 112px;
+}
+.session-clock > span,
+.session-delta > span {
+  display: block;
+  font: 8px var(--mono);
+  letter-spacing: 0.06em;
+  color: #9eaf98;
+  margin-bottom: 3px;
+}
+.session-clock > strong {
+  font: 25px var(--mono);
+  letter-spacing: -1px;
+  color: #e2edce;
+  font-variant-numeric: tabular-nums;
+}
+.session-delta {
+  min-width: 135px;
+}
+.session-delta > strong {
+  font: 19px var(--mono);
+}
+.session-delta > strong[data-sign="ahead"] {
+  color: #cbe68c;
+}
+.session-delta > strong[data-sign="behind"] {
+  color: #e0b17c;
+}
+.session-delta > small {
+  display: block;
+  font: 8px var(--mono);
+  margin-top: 3px;
+  color: #a5b79a;
+}
+.session-buttons {
+  display: grid;
+  gap: 5px;
+}
+.session-buttons .button {
+  font-size: 10px;
+  padding: 7px 10px;
+}
+.session-strip[data-flag="invalid"],
+.session-strip[data-flag="yellow"] {
+  border-bottom-color: #b18d5e;
+  background: #302d23;
+}
+.session-strip[data-flag="invalid"] .session-state > .eyebrow {
+  color: #edb579;
+}
+.session-strip[data-flag="pit"] {
+  border-bottom-color: #80bfc9;
+}
+.session-dialog,
+.circuit-library-dialog {
+  width: min(1120px, 94vw);
+  color: #d6e0cd;
+}
+.session-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
+  gap: 30px;
+  padding: 25px 30px;
+  overflow: auto;
+  max-height: calc(87vh - 155px);
+}
+.session-body > section,
+.session-body > aside {
+  min-width: 0;
+}
+.session-mode-buttons {
+  display: flex;
+  gap: 10px;
+}
+.session-record-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 25px 0 18px;
+}
+.session-record-metrics > div {
+  padding: 17px;
+  border: 1px solid #465644;
+  background: #273a2c;
+  border-radius: 7px;
+}
+.session-record-metrics span {
+  display: block;
+  font: 9px var(--mono);
+  color: #9eb28d;
+  margin-bottom: 10px;
+}
+.session-record-metrics strong {
+  font: 21px var(--mono);
+  color: #e2edc7;
+}
+.session-record-metrics > div + div strong {
+  font: 15px var(--sans);
+}
+.session-ghost-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #40513f;
+}
+.session-ghost-controls label {
+  font-size: 11px;
+  color: #b7c8aa;
+}
+.session-ghost-controls input[type="range"] {
+  width: 90px;
+  margin-left: 8px;
+}
+.session-body h3 {
+  font-size: 15px;
+  margin: 20px 0 12px;
+}
+.session-laps {
+  overflow: auto;
+}
+.session-laps table {
+  width: 100%;
+  border-collapse: collapse;
+  font: 10px var(--mono);
+}
+.session-laps th,
+.session-laps td {
+  text-align: left;
+  padding: 11px 9px;
+  border-bottom: 1px solid #3e503d;
+}
+.session-laps th {
+  color: #8fa682;
+  font-weight: 400;
+}
+.session-laps td:last-child {
+  font: 10px/1.5 var(--sans);
+  max-width: 170px;
+  color: #c3cfae;
+}
+.session-rules {
+  padding-left: 20px;
+  font-size: 11px;
+  line-height: 1.75;
+  color: #abbf9e;
+}
+.session-rules li {
+  margin: 10px 0;
+}
+.session-identity {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 6px 10px;
+  font: 10px var(--mono);
+}
+.session-identity dt {
+  color: #839a79;
+}
+.session-identity dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.session-body select,
+.session-body textarea,
+.session-body input[type="file"],
+.circuit-library-body input:not([type="checkbox"]),
+.circuit-library-body select,
+.circuit-library-body textarea {
+  width: 100%;
+  background: #1b2b21;
+  border: 1px solid #4a5c41;
+  color: #d5e1c3;
+  border-radius: 5px;
+  padding: 9px;
+  font-size: 11px;
+}
+.session-body textarea,
+.circuit-library-body textarea {
+  min-height: 95px;
+  resize: vertical;
+}
+.session-body .m6-details label,
+.circuit-library-body label {
+  display: block;
+  font: 9px var(--mono);
+  color: #9db18f;
+  margin: 13px 0 8px;
+}
+.session-body .m6-details label:has(input[type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.5;
+}
+.session-body .m6-details input[type="range"] {
+  width: 100%;
+}
+.circuit-library-body {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 28px;
+  padding: 22px 28px;
+  max-height: calc(87vh - 155px);
+  overflow: auto;
+}
+.circuit-library-body > aside .button {
+  width: 100%;
+  margin: 5px 0;
+}
+.library-filters {
+  display: flex;
+  align-items: end;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.library-filters label {
+  flex: 1;
+  margin: 0;
+}
+.library-filters input,
+.library-filters select {
+  margin-top: 7px;
+}
+#library-capacity {
+  font: 10px var(--mono);
+  white-space: nowrap;
+  color: #9eae8e;
+  padding-bottom: 10px;
+}
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.library-card {
+  background: #25382a;
+  border: 1px solid #435e3f;
+  border-radius: 8px;
+  padding: 12px;
+  color: #ceddb8;
+  text-align: left;
+  min-width: 0;
+}
+.library-card:hover,
+.library-card.selected {
+  border-color: #c2d98a;
+  background: #30452e;
+}
+.library-card svg {
+  width: 100%;
+  height: 118px;
+  background: #1d2e22;
+  border-radius: 5px;
+  margin-bottom: 12px;
+}
+.library-card polyline {
+  stroke: #c6dfa0;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.library-card strong {
+  display: block;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.library-card span,
+.library-card small {
+  display: block;
+  font: 10px/1.6 var(--mono);
+  color: #a2b590;
+  margin-top: 6px;
+  overflow-wrap: anywhere;
+}
+.library-card small {
+  font-size: 9px;
+  color: #829a76;
+}
+.library-empty {
+  padding: 25px;
+  font-size: 13px;
+  color: #92a98a;
+  grid-column: 1/-1;
+}
+@media (max-width: 1350px) {
+  .session-strip {
+    padding: 9px 18px;
+    gap: 10px;
+  }
+  .session-clock > strong {
+    font-size: 22px;
+  }
+  .session-delta {
+    min-width: 110px;
+  }
+  .session-delta > small {
+    max-width: 130px;
+  }
+  .session-state > strong {
+    max-width: 220px;
+  }
+  .circuit-controls .button {
+    padding: 7px 9px;
+  }
+  .circuit-controls p {
+    display: none;
+  }
+  .on-circuit .instruments {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+@media (max-width: 1000px) {
+  .session-strip {
+    grid-template-columns: minmax(120px, 1fr) auto auto;
+  }
+  .session-delta {
+    display: none;
+  }
+  .session-body {
+    grid-template-columns: 1fr;
+  }
+  .circuit-library-body {
+    grid-template-columns: 210px 1fr;
+  }
+  .library-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .session-state > strong,
+  .session-sectors {
+    display: none;
+  }
+  .session-strip {
+    grid-template-columns: 1fr auto;
+  }
+  .session-buttons {
+    grid-column: 1/-1;
+    display: flex;
+  }
+  .session-body,
+  .circuit-library-body {
+    padding: 18px;
+    grid-template-columns: 1fr;
+  }
+  .session-record-metrics {
+    grid-template-columns: 1fr;
+  }
+  .library-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .library-filters {
+    flex-wrap: wrap;
+  }
+  .session-dialog,
+  .circuit-library-dialog {
+    width: 96vw;
+  }
+}
+@media (max-height: 850px) and (min-width: 851px) {
+  .on-circuit .instruments {
+    height: 154px;
+    padding: 9px 18px;
+  }
+  .on-circuit .rig-diagram {
+    height: 60px;
+  }
+  .on-circuit .diagram-card {
+    padding: 8px 10px 6px;
+  }
+  .on-circuit .instruments-heading {
+    margin-bottom: 8px;
+  }
+  .on-circuit .scene-stage {
+    min-height: 210px;
+  }
 }

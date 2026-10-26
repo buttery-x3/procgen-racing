@@ -1,15 +1,23 @@
 import type { VehicleTelemetry } from "../vehicle/types";
+import { drivingFeedback } from "./feedback";
 
 /** Optional synthesized contact feedback. No files, microphone or network are
  * used; the AudioContext starts only from the user's sound button. */
 export class SurfaceAudio {
   enabled = false;
+  volume = 0.6;
   private context?: AudioContext;
   private noise?: AudioBufferSourceNode;
   private rumble?: OscillatorNode;
   private noiseGain?: GainNode;
   private rumbleGain?: GainNode;
   private filter?: BiquadFilterNode;
+  private engine?: OscillatorNode;
+  private engineGain?: GainNode;
+  private squeal?: OscillatorNode;
+  private squealGain?: GainNode;
+  private engineFilter?: BiquadFilterNode;
+  private previous?: VehicleTelemetry;
   async toggle() {
     if (!this.context) {
       const context = new AudioContext();
@@ -48,6 +56,31 @@ export class SurfaceAudio {
       this.noiseGain = noiseGain;
       this.rumbleGain = rumbleGain;
       this.filter = filter;
+      const engine = context.createOscillator(),
+        engineGain = context.createGain(),
+        engineFilter = context.createBiquadFilter();
+      engine.type = "sawtooth";
+      engine.frequency.value = 35;
+      engineFilter.type = "lowpass";
+      engineFilter.frequency.value = 700;
+      engineGain.gain.value = 0;
+      engine
+        .connect(engineFilter)
+        .connect(engineGain)
+        .connect(context.destination);
+      engine.start();
+      const squeal = context.createOscillator(),
+        squealGain = context.createGain();
+      squeal.type = "sine";
+      squeal.frequency.value = 780;
+      squealGain.gain.value = 0;
+      squeal.connect(squealGain).connect(context.destination);
+      squeal.start();
+      this.engine = engine;
+      this.engineGain = engineGain;
+      this.engineFilter = engineFilter;
+      this.squeal = squeal;
+      this.squealGain = squealGain;
     }
     const next = !this.enabled;
     if (next) await this.context.resume();
@@ -56,6 +89,8 @@ export class SurfaceAudio {
     return this.enabled;
   }
   update(telemetry: VehicleTelemetry, paused: boolean) {
+    const feedback = drivingFeedback(telemetry, this.previous);
+    this.previous = telemetry;
     if (!this.context || !this.enabled || paused) {
       this.silence();
       return;
@@ -83,17 +118,48 @@ export class SurfaceAudio {
     const speed = Math.min(1, telemetry.speed / 22),
       time = this.context.currentTime;
     this.noiseGain!.gain.setTargetAtTime(
-      speed *
+      this.volume *
+        speed *
         (contact * 0.005 +
           gravel * 0.075 +
           sand * 0.045 +
           grass * 0.025 +
           kerb * 0.035 +
-          roughness * 0.01),
+          roughness * 0.01) +
+        this.volume * feedback.impact * 0.13,
       time,
       0.06,
     );
-    this.rumbleGain!.gain.setTargetAtTime(speed * kerb * 0.055, time, 0.045);
+    this.rumbleGain!.gain.setTargetAtTime(
+      this.volume * (speed * kerb * 0.055 + feedback.impact * 0.05),
+      time,
+      0.045,
+    );
+    this.engine!.frequency.setTargetAtTime(
+      feedback.engineFrequency,
+      time,
+      0.035,
+    );
+    this.engineGain!.gain.setTargetAtTime(
+      this.volume * 0.025 * feedback.engineLoad,
+      time,
+      0.04,
+    );
+    this.engineFilter!.frequency.setTargetAtTime(
+      450 + feedback.engineLoad * 900 + telemetry.powertrain.rpm * 0.08,
+      time,
+      0.08,
+    );
+    this.squeal!.frequency.setTargetAtTime(
+      650 + feedback.scrub * 350,
+      time,
+      0.08,
+    );
+    this.squealGain!.gain.setTargetAtTime(
+      this.volume * feedback.scrub * 0.025,
+      time,
+      0.055,
+    );
     this.rumble!.frequency.setTargetAtTime(
       Math.max(22, telemetry.speed * 4.5),
       time,
@@ -110,16 +176,26 @@ export class SurfaceAudio {
       const t = this.context.currentTime;
       this.noiseGain?.gain.setTargetAtTime(0, t, 0.04);
       this.rumbleGain?.gain.setTargetAtTime(0, t, 0.04);
+      this.engineGain?.gain.setTargetAtTime(0, t, 0.04);
+      this.squealGain?.gain.setTargetAtTime(0, t, 0.04);
     }
   }
   dispose() {
     this.noise?.stop();
     this.rumble?.stop();
+    this.engine?.stop();
+    this.squeal?.stop();
     if (this.context && this.context.state !== "closed")
       void this.context.close();
     this.context = undefined;
     this.noise = undefined;
     this.rumble = undefined;
+    this.engine = undefined;
+    this.squeal = undefined;
+    this.engineGain = undefined;
+    this.squealGain = undefined;
+    this.engineFilter = undefined;
+    this.previous = undefined;
     this.enabled = false;
   }
 }

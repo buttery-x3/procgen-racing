@@ -44,5 +44,11 @@ Historical milestone notes and qualification reports do not override this policy
   evidence with `npm run report:m7`. See [docs/m7.md](docs/m7.md) for scope and
   reproduction, including the distinction between planning and full construction.
   Historical M4/M5/M6 reports remain evidence for those implementations.
+- M8 session/presentation changes use `npm run qualify:m8`,
+  `npm run qualify:m8:stress` and the visible browser session/renderer checks;
+  publish source-matching evidence with `npm run report:m8`. See [docs/m8.md](docs/m8.md).
+  Restart the development server after physics/race code edits so its compatibility
+  fingerprint matches the current source. Historical generation reports retain
+  their original hashes; session-only changes do not require regenerating them.
 - Keep installed dependencies, build output and local screenshots/traces out of
   commits according to `.gitignore`.

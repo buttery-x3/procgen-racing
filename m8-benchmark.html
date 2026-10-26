@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>M8 desktop benchmark</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <small>PROCGEN RACING / M8 QUALIFICATION</small>
+          <h1>Desktop driving benchmark</h1>
+          <p>
+            Production rendering, solo session rules, recorder, timing gates,
+            bounded effects, a synthetic trailing ghost and four-wheel physics.
+            Fixed 1920 × 1080 render surface, shadows on, pixel ratio 1. No
+            saved setups are changed.
+          </p>
+        </div>
+        <button id="run">Run three-venue benchmark</button
+        ><label
+          >Frames / venue<input
+            id="frames"
+            type="number"
+            min="300"
+            max="3600"
+            step="60"
+            value="720"
+        /></label>
+        <p id="status" role="status">
+          Ready · close other intensive workloads before measuring.
+        </p>
+      </header>
+      <div id="scene"></div>
+      <section>
+        <h2>Measurements</h2>
+        <p>
+          Street, banked oval and 24 km endurance venues; 180 warm-up frames
+          followed by the requested sample count. The driver uses conservative
+          speed targets. Frame intervals include browser scheduling. Heap
+          readings are reported only when the browser exposes them.
+        </p>
+        <pre id="summary"></pre>
+        <textarea id="report" aria-label="Benchmark JSON" readonly></textarea>
+      </section>
+    </main>
+    <script type="module" src="/src/diagnostics/M8Benchmark.ts"></script>
+  </body>
+</html>

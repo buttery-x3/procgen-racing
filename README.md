@@ -8,8 +8,14 @@ when a release is explicitly requested. See the [branch workflow](docs/workflow.
 and [agent instructions](AGENTS.md).
 
 A browser racing sandbox built with TypeScript, Three.js and Rapier. The current
-**M7 development build** adds inherited-road, street, airfield, mountain, oval,
-road/oval hybrid and 8–24 km endurance venues to the procedural car and tuning lab.
+**M8 development build** completes solo practice/time trials, lap rules, compatible
+ghosts and a circuit library around the procedural cars, circuits and tuning lab.
+
+**M8** adds directional 3D timing gates, three sectors, track limits, keyed personal
+bests, non-colliding pose ghosts and durable session import/export. The circuit
+library keeps named/favourite accepted routes and variants. Engine/tyre/impact
+audio, bounded skid/dust/smoke effects, a bonnet camera and quality controls complete
+the solo presentation. See the [M8 guide](docs/m8.md).
 
 **M7** adds fixed road networks with route alternatives/provenance, dedicated
 progressive oval banking and aprons, full/club/speedway variants, family-specific
@@ -63,10 +69,20 @@ npm run qualify:m6 -- --count=1000 --driving
 npm run qualify:m7 -- --count=1000 --construction=32
 npm run qualify:m7:driving
 npm run report:m7 # Publish matching generation, driving and browser evidence
+npm run qualify:m8 # Real timed laps and ghost round trips
+npm run qualify:m8:stress
+npm run report:m8
 ```
 
 ## Available now
 
+- **Solo sessions:** practice and time trials, interpolated directional timing,
+  sectors/deltas, explicit tyre-centre track limits, pit/wrong-way warnings and
+  setup/version-specific bests. Compatible 20 Hz pose ghosts support visibility,
+  opacity and JSON import/export without changing local personal bests.
+- **Circuit library:** name, favourite, search, rename, revalidate/load, import and
+  export accepted circuits/variants. Removal is recoverable from Trash. The old
+  M7 last-saved circuit can be added to the library.
 - **Car workshop:** hatch, coupe, sedan, mid-engine sport, road hypercar,
   rear-engine coupe, AWD sport, GT, endurance prototype, formula and stock-car
   archetypes. Seed streams/locks, editable dimensions/body sections, packaging
@@ -189,7 +205,8 @@ drag, pit merges, kerb profiles and resource tests. M6 adds generated geometry,
 mass/inertia and all-family physics checks, storage/history, inputs, traces and
 repeatable comparisons. M7 adds network/variant provenance, progressive-bank/apron
 contact, long-venue localization, bounded collision/GPU residency and durable
-circuit archives: **216 tests** currently pass.
+circuit archives. M8 adds timing/rules/ghost compatibility, durable circuit-library
+schemas, camera clearance and contact feedback: **237 tests** currently pass.
 
 M7's [named desktop benchmark](docs/research/m7-desktop-benchmark.json) measured
 about 100 fps at 1920×1080 on street, oval and 24 km endurance samples, with
@@ -200,6 +217,13 @@ The [M7 campaign](docs/research/m7-qualification.json) passed **7,000 planning
 checks and 224 complete constructions**, with zero failures or seed substitutions.
 All **31 full-lap driving checks** passed, including FF/FR/MR/AWD on every family
 and three stock-car oval lanes. See the [measurement scope](docs/m7.md).
+
+The [M8 campaign](docs/research/m8-qualification.json) passed **25 timed physical
+laps and ghost round trips** across all seven expanded circuit families and all
+eleven procedural car archetypes. The [browser checks](docs/research/m8-browser-qa.json)
+include a valid 61.198 s production-app lap, saved records, ghost compatibility and
+the library. The M8 renderer/session samples delivered about **100 fps at 1080p**
+on the named desktop; see the [measurement scope](docs/m8.md).
 
 The [M6 campaign](docs/research/m6-qualification.json) qualifies **11,000/11,000 cars**,
 33 physical acceptance cases and 22 complete dressed touring/GP laps, with zero
@@ -231,12 +255,14 @@ M7 also saves the accepted definition and active variant in IndexedDB; use
 **Restore / import a circuit** to restore it after reload or import its JSON.
 
 M7 supplies street, rural, mountain, airfield, speedway, road/oval hybrid and extended
-endurance layouts alongside the M4 touring/GP generator. Time trials, ghosts,
-race rules and a full circuit library remain M8 work; racing overpasses remain an
-optional extension. Open rally/hill-climb routes remain out of scope.
+endurance layouts alongside the M4 touring/GP generator. M8 adds time trials,
+ghosts, solo rules and a circuit library. Choose **Start time trial** to reset to
+the grid and cross the chequered line ahead. **Session & records** explains validity
+and presentation settings. Racing overpasses remain an optional extension; open
+rally/hill-climb routes remain out of scope.
 
 See the [implementation plan](docs/implementation-plan.md),
 [M1 foundation notes](docs/foundation.md), [M2 model notes](docs/m2.md) and
 [M3 surface compiler notes](docs/m3.md), [M4 v2 notes](docs/m4-v2.md),
-[M5 venue notes](docs/m5.md), [M6 car/workbench notes](docs/m6.md), [M7 expanded-family notes](docs/m7.md) and
+[M5 venue notes](docs/m5.md), [M6 car/workbench notes](docs/m6.md), [M7 expanded-family notes](docs/m7.md), [M8 solo-session notes](docs/m8.md) and
 [archived M4 v1 notes](docs/m4.md).
