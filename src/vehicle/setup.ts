@@ -1,5 +1,6 @@
 import { clamp } from "../core/math";
 import type { VehicleSetup, NumericSetupKey } from "./types";
+import { decodeCarDefinition } from "./CarDefinition";
 
 export const DEFAULT_SETUP: VehicleSetup = {
   mass: 1250,
@@ -84,21 +85,21 @@ export const PRESETS: Record<
 };
 
 const BOUNDS: Record<NumericSetupKey, readonly [number, number]> = {
-  mass: [700, 2200],
-  wheelbase: [2.1, 3.3],
-  trackWidth: [1.35, 1.95],
-  frontWeight: [0.35, 0.65],
-  frontSpring: [24000, 85000],
-  rearSpring: [24000, 85000],
+  mass: [450, 2600],
+  wheelbase: [2.05, 3.45],
+  trackWidth: [1.3, 2.1],
+  frontWeight: [0.3, 0.68],
+  frontSpring: [12000, 180000],
+  rearSpring: [12000, 180000],
   frontDamping: [1200, 10000],
   rearDamping: [1200, 10000],
   frontAntiRoll: [0, 30000],
   rearAntiRoll: [0, 30000],
-  restLength: [0.34, 0.58],
-  travel: [0.2, 0.36],
-  grip: [0.5, 1.6],
-  peakTorque: [100, 750],
-  redline: [4500, 10000],
+  restLength: [0.18, 0.58],
+  travel: [0.1, 0.36],
+  grip: [0.5, 2.1],
+  peakTorque: [80, 1100],
+  redline: [4500, 14000],
   finalDrive: [2.5, 5.5],
   diffLock: [0, 1],
   awdFrontSplit: [0.1, 0.9],
@@ -117,7 +118,7 @@ const BOUNDS: Record<NumericSetupKey, readonly [number, number]> = {
   speedSteering: [0, 1],
   autoHold: [0, 1],
   dragArea: [0.3, 1.3],
-  downforceArea: [0, 3],
+  downforceArea: [0, 6],
 };
 
 export function sanitizeSetup(input: unknown): VehicleSetup {
@@ -134,7 +135,7 @@ export function sanitizeSetup(input: unknown): VehicleSetup {
   }
   const enums = {
     drive: ["fwd", "rwd", "awd"],
-    enginePosition: ["front", "mid"],
+    enginePosition: ["front", "mid", "rear"],
     referenceCar: ["ff", "fr", "mr", "awd"],
     gearing: ["road", "close", "long"],
     transmission: ["automatic", "manual"],
@@ -145,6 +146,31 @@ export function sanitizeSetup(input: unknown): VehicleSetup {
   for (const key of Object.keys(enums) as (keyof typeof enums)[]) {
     if ((enums[key] as readonly unknown[]).includes(candidate[key]))
       Object.assign(result, { [key]: candidate[key] });
+  }
+  const vehicle = decodeCarDefinition(candidate.vehicle);
+  if (vehicle) {
+    result.vehicle = vehicle;
+    result.enginePosition =
+      vehicle.recipe.layout === "RR"
+        ? "rear"
+        : vehicle.recipe.layout.startsWith("M")
+          ? "mid"
+          : "front";
+  }
+  if (candidate.corners && typeof candidate.corners === "object") {
+    result.corners = {};
+    for (const id of ["fl", "fr", "rl", "rr"] as const) {
+      const c = (candidate.corners as VehicleSetup["corners"])?.[id];
+      if (
+        c &&
+        [c.springScale, c.dampingScale, c.rideOffset].every(Number.isFinite)
+      )
+        result.corners[id] = {
+          springScale: clamp(c.springScale, 0.65, 1.4),
+          dampingScale: clamp(c.dampingScale, 0.65, 1.4),
+          rideOffset: clamp(c.rideOffset, -0.03, 0.03),
+        };
+    }
   }
   return result;
 }

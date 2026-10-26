@@ -15,7 +15,8 @@ them merely because a newer milestone or release exists.
 - [M4 portfolio](m4-v2-portfolio.html) and [qualification](m4-v2-qualification.json)
 - [M5 construction qualification](m5-qualification.json) and
   [browser measurements](m5-browser-budget.json)
+- [M6 car construction and full-lap qualification](m6-qualification.json)
 
 Generate updated evidence on the relevant milestone branch and include it in that
-milestone's integration into `development`. The [M5 notes](../m5.md) and
+milestone's integration into `development`. The [M6 notes](../m6.md), [M5 notes](../m5.md) and
 [M4 notes](../m4-v2.md) describe the reproducing commands and measurement limits.

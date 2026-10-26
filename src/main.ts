@@ -1,4 +1,5 @@
 import "./style.css";
+import "./workbench/m6.css";
 import { App } from "./app/App";
 
 const root = document.querySelector<HTMLElement>("#app")!;

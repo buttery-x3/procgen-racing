@@ -1,4 +1,5 @@
 import type { SurfaceId } from "../track/types";
+import type { CarDefinition } from "./CarDefinition";
 /** Metres, kilograms, seconds, radians, newtons. +Y up, +Z forward, +X LEFT. */
 export type WheelId = "fl" | "fr" | "rl" | "rr";
 export const WHEEL_IDS: readonly WheelId[] = ["fl", "fr", "rl", "rr"];
@@ -29,7 +30,7 @@ export interface VehicleSetup {
   travel: number;
   grip: number;
   drive: "rwd" | "fwd" | "awd";
-  enginePosition: "front" | "mid";
+  enginePosition: "front" | "mid" | "rear";
   referenceCar: "ff" | "fr" | "mr" | "awd";
   peakTorque: number;
   redline: number;
@@ -57,10 +58,17 @@ export interface VehicleSetup {
   autoHold: number;
   dragArea: number;
   downforceArea: number;
+  vehicle?: CarDefinition;
+  corners?: Partial<
+    Record<
+      WheelId,
+      { springScale: number; dampingScale: number; rideOffset: number }
+    >
+  >;
 }
 export type DifferentialMode = "open" | "lsd" | "locked";
 export type NumericSetupKey = {
-  [K in keyof VehicleSetup]: VehicleSetup[K] extends number ? K : never;
+  [K in keyof VehicleSetup]-?: VehicleSetup[K] extends number ? K : never;
 }[keyof VehicleSetup];
 
 export interface VehicleControls {
@@ -156,6 +164,7 @@ export type Experiment =
   | "bank"
   | "handling"
   | "split"
+  | "comparison"
   | "circuit";
 export const WHEEL_RADIUS = 0.32;
 export const GRAVITY = 9.81;

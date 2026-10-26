@@ -1,0 +1,1822 @@
+{
+  "sourceHash": "19a00e579b4cc656",
+  "measuredAt": "2026-10-26",
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+  "memoryGiB": 32,
+  "countPerFamily": 1000,
+  "families": [
+    {
+      "family": "hatch",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          1034.0000000000002,
+          1165.9999999999998
+        ],
+        "wheelbase": [
+          2.38,
+          2.58
+        ],
+        "frontWeight": [
+          0.57,
+          0.572
+        ],
+        "yawInertia": [
+          905.9843512077506,
+          1153.788593707089
+        ]
+      },
+      "timeMs": {
+        "p50": 0.278599999999642,
+        "p95": 0.552599999999984,
+        "max": 3.6655000000000655
+      }
+    },
+    {
+      "family": "coupe",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          1231,
+          1388.9999999999995
+        ],
+        "wheelbase": [
+          2.56,
+          2.78
+        ],
+        "frontWeight": [
+          0.564,
+          0.566
+        ],
+        "yawInertia": [
+          1243.3291863126626,
+          1581.0606471443723
+        ]
+      },
+      "timeMs": {
+        "p50": 0.27149999999983265,
+        "p95": 0.5652000000000044,
+        "max": 14.114600000000337
+      }
+    },
+    {
+      "family": "sedan",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          1390.9999999999998,
+          1569.0000000000002
+        ],
+        "wheelbase": [
+          2.71,
+          2.93
+        ],
+        "frontWeight": [
+          0.57,
+          0.572
+        ],
+        "yawInertia": [
+          1498.4805051084786,
+          1915.4416667335126
+        ]
+      },
+      "timeMs": {
+        "p50": 0.25759999999991123,
+        "p95": 0.3823999999995067,
+        "max": 1.8320999999996275
+      }
+    },
+    {
+      "family": "sports",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          1090.0000000000002,
+          1228.9999999999998
+        ],
+        "wheelbase": [
+          2.46,
+          2.66
+        ],
+        "frontWeight": [
+          0.449,
+          0.451
+        ],
+        "yawInertia": [
+          946.9282372282295,
+          1193.1834926344397
+        ]
+      },
+      "timeMs": {
+        "p50": 0.21920000000045547,
+        "p95": 0.32920000000012806,
+        "max": 1.2555999999995038
+      }
+    },
+    {
+      "family": "hypercar",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          1306.9999999999998,
+          1473
+        ],
+        "wheelbase": [
+          2.61,
+          2.83
+        ],
+        "frontWeight": [
+          0.448,
+          0.45
+        ],
+        "yawInertia": [
+          1255.1558461980603,
+          1581.687895513857
+        ]
+      },
+      "timeMs": {
+        "p50": 0.22490000000016153,
+        "p95": 0.28920000000016444,
+        "max": 1.5378000000000611
+      }
+    },
+    {
+      "family": "rear-coupe",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          1212.9999999999998,
+          1366.9999999999995
+        ],
+        "wheelbase": [
+          2.38,
+          2.58
+        ],
+        "frontWeight": [
+          0.333,
+          0.335
+        ],
+        "yawInertia": [
+          1374.4529376124551,
+          1752.2112389392225
+        ]
+      },
+      "timeMs": {
+        "p50": 0.2323999999998705,
+        "p95": 0.3144000000002052,
+        "max": 0.9760999999998603
+      }
+    },
+    {
+      "family": "awd",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          1409.9999999999998,
+          1590.0000000000002
+        ],
+        "wheelbase": [
+          2.64,
+          2.86
+        ],
+        "frontWeight": [
+          0.448,
+          0.574
+        ],
+        "yawInertia": [
+          1342.491935423392,
+          1871.4953211573606
+        ]
+      },
+      "timeMs": {
+        "p50": 0.2484999999996944,
+        "p95": 0.43689999999969586,
+        "max": 1.9754000000002634
+      }
+    },
+    {
+      "family": "gt",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          1194,
+          1346.0000000000002
+        ],
+        "wheelbase": [
+          2.64,
+          2.86
+        ],
+        "frontWeight": [
+          0.448,
+          0.574
+        ],
+        "yawInertia": [
+          1187.0608137623,
+          1644.8465279957538
+        ]
+      },
+      "timeMs": {
+        "p50": 0.2503000000006068,
+        "p95": 0.3963999999996304,
+        "max": 2.0397000000002663
+      }
+    },
+    {
+      "family": "prototype",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          893.0000000000002,
+          1006.9999999999998
+        ],
+        "wheelbase": [
+          2.83,
+          3.07
+        ],
+        "frontWeight": [
+          0.447,
+          0.45
+        ],
+        "yawInertia": [
+          962.6546254532233,
+          1217.095998170034
+        ]
+      },
+      "timeMs": {
+        "p50": 0.19660000000112632,
+        "p95": 0.3120999999991909,
+        "max": 0.7417000000004919
+      }
+    },
+    {
+      "family": "open-wheel",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          611.0000000000001,
+          689
+        ],
+        "wheelbase": [
+          3.09,
+          3.35
+        ],
+        "frontWeight": [
+          0.441,
+          0.444
+        ],
+        "yawInertia": [
+          636.5821923360954,
+          810.889435303086
+        ]
+      },
+      "timeMs": {
+        "p50": 0.2158000000017637,
+        "p95": 0.30310000000099535,
+        "max": 1.7501999999985856
+      }
+    },
+    {
+      "family": "stock",
+      "attempted": 1000,
+      "passed": 1000,
+      "failed": 0,
+      "meshChecked": 50,
+      "uniqueMechanics": 1000,
+      "uniqueProportions": 1000,
+      "paintColours": 8,
+      "ranges": {
+        "mass": [
+          1503.9999999999998,
+          1696.0000000000002
+        ],
+        "wheelbase": [
+          2.78,
+          3.02
+        ],
+        "frontWeight": [
+          0.574,
+          0.576
+        ],
+        "yawInertia": [
+          1758.043175845873,
+          2220.9888281469293
+        ]
+      },
+      "timeMs": {
+        "p50": 0.20179999999891152,
+        "p95": 0.3010000000012951,
+        "max": 1.791799999999057
+      }
+    }
+  ],
+  "physical": [
+    {
+      "family": "hatch",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-hatch-road",
+        "family": "hatch",
+        "band": "road",
+        "layout": "FF",
+        "mechanicsSeed": "physical-hatch-road",
+        "proportionsSeed": "physical-hatch-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-9d9ee100",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+      "metrics": {
+        "distance": 12.707098053787057,
+        "maxSpeed": 14.365640258789062,
+        "zeroTo60": null,
+        "stopDistance": 1.637782096862793,
+        "peakRoll": 3.983827896551225e-7,
+        "peakPitch": 0.9119437353109213,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0144750903252717
+      },
+      "loadRatio": 1.0000000857030225,
+      "frontFraction": 0.5707281627921573
+    },
+    {
+      "family": "hatch",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-hatch-sport",
+        "family": "hatch",
+        "band": "sport",
+        "layout": "FF",
+        "mechanicsSeed": "physical-hatch-sport",
+        "proportionsSeed": "physical-hatch-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-4cbf8195",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+      "metrics": {
+        "distance": 14.402172586854071,
+        "maxSpeed": 16.861993217468264,
+        "zeroTo60": null,
+        "stopDistance": 1.9375295639038086,
+        "peakRoll": 3.0693119420634474e-7,
+        "peakPitch": 0.734419969110291,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0164630044443013
+      },
+      "loadRatio": 0.9999999741932869,
+      "frontFraction": 0.5707889063263583
+    },
+    {
+      "family": "hatch",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-hatch-race",
+        "family": "hatch",
+        "band": "race",
+        "layout": "FF",
+        "mechanicsSeed": "physical-hatch-race",
+        "proportionsSeed": "physical-hatch-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-4550d90b",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+      "metrics": {
+        "distance": 16.528955499029962,
+        "maxSpeed": 20.292304229736327,
+        "zeroTo60": null,
+        "stopDistance": 2.514343738555908,
+        "peakRoll": 1.7498898164487463e-7,
+        "peakPitch": 0.48112369907204916,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.015685031216366
+      },
+      "loadRatio": 1.0000000617884597,
+      "frontFraction": 0.5708965243914805
+    },
+    {
+      "family": "coupe",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-coupe-road",
+        "family": "coupe",
+        "band": "road",
+        "layout": "FR",
+        "mechanicsSeed": "physical-coupe-road",
+        "proportionsSeed": "physical-coupe-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-f195d7f0",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 56.4% front at rest",
+      "metrics": {
+        "distance": 19.65862515302726,
+        "maxSpeed": 24.235194396972656,
+        "zeroTo60": null,
+        "stopDistance": 3.99471521378577,
+        "peakRoll": 0.000026308256278725312,
+        "peakPitch": 0.955687545279742,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.027324601965525
+      },
+      "loadRatio": 1.000000013532039,
+      "frontFraction": 0.5637152543627406
+    },
+    {
+      "family": "coupe",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-coupe-sport",
+        "family": "coupe",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "physical-coupe-sport",
+        "proportionsSeed": "physical-coupe-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-24cead44",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 56.4% front at rest",
+      "metrics": {
+        "distance": 36.43709574703989,
+        "maxSpeed": 42.97172813415528,
+        "zeroTo60": null,
+        "stopDistance": 9.099561732584938,
+        "peakRoll": 0.0011182144601295586,
+        "peakPitch": 0.7814192344021259,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0522680256040204
+      },
+      "loadRatio": 1.0000000308515757,
+      "frontFraction": 0.5638016420513733
+    },
+    {
+      "family": "coupe",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-coupe-race",
+        "family": "coupe",
+        "band": "race",
+        "layout": "FR",
+        "mechanicsSeed": "physical-coupe-race",
+        "proportionsSeed": "physical-coupe-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-63221f2d",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 56.5% front at rest",
+      "metrics": {
+        "distance": 46.47705465655868,
+        "maxSpeed": 53.31128425598145,
+        "zeroTo60": null,
+        "stopDistance": 12.612188341950734,
+        "peakRoll": 0.00024645113577629105,
+        "peakPitch": 0.6014285436755442,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0584908146021237
+      },
+      "loadRatio": 0.9999999978905715,
+      "frontFraction": 0.564878110724361
+    },
+    {
+      "family": "sedan",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-sedan-road",
+        "family": "sedan",
+        "band": "road",
+        "layout": "FR",
+        "mechanicsSeed": "physical-sedan-road",
+        "proportionsSeed": "physical-sedan-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-9b62b77d",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+      "metrics": {
+        "distance": 34.63870909379674,
+        "maxSpeed": 40.6759838104248,
+        "zeroTo60": null,
+        "stopDistance": 8.862376937487719,
+        "peakRoll": 0.0008133384744735434,
+        "peakPitch": 0.8576395834714515,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0488297587798967
+      },
+      "loadRatio": 1.0000000103040005,
+      "frontFraction": 0.5707917503579041
+    },
+    {
+      "family": "sedan",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-sedan-sport",
+        "family": "sedan",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "physical-sedan-sport",
+        "proportionsSeed": "physical-sedan-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-59f8795e",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.2% front at rest",
+      "metrics": {
+        "distance": 23.177643813881737,
+        "maxSpeed": 29.14637145996094,
+        "zeroTo60": null,
+        "stopDistance": 5.098757505451073,
+        "peakRoll": 0.000038968800998491016,
+        "peakPitch": 0.529102158837987,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0205204434379849
+      },
+      "loadRatio": 1.0000000056755631,
+      "frontFraction": 0.5718721778518889
+    },
+    {
+      "family": "sedan",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-sedan-race",
+        "family": "sedan",
+        "band": "race",
+        "layout": "FR",
+        "mechanicsSeed": "physical-sedan-race",
+        "proportionsSeed": "physical-sedan-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-0b665217",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.2% front at rest",
+      "metrics": {
+        "distance": 28.56602526431133,
+        "maxSpeed": 33.74479866027832,
+        "zeroTo60": null,
+        "stopDistance": 7.598558425903359,
+        "peakRoll": 7.53989750350473e-7,
+        "peakPitch": 0.34436119608028115,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0238007414747778
+      },
+      "loadRatio": 1.0000000165177465,
+      "frontFraction": 0.5718940872974415
+    },
+    {
+      "family": "sports",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-sports-road",
+        "family": "sports",
+        "band": "road",
+        "layout": "MR",
+        "mechanicsSeed": "physical-sports-road",
+        "proportionsSeed": "physical-sports-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-c348156e",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 45.1% front at rest",
+      "metrics": {
+        "distance": 41.0694904446017,
+        "maxSpeed": 46.88548736572266,
+        "zeroTo60": null,
+        "stopDistance": 11.351819038391113,
+        "peakRoll": 6.566144433316011e-7,
+        "peakPitch": 1.162808808896336,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.06349997326422
+      },
+      "loadRatio": 1.000000050208482,
+      "frontFraction": 0.4505195935527478
+    },
+    {
+      "family": "sports",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-sports-sport",
+        "family": "sports",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "physical-sports-sport",
+        "proportionsSeed": "physical-sports-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-0dbae4a5",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 45.1% front at rest",
+      "metrics": {
+        "distance": 53.29977992822353,
+        "maxSpeed": 59.14460906982422,
+        "zeroTo60": null,
+        "stopDistance": 15.870458602905273,
+        "peakRoll": 2.77673135736967e-7,
+        "peakPitch": 1.1572989000499165,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0835922025123015
+      },
+      "loadRatio": 1.000000095443821,
+      "frontFraction": 0.4514608379904188
+    },
+    {
+      "family": "sports",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-sports-race",
+        "family": "sports",
+        "band": "race",
+        "layout": "MR",
+        "mechanicsSeed": "physical-sports-race",
+        "proportionsSeed": "physical-sports-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-e7863e5c",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 45.0% front at rest",
+      "metrics": {
+        "distance": 61.20551495625327,
+        "maxSpeed": 67.17743453979493,
+        "zeroTo60": 3.9166666666666665,
+        "stopDistance": 18.2354679107666,
+        "peakRoll": 2.628259518700732e-7,
+        "peakPitch": 0.6738249920734513,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0674754810188485
+      },
+      "loadRatio": 1.000000076743213,
+      "frontFraction": 0.4502262105386564
+    },
+    {
+      "family": "hypercar",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-hypercar-road",
+        "family": "hypercar",
+        "band": "road",
+        "layout": "MR",
+        "mechanicsSeed": "physical-hypercar-road",
+        "proportionsSeed": "physical-hypercar-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-88bb7d43",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 45.0% front at rest",
+      "metrics": {
+        "distance": 71.13013267650808,
+        "maxSpeed": 73.42783126831056,
+        "zeroTo60": 3.4583333333333335,
+        "stopDistance": 23.95448875427246,
+        "peakRoll": 3.0385336130714185e-7,
+        "peakPitch": 1.2724753433873728,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.107186805214298
+      },
+      "loadRatio": 1.0000000497532477,
+      "frontFraction": 0.44950877023839797
+    },
+    {
+      "family": "hypercar",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-hypercar-sport",
+        "family": "hypercar",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "physical-hypercar-sport",
+        "proportionsSeed": "physical-hypercar-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-aa9ca8b4",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+      "metrics": {
+        "distance": 75.0439872784998,
+        "maxSpeed": 77.66123428344727,
+        "zeroTo60": 3.2583333333333333,
+        "stopDistance": 24.999601364135742,
+        "peakRoll": 4.910383365558548e-7,
+        "peakPitch": 0.9841481173101605,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.1209719946066132
+      },
+      "loadRatio": 1.000000059497967,
+      "frontFraction": 0.44835227621518203
+    },
+    {
+      "family": "hypercar",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-hypercar-race",
+        "family": "hypercar",
+        "band": "race",
+        "layout": "MR",
+        "mechanicsSeed": "physical-hypercar-race",
+        "proportionsSeed": "physical-hypercar-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-b3ae89c6",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 44.9% front at rest",
+      "metrics": {
+        "distance": 85.45396996001136,
+        "maxSpeed": 87.83772583007817,
+        "zeroTo60": 2.841666666666667,
+        "stopDistance": 28.58272171020508,
+        "peakRoll": 2.3098367726502135e-7,
+        "peakPitch": 0.6546365227201463,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.1032667340018898
+      },
+      "loadRatio": 1.0000000577499313,
+      "frontFraction": 0.44920164254595524
+    },
+    {
+      "family": "rear-coupe",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-rear-coupe-road",
+        "family": "rear-coupe",
+        "band": "road",
+        "layout": "RR",
+        "mechanicsSeed": "physical-rear-coupe-road",
+        "proportionsSeed": "physical-rear-coupe-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-0297d2d9",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 33.4% front at rest",
+      "metrics": {
+        "distance": 39.432312026909614,
+        "maxSpeed": 45.09707794189453,
+        "zeroTo60": null,
+        "stopDistance": 10.494065284729004,
+        "peakRoll": 3.174900332953271e-7,
+        "peakPitch": 1.3864366108284127,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0736722950887037
+      },
+      "loadRatio": 1.0000000644041138,
+      "frontFraction": 0.33352717133464005
+    },
+    {
+      "family": "rear-coupe",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-rear-coupe-sport",
+        "family": "rear-coupe",
+        "band": "sport",
+        "layout": "RR",
+        "mechanicsSeed": "physical-rear-coupe-sport",
+        "proportionsSeed": "physical-rear-coupe-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-24962f3d",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 33.4% front at rest",
+      "metrics": {
+        "distance": 51.53916361281159,
+        "maxSpeed": 56.83268737792969,
+        "zeroTo60": null,
+        "stopDistance": 14.830347061157227,
+        "peakRoll": 2.3782912329544814e-7,
+        "peakPitch": 1.1477329052076113,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0873877935416862
+      },
+      "loadRatio": 1.000000038366844,
+      "frontFraction": 0.33438652128207536
+    },
+    {
+      "family": "rear-coupe",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-rear-coupe-race",
+        "family": "rear-coupe",
+        "band": "race",
+        "layout": "RR",
+        "mechanicsSeed": "physical-rear-coupe-race",
+        "proportionsSeed": "physical-rear-coupe-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-a79ec952",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 33.3% front at rest",
+      "metrics": {
+        "distance": 58.399602974132335,
+        "maxSpeed": 65.21687622070314,
+        "zeroTo60": 4.075,
+        "stopDistance": 16.738552093505863,
+        "peakRoll": 2.3454051781018866e-7,
+        "peakPitch": 0.8414582793410679,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0879401584555404
+      },
+      "loadRatio": 1.0000000260969235,
+      "frontFraction": 0.333257139835078
+    },
+    {
+      "family": "awd",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-awd-road",
+        "family": "awd",
+        "band": "road",
+        "layout": "F-AWD",
+        "mechanicsSeed": "physical-awd-road",
+        "proportionsSeed": "physical-awd-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-a09b2393",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.3% front at rest",
+      "metrics": {
+        "distance": 43.1098232433278,
+        "maxSpeed": 49.5305419921875,
+        "zeroTo60": null,
+        "stopDistance": 11.359580993652344,
+        "peakRoll": 3.761623593926229e-7,
+        "peakPitch": 1.2352291807204516,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.080601731822968
+      },
+      "loadRatio": 1.0000000967340945,
+      "frontFraction": 0.5726948266978861
+    },
+    {
+      "family": "awd",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-awd-sport",
+        "family": "awd",
+        "band": "sport",
+        "layout": "F-AWD",
+        "mechanicsSeed": "physical-awd-sport",
+        "proportionsSeed": "physical-awd-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-3947626e",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.3% front at rest",
+      "metrics": {
+        "distance": 48.24110797683551,
+        "maxSpeed": 54.21355018615723,
+        "zeroTo60": null,
+        "stopDistance": 12.713899612426758,
+        "peakRoll": 3.63794360352835e-7,
+        "peakPitch": 0.7845181430245174,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0660365411631747
+      },
+      "loadRatio": 1.0000000202153077,
+      "frontFraction": 0.5728360787917728
+    },
+    {
+      "family": "awd",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-awd-race",
+        "family": "awd",
+        "band": "race",
+        "layout": "F-AWD",
+        "mechanicsSeed": "physical-awd-race",
+        "proportionsSeed": "physical-awd-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-e7101d4e",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.3% front at rest",
+      "metrics": {
+        "distance": 57.45035746488084,
+        "maxSpeed": 65.44044799804688,
+        "zeroTo60": 4.233333333333333,
+        "stopDistance": 15.857990264892578,
+        "peakRoll": 4.4315378005696285e-7,
+        "peakPitch": 0.5744746170845487,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.1106230482422796
+      },
+      "loadRatio": 1.000000006977164,
+      "frontFraction": 0.5728967168934196
+    },
+    {
+      "family": "gt",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-gt-road",
+        "family": "gt",
+        "band": "road",
+        "layout": "FR",
+        "mechanicsSeed": "physical-gt-road",
+        "proportionsSeed": "physical-gt-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-fdcff3da",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.3% front at rest",
+      "metrics": {
+        "distance": 64.16564375430971,
+        "maxSpeed": 72.67609176635743,
+        "zeroTo60": 3.6,
+        "stopDistance": 18.353958129882812,
+        "peakRoll": 1.634147326236841e-7,
+        "peakPitch": 0.467831259741829,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0902353630955868
+      },
+      "loadRatio": 1.0000000019792943,
+      "frontFraction": 0.5729311232335297
+    },
+    {
+      "family": "gt",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-gt-sport",
+        "family": "gt",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "physical-gt-sport",
+        "proportionsSeed": "physical-gt-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-905297c8",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.3% front at rest",
+      "metrics": {
+        "distance": 66.70392612668996,
+        "maxSpeed": 76.86702575683594,
+        "zeroTo60": 3.3833333333333333,
+        "stopDistance": 17.908353805541992,
+        "peakRoll": 2.620965890862612e-7,
+        "peakPitch": 0.4829713390187845,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.1050414393610308
+      },
+      "loadRatio": 1.0000000391473394,
+      "frontFraction": 0.5729305583723235
+    },
+    {
+      "family": "gt",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-gt-race",
+        "family": "gt",
+        "band": "race",
+        "layout": "FR",
+        "mechanicsSeed": "physical-gt-race",
+        "proportionsSeed": "physical-gt-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-ffcd7427",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.3% front at rest",
+      "metrics": {
+        "distance": 76.42624094020363,
+        "maxSpeed": 87.34682922363281,
+        "zeroTo60": 2.908333333333333,
+        "stopDistance": 20.615425109863285,
+        "peakRoll": 7.435310386942055e-7,
+        "peakPitch": 0.5362826931219195,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.132769837395082
+      },
+      "loadRatio": 1.0000000747835565,
+      "frontFraction": 0.5729329283442922
+    },
+    {
+      "family": "prototype",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-prototype-road",
+        "family": "prototype",
+        "band": "road",
+        "layout": "MR",
+        "mechanicsSeed": "physical-prototype-road",
+        "proportionsSeed": "physical-prototype-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-91259cd1",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+      "metrics": {
+        "distance": 72.46413806417195,
+        "maxSpeed": 81.34538269042969,
+        "zeroTo60": 3.25,
+        "stopDistance": 21.519882202148438,
+        "peakRoll": 1.9790484507688605e-7,
+        "peakPitch": 0.5411445936561509,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.1369643412335622
+      },
+      "loadRatio": 1.000000003156741,
+      "frontFraction": 0.44814941025513017
+    },
+    {
+      "family": "prototype",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-prototype-sport",
+        "family": "prototype",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "physical-prototype-sport",
+        "proportionsSeed": "physical-prototype-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-4ecd108a",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 44.9% front at rest",
+      "metrics": {
+        "distance": 71.7581654165615,
+        "maxSpeed": 82.45227584838868,
+        "zeroTo60": 3.225,
+        "stopDistance": 20.191755294799805,
+        "peakRoll": 2.2389199587746418e-7,
+        "peakPitch": 0.6062368933392539,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.153387764612808
+      },
+      "loadRatio": 1.00000002411646,
+      "frontFraction": 0.4491568185556714
+    },
+    {
+      "family": "prototype",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-prototype-race",
+        "family": "prototype",
+        "band": "race",
+        "layout": "MR",
+        "mechanicsSeed": "physical-prototype-race",
+        "proportionsSeed": "physical-prototype-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-da9972f4",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+      "metrics": {
+        "distance": 83.61176109886513,
+        "maxSpeed": 94.43344345092774,
+        "zeroTo60": 2.7333333333333334,
+        "stopDistance": 23.441452026367188,
+        "peakRoll": 1.6888274507416313e-7,
+        "peakPitch": 0.5543465483988386,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.2416667464509394
+      },
+      "loadRatio": 1.0000000454984164,
+      "frontFraction": 0.44812014631886854
+    },
+    {
+      "family": "open-wheel",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-open-wheel-road",
+        "family": "open-wheel",
+        "band": "road",
+        "layout": "MR",
+        "mechanicsSeed": "physical-open-wheel-road",
+        "proportionsSeed": "physical-open-wheel-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-889c840b",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 44.3% front at rest",
+      "metrics": {
+        "distance": 54.41202361529086,
+        "maxSpeed": 63.00517730712891,
+        "zeroTo60": 4.291666666666667,
+        "stopDistance": 14.323867797851562,
+        "peakRoll": 2.2412835583843498e-7,
+        "peakPitch": 0.401231071353262,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.1140737558725444
+      },
+      "loadRatio": 1.0000000624729282,
+      "frontFraction": 0.44311566797545726
+    },
+    {
+      "family": "open-wheel",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-open-wheel-sport",
+        "family": "open-wheel",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "physical-open-wheel-sport",
+        "proportionsSeed": "physical-open-wheel-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-83a11c18",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 44.2% front at rest",
+      "metrics": {
+        "distance": 65.11508756731564,
+        "maxSpeed": 75.48800125122071,
+        "zeroTo60": 3.625,
+        "stopDistance": 18.234350204467773,
+        "peakRoll": 1.8355691416712835e-7,
+        "peakPitch": 0.4073733775437278,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.18639891203189
+      },
+      "loadRatio": 1.0000000533610172,
+      "frontFraction": 0.44209078873963614
+    },
+    {
+      "family": "open-wheel",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-open-wheel-race",
+        "family": "open-wheel",
+        "band": "race",
+        "layout": "MR",
+        "mechanicsSeed": "physical-open-wheel-race",
+        "proportionsSeed": "physical-open-wheel-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-de3e1bf5",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 44.2% front at rest",
+      "metrics": {
+        "distance": 77.85996083891229,
+        "maxSpeed": 89.55120849609375,
+        "zeroTo60": 3.0666666666666664,
+        "stopDistance": 22.50408172607422,
+        "peakRoll": 3.1128428894071104e-7,
+        "peakPitch": 0.3927658241325421,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.2896927521365489
+      },
+      "loadRatio": 1.000000062914576,
+      "frontFraction": 0.44208502595998855
+    },
+    {
+      "family": "stock",
+      "band": "road",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-stock-road",
+        "family": "stock",
+        "band": "road",
+        "layout": "FR",
+        "mechanicsSeed": "physical-stock-road",
+        "proportionsSeed": "physical-stock-road",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-e2f458fd",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+      "metrics": {
+        "distance": 59.288828230564874,
+        "maxSpeed": 68.62510299682617,
+        "zeroTo60": 3.8833333333333333,
+        "stopDistance": 16.766853542634447,
+        "peakRoll": 0.0012607378052563664,
+        "peakPitch": 0.3724866061099915,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.055220596795677
+      },
+      "loadRatio": 1.0000000329472,
+      "frontFraction": 0.5749380628553918
+    },
+    {
+      "family": "stock",
+      "band": "sport",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-stock-sport",
+        "family": "stock",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "physical-stock-sport",
+        "proportionsSeed": "physical-stock-sport",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-0d351121",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.6% front at rest",
+      "metrics": {
+        "distance": 65.48285107300136,
+        "maxSpeed": 75.50863494873047,
+        "zeroTo60": 3.4916666666666667,
+        "stopDistance": 18.387603767692152,
+        "peakRoll": 0.0002525277030357228,
+        "peakPitch": 0.396261959121141,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0652916900899936
+      },
+      "loadRatio": 1.0000000793537553,
+      "frontFraction": 0.5759428317351438
+    },
+    {
+      "family": "stock",
+      "band": "race",
+      "recipe": {
+        "version": 1,
+        "seed": "physical-stock-race",
+        "family": "stock",
+        "band": "race",
+        "layout": "FR",
+        "mechanicsSeed": "physical-stock-race",
+        "proportionsSeed": "physical-stock-race",
+        "appearanceSeed": "qualification"
+      },
+      "fingerprint": "car1-9d42c63f",
+      "valid": true,
+      "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+      "metrics": {
+        "distance": 82.476480528386,
+        "maxSpeed": 91.45621032714844,
+        "zeroTo60": 2.716666666666667,
+        "stopDistance": 23.194328318247656,
+        "peakRoll": 0.00028420799602402825,
+        "peakPitch": 0.4717347300126388,
+        "groundedFraction": 0.9999999999999967,
+        "peakLoad": 1.0917723072870946
+      },
+      "loadRatio": 1.0000000412900594,
+      "frontFraction": 0.5749366618388808
+    }
+  ],
+  "laps": [
+    {
+      "carFamily": "hatch",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "hatch",
+        "band": "sport",
+        "layout": "FF",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-3a1b91f1",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.067523465898,
+      "steps": 19491,
+      "groundedFraction": 1,
+      "peakLoad": 1.0726430836832443,
+      "maxLateral": 0.4439467121706332
+    },
+    {
+      "carFamily": "coupe",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "coupe",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-436472e1",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.0813071565167,
+      "steps": 19076,
+      "groundedFraction": 1,
+      "peakLoad": 1.0655364767604227,
+      "maxLateral": 0.36698595578632787
+    },
+    {
+      "carFamily": "sedan",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "sedan",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-1f35b34c",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.080425268177,
+      "steps": 19095,
+      "groundedFraction": 1,
+      "peakLoad": 1.057840780588185,
+      "maxLateral": 0.3190486284775531
+    },
+    {
+      "carFamily": "sports",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "sports",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-b6184aad",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.0583397341434,
+      "steps": 19057,
+      "groundedFraction": 1,
+      "peakLoad": 1.0420555994677145,
+      "maxLateral": 0.46757150703026124
+    },
+    {
+      "carFamily": "hypercar",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "hypercar",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-f58a3f08",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.044171905385,
+      "steps": 18842,
+      "groundedFraction": 1,
+      "peakLoad": 1.06411510488626,
+      "maxLateral": 0.4656178219065864
+    },
+    {
+      "carFamily": "rear-coupe",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "rear-coupe",
+        "band": "sport",
+        "layout": "RR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-fe9fd466",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.0391027743094,
+      "steps": 19037,
+      "groundedFraction": 1,
+      "peakLoad": 1.044719501608543,
+      "maxLateral": 0.5406806934069138
+    },
+    {
+      "carFamily": "awd",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "awd",
+        "band": "sport",
+        "layout": "F-AWD",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-26918f87",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.0116284706714,
+      "steps": 19026,
+      "groundedFraction": 1,
+      "peakLoad": 1.0389579778270022,
+      "maxLateral": 0.34232300877085037
+    },
+    {
+      "carFamily": "gt",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "gt",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-376f3e34",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.0518406696137,
+      "steps": 18814,
+      "groundedFraction": 1,
+      "peakLoad": 1.0608888134812944,
+      "maxLateral": 0.16971988754288286
+    },
+    {
+      "carFamily": "prototype",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "prototype",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-e98a53d3",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.1022204550463,
+      "steps": 18749,
+      "groundedFraction": 1,
+      "peakLoad": 1.0939254455643332,
+      "maxLateral": 0.18720350491573592
+    },
+    {
+      "carFamily": "open-wheel",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "open-wheel",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-138caa23",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.052564501911,
+      "steps": 18796,
+      "groundedFraction": 1,
+      "peakLoad": 1.1364484973459967,
+      "maxLateral": 0.2179272716528221
+    },
+    {
+      "carFamily": "stock",
+      "circuitFamily": "touring",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "stock",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-3f40786e",
+      "circuitFingerprint": "v2-2dea94b1/m5-a9985daf",
+      "valid": true,
+      "lapMetres": 2408.035257239984,
+      "steps": 18829,
+      "groundedFraction": 1,
+      "peakLoad": 1.0425534487952615,
+      "maxLateral": 0.22847634608320555
+    },
+    {
+      "carFamily": "hatch",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "hatch",
+        "band": "sport",
+        "layout": "FF",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-3a1b91f1",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.047390953273,
+      "steps": 33288,
+      "groundedFraction": 1,
+      "peakLoad": 1.0726241760384783,
+      "maxLateral": 0.503675436997396
+    },
+    {
+      "carFamily": "coupe",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "coupe",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-436472e1",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.001568196142,
+      "steps": 32617,
+      "groundedFraction": 1,
+      "peakLoad": 1.064564546658013,
+      "maxLateral": 0.4719361447567033
+    },
+    {
+      "carFamily": "sedan",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "sedan",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-1f35b34c",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.091305845672,
+      "steps": 32658,
+      "groundedFraction": 1,
+      "peakLoad": 1.0578425642198686,
+      "maxLateral": 0.43164730408738944
+    },
+    {
+      "carFamily": "sports",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "sports",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-b6184aad",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.1366937681705,
+      "steps": 32389,
+      "groundedFraction": 1,
+      "peakLoad": 1.1159648286247552,
+      "maxLateral": 0.5398991686828952
+    },
+    {
+      "carFamily": "hypercar",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "hypercar",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-f58a3f08",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.099935888301,
+      "steps": 32132,
+      "groundedFraction": 1,
+      "peakLoad": 1.0928916467933447,
+      "maxLateral": 0.5157282770364554
+    },
+    {
+      "carFamily": "rear-coupe",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "rear-coupe",
+        "band": "sport",
+        "layout": "RR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-fe9fd466",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.069485197392,
+      "steps": 32380,
+      "groundedFraction": 1,
+      "peakLoad": 1.1460843787411208,
+      "maxLateral": 0.598109828550647
+    },
+    {
+      "carFamily": "awd",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "awd",
+        "band": "sport",
+        "layout": "F-AWD",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-26918f87",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.126519969033,
+      "steps": 32366,
+      "groundedFraction": 1,
+      "peakLoad": 1.1332566936847446,
+      "maxLateral": 0.43642620593739856
+    },
+    {
+      "carFamily": "gt",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "gt",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-376f3e34",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.089916672909,
+      "steps": 32117,
+      "groundedFraction": 1,
+      "peakLoad": 1.0927621830345506,
+      "maxLateral": 0.2393699813823024
+    },
+    {
+      "carFamily": "prototype",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "prototype",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-e98a53d3",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.035414299319,
+      "steps": 32157,
+      "groundedFraction": 1,
+      "peakLoad": 1.1222918816519811,
+      "maxLateral": 0.20029907005922654
+    },
+    {
+      "carFamily": "open-wheel",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "open-wheel",
+        "band": "sport",
+        "layout": "MR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-138caa23",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.121398350333,
+      "steps": 32126,
+      "groundedFraction": 1,
+      "peakLoad": 1.1877014672983073,
+      "maxLateral": 0.16644095960749716
+    },
+    {
+      "carFamily": "stock",
+      "circuitFamily": "gp",
+      "recipe": {
+        "version": 1,
+        "seed": "apex-01",
+        "family": "stock",
+        "band": "sport",
+        "layout": "FR",
+        "mechanicsSeed": "apex-01",
+        "proportionsSeed": "apex-01",
+        "appearanceSeed": "apex-01"
+      },
+      "carFingerprint": "car1-3f40786e",
+      "circuitFingerprint": "v2-84688fe7/m5-321977de",
+      "valid": true,
+      "lapMetres": 5208.048281695483,
+      "steps": 32142,
+      "groundedFraction": 1,
+      "peakLoad": 1.0596032830017332,
+      "maxLateral": 0.20767228046493375
+    }
+  ],
+  "failures": [],
+  "elapsedSeconds": 164.9687501,
+  "attempted": 11000,
+  "passed": 11000,
+  "valid": true
+}

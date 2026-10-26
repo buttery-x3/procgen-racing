@@ -7,7 +7,6 @@ import {
   integrateTyre,
   gripCapacity,
   slipRatio,
-  WHEEL_INERTIA,
 } from "../vehicle/Tyre";
 import { Powertrain } from "../vehicle/Powertrain";
 import { distributeDriveTorque } from "../vehicle/Differential";
@@ -19,12 +18,12 @@ import { SURFACES } from "../track/types";
 import type { SurfaceId } from "../track/types";
 import { looseSurfaceDrag } from "../vehicle/SurfaceResponse";
 import {
-  FIXED_STEP,
-  GRAVITY,
-  NO_CONTROLS,
-  WHEEL_IDS,
-  WHEEL_RADIUS,
-} from "../vehicle/types";
+  resolveCar,
+  cornerSetup,
+  wheelInertia,
+} from "../vehicle/CarDefinition";
+import type { ResolvedCar } from "../vehicle/CarDefinition";
+import { FIXED_STEP, GRAVITY, NO_CONTROLS, WHEEL_IDS } from "../vehicle/types";
 import type {
   Experiment,
   VehicleControls,
@@ -89,6 +88,10 @@ export class SuspensionRig {
   };
   private roadNormal = UP.clone();
   telemetry!: VehicleTelemetry;
+  private car!: ResolvedCar;
+  private get radius() {
+    return this.car.dimensions.wheelRadius;
+  }
 
   constructor(setup: VehicleSetup = DEFAULT_SETUP) {
     this.setup = sanitizeSetup(setup);
@@ -122,22 +125,13 @@ export class SuspensionRig {
 
   private createChassis() {
     if (this.body) this.world.removeRigidBody(this.body);
-    const { mass, wheelbase, trackWidth, frontWeight } = this.setup;
-    const width = trackWidth + 0.18;
-    const length = wheelbase + 1.28;
-    const comZ = (frontWeight - 0.5) * wheelbase;
+    this.car = resolveCar(this.setup);
+    const { mass, com, inertia, inertiaFrame, dimensions: d } = this.car;
+    const width = d.bodyWidth;
+    const length = d.wheelbase + d.frontOverhang + d.rearOverhang;
     // Massless collision shape + explicit mass properties avoids double counting.
     const desc = RAPIER.RigidBodyDesc.dynamic()
-      .setAdditionalMassProperties(
-        mass,
-        { x: 0, y: 0.04, z: comZ },
-        {
-          x: (mass * (length * length + 0.75 ** 2)) / 12,
-          y: (mass * (length * length + width * width)) / 12,
-          z: (mass * (width * width + 0.75 ** 2)) / 12,
-        },
-        { x: 0, y: 0, z: 0, w: 1 },
-      )
+      .setAdditionalMassProperties(mass, com, inertia, inertiaFrame)
       .setCanSleep(false)
       .setCcdEnabled(true)
       .setLinearDamping(0.025)
@@ -146,15 +140,59 @@ export class SuspensionRig {
     this.world.createCollider(
       RAPIER.ColliderDesc.roundCuboid(
         width / 2 - 0.04,
-        0.17,
+        this.car.halfHeight - 0.04,
         length / 2 - 0.04,
         0.04,
       )
+        .setTranslation(0, 0, this.car.bodyCentreZ)
         .setMass(0)
         .setFriction(0.35)
         .setRestitution(0.05),
       this.body,
     );
+    if (this.setup.vehicle) {
+      const definition = this.setup.vehicle,
+        shape = definition.shape;
+      if (definition.family !== "open-wheel") {
+        const bottom = shape.shoulderHeight - 0.025,
+          top = Math.max(bottom + 0.225, d.cabinHeight),
+          vertices: number[] = [];
+        for (const roof of [false, true])
+          for (const x of [-1, 1])
+            for (const z of [-1, 1])
+              vertices.push(
+                (x *
+                  d.bodyWidth *
+                  (roof
+                    ? shape.roofWidth
+                    : definition.family === "prototype"
+                      ? 0.45
+                      : 0.84)) /
+                  2,
+                roof ? top : bottom,
+                d.cabinCentre +
+                  (z *
+                    d.cabinLength *
+                    (roof ? (definition.family === "hatch" ? 0.72 : 0.5) : 1)) /
+                    2,
+              );
+        const cabin = RAPIER.ColliderDesc.convexHull(
+          new Float32Array(vertices),
+        );
+        if (cabin)
+          this.world.createCollider(
+            cabin.setMass(0).setFriction(0.35).setRestitution(0.03),
+            this.body,
+          );
+      } else
+        this.world.createCollider(
+          RAPIER.ColliderDesc.cuboid(0.16, 0.12, 0.16)
+            .setTranslation(0, d.cabinHeight - 0.12, d.cabinCentre - 0.24)
+            .setMass(0)
+            .setFriction(0.35),
+          this.body,
+        );
+    }
   }
 
   updateSetup(setup: VehicleSetup, rebuild = false) {
@@ -200,7 +238,9 @@ export class SuspensionRig {
     this.bumpHeight = 0;
     this.bumpTarget = this.experiment === "bump" ? 0.13 : 0;
     const driving =
-      this.experiment === "handling" || this.experiment === "split";
+      this.experiment === "handling" ||
+      this.experiment === "split" ||
+      this.experiment === "comparison";
     const onCircuit = this.experiment === "circuit";
     this.platform.setEnabled(!driving && !onCircuit);
     this.ground.setEnabled(!onCircuit);
@@ -223,9 +263,9 @@ export class SuspensionRig {
     );
     this.roadNormal.copy(UP).applyQuaternion(rotation);
     const equilibriumHeight =
-      WHEEL_RADIUS +
+      this.radius +
       this.setup.restLength -
-      0.05 -
+      this.car.dimensions.mountY -
       (this.setup.mass * GRAVITY) /
         (2 * (this.setup.frontSpring + this.setup.rearSpring));
     let spawn = new Vector3(
@@ -330,17 +370,22 @@ export class SuspensionRig {
 
     WHEEL_IDS.forEach((id, index) => {
       const front = index < 2;
+      const corner = cornerSetup(this.setup, index);
       const localMount = new Vector3(
-        (wheelSide(index) * this.setup.trackWidth) / 2,
-        0.05,
+        (wheelSide(index) *
+          (front
+            ? this.car.dimensions.frontTrack
+            : this.car.dimensions.rearTrack)) /
+          2,
+        this.car.dimensions.mountY,
         ((front ? 1 : -1) * this.setup.wheelbase) / 2,
       );
       const mount = localMount.applyQuaternion(rotation).add(position);
       const ray = new RAPIER.Ray(mount, down);
-      const maxLength = this.setup.restLength + 0.08;
+      const maxLength = corner.restLength + 0.08;
       const hit = this.world.castRayAndGetNormal(
         ray,
-        maxLength + WHEEL_RADIUS,
+        maxLength + this.radius,
         true,
         undefined,
         undefined,
@@ -372,10 +417,18 @@ export class SuspensionRig {
           .applyAxisAngle(UP, steer)
           .applyQuaternion(rotation);
         for (const side of [-1, 1]) {
-          const origin = mount.clone().addScaledVector(across, side * 0.105);
+          const width = front
+            ? this.car.dimensions.frontTyreWidth
+            : this.car.dimensions.rearTyreWidth;
+          const origin = mount
+            .clone()
+            .addScaledVector(
+              across,
+              side * (this.setup.vehicle ? width * 0.456521739 : 0.105),
+            );
           const probe = this.world.castRayAndGetNormal(
             new RAPIER.Ray(origin, down),
-            maxLength + WHEEL_RADIUS,
+            maxLength + this.radius,
             true,
             undefined,
             undefined,
@@ -404,12 +457,12 @@ export class SuspensionRig {
         material.roughness += (m.roughness ?? 0) * weight;
       }
       const length = valid
-        ? clamp(hit!.timeOfImpact - WHEEL_RADIUS, 0.06, maxLength)
+        ? clamp(hit!.timeOfImpact - this.radius, 0.06, maxLength)
         : maxLength;
-      const compression = Math.max(0, this.setup.restLength - length);
+      const compression = Math.max(0, corner.restLength - length);
       const contact = valid
         ? mount.clone().addScaledVector(down, hit!.timeOfImpact)
-        : mount.clone().addScaledVector(down, maxLength + WHEEL_RADIUS);
+        : mount.clone().addScaledVector(down, maxLength + this.radius);
       const normal = valid
         ? new Vector3().copy(hit!.normal).normalize()
         : up.clone();
@@ -422,8 +475,8 @@ export class SuspensionRig {
         .cross(contact.clone().sub(com))
         .add(velocity)
         .sub(groundVelocity);
-      const spring = front ? this.setup.frontSpring : this.setup.rearSpring;
-      const damping = front ? this.setup.frontDamping : this.setup.rearDamping;
+      const spring = corner.spring;
+      const damping = corner.damping;
       const bumpCompression = Math.max(
         0,
         compression - this.setup.travel * 0.85,
@@ -523,7 +576,7 @@ export class SuspensionRig {
       if (c.hit && isDriven(i))
         slipDemand = Math.max(
           slipDemand,
-          slipRatio(this.tyres[i].omega, t.longitudinalSpeed) *
+          slipRatio(this.tyres[i].omega, t.longitudinalSpeed, this.radius) *
             (this.powertrain.gear < 0 ? -1 : 1),
         );
       t.surfaceGrip =
@@ -595,7 +648,7 @@ export class SuspensionRig {
         requestedBrake > 0
       ) {
         const targetOmega =
-          (Math.abs(longitudinal) / WHEEL_RADIUS) *
+          (Math.abs(longitudinal) / this.radius) *
           (1 - this.setup.longitudinalPeak);
         const available = Math.sqrt(
           Math.max(
@@ -604,12 +657,12 @@ export class SuspensionRig {
           ),
         );
         let limit =
-          available * WHEEL_RADIUS * 0.9 +
+          available * this.radius * 0.9 +
           (Math.max(0, Math.abs(this.tyres[i].omega) - targetOmega) *
-            WHEEL_INERTIA) /
+            wheelInertia(this.car, i)) /
             0.035;
         const brakingSlip =
-          slipRatio(this.tyres[i].omega, longitudinal) *
+          slipRatio(this.tyres[i].omega, longitudinal, this.radius) *
           Math.sign(longitudinal);
         if (brakingSlip < -this.setup.longitudinalPeak * 1.2)
           limit *= clamp(
@@ -635,12 +688,14 @@ export class SuspensionRig {
         torques[i],
         brake +
           (this.experiment === "circuit" && c.hit
-            ? c.material.rollingResistance * t.load * WHEEL_RADIUS
+            ? c.material.rollingResistance * t.load * this.radius
             : 0),
         capacity,
         this.setup.mass / 4,
         this.setup,
         dt,
+        this.radius,
+        wheelInertia(this.car, i),
       );
       let fx = force.fx,
         fy = force.fy;
@@ -697,7 +752,7 @@ export class SuspensionRig {
           fx /= utilization;
           fy /= utilization;
         }
-        this.tyres[i].omega = longitudinal / WHEEL_RADIUS;
+        this.tyres[i].omega = longitudinal / this.radius;
         this.tyres[i].fx = fx;
         this.tyres[i].fy = fy;
       }

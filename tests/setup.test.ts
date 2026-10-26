@@ -42,8 +42,8 @@ describe("imported setup validation", () => {
     expect(
       sanitizeSetup({ mass: -100, frontDamping: Infinity, frontWeight: 20 })
         .mass,
-    ).toBe(700);
-    expect(sanitizeSetup({ frontWeight: 20 }).frontWeight).toBe(0.65);
+    ).toBe(450);
+    expect(sanitizeSetup({ frontWeight: 20 }).frontWeight).toBe(0.68);
     expect(sanitizeSetup(null)).toEqual(DEFAULT_SETUP);
     expect(sanitizeSetup("<bad data>")).toEqual(DEFAULT_SETUP);
   });

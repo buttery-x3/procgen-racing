@@ -5,12 +5,13 @@
 > to remote `development` on completion for testing. Later releases to `main`
 > require an explicit request. See the [release workflow](workflow.md).
 
-Prepared 25 October 2026; updated 26 October. M0–M5 are implemented, including the
-revised M4 v2 generator and [M5 venue construction](m5.md). See [M4 v2 delivery notes](m4-v2.md) for the non-radial
+Prepared 25 October 2026; updated 26 October. M0–M6 are implemented, including the
+revised M4 v2 generator, [M5 venue construction](m5.md) and
+[M6 procedural cars/full workbench](m6.md). See [M4 v2 delivery notes](m4-v2.md) for the non-radial
 compiler, section/anchor route design, joint profile fitting and workbench. The
 [approved M4/M7 revision](m4-revised-plan.md) and [circuit research](research/circuit-design.md)
 supersede conflicting generation details below. V1 and the research lab remain
-archived baselines. M6 onward remain planned. Generation qualification uses the
+archived baselines. M7 onward remain planned. Generation qualification uses the
 development desktop's Ryzen 5 5600X / 32 GiB; broader hardware testing is still needed.
 
 The first repository baseline release is **v0.1.0 (M0–M5)** on `main`.
@@ -459,6 +460,15 @@ Each milestone ends with something inspectable or driveable. The first tiny play
 | M8 — Solo release                      | Proper laps/sectors, limits, ghosts, saved library, audio/effects, camera/UI polish, performance pass                                       | All requested families and archetypes usable in solo practice/time trials with the workbench and diagnostics  | M6, M7     |
 
 Critical path: suspension/contact stability → tire/drivetrain behaviour → 3D road/contact agreement → terrain fitting → kerbs/runoff → complete car/track families → release validation.
+
+**M6 delivered:** 11 constrained car families with FF/FR/MR/RR/AWD options,
+component COM/full-tensor inertia, dimension-aware wheels/collision and sectioned
+body meshes; seeded preview with physical acceptance checks; the full tuning,
+garage/A/B comparison, recorder and input workbench. Qualification passed 11,000
+car seeds, 33 physical acceptance cases and 22 dressed circuit laps; the complete
+suite passes 188 tests. See [delivery details and limits](m6.md) and the
+[source-hashed report](research/m6-qualification.json). It is integrated into
+`development` for testing; `main` retains the released M0–M5 baseline.
 
 Start UI work in M1 and develop it alongside physics; do not leave the workbench as a final skin over debug controls. M2 is the first handling-review build. M5 is the first convincing procedural circuit build. M8 is the complete first-release scope.
 

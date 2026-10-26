@@ -24,6 +24,8 @@ import type {
 import { CircuitView } from "../rendering/CircuitView";
 import { SurfaceAudio } from "../audio/SurfaceAudio";
 import { venueGeometrySettings } from "../track/venue/types";
+import { SetupHistory, copySetup } from "../storage/GarageStorage";
+import { generateCar } from "../vehicle/generateCar";
 
 export class App {
   private rig!: SuspensionRig;
@@ -38,7 +40,7 @@ export class App {
   private accumulator = 0;
   private lastUIUpdate = 0;
   private fps = 60;
-  private setupHistory: VehicleSetup[] = [];
+  private setupHistory = new SetupHistory();
   private savedSetup: VehicleSetup | null = loadSetup();
   private comparisonReturn: VehicleSetup | null = null;
   private readonly generation = new GenerationClient();
@@ -60,8 +62,10 @@ export class App {
       setup,
       {
         action: (action) => this.action(action),
-        setup: (next, rebuild) => this.applySetup(next, false, true, rebuild),
+        setup: (next, rebuild, group) =>
+          this.applySetup(next, false, true, rebuild, group),
         generate: (recipe) => void this.generatePreview(recipe),
+        input: (settings) => this.input.configure(settings),
       },
       !!this.savedSetup,
     );
@@ -169,22 +173,36 @@ export class App {
     refresh = true,
     remember = true,
     rebuild = false,
+    group = "",
   ) {
     const next = sanitizeSetup(setup);
-    if (JSON.stringify(next) === JSON.stringify(this.rig.setup)) return;
+    const identical = JSON.stringify(next) === JSON.stringify(this.rig.setup);
+    if (identical && !rebuild) return;
     if (remember) {
-      this.setupHistory.push({ ...this.rig.setup });
-      if (this.setupHistory.length > 50) this.setupHistory.shift();
-      this.workbench.setUndoEnabled(true);
+      if (!identical) this.setupHistory.record(this.rig.setup, group);
     }
+    const structure = (s: VehicleSetup) =>
+      s.vehicle && {
+        family: s.vehicle.family,
+        dimensions: s.vehicle.dimensions,
+        shape: s.vehicle.shape,
+        components: s.vehicle.components,
+      };
+    const visual =
+      JSON.stringify(next.vehicle?.appearance) !==
+      JSON.stringify(this.rig.setup.vehicle?.appearance);
     const structural =
       rebuild ||
+      JSON.stringify(structure(next)) !==
+        JSON.stringify(structure(this.rig.setup)) ||
       Array.from(STRUCTURAL_KEYS).some(
         (key) => next[key] !== this.rig.setup[key],
       );
     this.rig.updateSetup(next, structural);
-    if (structural) {
+    if (structural || visual) {
       this.view.buildCar(next);
+    }
+    if (structural) {
       this.view.remember(this.rig.telemetry, true);
       this.accumulator = 0;
       this.workbench.toast(
@@ -192,6 +210,8 @@ export class App {
       );
     }
     if (refresh) this.workbench.setSetup(next);
+    this.workbench.setUndoEnabled(this.setupHistory.canUndo);
+    this.workbench.setRedoEnabled(this.setupHistory.canRedo);
     if (this.comparisonReturn && remember) {
       this.comparisonReturn = null;
       this.workbench.setComparing(false);
@@ -375,10 +395,10 @@ export class App {
     } else if (action === "defaults" || action.startsWith("preset:")) {
       const name = action === "defaults" ? "balanced" : action.slice(7);
       if (!PRESETS[name]) return;
-      const source =
-        name === "balanced"
-          ? REFERENCE_CARS[this.rig.setup.referenceCar].setup
-          : PRESETS[name].setup;
+      const factory = this.rig.setup.vehicle
+        ? generateCar(this.rig.setup.vehicle.recipe).setup
+        : REFERENCE_CARS[this.rig.setup.referenceCar].setup;
+      const source = name === "balanced" ? factory : PRESETS[name].setup;
       const suspensionKeys = [
         "frontSpring",
         "rearSpring",
@@ -388,12 +408,12 @@ export class App {
         "rearAntiRoll",
       ] as const;
       const selected = { ...this.rig.setup };
-      for (const key of suspensionKeys) selected[key] = source[key];
-      this.applySetup(
-        action === "defaults"
-          ? REFERENCE_CARS[this.rig.setup.referenceCar].setup
-          : selected,
-      );
+      for (const key of suspensionKeys)
+        selected[key] =
+          this.rig.setup.vehicle && name !== "balanced"
+            ? (factory[key] * source[key]) / DEFAULT_SETUP[key]
+            : source[key];
+      this.applySetup(action === "defaults" ? factory : selected);
       this.workbench.setSetup(this.rig.setup, name);
       this.workbench.toast(
         `${PRESETS[name].label} setup · ${PRESETS[name].description}`,
@@ -407,7 +427,8 @@ export class App {
       }
       try {
         saveSetup(this.rig.setup);
-        this.savedSetup = { ...this.rig.setup };
+        this.savedSetup = copySetup(this.rig.setup);
+        this.workbench.setSavedReference(this.savedSetup);
         this.workbench.setCompareEnabled(true);
         this.workbench.toast(
           "Setup saved in this browser. It will be restored next time.",
@@ -425,7 +446,7 @@ export class App {
         this.workbench.setComparing(false);
         this.workbench.toast("Returned to your working setup.");
       } else {
-        this.comparisonReturn = { ...this.rig.setup };
+        this.comparisonReturn = copySetup(this.rig.setup);
         this.applySetup(this.savedSetup, true, false);
         this.workbench.setComparing(true);
         this.workbench.toast(
@@ -433,11 +454,17 @@ export class App {
         );
       }
     } else if (action === "undo") {
-      const setup = this.setupHistory.pop();
+      const setup = this.setupHistory.undo(this.rig.setup);
       if (!setup) return;
       this.applySetup(setup, true, false);
-      this.workbench.setUndoEnabled(this.setupHistory.length > 0);
+      this.workbench.setUndoEnabled(this.setupHistory.canUndo);
+      this.workbench.setRedoEnabled(this.setupHistory.canRedo);
       this.workbench.toast("Setup change undone.");
+    } else if (action === "redo") {
+      const setup = this.setupHistory.redo(this.rig.setup);
+      if (!setup) return;
+      this.applySetup(setup, true, false);
+      this.workbench.toast("Setup change redone.");
     }
   }
 
@@ -480,6 +507,10 @@ export class App {
       while (this.accumulator >= FIXED_STEP && steps < 10) {
         this.view.remember(this.rig.telemetry);
         this.rig.step(controls);
+        this.workbench.recordTelemetry(
+          this.rig.telemetry,
+          this.rig.body.angvel().y,
+        );
         this.accumulator -= FIXED_STEP;
         steps++;
       }

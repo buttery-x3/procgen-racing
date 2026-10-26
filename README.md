@@ -8,8 +8,15 @@ when a release is explicitly requested. See the [branch workflow](docs/workflow.
 and [agent instructions](AGENTS.md).
 
 A browser racing sandbox built with TypeScript, Three.js and Rapier. The current
-M5 build adds constructed racetrack venues to seeded touring/GP circuits and the
-four-wheel driving/suspension lab, with a live tuning workbench.
+**M6 development build** adds procedural cars and a complete tuning/comparison
+workbench to the seeded touring/GP venues and four-wheel driving/suspension lab.
+
+**M6** supplies 11 seeded car families, FF/FR/MR/RR/AWD packaging, component-derived
+COM/inertia and matching sectioned body geometry. Car workshop previews validate
+construction and actual physical response. Garage / Compare saves complete setups
+and runs repeatable A/B tests; the 120 Hz recorder freezes/scrubs recorded responses.
+Linked axle/per-wheel controls, undo/redo, JSON import/export and remappable inputs
+complete the workbench. See the [M6 guide and qualification](docs/m6.md).
 
 **M5** supplies semantic kerbs, fitted run-offs and escape guides, continuous
 barriers, pit/service lanes, garage blocks, stands and independent seeded scenery.
@@ -45,10 +52,23 @@ npm run qualify:m4:driving # Full laps on qualified tight/steep/high-relief case
 npm run report:m4         # Rebuild the 32-distinct-seed portfolio and summary
 npm run qualify:m5 -- --count=128 --workers=4
 npm run report:m5
+npm run qualify:m6 -- --count=1000 --driving
 ```
 
 ## Available now
 
+- **Car workshop:** hatch, coupe, sedan, mid-engine sport, road hypercar,
+  rear-engine coupe, AWD sport, GT, endurance prototype, formula and stock-car
+  archetypes. Seed streams/locks, editable dimensions/body sections, packaging
+  overlays and physical acceptance checks precede applying a car. Paint/trim
+  edits preserve the working tune and do not reset an unchanged physical rig.
+- **Full tuning/comparison workbench:** basic/all-settings modes, linked axle
+  edits, per-wheel spring/damper/ride overrides, field resets/change indicators,
+  staged chassis drafts and undo/redo. A named garage supports duplicate/rename,
+  full car/setup JSON import/export and isolated matched A/B launch/brake,
+  steering and drop tests. Live 120 Hz recordings can be frozen, scrubbed,
+  saved, overlaid and exported. Input settings include key/gamepad remapping,
+  steering response curves and a live gamepad meter.
 - **Venue construction:** club, traditional, modern and desert themes; 35/75 mm
   tapered kerbs, variable run-off, escape fans and speed guides, welded barriers,
   paved pit merges/service access and garage colliders. Primitive stands, marshal
@@ -94,8 +114,9 @@ npm run report:m5
   incline and bank surfaces; repeatable drop tests and pitch/roll impulses.
 - Live front/side/top diagrams with loads, travel and contact/slip state, a per-wheel
   slip/angle/RPM table, engine/gear HUD and expandable response traces.
-- Five workbench tabs, assist bundles, undo, saved A/B comparison and versioned
-  browser-local persistence. M1 saves receive M2 defaults when loaded.
+- Five workbench tabs, assist bundles and versioned browser-local persistence.
+  M1/M2 saves migrate to M6; older saved keys are preserved. The garage holds 24
+  setups; recent recordings retain up to six runs within 2 MB. Export JSON to archive.
 - Simple blocky geometry, primitive scenery, orbit/chase/top cameras, force
   visualization and interpolated 120 Hz physics. Chase follows behind the heading.
 
@@ -106,17 +127,22 @@ suspension settings, preserving the chosen drivetrain.
 
 ## Controls
 
-| Action           | Keyboard / mouse                     | Standard gamepad               |
-| ---------------- | ------------------------------------ | ------------------------------ |
-| Throttle / brake | W / S or up / down                   | Right / left trigger           |
-| Steer            | A / D or left / right                | Left stick                     |
-| Reverse / drive  | V toggles R/D; HUD buttons include N | D-pad down / up                |
-| Shift down / up  | Q / E                                | Left / right shoulder          |
-| Rear handbrake   | Shift                                | Bottom face button (A / Cross) |
-| Reset vehicle    | R                                    | Top face button (Y / Triangle) |
-| Pause / resume   | Space                                | Start / Menu                   |
-| Cycle camera     | C                                    | Left face button (X / Square)  |
-| Orbit / zoom     | Drag / scroll in Orbit view          | Use the camera buttons         |
+| Action           | Keyboard / mouse                            | Standard gamepad               |
+| ---------------- | ------------------------------------------- | ------------------------------ |
+| Throttle / brake | W / S or up / down                          | Right / left trigger           |
+| Steer            | A / D or left / right                       | Left stick                     |
+| Reverse / drive  | V toggles R/D; HUD buttons include N        | D-pad down / up                |
+| Shift down / up  | Q / E                                       | Left / right shoulder          |
+| Rear handbrake   | Shift                                       | Bottom face button (A / Cross) |
+| Reset vehicle    | R                                           | Top face button (Y / Triangle) |
+| Pause / resume   | Space                                       | Start / Menu                   |
+| Cycle camera     | C                                           | Left face button (X / Square)  |
+| Orbit / zoom     | Drag / scroll in Orbit view                 | Use the camera buttons         |
+| Undo / redo tune | Ctrl/Cmd+Z / Shift+Ctrl/Cmd+Z or Ctrl/Cmd+Y | Use inspector buttons          |
+
+These are the defaults. **Input settings** provides rebinding, dead zone and curve
+controls. Standard gamepad D-pad/A/B navigation operates dialogs and common controls;
+physical gamepad hardware remains to be verified.
 
 Stop before changing driving direction. **W / right trigger accelerates in the
 selected direction**, including reverse; S / left trigger always brakes. Automatic
@@ -149,7 +175,14 @@ cover analytical closure, crossings, folded layouts, reproducibility and explici
 preview limits. The suite now also checks production v2 terrain seams, reference
 lines, profile continuity, technical rhythm and FF/FR/MR/AWD laps. M5 adds map
 handedness, construction continuity, barrier impacts, material footprints, soil
-drag, pit merges, kerb profiles and resource tests: **142 tests** currently pass.
+drag, pit merges, kerb profiles and resource tests. M6 adds generated geometry,
+mass/inertia and all-family physics checks, storage/history, inputs, traces and
+repeatable comparisons: **188 tests** currently pass.
+
+The [M6 campaign](docs/research/m6-qualification.json) qualifies **11,000/11,000 cars**,
+33 physical acceptance cases and 22 complete dressed touring/GP laps, with zero
+failures. Lap checks use conservative reference speeds; these are compatibility
+tests, not racing-pace certification. See the [M6 measurement scope](docs/m6.md).
 
 The M5 sweep compiled **128/128 venues** across its four themes, with no construction
 failures or M4 fallbacks. See the [full M5 report](docs/research/m5-qualification.json).
@@ -173,7 +206,7 @@ Open **Circuit workshop**, choose a seed/style/landscape/length, then **Preview 
 the new recipe is generated. The workshop remembers the last loaded recipe; launch
 still opens the authored proving circuit, also available from the workshop.
 
-Street/oval layouts, broad car generation and time trials remain later milestones.
+Street/oval layouts and time trials remain later milestones.
 M5 supplies run-off envelopes, barriers, pits and facilities. M4 v2 supports arbitrary
 non-crossing folded courses; racing overpasses and inherited street/rural networks
 belong to later M7 work. Open rally/hill-climb routes remain out of scope.
@@ -181,5 +214,5 @@ belong to later M7 work. Open rally/hill-climb routes remain out of scope.
 See the [implementation plan](docs/implementation-plan.md),
 [M1 foundation notes](docs/foundation.md), [M2 model notes](docs/m2.md) and
 [M3 surface compiler notes](docs/m3.md), [M4 v2 notes](docs/m4-v2.md),
-[M5 venue notes](docs/m5.md) and
+[M5 venue notes](docs/m5.md), [M6 car/workbench notes](docs/m6.md) and
 [archived M4 v1 notes](docs/m4.md).

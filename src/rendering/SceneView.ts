@@ -1,7 +1,13 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { seededRandom } from "../core/math";
-import { WHEEL_RADIUS } from "../vehicle/types";
+import { resolveCar } from "../vehicle/CarDefinition";
+import type { ResolvedCar } from "../vehicle/CarDefinition";
+import {
+  createCarBody,
+  createControlArms,
+  updateControlArms,
+} from "./CarGeometry";
 import type { SuspensionRig } from "../physics/SuspensionRig";
 import type { VehicleSetup, VehicleTelemetry } from "../vehicle/types";
 import { wheelSide } from "../vehicle/coordinates";
@@ -152,6 +158,8 @@ export class SceneView {
   forcesVisible = false;
   cameraMode: "orbit" | "chase" | "top" | "overview" = "orbit";
   private setup: VehicleSetup;
+  private carSpec!: ResolvedCar;
+  private carArms: THREE.Mesh[] = [];
 
   constructor(
     private container: HTMLElement,
@@ -260,7 +268,12 @@ export class SceneView {
 
   buildCar(setup: VehicleSetup) {
     this.setup = setup;
-    materials.body.color.setHex(REFERENCE_CARS[setup.referenceCar].color);
+    this.carSpec = resolveCar(setup);
+    materials.body.color.setHex(
+      setup.vehicle?.appearance.paint ??
+        REFERENCE_CARS[setup.referenceCar].color,
+    );
+    materials.lime.color.setHex(setup.vehicle?.appearance.accent ?? 0xc9e98b);
     for (const line of [...this.suspensionLines, ...this.contactLines]) {
       this.scene.remove(line);
       line.geometry.dispose();
@@ -278,70 +291,86 @@ export class SceneView {
     this.contactLines = [];
     const width = setup.trackWidth + 0.2,
       length = setup.wheelbase + 1.28;
-    const body = new THREE.Mesh(bodyGeometry(width, length), materials.body);
-    body.castShadow = body.receiveShadow = true;
-    this.car.add(body);
-    this.car.add(
-      box(width * 0.91, 0.16, length * 0.95, materials.dark, 0, -0.14, -0.01),
-    );
-    const cabinShape = cabinDimensions(setup);
-    const cabin = new THREE.Mesh(cabinGeometry(cabinShape), materials.glass);
-    cabin.castShadow = true;
-    cabin.receiveShadow = true;
-    this.car.add(cabin);
-    this.car.add(
-      box(
-        cabinShape.roofWidth,
-        cabinShape.roofThickness,
-        cabinShape.roofLength,
-        materials.body,
-        0,
-        cabinShape.top + cabinShape.roofThickness / 2,
-        cabinShape.centreZ,
-      ),
-    );
-    for (const x of [-width * 0.3, width * 0.3]) {
+    if (setup.vehicle)
       this.car.add(
-        box(0.31, 0.075, 0.06, materials.headlight, x, 0.095, length * 0.49),
+        createCarBody(setup, { ...materials, accent: materials.lime }),
+      );
+    else {
+      const body = new THREE.Mesh(bodyGeometry(width, length), materials.body);
+      body.castShadow = body.receiveShadow = true;
+      this.car.add(body);
+      this.car.add(
+        box(width * 0.91, 0.16, length * 0.95, materials.dark, 0, -0.14, -0.01),
+      );
+      const cabinShape = cabinDimensions(setup);
+      const cabin = new THREE.Mesh(cabinGeometry(cabinShape), materials.glass);
+      cabin.castShadow = true;
+      cabin.receiveShadow = true;
+      this.car.add(cabin);
+      this.car.add(
+        box(
+          cabinShape.roofWidth,
+          cabinShape.roofThickness,
+          cabinShape.roofLength,
+          materials.body,
+          0,
+          cabinShape.top + cabinShape.roofThickness / 2,
+          cabinShape.centreZ,
+        ),
+      );
+      for (const x of [-width * 0.3, width * 0.3]) {
+        this.car.add(
+          box(0.31, 0.075, 0.06, materials.headlight, x, 0.095, length * 0.49),
+        );
+        this.car.add(
+          box(0.3, 0.07, 0.035, materials.taillight, x, 0.15, -length * 0.49),
+        );
+      }
+      this.car.add(
+        box(
+          0.11,
+          0.015,
+          length * 0.24,
+          materials.dark,
+          -0.17,
+          0.185,
+          length * 0.34,
+        ),
       );
       this.car.add(
-        box(0.3, 0.07, 0.035, materials.taillight, x, 0.15, -length * 0.49),
+        box(
+          0.035,
+          0.015,
+          length * 0.24,
+          materials.dark,
+          -0.28,
+          0.185,
+          length * 0.34,
+        ),
       );
     }
-    this.car.add(
-      box(
-        0.11,
-        0.015,
-        length * 0.24,
-        materials.dark,
-        -0.17,
-        0.185,
-        length * 0.34,
-      ),
-    );
-    this.car.add(
-      box(
-        0.035,
-        0.015,
-        length * 0.24,
-        materials.dark,
-        -0.28,
-        0.185,
-        length * 0.34,
-      ),
-    );
     for (let i = 0; i < 4; i++) {
+      const radius = this.carSpec.dimensions.wheelRadius,
+        tyreWidth =
+          i < 2
+            ? this.carSpec.dimensions.frontTyreWidth
+            : this.carSpec.dimensions.rearTyreWidth;
       const wheel = new THREE.Group();
       const spinner = new THREE.Group();
       const tire = new THREE.Mesh(
-        new THREE.CylinderGeometry(WHEEL_RADIUS, WHEEL_RADIUS, 0.23, 20),
+        new THREE.CylinderGeometry(radius, radius, tyreWidth, 20),
         materials.tire,
       );
       tire.rotation.z = Math.PI / 2;
       tire.castShadow = true;
       spinner.add(tire);
       const hub = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.205, 0.205, 0.24, 10),
+        new THREE.CylinderGeometry(
+          radius * 0.64,
+          radius * 0.64,
+          tyreWidth + 0.01,
+          10,
+        ),
         materials.rim,
       );
       hub.rotation.z = Math.PI / 2;
@@ -375,6 +404,10 @@ export class SceneView {
       this.scene.add(contactLine);
       this.contactLines.push(contactLine);
     }
+    this.carArms =
+      setup.vehicle?.family === "open-wheel"
+        ? createControlArms(this.car, this.carSpec, materials.dark)
+        : [];
     this.scene.add(this.car);
   }
 
@@ -555,8 +588,12 @@ export class SceneView {
     telemetry.wheels.forEach((wheel, i) => {
       const visual = pose.wheels[i];
       this.wheelGroups[i].position.set(
-        (wheelSide(i) * this.setup.trackWidth) / 2,
-        0.05 - visual.length,
+        (wheelSide(i) *
+          (i < 2
+            ? this.carSpec.dimensions.frontTrack
+            : this.carSpec.dimensions.rearTrack)) /
+          2,
+        this.carSpec.dimensions.mountY - visual.length,
         ((i < 2 ? 1 : -1) * this.setup.wheelbase) / 2,
       );
       this.wheelGroups[i].rotation.y = -visual.steer;
@@ -569,6 +606,11 @@ export class SceneView {
       if (forceLine.visible)
         this.updateLine(forceLine, visual.contact, visual.forceEnd);
     });
+    updateControlArms(
+      this.carArms,
+      this.carSpec,
+      this.wheelGroups.map((w) => w.position),
+    );
     const target = this.cameraTarget.copy(pose.position);
     target.y += 0.3;
     if (this.cameraMode === "chase") {
