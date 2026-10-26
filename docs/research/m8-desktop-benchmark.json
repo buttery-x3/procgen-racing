@@ -2,7 +2,7 @@
   "version": 1,
   "physicsVersion": "3b519332fd726112",
   "scope": "Visible browser RAF; production SceneView, GenerationClient, SuspensionRig and RaceSession at 1920x1080, pixel ratio 1, PCF shadows, 120 Hz physics, timing gates, 20 Hz working recorder, bounded effects and a synthetic trailing ghost for render load. FR reference car. This renderer/session benchmark excludes the workbench DOM and does not substitute for actual ghost playback or full-lap tests. Generation/setup precede warm-up. Browser scheduling and other desktop load affect results. GPU bytes are not measurable.",
-  "date": "2026-10-26T06:38:03.635Z",
+  "date": "2026-10-26T07:16:52.917Z",
   "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
   "hardwareConcurrency": 12,
   "deviceMemory": 32,
@@ -23,8 +23,8 @@
         "endurance": false
       },
       "fingerprint": "v3-3c530dff/m7-venue-9877a01",
-      "workerMs": 1724.6000000238419,
-      "setupMs": 425.60000002384186,
+      "workerMs": 1566.5,
+      "setupMs": 304.40000009536743,
       "geometry": {
         "inheritedShare": 1,
         "connectorShare": 0,
@@ -53,39 +53,39 @@
       "visibility": "visible",
       "frameIntervalMs": {
         "p50": 10,
-        "p95": 10.100000000000364,
-        "max": 10.200000000000728,
+        "p95": 10.10000000000582,
+        "max": 10.10000000000582,
         "over33ms": 0
       },
-      "meanFps": 100.00416684028502,
+      "meanFps": 100.00138890817935,
       "simulationMs": {
-        "p50": 0.7999999523162842,
-        "p95": 1.2000000476837158
+        "p50": 0.5999999046325684,
+        "p95": 0.8999999761581421
       },
       "renderSubmissionMs": {
-        "p50": 1.5,
-        "p95": 2.100000023841858
+        "p50": 1.2000000476837158,
+        "p95": 1.6999999284744263
       },
-      "distanceDriven": 153.1972502638614,
+      "distanceDriven": 152.4641057935355,
       "grounded": 4,
       "heap": {
         "before": {
-          "usedMiB": 61.04649639129639,
-          "totalMiB": 81.68214321136475,
+          "usedMiB": 62.34287071228027,
+          "totalMiB": 74.93646812438965,
           "limitMiB": 4192
         },
         "after": {
-          "usedMiB": 73.19093799591064,
-          "totalMiB": 106.5025224685669,
+          "usedMiB": 73.55942916870117,
+          "totalMiB": 106.0068473815918,
           "limitMiB": 4192
         },
-        "peakUsedMiB": 84.40962314605713
+        "peakUsedMiB": 84.39502716064453
       },
       "renderer": {
         "vendor": "Google Inc. (NVIDIA)",
         "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
         "drawCalls": 103,
-        "visibleTriangles": 33871,
+        "visibleTriangles": 33847,
         "geometries": 76,
         "textures": 5
       },
@@ -112,7 +112,7 @@
         }
       },
       "queries": {
-        "calls": 6895,
+        "calls": 6877,
         "maxCandidates": 120
       },
       "session": {
@@ -146,8 +146,8 @@
         "endurance": false
       },
       "fingerprint": "v3-c219dbd1/m7-venue-de96d65d",
-      "workerMs": 1730.1000000238419,
-      "setupMs": 140.89999997615814,
+      "workerMs": 1550.6999999284744,
+      "setupMs": 140.5,
       "geometry": {
         "inheritedShare": 1,
         "connectorShare": 0,
@@ -176,39 +176,39 @@
       "visibility": "visible",
       "frameIntervalMs": {
         "p50": 10,
-        "p95": 10.100000000002183,
-        "max": 10.200000000000728,
+        "p95": 10.10000000000582,
+        "max": 10.299999999988358,
         "over33ms": 0
       },
-      "meanFps": 100.00416684028501,
+      "meanFps": 100.00277785494059,
       "simulationMs": {
-        "p50": 0.6999999284744263,
-        "p95": 1.100000023841858
+        "p50": 0.5,
+        "p95": 0.8999999761581421
       },
       "renderSubmissionMs": {
-        "p50": 1.600000023841858,
-        "p95": 2.100000023841858
+        "p50": 1.1999999284744263,
+        "p95": 1.7000000476837158
       },
-      "distanceDriven": 152.74979972839355,
+      "distanceDriven": 152.2613048553476,
       "grounded": 4,
       "heap": {
         "before": {
-          "usedMiB": 111.86283683776855,
-          "totalMiB": 145.83896446228027,
+          "usedMiB": 118.01578617095947,
+          "totalMiB": 151.53811359405518,
           "limitMiB": 4192
         },
         "after": {
-          "usedMiB": 84.80124092102051,
-          "totalMiB": 144.15853691101074,
+          "usedMiB": 84.09120273590088,
+          "totalMiB": 145.91286182403564,
           "limitMiB": 4192
         },
-        "peakUsedMiB": 111.86283683776855
+        "peakUsedMiB": 118.01578617095947
       },
       "renderer": {
         "vendor": "Google Inc. (NVIDIA)",
         "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
         "drawCalls": 118,
-        "visibleTriangles": 30656,
+        "visibleTriangles": 30632,
         "geometries": 80,
         "textures": 5
       },
@@ -235,7 +235,7 @@
         }
       },
       "queries": {
-        "calls": 6883,
+        "calls": 6871,
         "maxCandidates": 110
       },
       "session": {
@@ -269,8 +269,8 @@
         "endurance": true
       },
       "fingerprint": "v3-85a195b2/m7-venue-3dde371c",
-      "workerMs": 10900.800000071526,
-      "setupMs": 287,
+      "workerMs": 9381.799999952316,
+      "setupMs": 237.89999997615814,
       "geometry": {
         "inheritedShare": 0.9376247504990021,
         "connectorShare": 0.06237524950099793,
@@ -299,39 +299,39 @@
       "visibility": "visible",
       "frameIntervalMs": {
         "p50": 10,
-        "p95": 10.099999999998545,
-        "max": 10.30000000000291,
+        "p95": 10.100000000034925,
+        "max": 10.100000000034925,
         "over33ms": 0
       },
-      "meanFps": 100.00416684028495,
+      "meanFps": 100.00277785494059,
       "simulationMs": {
-        "p50": 0.7000000476837158,
-        "p95": 1.1999999284744263
+        "p50": 0.5999999046325684,
+        "p95": 1
       },
       "renderSubmissionMs": {
-        "p50": 2.1999999284744263,
-        "p95": 2.8000000715255737
+        "p50": 2,
+        "p95": 2.6999999284744263
       },
       "distanceDriven": 152.2170473320548,
       "grounded": 4,
       "heap": {
         "before": {
-          "usedMiB": 162.01688766479492,
-          "totalMiB": 202.60894393920898,
+          "usedMiB": 176.66392517089844,
+          "totalMiB": 222.54671096801758,
           "limitMiB": 4192
         },
         "after": {
-          "usedMiB": 185.07108879089355,
-          "totalMiB": 234.83519172668457,
+          "usedMiB": 185.43182182312012,
+          "totalMiB": 239.02295875549316,
           "limitMiB": 4192
         },
-        "peakUsedMiB": 194.5173740386963
+        "peakUsedMiB": 198.326078414917
       },
       "renderer": {
         "vendor": "Google Inc. (NVIDIA)",
         "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
         "drawCalls": 97,
-        "visibleTriangles": 33513,
+        "visibleTriangles": 33489,
         "geometries": 73,
         "textures": 4
       },
@@ -377,15 +377,10 @@
       }
     }
   ],
-  "sourceHash": "9c85951dd0d8cac2",
-  "hardware": {
+  "sourceHash": "eda0572759b0d72e",
+  "desktop": {
     "cpu": "AMD Ryzen 5 5600X 6-Core Processor",
-    "memoryGiB": 32,
-    "gpu": "NVIDIA GeForce RTX 3060"
-  },
-  "measurementNotes": [
-    "Foreground-visible IAB page, loopback Vite on port 5318. Qualification/stress/test workers were idle during measurement. Other desktop activity was not controlled.",
-    "720 measured frames after 180 warm-up frames per venue. Synthetic trailing ghost exercises render load; actual recorded ghost playback and full-lap rules are qualified separately. Workbench DOM is excluded.",
-    "Browser/display delivery was capped near 100 Hz. Exposed JS heap excludes GPU/WASM memory. These are short foreground samples, not full-lap worst-case performance certification."
-  ]
+    "installedMemoryGiB": 32,
+    "note": "Actual WebGL GPU is recorded per case. Other desktop activity was not controlled; the qualification/test commands had completed before this measurement."
+  }
 }

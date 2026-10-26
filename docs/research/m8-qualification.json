@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "sourceHash": "9c85951dd0d8cac2",
+  "sourceHash": "eda0572759b0d72e",
   "physicsVersion": "3b519332fd726112",
-  "date": "2026-10-26T06:34:15.462Z",
+  "date": "2026-10-26T07:15:12.186Z",
   "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
   "memoryGiB": 32,
   "workers": 3,
-  "elapsedSeconds": 78.87200879999999,
+  "elapsedSeconds": 92.42638219999999,
   "scope": "25 real 120 Hz four-wheel timed laps: FR on all seven expanded circuit families (including 24 km), four references and all eleven procedural archetypes on the authored proving circuit, plus stock low/middle/high oval lanes. Each lap must pass production gate order and tyre-centre limits, create a keyed PB/ghost and round-trip its poses and controls. Conservative caps, not maximum-speed or every car/track combination certification. Generation itself is unchanged; M7/M6 campaign reports remain historical evidence.",
   "attempted": 25,
   "passed": 25,
@@ -45,7 +45,7 @@
         "key": "efb93ad1f6540f65"
       },
       "result": {
-        "id": "mvovraat-1",
+        "id": "mvox7mtj-1",
         "lap": 1,
         "duration": 235.57270215467335,
         "sectors": [
@@ -66,7 +66,7 @@
           "variant": "full",
           "key": "efb93ad1f6540f65"
         },
-        "finishedAt": "2026-10-26T06:33:11.909Z"
+        "finishedAt": "2026-10-26T07:13:54.248Z"
       },
       "ghost": {
         "samples": 4713,
@@ -79,7 +79,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.27236706629429663,
       "peakSurfaceChunks": 40,
-      "ms": 11409.534500000002
+      "ms": 11408.2918
     },
     {
       "family": "rural",
@@ -114,7 +114,7 @@
         "key": "20b0e23bef049657"
       },
       "result": {
-        "id": "mvovrhgs-1",
+        "id": "mvox7w90-1",
         "lap": 1,
         "duration": 430.247227683259,
         "sectors": [
@@ -135,7 +135,7 @@
           "variant": "full",
           "key": "20b0e23bef049657"
         },
-        "finishedAt": "2026-10-26T06:33:21.196Z"
+        "finishedAt": "2026-10-26T07:14:06.468Z"
       },
       "ghost": {
         "samples": 8606,
@@ -148,7 +148,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.3236358138552982,
       "peakSurfaceChunks": 34,
-      "ms": 20720.0795
+      "ms": 23725.9155
     },
     {
       "family": "mountain",
@@ -183,7 +183,7 @@
         "key": "81084712f1c8d49e"
       },
       "result": {
-        "id": "mvovrein-1",
+        "id": "mvox7s1a-1",
         "lap": 1,
         "duration": 334.5981353602767,
         "sectors": [
@@ -204,7 +204,7 @@
           "variant": "full",
           "key": "81084712f1c8d49e"
         },
-        "finishedAt": "2026-10-26T06:33:17.375Z"
+        "finishedAt": "2026-10-26T07:14:01.006Z"
       },
       "ghost": {
         "samples": 6693,
@@ -217,7 +217,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.33907286883389065,
       "peakSurfaceChunks": 38,
-      "ms": 16745.5303
+      "ms": 18214.4604
     },
     {
       "family": "airfield",
@@ -252,7 +252,7 @@
         "key": "d2752e2615d13b4a"
       },
       "result": {
-        "id": "mvovrie4-1",
+        "id": "mvox7wsm-1",
         "lap": 1,
         "duration": 254.12339861067375,
         "sectors": [
@@ -273,7 +273,7 @@
           "variant": "full",
           "key": "d2752e2615d13b4a"
         },
-        "finishedAt": "2026-10-26T06:33:22.396Z"
+        "finishedAt": "2026-10-26T07:14:07.174Z"
       },
       "ghost": {
         "samples": 5084,
@@ -286,7 +286,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.30305796240855,
       "peakSurfaceChunks": 41,
-      "ms": 10472.0112
+      "ms": 12917.654100000002
     },
     {
       "family": "oval",
@@ -321,7 +321,7 @@
         "key": "568ce76645a0ea6a"
       },
       "result": {
-        "id": "mvovrizd-1",
+        "id": "mvox7xp4-1",
         "lap": 1,
         "duration": 137.73148080933197,
         "sectors": [
@@ -342,7 +342,7 @@
           "variant": "full",
           "key": "568ce76645a0ea6a"
         },
-        "finishedAt": "2026-10-26T06:33:23.161Z"
+        "finishedAt": "2026-10-26T07:14:08.344Z"
       },
       "ghost": {
         "samples": 2756,
@@ -355,7 +355,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.6100257721345486,
       "peakSurfaceChunks": 29,
-      "ms": 5710.131600000001
+      "ms": 7200.665300000001
     },
     {
       "family": "hybrid",
@@ -390,7 +390,7 @@
         "key": "bb4b2468f2287f14"
       },
       "result": {
-        "id": "mvovrrg2-1",
+        "id": "mvox86yj-1",
         "lap": 1,
         "duration": 267.58755249209565,
         "sectors": [
@@ -411,7 +411,7 @@
           "variant": "full",
           "key": "bb4b2468f2287f14"
         },
-        "finishedAt": "2026-10-26T06:33:34.130Z"
+        "finishedAt": "2026-10-26T07:14:20.347Z"
       },
       "ghost": {
         "samples": 5353,
@@ -424,7 +424,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.6695851407086473,
       "peakSurfaceChunks": 36,
-      "ms": 12896.798200000001
+      "ms": 13786.614400000002
     },
     {
       "family": "endurance",
@@ -459,7 +459,7 @@
         "key": "4bf400fe6d2129f2"
       },
       "result": {
-        "id": "mvovsmuk-1",
+        "id": "mvox9aed-1",
         "lap": 1,
         "duration": 1383.4672032466385,
         "sectors": [
@@ -480,7 +480,7 @@
           "variant": "full",
           "key": "4bf400fe6d2129f2"
         },
-        "finishedAt": "2026-10-26T06:34:14.828Z"
+        "finishedAt": "2026-10-26T07:15:11.461Z"
       },
       "ghost": {
         "samples": 27671,
@@ -493,7 +493,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.32578797296919204,
       "peakSurfaceChunks": 34,
-      "ms": 52912.9115
+      "ms": 64847.322100000005
     },
     {
       "car": "ff",
@@ -512,7 +512,7 @@
         "key": "f3abe1f2bf874056"
       },
       "result": {
-        "id": "mvovrk9q-1",
+        "id": "mvox7z6e-1",
         "lap": 1,
         "duration": 62.52231238394505,
         "sectors": [
@@ -533,7 +533,7 @@
           "variant": "full",
           "key": "f3abe1f2bf874056"
         },
-        "finishedAt": "2026-10-26T06:33:24.830Z"
+        "finishedAt": "2026-10-26T07:14:10.262Z"
       },
       "ghost": {
         "samples": 1252,
@@ -546,7 +546,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.49501279764927764,
       "peakSurfaceChunks": 0,
-      "ms": 1618.8341
+      "ms": 1842.9537999999993
     },
     {
       "car": "fr",
@@ -565,7 +565,7 @@
         "key": "861afca5db1f6dc9"
       },
       "result": {
-        "id": "mvovrlev-1",
+        "id": "mvox80cm-1",
         "lap": 1,
         "duration": 61.196877879876745,
         "sectors": [
@@ -586,7 +586,7 @@
           "variant": "full",
           "key": "861afca5db1f6dc9"
         },
-        "finishedAt": "2026-10-26T06:33:26.311Z"
+        "finishedAt": "2026-10-26T07:14:11.782Z"
       },
       "ghost": {
         "samples": 1225,
@@ -599,7 +599,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4881551454452957,
       "peakSurfaceChunks": 0,
-      "ms": 1469.552599999999
+      "ms": 1528.2600999999995
     },
     {
       "car": "mr",
@@ -618,7 +618,7 @@
         "key": "76d372cd9508b169"
       },
       "result": {
-        "id": "mvovrmlv-1",
+        "id": "mvox81k4-1",
         "lap": 1,
         "duration": 60.77262242793734,
         "sectors": [
@@ -639,7 +639,7 @@
           "variant": "full",
           "key": "76d372cd9508b169"
         },
-        "finishedAt": "2026-10-26T06:33:27.859Z"
+        "finishedAt": "2026-10-26T07:14:13.348Z"
       },
       "ghost": {
         "samples": 1217,
@@ -652,7 +652,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4528918511097211,
       "peakSurfaceChunks": 0,
-      "ms": 1552.5060999999987
+      "ms": 1547.0038000000022
     },
     {
       "car": "awd",
@@ -671,7 +671,7 @@
         "key": "585047a3c8ca7957"
       },
       "result": {
-        "id": "mvovrnsu-1",
+        "id": "mvox82x0-1",
         "lap": 1,
         "duration": 60.7476246832933,
         "sectors": [
@@ -692,7 +692,7 @@
           "variant": "full",
           "key": "585047a3c8ca7957"
         },
-        "finishedAt": "2026-10-26T06:33:29.406Z"
+        "finishedAt": "2026-10-26T07:14:15.108Z"
       },
       "ghost": {
         "samples": 1216,
@@ -705,7 +705,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.5091564582594352,
       "peakSurfaceChunks": 0,
-      "ms": 1522.0111999999972
+      "ms": 1769.671699999999
     },
     {
       "carFamily": "hatch",
@@ -724,7 +724,7 @@
         "key": "9891893e6c566552"
       },
       "result": {
-        "id": "mvovrpi8-1",
+        "id": "mvox84ie-1",
         "lap": 1,
         "duration": 62.33876663939387,
         "sectors": [
@@ -745,7 +745,7 @@
           "variant": "full",
           "key": "9891893e6c566552"
         },
-        "finishedAt": "2026-10-26T06:33:31.616Z"
+        "finishedAt": "2026-10-26T07:14:17.174Z"
       },
       "ghost": {
         "samples": 1248,
@@ -758,7 +758,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.47552191473263805,
       "peakSurfaceChunks": 0,
-      "ms": 2209.5116999999955
+      "ms": 2066.6164000000063
     },
     {
       "carFamily": "coupe",
@@ -777,7 +777,7 @@
         "key": "35aeecc81c40f9c4"
       },
       "result": {
-        "id": "mvovrqts-1",
+        "id": "mvox85xz-1",
         "lap": 1,
         "duration": 60.9619546727133,
         "sectors": [
@@ -798,7 +798,7 @@
           "variant": "full",
           "key": "35aeecc81c40f9c4"
         },
-        "finishedAt": "2026-10-26T06:33:33.328Z"
+        "finishedAt": "2026-10-26T07:14:19.031Z"
       },
       "ghost": {
         "samples": 1221,
@@ -811,7 +811,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.5249160146561275,
       "peakSurfaceChunks": 0,
-      "ms": 1707.5637999999963
+      "ms": 1848.696600000003
     },
     {
       "carFamily": "sedan",
@@ -830,7 +830,7 @@
         "key": "ac4daf82c88903ae"
       },
       "result": {
-        "id": "mvovrs4f-1",
+        "id": "mvox879h-1",
         "lap": 1,
         "duration": 61.011908299065155,
         "sectors": [
@@ -851,7 +851,7 @@
           "variant": "full",
           "key": "ac4daf82c88903ae"
         },
-        "finishedAt": "2026-10-26T06:33:35.007Z"
+        "finishedAt": "2026-10-26T07:14:20.741Z"
       },
       "ghost": {
         "samples": 1222,
@@ -864,7 +864,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.5580369417629034,
       "peakSurfaceChunks": 0,
-      "ms": 1679.6285999999964
+      "ms": 1707.8470000000016
     },
     {
       "carFamily": "sports",
@@ -883,7 +883,7 @@
         "key": "4c6aa9eb8243fcaf"
       },
       "result": {
-        "id": "mvovrt19-1",
+        "id": "mvox88jm-1",
         "lap": 1,
         "duration": 60.76725266345649,
         "sectors": [
@@ -904,7 +904,7 @@
           "variant": "full",
           "key": "4c6aa9eb8243fcaf"
         },
-        "finishedAt": "2026-10-26T06:33:36.189Z"
+        "finishedAt": "2026-10-26T07:14:22.402Z"
       },
       "ghost": {
         "samples": 1217,
@@ -917,7 +917,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4647949148455812,
       "peakSurfaceChunks": 0,
-      "ms": 1905.2007999999987
+      "ms": 1914.834799999997
     },
     {
       "carFamily": "hypercar",
@@ -936,7 +936,7 @@
         "key": "b3e0108ad0300bf6"
       },
       "result": {
-        "id": "mvovrthd-1",
+        "id": "mvox88lg-1",
         "lap": 1,
         "duration": 60.07941119852609,
         "sectors": [
@@ -957,7 +957,7 @@
           "variant": "full",
           "key": "b3e0108ad0300bf6"
         },
-        "finishedAt": "2026-10-26T06:33:36.769Z"
+        "finishedAt": "2026-10-26T07:14:22.468Z"
       },
       "ghost": {
         "samples": 1203,
@@ -970,7 +970,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4827702066836267,
       "peakSurfaceChunks": 0,
-      "ms": 1809.0495999999985
+      "ms": 1724.4881999999998
     },
     {
       "carFamily": "rear-coupe",
@@ -989,7 +989,7 @@
         "key": "ade44eadbb957371"
       },
       "result": {
-        "id": "mvovruid-1",
+        "id": "mvox89yx-1",
         "lap": 1,
         "duration": 60.772831413448245,
         "sectors": [
@@ -1010,7 +1010,7 @@
           "variant": "full",
           "key": "ade44eadbb957371"
         },
-        "finishedAt": "2026-10-26T06:33:38.101Z"
+        "finishedAt": "2026-10-26T07:14:24.249Z"
       },
       "ghost": {
         "samples": 1217,
@@ -1023,7 +1023,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4198798848387352,
       "peakSurfaceChunks": 0,
-      "ms": 1911.1592000000019
+      "ms": 1854.1198999999979
     },
     {
       "carFamily": "awd",
@@ -1042,7 +1042,7 @@
         "key": "148e4a8d49bb5471"
       },
       "result": {
-        "id": "mvovrutt-1",
+        "id": "mvox89zi-1",
         "lap": 1,
         "duration": 60.650080700058886,
         "sectors": [
@@ -1063,7 +1063,7 @@
           "variant": "full",
           "key": "148e4a8d49bb5471"
         },
-        "finishedAt": "2026-10-26T06:33:38.513Z"
+        "finishedAt": "2026-10-26T07:14:24.270Z"
       },
       "ghost": {
         "samples": 1214,
@@ -1076,7 +1076,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.5559081571215583,
       "peakSurfaceChunks": 0,
-      "ms": 1656.3110000000015
+      "ms": 1805.123900000006
     },
     {
       "carFamily": "gt",
@@ -1095,7 +1095,7 @@
         "key": "e9799256cfe94122"
       },
       "result": {
-        "id": "mvovrvlr-1",
+        "id": "mvox8bef-1",
         "lap": 1,
         "duration": 60.065290299747616,
         "sectors": [
@@ -1116,7 +1116,7 @@
           "variant": "full",
           "key": "e9799256cfe94122"
         },
-        "finishedAt": "2026-10-26T06:33:39.519Z"
+        "finishedAt": "2026-10-26T07:14:26.104Z"
       },
       "ghost": {
         "samples": 1203,
@@ -1129,7 +1129,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.6133072014220344,
       "peakSurfaceChunks": 0,
-      "ms": 1401.4173999999985
+      "ms": 1852.4010999999955
     },
     {
       "carFamily": "prototype",
@@ -1148,7 +1148,7 @@
         "key": "88b41535ce0659b9"
       },
       "result": {
-        "id": "mvovrvws-1",
+        "id": "mvox8bf1-1",
         "lap": 1,
         "duration": 59.98588910569663,
         "sectors": [
@@ -1169,7 +1169,7 @@
           "variant": "full",
           "key": "88b41535ce0659b9"
         },
-        "finishedAt": "2026-10-26T06:33:39.916Z"
+        "finishedAt": "2026-10-26T07:14:26.125Z"
       },
       "ghost": {
         "samples": 1201,
@@ -1182,7 +1182,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.6269036345711878,
       "peakSurfaceChunks": 0,
-      "ms": 1400.7272000000012
+      "ms": 1849.2834000000003
     },
     {
       "carFamily": "open-wheel",
@@ -1201,7 +1201,7 @@
         "key": "fc6f18dbbe1b04a7"
       },
       "result": {
-        "id": "mvovrwpn-1",
+        "id": "mvox8cwv-1",
         "lap": 1,
         "duration": 60.191796240819755,
         "sectors": [
@@ -1222,7 +1222,7 @@
           "variant": "full",
           "key": "fc6f18dbbe1b04a7"
         },
-        "finishedAt": "2026-10-26T06:33:40.955Z"
+        "finishedAt": "2026-10-26T07:14:28.063Z"
       },
       "ghost": {
         "samples": 1205,
@@ -1235,7 +1235,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.648459986152641,
       "peakSurfaceChunks": 0,
-      "ms": 1440.5275000000038
+      "ms": 1972.2019
     },
     {
       "carFamily": "stock",
@@ -1254,7 +1254,7 @@
         "key": "9d9e2ccd7f7c1fc9"
       },
       "result": {
-        "id": "mvovrx0f-1",
+        "id": "mvox8cyf-1",
         "lap": 1,
         "duration": 60.098392901435304,
         "sectors": [
@@ -1275,7 +1275,7 @@
           "variant": "full",
           "key": "9d9e2ccd7f7c1fc9"
         },
-        "finishedAt": "2026-10-26T06:33:41.343Z"
+        "finishedAt": "2026-10-26T07:14:28.119Z"
       },
       "ghost": {
         "samples": 1203,
@@ -1288,7 +1288,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.6672825529477362,
       "peakSurfaceChunks": 0,
-      "ms": 1429.7288999999946
+      "ms": 2000.9313000000038
     },
     {
       "family": "oval",
@@ -1324,7 +1324,7 @@
         "key": "834ae5e86ceae434"
       },
       "result": {
-        "id": "mvovs27c-1",
+        "id": "mvox8jv2-1",
         "lap": 1,
         "duration": 148.98925137593483,
         "sectors": [
@@ -1345,7 +1345,7 @@
           "variant": "full",
           "key": "834ae5e86ceae434"
         },
-        "finishedAt": "2026-10-26T06:33:48.072Z"
+        "finishedAt": "2026-10-26T07:14:37.070Z"
       },
       "ghost": {
         "samples": 2981,
@@ -1358,7 +1358,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.3745307504357811,
       "peakSurfaceChunks": 29,
-      "ms": 7159.8436
+      "ms": 9032.189600000005
     },
     {
       "family": "oval",
@@ -1394,7 +1394,7 @@
         "key": "834ae5e86ceae434"
       },
       "result": {
-        "id": "mvovs2fj-1",
+        "id": "mvox8jza-1",
         "lap": 1,
         "duration": 150.24238915751783,
         "sectors": [
@@ -1415,7 +1415,7 @@
           "variant": "full",
           "key": "834ae5e86ceae434"
         },
-        "finishedAt": "2026-10-26T06:33:48.367Z"
+        "finishedAt": "2026-10-26T07:14:37.222Z"
       },
       "ghost": {
         "samples": 3006,
@@ -1428,7 +1428,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.3637736200600664,
       "peakSurfaceChunks": 29,
-      "ms": 7068.671300000002
+      "ms": 9141.149300000005
     },
     {
       "family": "oval",
@@ -1464,7 +1464,7 @@
         "key": "834ae5e86ceae434"
       },
       "result": {
-        "id": "mvovs7b6-1",
+        "id": "mvox8qnr-1",
         "lap": 1,
         "duration": 151.54463689965306,
         "sectors": [
@@ -1485,7 +1485,7 @@
           "variant": "full",
           "key": "834ae5e86ceae434"
         },
-        "finishedAt": "2026-10-26T06:33:54.690Z"
+        "finishedAt": "2026-10-26T07:14:45.879Z"
       },
       "ghost": {
         "samples": 3032,
@@ -1498,7 +1498,7 @@
       "fourContactFraction": 1,
       "maxLineError": 0.4904343802785016,
       "peakSurfaceChunks": 29,
-      "ms": 6610.981899999999
+      "ms": 8812.971799999992
     }
   ]
 }
