@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <title>M4 production worker benchmark</title>
+  <style>
+    body {
+      background: #18201b;
+      color: #e6eddd;
+      font: 15px system-ui;
+      padding: 30px;
+    }
+    button {
+      padding: 12px;
+      background: #d5eba4;
+      border: 0;
+    }
+    pre {
+      white-space: pre-wrap;
+      font-size: 12px;
+    }
+    progress {
+      width: 400px;
+    }
+  </style>
+  <h1>M4 production worker benchmark</h1>
+  <p>
+    Baseline: <code>main</code> / <code>v0.1.0</code> (M0–M5). Future milestones
+    use separate branches from <code>development</code>, then merge and push to
+    remote <code>development</code> for testing.
+    <a href="../workflow.md" style="color: #d5eba4"
+      >Release and branch workflow</a
+    >.
+  </p>
+  <p>
+    12 fixed recipes, one production worker at a time. Includes worker startup,
+    generation, compilation and buffer transfer. Keep this tab active.
+  </p>
+  <button id="run">Run benchmark</button>
+  <progress max="12" value="0"></progress>
+  <p id="status">Ready</p>
+  <pre id="results"></pre>
+  <script type="module">
+    const jobs = [];
+    for (const family of ["touring", "gp"])
+      for (const relief of ["gentle", "rolling"])
+        for (let i = 0; i < 3; i++)
+          jobs.push({
+            version: 2,
+            seed: `browser-budget-${i}`,
+            family,
+            relief,
+            targetLength: (family === "touring"
+              ? [2000, 3200, 4500]
+              : [4000, 5200, 7500])[i],
+            character: ["flowing", "mixed", "technical"][i],
+            layout: i,
+            envelope: "comfortable",
+          });
+    document.querySelector("#run").addEventListener("click", async () => {
+      document.querySelector("#run").disabled = true;
+      const records = [];
+      for (const recipe of jobs) {
+        document.querySelector("#status").textContent =
+          `${records.length + 1}/12 · ${recipe.family}/${recipe.relief} · ${recipe.targetLength} m`;
+        const start = performance.now();
+        const record = await new Promise((resolve) => {
+          const worker = new Worker(
+            new URL("../../src/track/generation.worker.ts", import.meta.url),
+            { type: "module" },
+          );
+          const timer = setTimeout(() => {
+            worker.terminate();
+            resolve({ recipe, error: "60 second deadline" });
+          }, 60000);
+          worker.onerror = (event) => {
+            clearTimeout(timer);
+            worker.terminate();
+            resolve({ recipe, error: event.message });
+          };
+          worker.onmessage = (event) => {
+            const message = event.data;
+            if (message.type === "progress") return;
+            clearTimeout(timer);
+            worker.terminate();
+            if (message.type === "error") {
+              resolve({ recipe, error: message.message });
+              return;
+            }
+            const r = message.result;
+            resolve({
+              recipe,
+              ms: performance.now() - start,
+              fingerprint: r.fingerprint,
+              fallback: r.fallback,
+              triangles: r.circuit.triangleCount,
+              chunks: r.circuit.chunks.length,
+              typedBufferMiB:
+                r.circuit.chunks.reduce(
+                  (s, c) =>
+                    s +
+                    c.vertices.byteLength +
+                    c.indices.byteLength +
+                    c.colors.byteLength,
+                  0,
+                ) /
+                2 ** 20,
+            });
+          };
+          worker.postMessage(recipe);
+        });
+        records.push(record);
+        document.querySelector("progress").value = records.length;
+        document.querySelector("#results").textContent = JSON.stringify(
+          { userAgent: navigator.userAgent, records },
+          null,
+          2,
+        );
+      }
+      const values = records
+          .filter((r) => !r.error)
+          .map((r) => r.ms)
+          .sort((a, b) => a - b),
+        summary = {
+          attempted: records.length,
+          failed: records.filter((r) => r.error).length,
+          fallback: records.filter((r) => r.fallback).length,
+          p50Ms: values[Math.floor(values.length * 0.5)],
+          p95Ms:
+            values[
+              Math.min(values.length - 1, Math.floor(values.length * 0.95))
+            ],
+          maxMs: values.at(-1),
+          maxTypedBufferMiB: Math.max(
+            ...records.map((r) => r.typedBufferMiB ?? 0),
+          ),
+        };
+      document.querySelector("#status").textContent = "Completed";
+      document.querySelector("#results").textContent = JSON.stringify(
+        { userAgent: navigator.userAgent, summary, records },
+        null,
+        2,
+      );
+      document.querySelector("#run").disabled = false;
+    });
+  </script>
+</html>

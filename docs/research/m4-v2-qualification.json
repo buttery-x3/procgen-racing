@@ -1,0 +1,1290 @@
+{
+  "codeHash": "999151a7cb7392be",
+  "compile": "all",
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+  "logicalCpus": 12,
+  "memoryGiB": 32,
+  "elapsedSeconds": 2323.1700456999997,
+  "presets": [
+    {
+      "family": "touring",
+      "relief": "gentle",
+      "attempted": 1000,
+      "native": 1000,
+      "fallback": 0,
+      "failed": 0,
+      "nativeRate": 1,
+      "compiled": 1000,
+      "timeMs": {
+        "p50": 2259.4848999999813,
+        "p95": 4293.530599999998,
+        "max": 7003.100299999991
+      },
+      "hull": [
+        0.4882033129787941,
+        0.9999999999999998
+      ],
+      "directionChanges": [
+        0,
+        16
+      ],
+      "longStraights": [
+        1,
+        4
+      ],
+      "elevationRange": [
+        2.228643587938933,
+        26.061171346963775
+      ],
+      "retainedRelief": [
+        0.7134375516884753,
+        0.9954272915196388
+      ],
+      "modes": [
+        "sequence",
+        "anchors"
+      ],
+      "maxGrade": 0.05516685447739692,
+      "challengeAboveSixPercent": 0,
+      "largestMesh": 135750,
+      "uniqueFingerprints": 1000,
+      "rejectedCandidates": 13,
+      "extremes": {
+        "slowest": {
+          "id": 467,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-467",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 4500,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-e20933b1",
+          "ms": 7003.100299999991,
+          "metrics": {
+            "length": 4500.000000000301,
+            "elevationRange": 12.267715780550404,
+            "maxGrade": 0.019447264377318713,
+            "maxBank": 0.037075252026578576,
+            "minWidth": 10.799540240497093,
+            "maxWidth": 14.000338502271239,
+            "minRadius": 81.823783399593,
+            "clearance": 62.84402810554253,
+            "maxWidthRate": 0.015476197874498727,
+            "maxBankRate": 0.000935260793977328,
+            "crestG": 0.14889999554872024,
+            "compressionG": 0.10035379238711913,
+            "startStraight": 250,
+            "earthworkRms": 0.12916113941285595,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 3533,
+            "feasible": 8,
+            "hull": 0.8467592478890856,
+            "changes": 8,
+            "straights": 2,
+            "cutFill": 0.19886026725259046,
+            "retained": 0.9820026844003008,
+            "closure": 0.11501711806103344
+          },
+          "triangles": 132754
+        },
+        "tightest": {
+          "id": 348,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-348",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 2000,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "fingerprint": "v2-9c21c33f",
+          "ms": 1456.7027000000235,
+          "metrics": {
+            "length": 2000.000000000013,
+            "elevationRange": 8.679161694495392,
+            "maxGrade": 0.03628180290804505,
+            "maxBank": 0.04791465330498496,
+            "minWidth": 10.821597538492272,
+            "maxWidth": 14.000353423521263,
+            "minRadius": 28.425001952771115,
+            "clearance": 53.437963075593785,
+            "maxWidthRate": 0.015516181998888275,
+            "maxBankRate": 0.00201218831511026,
+            "crestG": 0.2266678599375885,
+            "compressionG": 0.2595340602164105,
+            "startStraight": 246,
+            "earthworkRms": 0.36203338233536625,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 5755,
+            "feasible": 8,
+            "hull": 0.8311111252850677,
+            "changes": 12,
+            "straights": 1,
+            "cutFill": 0.4396395722753483,
+            "retained": 0.9187559067006078,
+            "closure": 0.10285101495825652
+          },
+          "triangles": 56224
+        },
+        "steepest": {
+          "id": 969,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-969",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 2000,
+            "character": "technical",
+            "envelope": "terrain",
+            "layout": 0
+          },
+          "fingerprint": "v2-aaa82384",
+          "ms": 1747.185999999987,
+          "metrics": {
+            "length": 2000.0000000000368,
+            "elevationRange": 17.14390867445007,
+            "maxGrade": 0.05516685447739692,
+            "maxBank": 0.0473834715317467,
+            "minWidth": 10.807793174715767,
+            "maxWidth": 14.000353423521261,
+            "minRadius": 33.112283455015934,
+            "clearance": 50.69806269565093,
+            "maxWidthRate": 0.015273271694599619,
+            "maxBankRate": 0.001996356335100359,
+            "crestG": 0.18039254433186733,
+            "compressionG": 0.1354373023954311,
+            "startStraight": 246,
+            "earthworkRms": 0.46811763121004385,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 6400,
+            "feasible": 5,
+            "hull": 0.9035755528402077,
+            "changes": 10,
+            "straights": 1,
+            "cutFill": 0.49738538874228,
+            "retained": 0.9523677929062101,
+            "closure": 0.027969719389833957
+          },
+          "triangles": 57260
+        },
+        "mostFolded": {
+          "id": 701,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-701",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 4500,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-0b2c758c",
+          "ms": 3040.3796999999904,
+          "metrics": {
+            "length": 4499.999999999514,
+            "elevationRange": 15.742501869507784,
+            "maxGrade": 0.020592903803918004,
+            "maxBank": 0.042272244821138005,
+            "minWidth": 10.799393611270435,
+            "maxWidth": 14.000338740094316,
+            "minRadius": 72.18638518952615,
+            "clearance": 42.93409333878718,
+            "maxWidthRate": 0.015480381080312694,
+            "maxBankRate": 0.0013664300022579942,
+            "crestG": 0.10601515892084928,
+            "compressionG": 0.14510985159458306,
+            "startStraight": 328,
+            "earthworkRms": 0.11380919195991686,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 903,
+            "feasible": 8,
+            "hull": 0.4882033129787941,
+            "changes": 10,
+            "straights": 2,
+            "cutFill": 0.16389973021263282,
+            "retained": 0.9728814781278361,
+            "closure": 0.1233292781309482
+          },
+          "triangles": 127766
+        },
+        "largestRelief": {
+          "id": 971,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-971",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 4500,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-e5821a41",
+          "ms": 3503.406399999978,
+          "metrics": {
+            "length": 4499.999999999641,
+            "elevationRange": 26.061171346963775,
+            "maxGrade": 0.031687490505793024,
+            "maxBank": 0.04201329306423184,
+            "minWidth": 10.79948119251991,
+            "maxWidth": 14.00033874009431,
+            "minRadius": 72.68877392717977,
+            "clearance": 62.1001496053932,
+            "maxWidthRate": 0.01548038108030804,
+            "maxBankRate": 0.0012018601270000592,
+            "crestG": 0.14178454629076354,
+            "compressionG": 0.10519630600990174,
+            "startStraight": 264,
+            "earthworkRms": 0.1258054181744879,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 1059,
+            "feasible": 8,
+            "hull": 0.8221801353873779,
+            "changes": 6,
+            "straights": 3,
+            "cutFill": 0.17172991851713038,
+            "retained": 0.990546415271063,
+            "closure": 0.1645374663468964
+          },
+          "triangles": 130822
+        },
+        "largestMesh": {
+          "id": 680,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-680",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 4500,
+            "character": "flowing",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-9e514398",
+          "ms": 5646.012400000007,
+          "metrics": {
+            "length": 4499.999999999196,
+            "elevationRange": 25.848620976323005,
+            "maxGrade": 0.030006770455594176,
+            "maxBank": 0.032954764744249146,
+            "minWidth": 10.799542575604182,
+            "maxWidth": 14.000338740094312,
+            "minRadius": 92.58876719110069,
+            "clearance": 63.56871284684572,
+            "maxWidthRate": 0.01548038108030957,
+            "maxBankRate": 0.0009001202538823386,
+            "crestG": 0.10067143765293053,
+            "compressionG": 0.056457420113879046,
+            "startStraight": 250,
+            "earthworkRms": 0.13232381105872895,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "anchors",
+            "proposals": 420,
+            "feasible": 8,
+            "hull": 0.9683710163611573,
+            "changes": 2,
+            "straights": 3,
+            "cutFill": 0.19337981616627634,
+            "retained": 0.990851956222585,
+            "closure": 0.20201753131069483
+          },
+          "triangles": 135750
+        }
+      }
+    },
+    {
+      "family": "touring",
+      "relief": "rolling",
+      "attempted": 1000,
+      "native": 1000,
+      "fallback": 0,
+      "failed": 0,
+      "nativeRate": 1,
+      "compiled": 1000,
+      "timeMs": {
+        "p50": 2018.4449000000022,
+        "p95": 3468.195799999987,
+        "max": 5279.674699999974
+      },
+      "hull": [
+        0.4891417911117121,
+        1.0000000000000009
+      ],
+      "directionChanges": [
+        0,
+        16
+      ],
+      "longStraights": [
+        1,
+        4
+      ],
+      "elevationRange": [
+        5.730797797557329,
+        56.99560996906426
+      ],
+      "retainedRelief": [
+        0.572964757517552,
+        0.9937460587645748
+      ],
+      "modes": [
+        "sequence",
+        "anchors"
+      ],
+      "maxGrade": 0.08659947476959304,
+      "challengeAboveSixPercent": 51,
+      "largestMesh": 135718,
+      "uniqueFingerprints": 1000,
+      "rejectedCandidates": 30,
+      "extremes": {
+        "slowest": {
+          "id": 1233,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-233",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 4500,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-0b7e2df1",
+          "ms": 5279.674699999974,
+          "metrics": {
+            "length": 4499.999999999316,
+            "elevationRange": 19.15884644529379,
+            "maxGrade": 0.030417118037114416,
+            "maxBank": 0.04161979380337612,
+            "minWidth": 10.79946852392846,
+            "maxWidth": 14.000338740094312,
+            "minRadius": 71.49908931438338,
+            "clearance": 62.04040834497449,
+            "maxWidthRate": 0.015480381080308712,
+            "maxBankRate": 0.0012378636254172116,
+            "crestG": 0.21633651744884883,
+            "compressionG": 0.1477509945359981,
+            "startStraight": 246,
+            "earthworkRms": 0.2263516200787878,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 1687,
+            "feasible": 8,
+            "hull": 0.7394466874496307,
+            "changes": 12,
+            "straights": 2,
+            "cutFill": 0.2953919723539886,
+            "retained": 0.9841938283604061,
+            "closure": 0.11281545892943483
+          },
+          "triangles": 132118
+        },
+        "tightest": {
+          "id": 1348,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-348",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 2000,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "fingerprint": "v2-3a27e2c0",
+          "ms": 1624.2532999999821,
+          "metrics": {
+            "length": 2000.000000000013,
+            "elevationRange": 21.34577593640994,
+            "maxGrade": 0.05089270173884209,
+            "maxBank": 0.04791465330498496,
+            "minWidth": 10.821597538492272,
+            "maxWidth": 14.000353423521263,
+            "minRadius": 28.425001952771115,
+            "clearance": 53.437963075593785,
+            "maxWidthRate": 0.015516181998888275,
+            "maxBankRate": 0.00201218831511026,
+            "crestG": 0.24424579159984083,
+            "compressionG": 0.3623562630920883,
+            "startStraight": 246,
+            "earthworkRms": 2.2560397294916945,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 5755,
+            "feasible": 8,
+            "hull": 0.8311111252850677,
+            "changes": 12,
+            "straights": 1,
+            "cutFill": 2.33100370097929,
+            "retained": 0.8791213143022936,
+            "closure": 0.10285101495825652
+          },
+          "triangles": 56224
+        },
+        "steepest": {
+          "id": 1489,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-489",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 2000,
+            "character": "flowing",
+            "envelope": "terrain",
+            "layout": 0
+          },
+          "fingerprint": "v2-97cd8c69",
+          "ms": 1392.3373000000138,
+          "metrics": {
+            "length": 1999.9999999999852,
+            "elevationRange": 17.178136155628273,
+            "maxGrade": 0.08659947476959304,
+            "maxBank": 0.02603625473025704,
+            "minWidth": 10.79902847592797,
+            "maxWidth": 14.000354005053381,
+            "minRadius": 38.5908713992201,
+            "clearance": 53.48354286571838,
+            "maxWidthRate": 0.015523620346483363,
+            "maxBankRate": 0.001159151421596677,
+            "crestG": 0.2789759827746187,
+            "compressionG": 0.3458058441897408,
+            "startStraight": 246,
+            "earthworkRms": 1.5223936123124524,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 857,
+            "feasible": 8,
+            "hull": 0.9555864313040603,
+            "changes": 6,
+            "straights": 2,
+            "cutFill": 1.5735011087886261,
+            "retained": 0.8831545693914973,
+            "closure": 0.2001174150413991
+          },
+          "triangles": 57510
+        },
+        "mostFolded": {
+          "id": 1122,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-122",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 4500,
+            "character": "flowing",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-fb87df30",
+          "ms": 2708.4833000000217,
+          "metrics": {
+            "length": 4500.000000000293,
+            "elevationRange": 29.393739157217993,
+            "maxGrade": 0.04985984844126535,
+            "maxBank": 0.03605349149932926,
+            "minWidth": 10.799539417924727,
+            "maxWidth": 14.00033850227124,
+            "minRadius": 84.57824481336813,
+            "clearance": 62.55758012798342,
+            "maxWidthRate": 0.015476197874494977,
+            "maxBankRate": 0.0010264059092594106,
+            "crestG": 0.10980154502393365,
+            "compressionG": 0.1819974774647762,
+            "startStraight": 248,
+            "earthworkRms": 0.4037913198604472,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 326,
+            "feasible": 8,
+            "hull": 0.4891417911117121,
+            "changes": 4,
+            "straights": 3,
+            "cutFill": 0.45294321314144154,
+            "retained": 0.9700969885531419,
+            "closure": 0.06129395999193401
+          },
+          "triangles": 129200
+        },
+        "largestRelief": {
+          "id": 1848,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-848",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 4500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-54ae7545",
+          "ms": 2836.4697999999626,
+          "metrics": {
+            "length": 4500.0000000000155,
+            "elevationRange": 56.99560996906426,
+            "maxGrade": 0.049915936055854614,
+            "maxBank": 0.02798486074579602,
+            "minWidth": 10.799540240497091,
+            "maxWidth": 14.000338502271235,
+            "minRadius": 109.04033086799141,
+            "clearance": 64.16618278510632,
+            "maxWidthRate": 0.015476197874495043,
+            "maxBankRate": 0.0008128800566946839,
+            "crestG": 0.11485914020305364,
+            "compressionG": 0.11649217691463935,
+            "startStraight": 278,
+            "earthworkRms": 0.4234363589085666,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "anchors",
+            "proposals": 1064,
+            "feasible": 8,
+            "hull": 0.8212800680789951,
+            "changes": 4,
+            "straights": 3,
+            "cutFill": 0.5229744018891896,
+            "retained": 0.9715573955355141,
+            "closure": 0.10469336776280916
+          },
+          "triangles": 132356
+        },
+        "largestMesh": {
+          "id": 1428,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-428",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 4500,
+            "character": "flowing",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-edceabf8",
+          "ms": 2846.6329999999143,
+          "metrics": {
+            "length": 4500.000000000181,
+            "elevationRange": 30.778544830499925,
+            "maxGrade": 0.04945589289165932,
+            "maxBank": 0.033705543516167946,
+            "minWidth": 10.799540240497091,
+            "maxWidth": 14.000338502271237,
+            "minRadius": 89.99097938802373,
+            "clearance": 63.36614439257612,
+            "maxWidthRate": 0.015476197874494918,
+            "maxBankRate": 0.0009283757097409177,
+            "crestG": 0.0961157187990184,
+            "compressionG": 0.181993290658898,
+            "startStraight": 246,
+            "earthworkRms": 0.5551856218577674,
+            "designSpeed": 40
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 234,
+            "feasible": 8,
+            "hull": 0.8852725596756523,
+            "changes": 6,
+            "straights": 2,
+            "cutFill": 0.6225114181543833,
+            "retained": 0.9694669083807578,
+            "closure": 0.1738504136404172
+          },
+          "triangles": 135718
+        }
+      }
+    },
+    {
+      "family": "gp",
+      "relief": "gentle",
+      "attempted": 1000,
+      "native": 1000,
+      "fallback": 0,
+      "failed": 0,
+      "nativeRate": 1,
+      "compiled": 1000,
+      "timeMs": {
+        "p50": 3957.8292999998666,
+        "p95": 7108.017899999861,
+        "max": 9443.224500000011
+      },
+      "hull": [
+        0.4470191696972144,
+        1.0000000000000013
+      ],
+      "directionChanges": [
+        0,
+        18
+      ],
+      "longStraights": [
+        1,
+        6
+      ],
+      "elevationRange": [
+        2.5013913468455176,
+        33.09651770221532
+      ],
+      "retainedRelief": [
+        0.8805240395771335,
+        0.9987087315961658
+      ],
+      "modes": [
+        "sequence",
+        "anchors"
+      ],
+      "maxGrade": 0.06217458146967925,
+      "challengeAboveSixPercent": 1,
+      "largestMesh": 240946,
+      "uniqueFingerprints": 1000,
+      "rejectedCandidates": 5,
+      "extremes": {
+        "slowest": {
+          "id": 2991,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-991",
+            "family": "gp",
+            "relief": "gentle",
+            "targetLength": 5200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 1
+          },
+          "fingerprint": "v2-fd1dc78d",
+          "ms": 9443.224500000011,
+          "metrics": {
+            "length": 5200.000000000019,
+            "elevationRange": 12.173966007655206,
+            "maxGrade": 0.018585374328005732,
+            "maxBank": 0.042137026980298906,
+            "minWidth": 13.499484440758803,
+            "maxWidth": 16.00026197555642,
+            "minRadius": 71.54591034427456,
+            "clearance": 49.63914085537733,
+            "maxWidthRate": 0.012081076375518814,
+            "maxBankRate": 0.0012059832342893938,
+            "crestG": 0.1229108087896626,
+            "compressionG": 0.08120734030012022,
+            "startStraight": 368,
+            "earthworkRms": 0.11673735298771848,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 1900,
+            "feasible": 8,
+            "hull": 0.5628689437695689,
+            "changes": 10,
+            "straights": 2,
+            "cutFill": 0.18042210763320604,
+            "retained": 0.9717129387311626,
+            "closure": 0.06116615443288128
+          },
+          "triangles": 157542
+        },
+        "tightest": {
+          "id": 2708,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-708",
+            "family": "gp",
+            "relief": "gentle",
+            "targetLength": 4000,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "fingerprint": "v2-efc8f361",
+          "ms": 3957.8292999998666,
+          "metrics": {
+            "length": 3999.999999999672,
+            "elevationRange": 3.272624947669712,
+            "maxGrade": 0.011363142356366563,
+            "maxBank": 0.041920344445606585,
+            "minWidth": 13.499343779634296,
+            "maxWidth": 16.000263158328806,
+            "minRadius": 47.48960896979434,
+            "clearance": 56.51798603150178,
+            "maxWidthRate": 0.012089313447926622,
+            "maxBankRate": 0.000853396682981325,
+            "crestG": 0.2347714386584749,
+            "compressionG": 0.2325551474711414,
+            "startStraight": 364,
+            "earthworkRms": 0.11849680432029992,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 4137,
+            "feasible": 8,
+            "hull": 0.6584949234865985,
+            "changes": 12,
+            "straights": 2,
+            "cutFill": 0.17412037706890204,
+            "retained": 0.9118536013276669,
+            "closure": 0.049485603683053034
+          },
+          "triangles": 115116
+        },
+        "steepest": {
+          "id": 2429,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-429",
+            "family": "gp",
+            "relief": "gentle",
+            "targetLength": 4000,
+            "character": "technical",
+            "envelope": "terrain",
+            "layout": 0
+          },
+          "fingerprint": "v2-3e7f07e4",
+          "ms": 3006.037200000137,
+          "metrics": {
+            "length": 3999.9999999997103,
+            "elevationRange": 23.521864458272287,
+            "maxGrade": 0.06217458146967925,
+            "maxBank": 0.04495851970333044,
+            "minWidth": 13.499328090099523,
+            "maxWidth": 16.000263158328806,
+            "minRadius": 53.526623269365885,
+            "clearance": 59.40228013597077,
+            "maxWidthRate": 0.012113928498085779,
+            "maxBankRate": 0.0015739631016699039,
+            "crestG": 0.18113526739020655,
+            "compressionG": 0.15438388558796176,
+            "startStraight": 400,
+            "earthworkRms": 0.49223033635769664,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 4463,
+            "feasible": 8,
+            "hull": 0.6418370142871793,
+            "changes": 12,
+            "straights": 2,
+            "cutFill": 0.5432508854126762,
+            "retained": 0.9793390163063442,
+            "closure": 0.16586890658254932
+          },
+          "triangles": 115846
+        },
+        "mostFolded": {
+          "id": 2350,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-350",
+            "family": "gp",
+            "relief": "gentle",
+            "targetLength": 7500,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-3ec73de0",
+          "ms": 7346.197200000053,
+          "metrics": {
+            "length": 7499.999999999171,
+            "elevationRange": 7.111723593273245,
+            "maxGrade": 0.01632028445128605,
+            "maxBank": 0.03514009235112062,
+            "minWidth": 13.499643680159442,
+            "maxWidth": 16.000262270070166,
+            "minRadius": 86.79954795174747,
+            "clearance": 58.506798016712295,
+            "maxWidthRate": 0.012084947004267658,
+            "maxBankRate": 0.0009405246716446705,
+            "crestG": 0.10101011901388535,
+            "compressionG": 0.18191423255126152,
+            "startStraight": 360,
+            "earthworkRms": 0.10371174212527527,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 1163,
+            "feasible": 8,
+            "hull": 0.4470191696972144,
+            "changes": 10,
+            "straights": 2,
+            "cutFill": 0.16854301620424314,
+            "retained": 0.9690889032363146,
+            "closure": 0.04661067148607981
+          },
+          "triangles": 222750
+        },
+        "largestRelief": {
+          "id": 2368,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-368",
+            "family": "gp",
+            "relief": "gentle",
+            "targetLength": 7500,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-6e39b317",
+          "ms": 5511.553300000029,
+          "metrics": {
+            "length": 7500.000000001075,
+            "elevationRange": 33.09651770221532,
+            "maxGrade": 0.027339799183014536,
+            "maxBank": 0.04046473397732634,
+            "minWidth": 13.499643054473138,
+            "maxWidth": 16.000262160561977,
+            "minRadius": 74.71853938823098,
+            "clearance": 60.26869557791271,
+            "maxWidthRate": 0.012082708905856818,
+            "maxBankRate": 0.0010879797034152934,
+            "crestG": 0.1822954156494946,
+            "compressionG": 0.08879860269135748,
+            "startStraight": 348,
+            "earthworkRms": 0.13474502575471567,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 1413,
+            "feasible": 8,
+            "hull": 0.7882529921233407,
+            "changes": 12,
+            "straights": 3,
+            "cutFill": 0.2509288541003718,
+            "retained": 0.9904097104706083,
+            "closure": 0.11480443135452852
+          },
+          "triangles": 223400
+        },
+        "largestMesh": {
+          "id": 2932,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-932",
+            "family": "gp",
+            "relief": "gentle",
+            "targetLength": 7500,
+            "character": "flowing",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-e5b45a0c",
+          "ms": 5914.786799999885,
+          "metrics": {
+            "length": 7499.9999999989395,
+            "elevationRange": 29.26527348935918,
+            "maxGrade": 0.01954855394878848,
+            "maxBank": 0.017718565450004484,
+            "minWidth": 13.499643680159439,
+            "maxWidth": 16.000262270070166,
+            "minRadius": 172.2944146004938,
+            "clearance": 63.285799683099896,
+            "maxWidthRate": 0.012084947004262258,
+            "maxBankRate": 0.0004729565194790934,
+            "crestG": 0.09808283061762667,
+            "compressionG": 0.12701469189301873,
+            "startStraight": 392,
+            "earthworkRms": 0.06068271853614512,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "anchors",
+            "proposals": 273,
+            "feasible": 8,
+            "hull": 0.8710419283517102,
+            "changes": 2,
+            "straights": 3,
+            "cutFill": 0.13160928258996868,
+            "retained": 0.9938123980869702,
+            "closure": 0.18495165372999378
+          },
+          "triangles": 240946
+        }
+      }
+    },
+    {
+      "family": "gp",
+      "relief": "rolling",
+      "attempted": 1000,
+      "native": 1000,
+      "fallback": 0,
+      "failed": 0,
+      "nativeRate": 1,
+      "compiled": 1000,
+      "timeMs": {
+        "p50": 4265.4207999999635,
+        "p95": 7608.122599999886,
+        "max": 11374.708800000139
+      },
+      "hull": [
+        0.4470191696972144,
+        1.0000000000000013
+      ],
+      "directionChanges": [
+        0,
+        18
+      ],
+      "longStraights": [
+        1,
+        7
+      ],
+      "elevationRange": [
+        8.511604707135648,
+        74.95422196397638
+      ],
+      "retainedRelief": [
+        0.8531585970813249,
+        0.9964334344966058
+      ],
+      "modes": [
+        "sequence",
+        "anchors"
+      ],
+      "maxGrade": 0.08509882841578534,
+      "challengeAboveSixPercent": 19,
+      "largestMesh": 240646,
+      "uniqueFingerprints": 1000,
+      "rejectedCandidates": 12,
+      "extremes": {
+        "slowest": {
+          "id": 3794,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-794",
+            "family": "gp",
+            "relief": "rolling",
+            "targetLength": 7500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-71ac1344",
+          "ms": 11374.708800000139,
+          "metrics": {
+            "length": 7499.99999999886,
+            "elevationRange": 30.089795584329394,
+            "maxGrade": 0.03375504580949408,
+            "maxBank": 0.04633293618209765,
+            "minWidth": 13.499326236045606,
+            "maxWidth": 16.000262270070166,
+            "minRadius": 55.9300037557245,
+            "clearance": 57.557689730008235,
+            "maxWidthRate": 0.01208494700426283,
+            "maxBankRate": 0.0011713859558645124,
+            "crestG": 0.21266355246564547,
+            "compressionG": 0.18185163240351215,
+            "startStraight": 346,
+            "earthworkRms": 0.20852557708981265,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 1303,
+            "feasible": 8,
+            "hull": 0.7064700069600125,
+            "changes": 14,
+            "straights": 3,
+            "cutFill": 0.35180093043580746,
+            "retained": 0.9818062884875021,
+            "closure": 0.09245945584577095
+          },
+          "triangles": 233652
+        },
+        "tightest": {
+          "id": 3033,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-33",
+            "family": "gp",
+            "relief": "rolling",
+            "targetLength": 4000,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "fingerprint": "v2-074e045d",
+          "ms": 3108.1182000001427,
+          "metrics": {
+            "length": 3999.999999999958,
+            "elevationRange": 26.278747027212454,
+            "maxGrade": 0.0484672291865862,
+            "maxBank": 0.04462079328718786,
+            "minWidth": 13.499579479389148,
+            "maxWidth": 16.00026315832881,
+            "minRadius": 47.294681528250344,
+            "clearance": 56.22027421444385,
+            "maxWidthRate": 0.012131820970350387,
+            "maxBankRate": 0.0011460729212304946,
+            "crestG": 0.11326380654685217,
+            "compressionG": 0.181467346889694,
+            "startStraight": 346,
+            "earthworkRms": 0.5887132033851907,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 3097,
+            "feasible": 8,
+            "hull": 0.5442660140663474,
+            "changes": 12,
+            "straights": 2,
+            "cutFill": 0.6236951565715033,
+            "retained": 0.9328485803791533,
+            "closure": 0.1387528292662559
+          },
+          "triangles": 116740
+        },
+        "steepest": {
+          "id": 3949,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-949",
+            "family": "gp",
+            "relief": "rolling",
+            "targetLength": 5200,
+            "character": "flowing",
+            "envelope": "terrain",
+            "layout": 1
+          },
+          "fingerprint": "v2-d08f85dd",
+          "ms": 4050.87109999964,
+          "metrics": {
+            "length": 5199.999999999845,
+            "elevationRange": 37.297079146977396,
+            "maxGrade": 0.08509882841578534,
+            "maxBank": 0.04255654900964282,
+            "minWidth": 13.499590445867756,
+            "maxWidth": 16.000262133495617,
+            "minRadius": 70.87673182861118,
+            "clearance": 59.91235308509872,
+            "maxWidthRate": 0.012084398584647186,
+            "maxBankRate": 0.0011678678804560782,
+            "crestG": 0.20151207735570073,
+            "compressionG": 0.2330538605199239,
+            "startStraight": 344,
+            "earthworkRms": 0.6567794699539642,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 670,
+            "feasible": 8,
+            "hull": 0.7975438762785816,
+            "changes": 8,
+            "straights": 2,
+            "cutFill": 0.7346039636501128,
+            "retained": 0.9856107965572326,
+            "closure": 0.09754170493037824
+          },
+          "triangles": 154136
+        },
+        "mostFolded": {
+          "id": 3350,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-350",
+            "family": "gp",
+            "relief": "rolling",
+            "targetLength": 7500,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-c84699d8",
+          "ms": 6677.950399999972,
+          "metrics": {
+            "length": 7499.999999999202,
+            "elevationRange": 18.25775557254893,
+            "maxGrade": 0.0496334391466389,
+            "maxBank": 0.035140092351118486,
+            "minWidth": 13.499643680159437,
+            "maxWidth": 16.000262270070163,
+            "minRadius": 86.79954795175485,
+            "clearance": 58.50679801671218,
+            "maxWidthRate": 0.0120849470042625,
+            "maxBankRate": 0.0009405246716451074,
+            "crestG": 0.188942834348763,
+            "compressionG": 0.20608449217571498,
+            "startStraight": 346,
+            "earthworkRms": 0.2905827752670385,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 1163,
+            "feasible": 8,
+            "hull": 0.4470191696972144,
+            "changes": 10,
+            "straights": 2,
+            "cutFill": 0.4359487050581986,
+            "retained": 0.9690889032363204,
+            "closure": 0.04661067148607981
+          },
+          "triangles": 222750
+        },
+        "largestRelief": {
+          "id": 3209,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-209",
+            "family": "gp",
+            "relief": "rolling",
+            "targetLength": 7500,
+            "character": "mixed",
+            "envelope": "terrain",
+            "layout": 2
+          },
+          "fingerprint": "v2-5d04d050",
+          "ms": 7174.584199999925,
+          "metrics": {
+            "length": 7500.000000001627,
+            "elevationRange": 74.95422196397638,
+            "maxGrade": 0.0413366761110021,
+            "maxBank": 0.022749856107002708,
+            "minWidth": 13.499643054473134,
+            "maxWidth": 16.000262160561974,
+            "minRadius": 116.65748142833473,
+            "clearance": 62.437595899416195,
+            "maxWidthRate": 0.01208270890585593,
+            "maxBankRate": 0.0008614904029906153,
+            "crestG": 0.12406028262327448,
+            "compressionG": 0.18254125359396772,
+            "startStraight": 348,
+            "earthworkRms": 0.20189955232802423,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "sequence",
+            "proposals": 1535,
+            "feasible": 8,
+            "hull": 0.8660250275388186,
+            "changes": 8,
+            "straights": 3,
+            "cutFill": 0.4313388429983763,
+            "retained": 0.9892508171214547,
+            "closure": 0.20383270929766323
+          },
+          "triangles": 235344
+        },
+        "largestMesh": {
+          "id": 3203,
+          "recipe": {
+            "version": 2,
+            "seed": "qualification-203",
+            "family": "gp",
+            "relief": "rolling",
+            "targetLength": 7500,
+            "character": "flowing",
+            "envelope": "comfortable",
+            "layout": 2
+          },
+          "fingerprint": "v2-d4ffd9c5",
+          "ms": 8581.746599999955,
+          "metrics": {
+            "length": 7500.000000001742,
+            "elevationRange": 55.55934420672154,
+            "maxGrade": 0.032999927057756874,
+            "maxBank": 0.015896639100861715,
+            "minWidth": 13.499643054473134,
+            "maxWidth": 16.000262160561974,
+            "minRadius": 191.84020004883595,
+            "clearance": 63.38158501124097,
+            "maxWidthRate": 0.012082708905856634,
+            "maxBankRate": 0.00041758774960956965,
+            "crestG": 0.1822938480868163,
+            "compressionG": 0.18604696213676158,
+            "startStraight": 346,
+            "earthworkRms": 0.13591690797502246,
+            "designSpeed": 52
+          },
+          "design": {
+            "mode": "anchors",
+            "proposals": 398,
+            "feasible": 8,
+            "hull": 0.9999999999999989,
+            "changes": 0,
+            "straights": 3,
+            "cutFill": 0.25318087298272673,
+            "retained": 0.989226259434487,
+            "closure": 0.10897616897221471
+          },
+          "triangles": 240646
+        }
+      }
+    }
+  ],
+  "node": "v24.15.0",
+  "generatedAt": "2026-10-25T14:18:27.490Z",
+  "portfolioDiversity": {
+    "cases": 32,
+    "distinctSeeds": 32,
+    "selection": "Fixed disjoint index ranges: touring/gentle 0–7, touring/rolling 8–15, GP/gentle 16–23, GP/rolling 24–31. No selection by shape.",
+    "method": "RMS outline distance after centering, RMS-radius normalization and best rotation/reflection/circulation, with cyclic starts sampled every 2% of lap. Zero means the same outline; distance is not a quality score.",
+    "closestPairs": [
+      {
+        "a": 2022,
+        "b": 3029,
+        "distance": 0.08224677561054665
+      },
+      {
+        "a": 3,
+        "b": 3027,
+        "distance": 0.09514743556049596
+      },
+      {
+        "a": 1010,
+        "b": 2021,
+        "distance": 0.11880293790361784
+      },
+      {
+        "a": 1013,
+        "b": 3027,
+        "distance": 0.12723774513135147
+      },
+      {
+        "a": 6,
+        "b": 1010,
+        "distance": 0.12752402136721425
+      }
+    ],
+    "pairDistance": {
+      "min": 0.08224677561054665,
+      "median": 0.28212296758741623,
+      "max": 0.6305510823389773
+    }
+  }
+}

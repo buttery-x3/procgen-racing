@@ -1,0 +1,239 @@
+{
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "summary": {
+    "attempted": 12,
+    "failed": 0,
+    "fallback": 0,
+    "p50Ms": 1749.5,
+    "p95Ms": 2878.7000000476837,
+    "maxMs": 2878.7000000476837,
+    "maxTypedBufferMiB": 5.058803558349609,
+    "typedBufferMiB": {
+      "min": 1.2367362976074219,
+      "p50": 2.9105873107910156,
+      "p95": 5.058803558349609,
+      "max": 5.058803558349609
+    }
+  },
+  "records": [
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-0",
+        "family": "touring",
+        "relief": "gentle",
+        "targetLength": 2000,
+        "character": "flowing",
+        "layout": 0,
+        "envelope": "comfortable"
+      },
+      "ms": 752.7000000476837,
+      "fingerprint": "v2-6e0b9e99",
+      "fallback": false,
+      "triangles": 56810,
+      "chunks": 64,
+      "typedBufferMiB": 1.2367362976074219
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-1",
+        "family": "touring",
+        "relief": "gentle",
+        "targetLength": 3200,
+        "character": "mixed",
+        "layout": 1,
+        "envelope": "comfortable"
+      },
+      "ms": 1034.1000000238419,
+      "fingerprint": "v2-e9581c28",
+      "fallback": false,
+      "triangles": 92542,
+      "chunks": 115,
+      "typedBufferMiB": 2.0178489685058594
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-2",
+        "family": "touring",
+        "relief": "gentle",
+        "targetLength": 4500,
+        "character": "technical",
+        "layout": 2,
+        "envelope": "comfortable"
+      },
+      "ms": 1485.3000000715256,
+      "fingerprint": "v2-acdea1ec",
+      "fallback": false,
+      "triangles": 133554,
+      "chunks": 162,
+      "typedBufferMiB": 2.9105873107910156
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-0",
+        "family": "touring",
+        "relief": "rolling",
+        "targetLength": 2000,
+        "character": "flowing",
+        "layout": 0,
+        "envelope": "comfortable"
+      },
+      "ms": 836.3999999761581,
+      "fingerprint": "v2-f9ed7921",
+      "fallback": false,
+      "triangles": 56810,
+      "chunks": 64,
+      "typedBufferMiB": 1.2367362976074219
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-1",
+        "family": "touring",
+        "relief": "rolling",
+        "targetLength": 3200,
+        "character": "mixed",
+        "layout": 1,
+        "envelope": "comfortable"
+      },
+      "ms": 1150,
+      "fingerprint": "v2-921cf89c",
+      "fallback": false,
+      "triangles": 92542,
+      "chunks": 115,
+      "typedBufferMiB": 2.0178489685058594
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-2",
+        "family": "touring",
+        "relief": "rolling",
+        "targetLength": 4500,
+        "character": "technical",
+        "layout": 2,
+        "envelope": "comfortable"
+      },
+      "ms": 2098.100000023842,
+      "fingerprint": "v2-243ab7ef",
+      "fallback": false,
+      "triangles": 133554,
+      "chunks": 162,
+      "typedBufferMiB": 2.9105873107910156
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-0",
+        "family": "gp",
+        "relief": "gentle",
+        "targetLength": 4000,
+        "character": "flowing",
+        "layout": 0,
+        "envelope": "comfortable"
+      },
+      "ms": 1749.5,
+      "fingerprint": "v2-1862baff",
+      "fallback": false,
+      "triangles": 115392,
+      "chunks": 133,
+      "typedBufferMiB": 2.5147476196289062
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-1",
+        "family": "gp",
+        "relief": "gentle",
+        "targetLength": 5200,
+        "character": "mixed",
+        "layout": 1,
+        "envelope": "comfortable"
+      },
+      "ms": 1966.2000000476837,
+      "fingerprint": "v2-4ca0a563",
+      "fallback": false,
+      "triangles": 154370,
+      "chunks": 190,
+      "typedBufferMiB": 3.3656578063964844
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-2",
+        "family": "gp",
+        "relief": "gentle",
+        "targetLength": 7500,
+        "character": "technical",
+        "layout": 2,
+        "envelope": "comfortable"
+      },
+      "ms": 2548.5,
+      "fingerprint": "v2-bebb8d52",
+      "fallback": false,
+      "triangles": 222610,
+      "chunks": 270,
+      "typedBufferMiB": 4.852252960205078
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-0",
+        "family": "gp",
+        "relief": "rolling",
+        "targetLength": 4000,
+        "character": "flowing",
+        "layout": 0,
+        "envelope": "comfortable"
+      },
+      "ms": 1621.3999999761581,
+      "fingerprint": "v2-366f8e57",
+      "fallback": false,
+      "triangles": 115392,
+      "chunks": 133,
+      "typedBufferMiB": 2.5147476196289062
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-1",
+        "family": "gp",
+        "relief": "rolling",
+        "targetLength": 5200,
+        "character": "mixed",
+        "layout": 1,
+        "envelope": "comfortable"
+      },
+      "ms": 2284.399999976158,
+      "fingerprint": "v2-7bf240d7",
+      "fallback": false,
+      "triangles": 154370,
+      "chunks": 190,
+      "typedBufferMiB": 3.3656578063964844
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-2",
+        "family": "gp",
+        "relief": "rolling",
+        "targetLength": 7500,
+        "character": "technical",
+        "layout": 2,
+        "envelope": "comfortable"
+      },
+      "ms": 2878.7000000476837,
+      "fingerprint": "v2-189a6724",
+      "fallback": false,
+      "triangles": 231810,
+      "chunks": 326,
+      "typedBufferMiB": 5.058803558349609
+    }
+  ],
+  "sourceHash": "999151a7cb7392be",
+  "hardware": "AMD Ryzen 5 5600X / 32 GiB, Windows desktop",
+  "scope": "12 serial production-worker recipes in Chromium 155 after the parallel qualification and simulated laps completed. Times include worker startup and buffer transfer; Vite development mode. Typed buffer sizes exclude JS objects, colliders and GPU memory."
+}

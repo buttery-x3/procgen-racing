@@ -1,0 +1,2 @@
+# Keep source bytes and qualification hashes stable across Windows/macOS/Linux.
+* text=auto eol=lf

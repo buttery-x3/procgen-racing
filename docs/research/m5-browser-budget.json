@@ -1,0 +1,258 @@
+{
+  "measuredAt": "2026-10-26",
+  "sourceHash": "6282afb450af1fb8",
+  "hardware": "AMD Ryzen 5 5600X, 32 GiB RAM",
+  "scope": "Serial production worker startup, generation, construction and typed-buffer transfer in the embedded desktop browser. Buffer count excludes JavaScript objects, Rapier allocations and GPU memory.",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "summary": {
+    "attempted": 12,
+    "failed": 0,
+    "fallback": 0,
+    "p50Ms": 1968.5,
+    "p95Ms": 3611.399999976158,
+    "maxMs": 3611.399999976158,
+    "maxTypedBufferMiB": 7.130912780761719
+  },
+  "records": [
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-0",
+        "family": "touring",
+        "relief": "gentle",
+        "targetLength": 2000,
+        "character": "flowing",
+        "layout": 0,
+        "envelope": "comfortable"
+      },
+      "ms": 992.6999999284744,
+      "fingerprint": "v2-6e0b9e99/m5-3fc26d30",
+      "theme": "club",
+      "props": 287,
+      "fallback": false,
+      "triangles": 85126,
+      "chunks": 93,
+      "typedBufferMiB": 1.852996826171875
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-1",
+        "family": "touring",
+        "relief": "gentle",
+        "targetLength": 3200,
+        "character": "mixed",
+        "layout": 1,
+        "envelope": "comfortable"
+      },
+      "ms": 1459.6000000238419,
+      "fingerprint": "v2-e9581c28/m5-05fdf4bc",
+      "theme": "traditional",
+      "props": 476,
+      "fallback": false,
+      "triangles": 145552,
+      "chunks": 143,
+      "typedBufferMiB": 3.1673736572265625
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-2",
+        "family": "touring",
+        "relief": "gentle",
+        "targetLength": 4500,
+        "character": "technical",
+        "layout": 2,
+        "envelope": "comfortable"
+      },
+      "ms": 1968.5,
+      "fingerprint": "v2-acdea1ec/m5-facedd21",
+      "theme": "modern",
+      "props": 660,
+      "fallback": false,
+      "triangles": 209092,
+      "chunks": 203,
+      "typedBufferMiB": 4.550483703613281
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-0",
+        "family": "touring",
+        "relief": "rolling",
+        "targetLength": 2000,
+        "character": "flowing",
+        "layout": 0,
+        "envelope": "comfortable"
+      },
+      "ms": 941.8999999761581,
+      "fingerprint": "v2-f9ed7921/m5-81d9e261",
+      "theme": "desert",
+      "props": 294,
+      "fallback": false,
+      "triangles": 84744,
+      "chunks": 92,
+      "typedBufferMiB": 1.8444442749023438
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-1",
+        "family": "touring",
+        "relief": "rolling",
+        "targetLength": 3200,
+        "character": "mixed",
+        "layout": 1,
+        "envelope": "comfortable"
+      },
+      "ms": 1488.6999999284744,
+      "fingerprint": "v2-921cf89c/m5-aa557645",
+      "theme": "club",
+      "props": 469,
+      "fallback": false,
+      "triangles": 146276,
+      "chunks": 144,
+      "typedBufferMiB": 3.183238983154297
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-2",
+        "family": "touring",
+        "relief": "rolling",
+        "targetLength": 4500,
+        "character": "technical",
+        "layout": 2,
+        "envelope": "comfortable"
+      },
+      "ms": 1996.5,
+      "fingerprint": "v2-243ab7ef/m5-78f87988",
+      "theme": "traditional",
+      "props": 660,
+      "fallback": false,
+      "triangles": 211794,
+      "chunks": 205,
+      "typedBufferMiB": 4.609348297119141
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-0",
+        "family": "gp",
+        "relief": "gentle",
+        "targetLength": 4000,
+        "character": "flowing",
+        "layout": 0,
+        "envelope": "comfortable"
+      },
+      "ms": 1646.8999999761581,
+      "fingerprint": "v2-1862baff/m5-46b101f1",
+      "theme": "modern",
+      "props": 566,
+      "fallback": false,
+      "triangles": 139880,
+      "chunks": 146,
+      "typedBufferMiB": 3.045246124267578
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-1",
+        "family": "gp",
+        "relief": "gentle",
+        "targetLength": 5200,
+        "character": "mixed",
+        "layout": 1,
+        "envelope": "comfortable"
+      },
+      "ms": 2375.8000000715256,
+      "fingerprint": "v2-4ca0a563/m5-ad92b75c",
+      "theme": "desert",
+      "props": 772,
+      "fallback": false,
+      "triangles": 229660,
+      "chunks": 239,
+      "typedBufferMiB": 5.000511169433594
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-2",
+        "family": "gp",
+        "relief": "gentle",
+        "targetLength": 7500,
+        "character": "technical",
+        "layout": 2,
+        "envelope": "comfortable"
+      },
+      "ms": 3154.3000000715256,
+      "fingerprint": "v2-bebb8d52/m5-401d9e15",
+      "theme": "club",
+      "props": 1068,
+      "fallback": false,
+      "triangles": 310114,
+      "chunks": 317,
+      "typedBufferMiB": 6.751869201660156
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-0",
+        "family": "gp",
+        "relief": "rolling",
+        "targetLength": 4000,
+        "character": "flowing",
+        "layout": 0,
+        "envelope": "comfortable"
+      },
+      "ms": 1591.8000000715256,
+      "fingerprint": "v2-366f8e57/m5-cd6409c4",
+      "theme": "traditional",
+      "props": 566,
+      "fallback": false,
+      "triangles": 140402,
+      "chunks": 146,
+      "typedBufferMiB": 3.056507110595703
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-1",
+        "family": "gp",
+        "relief": "rolling",
+        "targetLength": 5200,
+        "character": "mixed",
+        "layout": 1,
+        "envelope": "comfortable"
+      },
+      "ms": 2294.899999976158,
+      "fingerprint": "v2-7bf240d7/m5-1a454ba6",
+      "theme": "modern",
+      "props": 772,
+      "fallback": false,
+      "triangles": 224802,
+      "chunks": 237,
+      "typedBufferMiB": 4.895107269287109
+    },
+    {
+      "recipe": {
+        "version": 2,
+        "seed": "browser-budget-2",
+        "family": "gp",
+        "relief": "rolling",
+        "targetLength": 7500,
+        "character": "technical",
+        "layout": 2,
+        "envelope": "comfortable"
+      },
+      "ms": 3611.399999976158,
+      "fingerprint": "v2-189a6724/m5-8c2b1a01",
+      "theme": "desert",
+      "props": 1086,
+      "fallback": false,
+      "triangles": 327272,
+      "chunks": 377,
+      "typedBufferMiB": 7.130912780761719
+    }
+  ]
+}

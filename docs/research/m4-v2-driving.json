@@ -1,0 +1,138 @@
+{
+  "sourceHash": "999151a7cb7392be",
+  "description": "Full laps at 120 Hz on each family’s tightest, steepest and largest-relief qualified cases. Reference drivers cap speed at 16–21 m/s and brake for .55 g cornering.",
+  "results": [
+    {
+      "role": "tightest",
+      "car": "ff",
+      "recipe": {
+        "version": 2,
+        "seed": "qualification-348",
+        "family": "touring",
+        "relief": "gentle",
+        "targetLength": 2000,
+        "character": "technical",
+        "envelope": "comfortable",
+        "layout": 0
+      },
+      "fingerprint": "v2-9c21c33f",
+      "length": 2000.0000000056366,
+      "travelled": 2010.039459871919,
+      "maxLateral": 0.38605748063502077,
+      "peakLoad": 1.034288435058,
+      "fourContactFraction": 1,
+      "simulationSeconds": 138.49166666666667,
+      "pass": true
+    },
+    {
+      "role": "steepest",
+      "car": "fr",
+      "recipe": {
+        "version": 2,
+        "seed": "qualification-489",
+        "family": "touring",
+        "relief": "rolling",
+        "targetLength": 2000,
+        "character": "flowing",
+        "envelope": "terrain",
+        "layout": 0
+      },
+      "fingerprint": "v2-97cd8c69",
+      "length": 2000.0000000012733,
+      "travelled": 2010.0927194958922,
+      "maxLateral": 0.5760621308039494,
+      "peakLoad": 1.151444076561457,
+      "fourContactFraction": 1,
+      "simulationSeconds": 120.63333333333334,
+      "pass": true
+    },
+    {
+      "role": "largest_relief",
+      "car": "ff",
+      "recipe": {
+        "version": 2,
+        "seed": "qualification-848",
+        "family": "touring",
+        "relief": "rolling",
+        "targetLength": 4500,
+        "character": "mixed",
+        "envelope": "comfortable",
+        "layout": 2
+      },
+      "fingerprint": "v2-54ae7545",
+      "length": 4499.999999997492,
+      "travelled": 4510.121760724863,
+      "maxLateral": 0.1469913157306893,
+      "peakLoad": 1.034756681935369,
+      "fourContactFraction": 1,
+      "simulationSeconds": 302.8333333333333,
+      "pass": true
+    },
+    {
+      "role": "tightest",
+      "car": "mr",
+      "recipe": {
+        "version": 2,
+        "seed": "qualification-33",
+        "family": "gp",
+        "relief": "rolling",
+        "targetLength": 4000,
+        "character": "technical",
+        "envelope": "comfortable",
+        "layout": 0
+      },
+      "fingerprint": "v2-074e045d",
+      "length": 4000.000000008454,
+      "travelled": 4010.1555217486994,
+      "maxLateral": 0.9132094023532347,
+      "peakLoad": 1.1452864114718893,
+      "fourContactFraction": 1,
+      "simulationSeconds": 201.35,
+      "pass": true
+    },
+    {
+      "role": "steepest",
+      "car": "awd",
+      "recipe": {
+        "version": 2,
+        "seed": "qualification-949",
+        "family": "gp",
+        "relief": "rolling",
+        "targetLength": 5200,
+        "character": "flowing",
+        "envelope": "terrain",
+        "layout": 1
+      },
+      "fingerprint": "v2-d08f85dd",
+      "length": 5200.000000007789,
+      "travelled": 5210.161945735356,
+      "maxLateral": 0.6892232782038268,
+      "peakLoad": 1.223075181628163,
+      "fourContactFraction": 1,
+      "simulationSeconds": 270.6,
+      "pass": true
+    },
+    {
+      "role": "largest_relief",
+      "car": "mr",
+      "recipe": {
+        "version": 2,
+        "seed": "qualification-209",
+        "family": "gp",
+        "relief": "rolling",
+        "targetLength": 7500,
+        "character": "mixed",
+        "envelope": "terrain",
+        "layout": 2
+      },
+      "fingerprint": "v2-5d04d050",
+      "length": 7500.000000002519,
+      "travelled": 7510.061824210361,
+      "maxLateral": 0.6301747169447639,
+      "peakLoad": 1.0444203615944583,
+      "fourContactFraction": 1,
+      "simulationSeconds": 371.3,
+      "pass": true
+    }
+  ]
+}
