@@ -20,6 +20,20 @@ export function smoothParam(
   param.setTargetAtTime(value, Math.max(0, time), Math.max(0.001, seconds));
 }
 
+/**
+ * Chromium 152 converts the default loop end from seconds back to frames.
+ * A fractional residue above the buffer end can stop wrapping and reuse invalid
+ * samples (crbug.com/553218226). Pick a nearby exact round trip, keeping rate 1.
+ */
+export function noiseBufferLength(sampleRate: number, durationSeconds: number): number {
+  if (!Number.isFinite(sampleRate) || sampleRate <= 0 || !Number.isFinite(durationSeconds) || durationSeconds <= 0)
+    throw new RangeError("Noise requires a finite positive sample rate and duration.");
+  let frames = Math.ceil(sampleRate * durationSeconds);
+  if (!Number.isSafeInteger(frames)) throw new RangeError("Noise buffer is too large.");
+  while ((frames / sampleRate) * sampleRate !== frames) frames++;
+  return frames;
+}
+
 /** Each voice gets its own deterministic, uncorrelated stream and loop length. */
 export function createNoise(
   context: BaseAudioContext,
@@ -32,7 +46,7 @@ export function createNoise(
     : clampAudio(durationSeconds, 0.1, 8);
   const buffer = context.createBuffer(
     1,
-    Math.ceil(context.sampleRate * duration),
+    noiseBufferLength(context.sampleRate, duration),
     context.sampleRate,
   );
   const data = buffer.getChannelData(0);

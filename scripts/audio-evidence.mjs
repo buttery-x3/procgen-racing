@@ -21,9 +21,11 @@ export function localAudioEvidence() {
           try {
             const report = JSON.parse(body);
             if (!report || typeof report !== "object" || Array.isArray(report)) throw new Error("Object required");
+            const filename = report.format === "procgen-racing:audio-driving-diagnostic"
+              ? "audio-driving-browser.json" : "audio-browser.json";
             const directory = resolve(server.config.root, "artifacts");
             mkdirSync(directory, { recursive: true });
-            writeFileSync(resolve(directory, "audio-browser.json"), JSON.stringify(report, null, 2) + "\n");
+            writeFileSync(resolve(directory, filename), JSON.stringify(report, null, 2) + "\n");
             response.setHeader("Content-Type", "application/json");
             response.end('{"saved":true}');
           } catch {

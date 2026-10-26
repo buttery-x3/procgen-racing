@@ -34,6 +34,7 @@ export interface RenderMeasurement {
     minimumRelativeDb: number;
     windowSeconds: [number, number];
   };
+  transitionWindows?: { name: string; start: number; end: number; rms: number; dominantHz: number }[];
 }
 export interface AudioQualificationReport {
   format: "procgen-racing:audio-qualification";
@@ -118,14 +119,17 @@ interface RenderOptions {
   stopUpdatesAt?: number;
   prepareResumeAt?: number;
   captureMono?: (samples: Float32Array) => void;
+  duration?: number;
+  updateHz?: number;
+  transitionWindows?: { name: string; start: number; end: number }[];
 }
 
 async function render(options: RenderOptions): Promise<RenderMeasurement> {
-  const duration = 0.85;
+  const duration = options.duration ?? 0.85;
   const context = new OfflineAudioContext(2, Math.ceil(duration * options.sampleRate), options.sampleRate);
   const graph = new VehicleAudioGraph(context, context.destination, options.settings, engineAudioProfile(DEFAULT_SETUP), 0);
   try {
-    for (let time = 0; time < duration; time += 1 / 60) {
+    for (let time = 0; time < duration; time += 1 / (options.updateHz ?? 60)) {
       if (time >= (options.stopUpdatesAt ?? Infinity) || time >= (options.silenceAt ?? Infinity) || time >= (options.prepareResumeAt ?? Infinity)) break;
       graph.update(options.frame(time), time);
     }
@@ -145,6 +149,11 @@ async function render(options: RenderOptions): Promise<RenderMeasurement> {
       name: options.name, sampleRate: options.sampleRate, output: options.settings.output, finite, peak,
       leftRms: rms(left, start, end), rightRms: rms(right, start, end), monoRms: rms(mono, start, end),
       ...spectrum(mono, options.sampleRate), resumeGateRms: rms(mono, Math.floor(options.sampleRate * 0.27), Math.floor(options.sampleRate * 0.37)), tailRms: rms(mono, Math.floor(options.sampleRate * 0.72), buffer.length),
+      ...(options.transitionWindows ? { transitionWindows: options.transitionWindows.map(({ name, start, end }) => ({
+        name, start, end,
+        rms: rms(mono, Math.floor(start * options.sampleRate), Math.floor(end * options.sampleRate)),
+        dominantHz: spectrum(mono.slice(Math.floor(start * options.sampleRate), Math.floor(end * options.sampleRate)), options.sampleRate).dominantHz,
+      })) } : {}),
     };
   } finally { graph.dispose(); }
 }
@@ -214,9 +223,53 @@ export async function runAudioQualification(options: {
     const overrun = await engine("overrun", { load: 0, driveLoad: 0, overrun: 1 }, (samples) => { overrunWave = samples; });
     check(`${sampleRate}: idle is audible`, idle.monoRms > 0.0005, `${idle.monoRms.toFixed(6)} RMS`);
     check(`${sampleRate}: power increases level`, loaded.monoRms > low.monoRms * 1.1, `loaded/low-load ${loaded.monoRms.toFixed(6)}/${low.monoRms.toFixed(6)} at 4000 RPM`);
-    check(`${sampleRate}: shift cuts load texture`, shifted.monoRms < loaded.monoRms * 0.95, `shift/loaded ${shifted.monoRms.toFixed(6)}/${loaded.monoRms.toFixed(6)} at identical RPM`);
+    check(`${sampleRate}: shift cuts load texture without silencing the engine`, shifted.monoRms < loaded.monoRms * 0.95 && shifted.monoRms > 0.0005, `shift/loaded ${shifted.monoRms.toFixed(6)}/${loaded.monoRms.toFixed(6)} at identical RPM`);
     check(`${sampleRate}: pitch rises with RPM`, high.dominantHz > idle.dominantHz * 3, `dominant bins idle/high ${idle.dominantHz.toFixed(1)}/${high.dominantHz.toFixed(1)} Hz`);
     check(`${sampleRate}: neutral revs remain audible`, neutral.monoRms > 0.0005 && neutral.dominantHz > idle.dominantHz * 2, `neutral ${neutral.monoRms.toFixed(6)} RMS; dominant ${neutral.dominantHz.toFixed(1)} Hz`);
+    const transitions = await next({
+      name: "engine/launch-shift-stop-relaunch", sampleRate,
+      settings: { ...DEFAULT_AUDIO_SETTINGS, tyres: 0, surface: 0 },
+      duration: 5.5, updateHz: 100,
+      frame: (time) => {
+        const shifting = time >= 1.5 && time < 1.7;
+        const powering = (time >= 0.5 && time < 2.5) || time >= 4.2;
+        const rpm = time < 0.5 ? 1000 : time < 1.5 ? 1000 + (time - 0.5) * 5000
+          : time < 1.7 ? 6000 : time < 2.5 ? 4000 : time < 3.5 ? 4000 - (time - 2.5) * 3000
+          : time < 4.2 ? 1000 : 1000 + (time - 4.2) * 4000;
+        return { ...auditionFrame([]), engine: { rpm, load: powering ? 0.9 : 0, driveLoad: powering && !shifting ? 0.8 : 0,
+          gear: time < 1.5 || time >= 3.5 ? 1 : 2, shifting, overrun: time >= 2.5 && time < 3.5 ? 0.8 : 0 } };
+      },
+      transitionWindows: [
+        { name: "idle", start: 0.2, end: 0.45 }, { name: "launch", start: 1.1, end: 1.4 },
+        { name: "shift", start: 1.54, end: 1.69 }, { name: "post-shift", start: 1.9, end: 2.4 },
+        { name: "stopped-idle", start: 3.8, end: 4.1 }, { name: "relaunch", start: 4.8, end: 5.2 },
+      ],
+    });
+    const transitionWindows = transitions.transitionWindows!;
+    check(`${sampleRate}: dynamic engine stays audible through first shift, stop and relaunch`,
+      transitionWindows.every((window) => window.rms > 0.0005),
+      `100 Hz native automation; ${transitionWindows.map((window) => `${window.name} ${window.rms.toFixed(6)} RMS`).join("; ")}`);
+    const stoppedIdle = transitionWindows.find((window) => window.name === "stopped-idle")!;
+    const initialIdle = transitionWindows.find((window) => window.name === "idle")!;
+    check(`${sampleRate}: braking returns engine pitch and level to idle`,
+      stoppedIdle.dominantHz < 100 && stoppedIdle.rms > initialIdle.rms * 0.5 && stoppedIdle.rms < initialIdle.rms * 2,
+      `initial/stopped ${initialIdle.dominantHz.toFixed(1)}/${stoppedIdle.dominantHz.toFixed(1)} Hz; ${initialIdle.rms.toFixed(6)}/${stoppedIdle.rms.toFixed(6)} RMS`);
+    for (const output of ["headphones", "stereo", "mono"] as const) {
+      const looping = await next({
+        name: `loop-boundaries/${output}/four-wheels`, sampleRate,
+        settings: { ...DEFAULT_AUDIO_SETTINGS, output }, duration: 7.2,
+        frame: () => auditionFrame(WHEEL_IDS, 0, true, 1),
+        transitionWindows: [
+          { name: "first-pass", start: 0.3, end: 0.6 },
+          { name: "after-first-wrap", start: 2.6, end: 2.9 },
+          { name: "after-second-wrap", start: 4.8, end: 5.1 },
+          { name: "after-third-wrap", start: 6.8, end: 7.1 },
+        ],
+      });
+      check(`${sampleRate}/${output}: all noise loops stay finite and audible after repeated wraps`,
+        looping.finite && looping.transitionWindows!.every((window) => window.rms > 0.001),
+        `7.2-second native render; ${looping.transitionWindows!.map((window) => `${window.name} ${window.rms.toFixed(6)} RMS`).join("; ")}`);
+    }
     // The same seeded graph starts at time zero in both renders. Subtracting
     // phase-aligned samples measures the actual added texture even when noise
     // cross-terms make its total RMS slightly smaller than the coast baseline.

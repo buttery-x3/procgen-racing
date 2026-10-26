@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Live driving audio diagnostic</title>
+    <style>
+      #audio-driving-panel{position:fixed;left:18px;bottom:48px;z-index:80;width:min(520px,calc(100vw - 36px));max-height:78vh;overflow:auto;padding:16px;background:#142321f5;border:1px solid #7e9a72;border-radius:6px;box-shadow:0 10px 40px #0008;font:12px/1.5 system-ui;color:#e2eedb}
+      #audio-driving-panel h1{font-size:18px;margin:0 0 6px}#audio-driving-panel p{margin:8px 0;color:#bacbb5}#audio-driving-panel button{padding:9px 11px;margin:3px 4px 3px 0;background:#cfdfa6;color:#15251b;border-radius:3px;font-weight:650}#audio-driving-panel pre{white-space:pre-wrap;margin:10px 0;font:11px/1.5 Consolas,monospace}#audio-driving-panel textarea{width:100%;height:160px;background:#0d1915;color:#d6e7ca;font:10px/1.4 Consolas,monospace}#driving-status{font-weight:700;color:#d7edb3}#driving-failures{color:#efbd9b}
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <section id="audio-driving-panel" aria-label="Live driving audio diagnostic">
+      <h1>Live driving audio diagnostic</h1>
+      <p>Production App, physics, input collector and audio graph on the drive pad. Digital meters do not prove hardware output or listening quality. Sound follows the normal mixer and trusted-gesture unlock.</p>
+      <button id="driving-start" disabled>Run launch / shift / stop</button>
+      <button id="driving-manual" disabled>Manual driving + meters</button>
+      <button id="driving-stop" disabled>End recording</button>
+      <button id="driving-copy-readout">Copy live readout</button>
+      <div id="driving-status" role="status">Loading the production app…</div>
+      <pre id="driving-live">Waiting for app initialization.</pre>
+      <div id="driving-failures">No diagnostic result recorded.</div>
+      <details><summary>Report and measurement scope</summary>
+        <p>Automatic sequence: idle → full throttle until the actual first upshift (14 s cap) → 2 s recovery → brake to a stop (12 s cap) → 3 s idle → accelerate again → brake. Manual mode uses the normal W/S/Q/E controls; click the viewport first. Hidden/paused samples are excluded from silence counts. Meters warm up for 150 ms and each stage for 350 ms; a silence event needs three consecutive eligible samples.</p>
+        <button id="driving-copy">Copy report</button><button id="driving-download">Download report</button>
+        <textarea id="driving-report" readonly aria-label="Live driving audio report"></textarea>
+      </details>
+    </section>
+    <script type="module" src="/src/diagnostics/AudioDrivingTest.ts"></script>
+  </body>
+</html>

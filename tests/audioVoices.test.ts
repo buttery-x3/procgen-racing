@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { EngineVoice } from "../src/audio/EngineVoice";
 import { SpatialAudio, wheelAudioPosition } from "../src/audio/SpatialAudio";
 import { TyreVoice } from "../src/audio/TyreVoice";
-import { smoothParam } from "../src/audio/nodes";
+import { createNoise, noiseBufferLength, smoothParam } from "../src/audio/nodes";
 import type { AudioSettings, EngineAudioControl, TyreAudioControl } from "../src/audio/types";
 import type { WheelId } from "../src/vehicle/types";
 
@@ -92,6 +92,32 @@ class Context {
   }
   get audio(): BaseAudioContext { return this as unknown as BaseAudioContext; }
 }
+
+describe("native noise loop boundaries", () => {
+  it("avoids the Chromium 152 rear-left loop-end rounding failure", () => {
+    const context = new Context();
+    context.sampleRate = 48000;
+    // The old RL length round-trips ABOVE its last frame, so Chromium 152
+    // never wraps and can feed invalid stale samples into the entire mix.
+    expect((100368 / 48000) * 48000).toBeGreaterThan(100368);
+    createNoise(context.audio, 0x6234f901);
+    const frames = context.buffers[0].length;
+    expect((frames / context.sampleRate) * context.sampleRate).toBe(frames);
+    expect(frames).toBeGreaterThanOrEqual(100368);
+    expect(frames).toBeLessThan(100384);
+  });
+  it("keeps authored loop durations close with exact ends at common device rates", () => {
+    for (const sampleRate of [32000, 44100, 48000, 88200, 96000, 192000]) {
+      for (let milliseconds = 100; milliseconds <= 8000; milliseconds++) {
+        const requested = Math.ceil(sampleRate * (milliseconds / 1000));
+        const frames = noiseBufferLength(sampleRate, milliseconds / 1000);
+        expect((frames / sampleRate) * sampleRate).toBe(frames);
+        expect(frames).toBeGreaterThanOrEqual(requested);
+        expect(frames - requested).toBeLessThan(128);
+      }
+    }
+  });
+});
 
 const settings: AudioSettings = {
   version: 1, enabled: true, master: 1, engine: 1, tyres: 1, surface: 1,
