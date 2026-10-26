@@ -1,0 +1,280 @@
+{
+  "format": "procgen-racing:audio-release-validation",
+  "version": 1,
+  "recordedAt": "2026-10-26T23:09:49.539Z",
+  "release": "v0.3.0",
+  "testedCommit": "3ca2164e8356314a623663e98f4621461564559f",
+  "sourceHash": "b5ba8fdab7d24a95",
+  "physicsRulesCompatibilityHash": "a9dbfc02ed5bf60c",
+  "releaseTreeScope": "Validation ran on the versioned candidate. Later release-evidence documentation and merge metadata do not change executable content; this is not a new whole-subsystem qualification.",
+  "recordingCleanup": {
+    "branch": "codex/reference-audio-integration",
+    "cleanupCommit": "99eaa1a",
+    "finalFeatureCommit": "7a40967",
+    "sourceAndComparisonRecordingsTracked": false,
+    "repositoryLocalCopiesRemoved": true,
+    "originalDocumentsFiles": "Outside the branch; unchanged.",
+    "derivedNumericalModelRetained": true,
+    "provenance": "audio-model-provenance.json"
+  },
+  "regression": {
+    "command": "npm.cmd test -- --maxWorkers=2 --reporter=default --reporter=json --outputFile=artifacts/v0.3.0-tests.json",
+    "passed": true,
+    "totalTests": 330,
+    "passedTests": 330,
+    "failedTests": 0,
+    "testFiles": 24,
+    "startedAt": "2026-10-26T23:04:04.782Z",
+    "finishedAt": "2026-10-26T23:05:15.995Z",
+    "durationSeconds": 71.213
+  },
+  "build": {
+    "command": "npm.cmd run build",
+    "passed": true,
+    "scope": "Strict TypeScript checking and Vite production bundle, including static synthesis model and both AudioWorklets.",
+    "warnings": [
+      "Existing large Three.js/Rapier bundle warning."
+    ]
+  },
+  "package": {
+    "format": "procgen-racing:audio-release-package",
+    "version": 1,
+    "checkedAt": "2026-10-26T23:04:38.844Z",
+    "candidateCommit": "3ca2164e8356314a623663e98f4621461564559f",
+    "modelSha256": "0f640d311e0f7c9297bb30b9784880553ac67275b433705b9629b291d6ec6082",
+    "modelBytes": 1846340,
+    "worklets": [
+      {
+        "name": "playground-voices.js",
+        "sha256": "9413fbb9ed457ba227044738b19fd89eee7de2da5e0c0aff2e764370270c486b"
+      },
+      {
+        "name": "reference-tyre.js",
+        "sha256": "b365264addc8115b7cefcda427197275176cfbd198fa44922d5a6785556b028e"
+      }
+    ],
+    "recordingFiles": [],
+    "retiredComparisonPagePresent": false,
+    "localRecordingEndpointInBuild": false
+  },
+  "builtApp": {
+    "url": "http://127.0.0.1:5193/audio-driving.html",
+    "scope": "Cold load of the standalone production build, trusted-gesture manual meters, idle only. Confirms static model/worklet loading, source readiness and finite non-silent engine/final output. No automatic driving sequence or listening-quality judgment.",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "recordedAt": "2026-10-26T23:08:32.120Z",
+    "sourceHash": "b5ba8fdab7d24a95",
+    "sampleRate": 48000,
+    "samples": 74,
+    "summaries": [
+      {
+        "stage": "manual",
+        "beganSeconds": 0.00010000002384185791,
+        "endedSeconds": 7.361799999952316,
+        "samples": 74,
+        "eligibleSamples": 71,
+        "minimumEngineRms": 0.01656183295298115,
+        "minimumOutputRms": 0.011615062824965407,
+        "maximumRpm": 977.6768496799607,
+        "maximumSpeed": 0.009193887934088707,
+        "engineSilentSamples": 0,
+        "outputSilentSamples": 0,
+        "nonFiniteSamples": 0,
+        "contextNotRunningSamples": 0,
+        "appStalledSamples": 0
+      }
+    ],
+    "events": [],
+    "errors": [],
+    "sourceBackend": "pulse-exhaust-reference-v3",
+    "sourceReady": true,
+    "tyreModelId": "local:tyre-spectrum-v1:2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0",
+    "contextState": "running",
+    "nodeHealth": {
+      "engine": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0.01656183295298115,
+        "maximumRms": 0.02632279195166351
+      },
+      "impact": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "mix": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0.01656183295298115,
+        "maximumRms": 0.02632279195166351
+      },
+      "ceiling": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0.01935843720590423,
+        "maximumRms": 0.030730453829341843
+      },
+      "output": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0.011615062824965407,
+        "maximumRms": 0.01843827301723974
+      },
+      "fl/input": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fl/hrtf": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fl/hrtf-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fl/stereo": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fl/stereo-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fl/mono-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fr/input": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fr/hrtf": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fr/hrtf-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fr/stereo": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fr/stereo-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "fr/mono-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rl/input": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rl/hrtf": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rl/hrtf-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rl/stereo": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rl/stereo-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rl/mono-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rr/input": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rr/hrtf": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rr/hrtf-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rr/stereo": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rr/stereo-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      },
+      "rr/mono-routed": {
+        "samples": 72,
+        "nonFiniteSamples": 0,
+        "minimumRms": 0,
+        "maximumRms": 0
+      }
+    }
+  },
+  "priorDrivingIntegration": {
+    "record": "reference-audio-integration.json",
+    "scope": "Existing short actual-app launch/shift/stop/relaunch and active-wheel evidence retains its original fingerprint and environment. The release check does not relabel or repeat it."
+  },
+  "limitations": [
+    "Stationary wheel paths are expected to be silent; this built-app check verifies readiness rather than active tyre output. The regression suite includes a finite/audible worklet render with the exact packaged model.",
+    "No new generation, M8 timing/renderer campaign or human channel-identification study was run; unchanged subsystems retain their historical evidence.",
+    "The excluded 20-minute endurance test was not run.",
+    "Digital signal measurements do not certify human listening quality, hardware underruns or acoustic latency.",
+    "Provenance is recorded separately; no source-licence or fair-use determination is made."
+  ]
+}
