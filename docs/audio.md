@@ -6,6 +6,13 @@ sound with an RPM/load engine and four independent tyre voices. It is integrated
 through `development`; release promotion remains a separate request.
 The [research and approved plan](research/audio-system.md) records the rationale.
 
+**Sound-quality review, 26 October 2026:** the user finds the engine thin/buzzy
+and the tyres whistle-like. Treat this implementation as the working audio
+infrastructure and comparison baseline, not accepted final timbre. The
+[new research and playground proposal](research/audio-timbre.md) describes a
+pulse/exhaust engine, richer friction texture and short A/B tuning workflow.
+Production voices and existing qualification records are preserved.
+
 ## Listening and controls
 
 Sound is **enabled by default**. The first trusted pointer or keyboard interaction
@@ -87,10 +94,21 @@ Existing vehicle/race code, result compatibility, generation and visual
 skid/smoke sensitivity are unchanged. `drivingFeedback` remains the visual
 feedback implementation; the new warning signal is audio-only.
 
-## Reproduce qualification
+## Choosing checks and reproducing full audio qualification
+
+For each development commit select only the checks affected by its diff. Voice
+tuning uses short listening comparisons and relevant voice/native-render cases;
+control changes use control/collector cases. Recheck lifecycle/channel behavior
+when those boundaries change, and actual driving when that integration changes.
+Do not rerun the whole lab or full regression suite for each preset or feature.
+Documentation-only work needs document/link/diff review.
+
+The full regression suite and production build are required before promotion
+into `main`; see [validation policy](workflow.md#validation-scope--revised-26-october-2026).
+The following commands reproduce the broader audio qualification when it is
+specifically needed, rather than forming a per-commit checklist:
 
 ```sh
-npm test -- --maxWorkers=2
 npm run build
 npm run qualify:audio
 npm run dev
@@ -107,15 +125,18 @@ visible and unpaused; focus loss interrupts the automatic sequence. The live
 readout identifies invalid engine, wheel, spatial, mix and output samples.
 
 The 20-minute endurance tool is optional and is excluded from required checks.
-Run it only on an explicit user request. Routine fixes use the short native-loop,
-lifecycle and actual driving checks above.
+Run it only on an explicit user request. Routine fixes select the relevant short
+checks above; they do not automatically run every category.
 
 In development the lab saves bounded JSON to
 `artifacts/audio-browser.json` through a same-origin local endpoint. The actual
 driving page saves its compact stage/node report separately to
 `artifacts/audio-driving-browser.json`; its full downloaded report can also
 include up to 600 rolling observations. Production builds provide Copy/Download
-JSON instead. To publish completed reports:
+JSON instead. Publishing a new complete qualification is separate from ordinary
+targeted validation. Retain baseline reports with their original hashes and save
+new targeted evidence with its actual scope; do not repeat successful tests just
+because the broad publisher fingerprint changed. To publish completed reports:
 
 ```sh
 npm run report:audio
@@ -139,7 +160,7 @@ The loop-fix delivery also saves its actual
 that export after the user asked to stop repeating validation. The earlier full
 feature report remains historical evidence rather than being relabeled.
 
-## Validation scope
+## Recorded baseline validation scope
 
 The feature passes **307 regression tests**, including **63 audio tests**.
 The production build and strict TypeScript check pass; the existing large-chunk

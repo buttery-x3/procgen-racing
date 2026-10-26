@@ -5,6 +5,12 @@
 > to remote `development` on completion for testing. Later releases to `main`
 > require an explicit request. See the [release workflow](workflow.md).
 
+> **Validation policy, 26 October 2026:** each development commit uses checks
+> targeted to the changed behavior. The full regression suite and production
+> build are required before merging into `main`, not for every new feature.
+> Documentation-only work uses document/link/diff checks. See
+> [validation scope](workflow.md#validation-scope--revised-26-october-2026).
+
 Prepared 25 October 2026; updated 26 October. M0–M8 are implemented, including the
 revised M4 v2 generator, [M5 venue construction](m5.md) and
 [M6 procedural cars/full workbench](m6.md) and [M7 expanded circuit families](m7.md). See [M4 v2 delivery notes](m4-v2.md) for the non-radial
@@ -546,3 +552,11 @@ endurance run from required checks.
 Human recognition and acoustic end-to-end latency remain unmeasured; automated
 spectral/channel checks do not substitute for listening. This work leaves M8
 completed and preserves its release and qualification records.
+
+The user's subsequent sound-quality review rejected the engine's buzzy timbre
+and the tyres' whistle-like tone. Preserve this implementation as the audio
+infrastructure baseline. The [follow-up research](research/audio-timbre.md)
+proposes short, level-matched A/B auditions of a pulse/exhaust engine and richer
+tyre texture in a small sound playground, with recording-assisted alternatives
+if needed. Select a convincing voice before expanding presets or production
+integration. This research pass adds no replacement voices or new test campaign.

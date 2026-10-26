@@ -32,9 +32,21 @@ Historical milestone notes and qualification reports do not override this policy
 ## Project checks
 
 - Browser app: TypeScript, Three.js, Rapier and Vite.
-- Run `npm test -- --maxWorkers=2` for the full regression suite and `npm run build`
-  for strict TypeScript checking and the production build. In PowerShell use
-  `npm.cmd` if the script execution policy blocks `npm`.
+- For each feature/fix commit, run only targeted checks relevant to the changed
+  behavior and its directly affected integrations. Do not run the full regression
+  suite for every feature, tuning iteration, documentation change or merge into
+  `development`. Documentation-only commits need content/link/diff checks.
+- Before merging/promoting a release into `main`, run
+  `npm test -- --maxWorkers=2` and `npm run build` on the release candidate.
+  During development use type checking/builds when the change affects code,
+  assets or build integration and warrants them. In PowerShell use `npm.cmd` if
+  the script execution policy blocks `npm`.
+- Choose validation scope from the diff. Reuse recorded evidence for unchanged
+  subsystems, retaining its original commit/hash and limitations. Rerun affected
+  checks after meaningful changes, failures or integration conflicts; do not
+  repeat successful checks just to refresh a broad report fingerprint. Publishing
+  a new complete qualification report is separate from validating a targeted
+  commit; never relabel old results as a fresh run. See [docs/workflow.md](docs/workflow.md).
 - Run generation qualification when changing generation/construction behavior;
   preserve the reported source hash and measurement scope. See
   [docs/m5.md](docs/m5.md) for venue campaigns and [docs/m6.md](docs/m6.md) for
@@ -55,11 +67,15 @@ Historical milestone notes and qualification reports do not override this policy
 - Keep installed dependencies, build output and local screenshots/traces out of
   commits according to `.gitignore`.
 
-- The separate synthesized-audio feature uses `npm run qualify:audio`, the
-  visible `audio-lab.html` offline/lifecycle checks, the actual-app
-  `audio-driving.html` launch/shift/stop/relaunch sequence. The 20-minute stress
+- For audio changes, select the affected voice/control tests and short native
+  renders from `npm run qualify:audio` and `audio-lab.html`. Use lifecycle/channel
+  checks only when their behavior changes, and the `audio-driving.html` sequence
+  when driving integration changes. Timbre tuning starts with short A/B listening
+  comparisons, reusing the established channel/runtime foundation. The 20-minute stress
   run is not a required check; run it only when the user explicitly requests it.
   Publish source-matching evidence with
-  `npm run report:audio`; see [docs/audio.md](docs/audio.md). Audio-only changes
-  retain M8 and historical generation evidence. Full regression/build checks
-  still apply; changes to physics, races or construction require their own scope.
+  `npm run report:audio` only when a new complete audio qualification is needed;
+  see [docs/audio.md](docs/audio.md) and the [timbre research](docs/research/audio-timbre.md).
+  Audio-only changes retain M8 and historical generation evidence. Changes to
+  physics, races or construction require their own relevant scope. The full
+  regression suite is required before promotion to `main`, not per audio commit.

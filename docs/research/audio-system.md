@@ -2,8 +2,12 @@
 
 Prepared 26 October 2026; approved for implementation the same day.
 **Status: implemented as a separate audio feature following completed M8.**
-See [delivery and qualification notes](../audio.md). Human listening validation
-remains unmeasured. This document records the research and approved design.
+See [delivery and qualification notes](../audio.md). This document records the
+original research and approved design. On 26 October the user rejected the
+engine's thin/buzzy timbre and the tyres' whistle-like sound. The
+[sound-quality research and tuning workflow](audio-timbre.md) supersedes the
+timbre/iteration recommendations below while retaining the working infrastructure.
+Formal human spatial-recognition results remain unmeasured.
 
 The user confirmed that **headphones are the primary output** and that
 **clear handling feedback takes priority over naturalism**, including deliberately
@@ -452,6 +456,12 @@ Test behavior rather than a particular node count or copy of the formulas:
 
 ### Listening gate
 
+This is the original proposed recognition study, not a mandatory checklist for
+sound tuning. The updated workflow uses short A/B timbre decisions first and
+retains existing channel evidence. A repeated 32-trial study or long comfort
+session is optional research only when explicitly requested; see
+[the current proposal](audio-timbre.md#listening-decisions-and-stop-points).
+
 Provide short labeled practice examples, then randomize at least 32 single-wheel
 trials per mode, balanced across all four wheels. Compare ordinary panning,
 HRTF-only, and HRTF plus axle timbre; use the same source levels and matched
@@ -494,15 +504,15 @@ Lap time is secondary; perception and controllability are the primary gates.
   results. No broad browser claim from one Chromium session; smoke-test Firefox
   and Safari on available hardware or record them as untested.
 
-At implementation completion run `npm test -- --maxWorkers=2`,
-`npm run build` and `npm run qualify:audio`, then use the visible Audio lab
-offline/lifecycle checks and the short actual-app launch/shift/stop/relaunch
-sequence at `audio-driving.html`. Publish its own
-source-matching evidence with `npm run report:audio`. The user's implementation
-approval treats audio as separate work after completed M8, so M8's existing
-qualification records are retained. Physics/race changes would require their
-separate checks and a restarted development server; this implementation does
-not change those sources.
+Under the owner's revised policy, each development commit uses targeted checks
+for its changed behavior. Voice tuning, controls, lifecycle and driving
+integration have separate scopes; do not automatically rerun them all. The full
+regression suite and production build are required before merging into `main`.
+Use `npm run report:audio` when publishing a new complete source-matching audio
+qualification, not as a gate for every tuning commit. See
+[the validation policy](../workflow.md#validation-scope--revised-26-october-2026).
+M8's existing qualification records are retained. Physics/race changes require
+their own relevant checks and a restarted development server.
 
 Audio-only synthesis/settings do not require rerunning historical car/track
 construction campaigns. Any scope expansion into construction or physics must

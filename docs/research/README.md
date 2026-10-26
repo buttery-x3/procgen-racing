@@ -16,6 +16,9 @@ them merely because a newer milestone or release exists.
   with [native audio qualification](audio-qualification.json) and
   [actual-app driving qualification](audio-driving-qualification.json), plus
   [the loop-fix native regression export](audio-loop-regression.json)
+- [Audio sound-quality research and playground proposal](audio-timbre.md):
+  engine pulse/exhaust modeling, tyre friction texture, short A/B authoring and
+  targeted validation while preserving the existing audio foundation
 - [M4 portfolio](m4-v2-portfolio.html) and [qualification](m4-v2-qualification.json)
 - [M5 construction qualification](m5-qualification.json) and
   [browser measurements](m5-browser-budget.json)
