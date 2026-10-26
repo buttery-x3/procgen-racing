@@ -452,6 +452,74 @@ describe("M8 bounded presentation feedback", () => {
     expect(drivingFeedback(next, t).impact).toBeLessThanOrEqual(1);
     expect(drivingFeedback(next, t).impact).toBeGreaterThan(0);
   });
+  it("uses one fifth of the previous scrub response during ordinary partial slip", () => {
+    const t = telemetry(1, 20);
+    for (const w of t.wheels) {
+      w.longitudinalForce = 3000;
+      w.slipRatio = 0.1;
+    }
+    const feedback = drivingFeedback(t);
+    expect(feedback.scrub).toBeCloseTo(Math.sqrt(36000 / 40000) * 0.2, 8);
+    expect(feedback.engineFrequency).toBe(4000 / 30);
+    expect(feedback.engineLoad).toBeCloseTo(0.475, 8);
+  });
+  it.each([1, -1, "left", "right"] as const)(
+    "retains the previous maximum scrub for full slip (%s)",
+    (direction) => {
+      const t = telemetry(1, 20),
+        w = t.wheels[0];
+      if (typeof direction === "number") {
+        w.longitudinalForce = 3000;
+        w.slipRatio = direction;
+      } else {
+        w.lateralForce = 3000;
+        w.lateralSpeed = direction === "left" ? 18 : -18;
+        w.slipAngle = direction === "left" ? Math.PI / 6 : -Math.PI / 6;
+      }
+      expect(drivingFeedback(t).scrub).toBeCloseTo(1, 8);
+    },
+  );
+  it("builds squeal progressively and ignores an airborne spinning wheel", () => {
+    const t = telemetry(1, 20),
+      w = t.wheels[0],
+      values: number[] = [];
+    w.longitudinalForce = 3000;
+    for (const ratio of [0, 0.1, 0.2, 0.4, 0.6, 0.8, 1]) {
+      w.slipRatio = ratio;
+      values.push(drivingFeedback(t).scrub);
+    }
+    expect(values[0]).toBe(0);
+    expect(values).toEqual([...values].sort((a, b) => a - b));
+    expect(values.at(-1)).toBeCloseTo(1, 8);
+    w.grounded = false;
+    expect(drivingFeedback(t).scrub).toBe(0);
+  });
+  it("requires twice the old slip power for rubber marks and retains full mark opacity", () => {
+    const t = telemetry(1, 20),
+      effects = new DrivingEffects(),
+      marks = effects.group.children[0] as Mesh;
+    for (const w of t.wheels) {
+      w.longitudinalForce = 1000;
+      w.slipRatio = 0.06; // 1.8 kW per wheel: above the old onset, below the new one.
+    }
+    const advance = () => {
+      t.time += 1 / 60;
+      for (const w of t.wheels) w.contact.z += 0.3;
+      effects.update(t, true);
+    };
+    advance();
+    advance();
+    expect(marks.geometry.drawRange.count).toBe(0);
+    for (const w of t.wheels) w.slipRatio = 0.1; // 3 kW: marks still start normally.
+    advance();
+    advance();
+    expect(marks.geometry.drawRange.count).toBe(24);
+    expect((marks.material as MeshBasicMaterial).opacity).toBe(0.5);
+    for (const w of t.wheels) w.grounded = false;
+    advance();
+    expect(marks.geometry.drawRange.count).toBe(24);
+    effects.dispose();
+  });
   it("bounds effect pools and ghost rendering creates no collision object", () => {
     const effects = new DrivingEffects();
     expect(effects.capacity).toEqual({ marks: 1800, particles: 80 });

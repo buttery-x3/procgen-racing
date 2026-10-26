@@ -9,9 +9,12 @@ import {
   Vector3,
 } from "three";
 import type { VehicleTelemetry } from "../vehicle/types";
+import { tyreSlipPower } from "../core/tyreFeedback";
 
 const MARKS = 1800,
-  PARTICLES = 80;
+  PARTICLES = 80,
+  // Twice the original onset power: half the sensitivity, with unchanged marks.
+  SKID_MARK_POWER = 2800;
 export class DrivingEffects {
   readonly group = new Group();
   private markPositions = new Float32Array(MARKS * 18);
@@ -86,11 +89,8 @@ export class DrivingEffects {
     if (emit) this.emission = 0;
     let dirty = false;
     for (let i = 0; i < 4; i++) {
-      const w = t.wheels[i],
-        energy =
-          Math.abs(w.longitudinalForce * w.longitudinalSpeed * w.slipRatio) +
-          Math.abs(w.lateralForce * w.lateralSpeed);
-      const slipping = w.grounded && t.speed > 3 && energy > 1400,
+      const w = t.wheels[i];
+      const slipping = t.speed > 3 && tyreSlipPower(w) > SKID_MARK_POWER,
         loose =
           w.surface === "sand" ||
           w.surface === "gravel" ||
