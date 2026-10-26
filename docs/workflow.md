@@ -77,6 +77,7 @@ baseline tags.
 
 The **v0.1.0 baseline** is described in [release notes](releases/v0.1.0.md).
 M6 procedural cars and the full workbench are delivered through
-`codex/m6-car-generation` into `development` for testing. M7 onward remain planned;
+`codex/m6-car-generation` into `development` for testing. M7 expanded circuit families
+use `codex/m7-track-families`, merged and pushed to `development` for testing. M8 remains planned;
 the baseline does not claim the complete M8 time-trial release scope. See the
-[M6 delivery notes](m6.md).
+[M6 delivery notes](m6.md) and [M7 delivery notes](m7.md).

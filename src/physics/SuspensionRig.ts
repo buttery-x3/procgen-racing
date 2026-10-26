@@ -296,6 +296,7 @@ export class SuspensionRig {
       this.roadNormal.copy(frame.normal);
     }
     this.body.setTranslation(spawn, true);
+    if (onCircuit) this.circuitPhysics?.update(spawn, true);
     this.body.setRotation(rotation, true);
     this.body.setLinvel({ x: 0, y: 0, z: 0 }, true);
     this.body.setAngvel({ x: 0, y: 0, z: 0 }, true);
@@ -324,6 +325,8 @@ export class SuspensionRig {
   }
 
   step(controls: VehicleControls = NO_CONTROLS, dt = FIXED_STEP) {
+    if (this.experiment === "circuit")
+      this.circuitPhysics?.update(this.body.translation());
     this.world.timestep = dt;
     this.time += dt;
     const localForward = FORWARD.clone().applyQuaternion(
@@ -901,7 +904,9 @@ export class SuspensionRig {
         this.experiment === "circuit"
           ? (() => {
               const circuit = this.circuit,
-                location = circuit.locate(this.body.translation()),
+                location = circuit.locate(this.body.translation(), {
+                  station: this.telemetry?.track?.station,
+                }),
                 sample = location.sample;
               return {
                 station: location.station,
@@ -913,6 +918,9 @@ export class SuspensionRig {
                 bank: sample.bank,
                 width: sample.leftWidth + sample.rightWidth,
                 section: sample.section.name,
+                branchId: location.branchId,
+                variantId: location.variantId,
+                layer: location.layer,
               };
             })()
           : undefined,
@@ -921,5 +929,8 @@ export class SuspensionRig {
 
   dispose() {
     this.world.free();
+  }
+  get streamingStats() {
+    return this.circuitPhysics?.stats;
   }
 }

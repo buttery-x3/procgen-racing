@@ -2629,6 +2629,103 @@ dialog > .save-button {
   width: 100%;
   margin-top: 7px;
 }
+.generator-family-controls {
+  display: grid;
+  margin: 18px 0;
+  gap: 8px;
+  border-top: 1px solid #40553b;
+  padding-top: 14px;
+}
+.generator-family-controls label {
+  font-size: 10px;
+  color: #adbf9a;
+}
+.generator-family-controls select,
+#generator-oval-settings select {
+  width: 100%;
+  margin: 6px 0 12px;
+}
+.generator-family-controls .venue-check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+#generator-import {
+  width: 100%;
+  resize: vertical;
+  margin: 8px 0;
+  padding: 9px;
+  border: 1px solid #526447;
+  background: #142019;
+  color: #c9d9b9;
+  font: 10px/1.5 var(--mono);
+}
+#generator-file {
+  max-width: 100%;
+  font-size: 10px;
+  margin: 8px 0;
+}
+.generator-cross-section {
+  border: 1px solid #40503a;
+  border-radius: 6px;
+  background: #17261b;
+  padding: 12px 16px;
+  margin: 10px 0;
+}
+.generator-cross-section header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.generator-cross-section label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #a6b78d;
+  font-size: 10px;
+}
+.generator-cross-section input {
+  width: 150px;
+  accent-color: #d4eaa5;
+}
+.generator-cross-section svg {
+  width: 100%;
+  height: 140px;
+}
+.generator-cross-section p,
+.generator-family-evidence p {
+  font-size: 11px;
+  color: #9fb08e;
+  line-height: 1.6;
+}
+.generator-family-evidence {
+  margin: 16px 0;
+  padding: 14px 0;
+  border-block: 1px solid #40503a;
+}
+.generator-family-evidence > div {
+  display: grid;
+  grid-template-columns: 135px 1fr;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+.generator-family-evidence span {
+  font: 9px var(--mono);
+  letter-spacing: 0.08em;
+  color: #9fb08e;
+}
+.generator-family-evidence strong {
+  font-size: 11px;
+  font-weight: 500;
+  color: #d1ddbc;
+}
+.generator-family-evidence summary {
+  font-size: 11px;
+  color: #c6d8ad;
+  cursor: pointer;
+}
 .generator-diagnostics {
   display: grid;
   grid-template-columns: auto 1fr;

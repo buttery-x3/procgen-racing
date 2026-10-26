@@ -4,11 +4,13 @@ import type {
   GenerationProgress,
 } from "./generationTypes";
 import type { VenueSettings } from "./venue/types";
+import type { CircuitArchive } from "../storage/CircuitStorage";
 
 export interface VenueGenerationRequest {
   recipe: GenerationRecipe;
   venue: VenueSettings;
   cached?: GenerationResult;
+  archive?: CircuitArchive;
 }
 
 export interface GenerationWorker {
@@ -37,6 +39,7 @@ export class GenerationClient {
     progress: (value: GenerationProgress) => void = () => {},
     venue?: VenueSettings,
     cached?: GenerationResult,
+    archive?: CircuitArchive,
   ) {
     this.cancel();
     return new Promise<GenerationResult>((resolve, reject) => {
@@ -65,7 +68,7 @@ export class GenerationClient {
         reject(new Error(event.message || "Circuit generation worker failed."));
       };
       try {
-        worker.postMessage(venue ? { recipe, venue, cached } : recipe);
+        worker.postMessage(venue ? { recipe, venue, cached, archive } : recipe);
       } catch (error) {
         finish();
         reject(error);

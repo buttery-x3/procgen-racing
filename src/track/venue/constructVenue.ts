@@ -11,6 +11,7 @@ import { planVenue, populateVegetation } from "./VenuePlanner";
 import { normalizeVenue, venueGeometrySettings } from "./types";
 export { venueGeometrySettings } from "./types";
 import type { VenueSettings } from "./types";
+import { constructFamilyVenue, clearFamilyVegetation } from "../families/Venue";
 
 function solidFingerprint(result: GenerationResult) {
   const venue = result.circuit.definition.venue!;
@@ -32,6 +33,8 @@ export function constructVenue(
   input: VenueSettings,
   progress: (p: GenerationProgress) => void = () => {},
 ): GenerationResult {
+  if (base.recipe.version === 3)
+    return constructFamilyVenue(base, input, progress);
   const settings = normalizeVenue(input);
   if (!settings.enabled || base.recipe.version === 1) return base;
   const failures: string[] = [];
@@ -337,6 +340,7 @@ export function restyleScenery(
     scenerySeed: settings.scenerySeed,
   };
   populateVegetation(result.circuit, surfaceQuery(result.circuit));
+  clearFamilyVegetation(result.circuit);
   return result;
 }
 export function generateVenueCircuit(

@@ -94,7 +94,9 @@ export interface VenueProp {
     | "bush"
     | "board"
     | "marker"
-    | "light";
+    | "light"
+    | "building";
+  size?: Vec3;
   position: Vec3;
   heading: number;
   scale: number;
@@ -116,6 +118,15 @@ export interface VenueDefinition {
   pit?: PitLane;
   access?: ServiceRoad;
   props: VenueProp[];
+  branches?: {
+    id: "pit";
+    name: string;
+    points: Vec3[];
+    width: number;
+    entryAt: number;
+    exitAt: number;
+    layer: 0;
+  }[];
   report: {
     kerbs: number;
     kerbCoverage: number;

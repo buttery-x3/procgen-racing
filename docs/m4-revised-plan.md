@@ -273,6 +273,12 @@ unchanged and uses the same measured vehicle envelopes.
 
 ## 5. M7 changes
 
+**Delivery update, 26 October 2026:** M7-A/B/C are implemented by the v3 network,
+speedway and long-venue pipeline. See [M7 delivery and qualification](m7.md) for
+the concrete controls, algorithms, persistence, streaming budgets and measured
+scope. Existing touring/GP v2 recipes remain supported. M7-D stays optional and
+deferred; the delivered racing routes use layer 0 and do not cross.
+
 | Stage                                     | Scope                                                                                                                                                                                                | Specific qualification                                                                                                                                                                             |
 | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **M7-A — inherited networks**             | Synthetic rural-road networks, urban blocks/arterials and airfield axes; fixed-road vs new-connector provenance; closed-cycle selection, junction fitting, property exclusions, alternate/pit routes | Distinct Le Mans-like hybrid-road, Bathurst-like closed mountain-road and urban street briefs. Not replicas. Widths, inherited cambers, escapes and barriers follow the site. No open rally route. |

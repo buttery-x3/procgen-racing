@@ -1,0 +1,348 @@
+{
+  "version": 1,
+  "scope": "Visible browser RAF; production SceneView, GenerationClient and SuspensionRig at 1920x1080, pixel ratio 1, PCF shadows, 120 Hz physics, FR reference car. Generation and setup precede warm-up. Browser scheduling and other desktop load affect results. GPU bytes are not measurable by this page.",
+  "date": "2026-10-26T04:36:31.845Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "hardwareConcurrency": 12,
+  "deviceMemory": 32,
+  "results": [
+    {
+      "recipe": {
+        "version": 3,
+        "seed": "m7-desktop-101",
+        "family": "street",
+        "relief": "gentle",
+        "targetLength": 3600,
+        "character": "mixed",
+        "envelope": "comfortable",
+        "layout": 0,
+        "variant": "full",
+        "oval": "oval",
+        "banking": "fast",
+        "endurance": false
+      },
+      "fingerprint": "v3-301f1b4e/m7-venue-2deb4fd1",
+      "workerMs": 1336.1000000238419,
+      "setupMs": 221.69999992847443,
+      "geometry": {
+        "inheritedShare": 1,
+        "connectorShare": 0,
+        "networkNodes": 56,
+        "networkEdges": 103,
+        "junctions": 18,
+        "variants": 2,
+        "laneBankRange": [
+          0,
+          0.03413929809503814
+        ],
+        "maxLaneBankRate": 0.0010703313746778574,
+        "branchIds": [
+          "main",
+          "pit"
+        ],
+        "transferBytes": 4115532,
+        "surfaceChunks": 132,
+        "triangles": 182358
+      },
+      "frameSamples": 720,
+      "warmupFrames": 180,
+      "width": 1920,
+      "height": 1080,
+      "pixelRatio": 1,
+      "visibility": "visible",
+      "frameIntervalMs": {
+        "p50": 10,
+        "p95": 10.100000000002183,
+        "max": 10.100000000002183,
+        "over33ms": 0
+      },
+      "meanFps": 100.00416684028501,
+      "simulationMs": {
+        "p50": 0.3999999761581421,
+        "p95": 0.7000000476837158
+      },
+      "renderSubmissionMs": {
+        "p50": 1,
+        "p95": 1.4000000953674316
+      },
+      "distanceDriven": 152.1517567825913,
+      "grounded": 4,
+      "heap": {
+        "before": {
+          "usedMiB": 54.49147319793701,
+          "totalMiB": 74.18700313568115,
+          "limitMiB": 4192
+        },
+        "after": {
+          "usedMiB": 71.22308540344238,
+          "totalMiB": 82.64430046081543,
+          "limitMiB": 4192
+        },
+        "peakUsedMiB": 71.22308540344238
+      },
+      "renderer": {
+        "vendor": "Google Inc. (NVIDIA)",
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 105,
+        "visibleTriangles": 32053,
+        "geometries": 79,
+        "textures": 7
+      },
+      "streaming": {
+        "peakSurface": 27,
+        "peakObstacle": 25,
+        "peakMeshes": 33,
+        "physics": {
+          "surfaceChunks": 27,
+          "obstacleChunks": 25,
+          "materialColliders": 61,
+          "obstacleColliders": 25,
+          "peakSurfaceChunks": 27,
+          "peakObstacleChunks": 25,
+          "created": 89,
+          "retired": 3
+        },
+        "render": {
+          "surfaceMeshes": 33,
+          "peakSurfaceMeshes": 33,
+          "loads": 39,
+          "retired": 6,
+          "overviewTriangles": 0
+        }
+      },
+      "queries": {
+        "calls": 1446,
+        "maxCandidates": 119
+      }
+    },
+    {
+      "recipe": {
+        "version": 3,
+        "seed": "m7-desktop-101",
+        "family": "oval",
+        "relief": "gentle",
+        "targetLength": 4400,
+        "character": "mixed",
+        "envelope": "comfortable",
+        "layout": 0,
+        "variant": "full",
+        "oval": "oval",
+        "banking": "fast",
+        "endurance": false
+      },
+      "fingerprint": "v3-fe328e/m7-venue-4d496efe",
+      "workerMs": 1284.1999999284744,
+      "setupMs": 94.89999997615814,
+      "geometry": {
+        "inheritedShare": 1,
+        "connectorShare": 0,
+        "networkNodes": 5,
+        "networkEdges": 5,
+        "junctions": 0,
+        "variants": 1,
+        "laneBankRange": [
+          0,
+          0.40133634678670804
+        ],
+        "maxLaneBankRate": 0.002152248939183703,
+        "branchIds": [
+          "main",
+          "pit"
+        ],
+        "transferBytes": 4709832,
+        "surfaceChunks": 158,
+        "triangles": 208716
+      },
+      "frameSamples": 720,
+      "warmupFrames": 180,
+      "width": 1920,
+      "height": 1080,
+      "pixelRatio": 1,
+      "visibility": "visible",
+      "frameIntervalMs": {
+        "p50": 10,
+        "p95": 10.099999999998545,
+        "max": 10.19999999999709,
+        "over33ms": 0
+      },
+      "meanFps": 100.00277785494038,
+      "simulationMs": {
+        "p50": 0.3999999761581421,
+        "p95": 0.6999999284744263
+      },
+      "renderSubmissionMs": {
+        "p50": 0.8999999761581421,
+        "p95": 1.399999976158142
+      },
+      "distanceDriven": 152.2612590789795,
+      "grounded": 4,
+      "heap": {
+        "before": {
+          "usedMiB": 94.57395553588867,
+          "totalMiB": 112.86389923095703,
+          "limitMiB": 4192
+        },
+        "after": {
+          "usedMiB": 66.68508052825928,
+          "totalMiB": 127.86207103729248,
+          "limitMiB": 4192
+        },
+        "peakUsedMiB": 99.50171184539795
+      },
+      "renderer": {
+        "vendor": "Google Inc. (NVIDIA)",
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 104,
+        "visibleTriangles": 29622,
+        "geometries": 73,
+        "textures": 5
+      },
+      "streaming": {
+        "peakSurface": 27,
+        "peakObstacle": 20,
+        "peakMeshes": 32,
+        "physics": {
+          "surfaceChunks": 27,
+          "obstacleChunks": 20,
+          "materialColliders": 46,
+          "obstacleColliders": 20,
+          "peakSurfaceChunks": 27,
+          "peakObstacleChunks": 20,
+          "created": 71,
+          "retired": 5
+        },
+        "render": {
+          "surfaceMeshes": 30,
+          "peakSurfaceMeshes": 32,
+          "loads": 34,
+          "retired": 4,
+          "overviewTriangles": 0
+        }
+      },
+      "queries": {
+        "calls": 1446,
+        "maxCandidates": 110
+      }
+    },
+    {
+      "recipe": {
+        "version": 3,
+        "seed": "m7-desktop-101",
+        "family": "endurance",
+        "relief": "gentle",
+        "targetLength": 24000,
+        "character": "mixed",
+        "envelope": "comfortable",
+        "layout": 0,
+        "variant": "full",
+        "oval": "oval",
+        "banking": "fast",
+        "endurance": true
+      },
+      "fingerprint": "v3-9f4ad333/m7-venue-ad990cb7",
+      "workerMs": 7238.399999976158,
+      "setupMs": 162.10000002384186,
+      "geometry": {
+        "inheritedShare": 0.9516209476309226,
+        "connectorShare": 0.04837905236907736,
+        "networkNodes": 56,
+        "networkEdges": 98,
+        "junctions": 35,
+        "variants": 2,
+        "laneBankRange": [
+          0,
+          0.03068289692812802
+        ],
+        "maxLaneBankRate": 0.0008220310390081844,
+        "branchIds": [
+          "main",
+          "pit"
+        ],
+        "transferBytes": 27723172,
+        "surfaceChunks": 1474,
+        "triangles": 1226176
+      },
+      "frameSamples": 720,
+      "warmupFrames": 180,
+      "width": 1920,
+      "height": 1080,
+      "pixelRatio": 1,
+      "visibility": "visible",
+      "frameIntervalMs": {
+        "p50": 10,
+        "p95": 10.099999999998545,
+        "max": 10.5,
+        "over33ms": 0
+      },
+      "meanFps": 100.00277785494038,
+      "simulationMs": {
+        "p50": 0.5,
+        "p95": 0.8999999761581421
+      },
+      "renderSubmissionMs": {
+        "p50": 2,
+        "p95": 2.899999976158142
+      },
+      "distanceDriven": 152.17873638061428,
+      "grounded": 4,
+      "heap": {
+        "before": {
+          "usedMiB": 140.5033082962036,
+          "totalMiB": 170.32614994049072,
+          "limitMiB": 4192
+        },
+        "after": {
+          "usedMiB": 158.2441349029541,
+          "totalMiB": 202.40874671936035,
+          "limitMiB": 4192
+        },
+        "peakUsedMiB": 173.49588203430176
+      },
+      "renderer": {
+        "vendor": "Google Inc. (NVIDIA)",
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 91,
+        "visibleTriangles": 36036,
+        "geometries": 72,
+        "textures": 4
+      },
+      "streaming": {
+        "peakSurface": 29,
+        "peakObstacle": 30,
+        "peakMeshes": 37,
+        "physics": {
+          "surfaceChunks": 29,
+          "obstacleChunks": 29,
+          "materialColliders": 57,
+          "obstacleColliders": 29,
+          "peakSurfaceChunks": 29,
+          "peakObstacleChunks": 30,
+          "created": 94,
+          "retired": 8
+        },
+        "render": {
+          "surfaceMeshes": 36,
+          "peakSurfaceMeshes": 37,
+          "loads": 40,
+          "retired": 4,
+          "overviewTriangles": 0
+        }
+      },
+      "queries": {
+        "calls": 1446,
+        "maxCandidates": 128
+      }
+    }
+  ],
+  "sourceHash": "0c3c2dff67917ddb",
+  "hardware": {
+    "cpu": "AMD Ryzen 5 5600X 6-Core Processor",
+    "memoryGiB": 32,
+    "osGpu": "NVIDIA GeForce RTX 3060"
+  },
+  "measurementNotes": [
+    "Foreground-visible IAB page, loopback Vite on port 5317; generation/driving campaigns were idle during measurement. Other desktop activity was not controlled.",
+    "720 measured frames plus 180 warm-up frames per venue. Short driving samples, not a rendered full-lap certification. The separate Node driving report covers complete laps.",
+    "Frame delivery is capped near 100 Hz by the browser/display; these results are not an uncapped GPU throughput measurement. JS heap excludes Rapier/WASM/GPU allocations."
+  ]
+}

@@ -77,6 +77,10 @@ export function inspectLayout(
           const c = points[j],
             d = points[(j + 1) % n];
           if (
+            Math.max(a.x, b.x) >= Math.min(c.x, d.x) - 1e-7 &&
+            Math.max(c.x, d.x) >= Math.min(a.x, b.x) - 1e-7 &&
+            Math.max(a.z, b.z) >= Math.min(c.z, d.z) - 1e-7 &&
+            Math.max(c.z, d.z) >= Math.min(a.z, b.z) - 1e-7 &&
             orient(a, b, c) * orient(a, b, d) < 0 &&
             orient(c, d, a) * orient(c, d, b) < 0
           )

@@ -2,6 +2,7 @@ import { normalizeRecipe } from "./generationTypes";
 import type { GenerationRecipe, GenerationProgress } from "./generationTypes";
 import { generateLegacyCircuit } from "./generateLegacyCircuit";
 import { generateDesignedCircuit } from "./generateDesignedCircuit";
+import { generateFamilyCircuit } from "./families/generateFamilyCircuit";
 
 /** Saved v1 recipes keep the exact original generator and surface strategy. */
 export function generateCircuit(
@@ -12,7 +13,9 @@ export function generateCircuit(
   } = {},
 ) {
   const recipe = normalizeRecipe(input);
-  return recipe.version === 1
-    ? generateLegacyCircuit(recipe, options)
-    : generateDesignedCircuit(recipe, options);
+  return recipe.version === 3
+    ? generateFamilyCircuit(recipe, options)
+    : recipe.version === 1
+      ? generateLegacyCircuit(recipe, options)
+      : generateDesignedCircuit(recipe, options);
 }
