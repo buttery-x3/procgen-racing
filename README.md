@@ -284,6 +284,11 @@ proposal](docs/research/audio-timbre.md) for the next tuning workflow. Developme
 commits use [targeted validation](docs/workflow.md#validation-scope--revised-26-october-2026);
 the full suite is required before merging into `main`.
 
+The [audio playground](audio-playground.html) is the first audible A/B prototype:
+short engine and tyre examples, perceptual controls and local JSON presets. Its
+new pulse/exhaust and friction voices remain separate from production driving
+audio until their sound is accepted by listening.
+
 The separate [audio feature](docs/audio.md) adds RPM/load/shift engine synthesis,
 four independent tyre warning/slip voices, headphone spatialization and distinct
 front/rear cues. Sound is enabled by default and starts with the first browser

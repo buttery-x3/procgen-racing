@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#151d19" />
+  <title>Audio playground · Procgen Racing</title>
+  <link rel="stylesheet" href="/src/diagnostics/audio-playground.css" />
+</head>
+<body>
+  <header>
+    <div><span class="eyebrow">PROCEDURAL RACING / SOUND DESIGN</span><h1>Audio playground</h1><p>Short, synthetic listening examples. A is the current production voice; B is the new pulse/exhaust engine and noise-excited tyre candidate. Choose what actually sounds better to you.</p></div>
+    <a href="/">← Back to driving</a>
+  </header>
+  <main>
+    <section class="transport card" aria-label="Audition transport">
+      <div class="row"><button id="play" class="primary">Play example</button><button id="stop" disabled>Stop</button><button id="candidate-a" aria-pressed="false">A · Current</button><button id="candidate-b" class="selected" aria-pressed="true">B · New</button><label class="inline"><input id="loop" type="checkbox" /> Loop short example</label></div>
+      <p id="status" role="status">Choose an example and press Play. Listening is the acceptance test; the level meters are only a guide.</p>
+      <div class="meters"><div><span>A · current</span><meter id="meter-a" min="0" max="0.2" value="0"></meter><strong id="rms-a">—</strong></div><div><span>B · new</span><meter id="meter-b" min="0" max="0.2" value="0"></meter><strong id="rms-b">—</strong></div></div>
+      <p class="hint">Both voices receive the same controls. A/B fades over 60 ms. Use “Match B level” after a steady example, then leave the trims fixed while comparing dynamics; equal RMS may still sound differently loud.</p>
+    </section>
+    <div class="grid">
+      <section class="card" aria-labelledby="examples-title">
+        <h2 id="examples-title">Listen</h2>
+        <label>Example <select id="fixture"></select></label>
+        <p class="hint">Examples are synthetic and last 7–9 seconds. Manual controls continue until you stop.</p>
+        <div class="three"><label>Solo <select id="solo"><option value="engine">Engine</option><option value="tyre">Tyre</option><option value="surface">Surface</option><option value="mix">Engine + wheel</option></select></label><label>Output <select id="route"><option value="dry">Dry / centred</option><option value="headphones">Headphones · HRTF</option><option value="stereo">Stereo</option><option value="mono">Mono</option></select></label><label>Wheel <select id="wheel"><option value="fl">Front left</option><option value="fr">Front right</option><option value="rl">Rear left</option><option value="rr">Rear right</option></select></label></div>
+        <h3>Manual inputs</h3><div id="manual-controls" class="sliders"></div>
+        <h3>Audition level</h3><div id="trim-controls" class="sliders"></div><button id="match-level">Match B level to A</button>
+      </section>
+      <section class="card" aria-labelledby="engine-title">
+        <h2 id="engine-title">Engine B</h2><p>Combustion pulses feed two short exhaust paths. Body and pipe colour change separately from RPM.</p><div id="engine-controls" class="sliders"></div>
+        <h2 class="section-title" id="tyre-title">Tyre B</h2><p>Broad scrape and several unequal noise-excited resonances replace the dominant pure tone.</p><div id="tyre-controls" class="sliders"></div>
+      </section>
+    </div>
+    <section class="card presets" aria-labelledby="preset-title"><div><h2 id="preset-title">Presets</h2><p>Presets stay in this browser and do not change the driving game. Export JSON to keep or share a setting.</p></div><div class="row"><label>Preset name <input id="preset-name" maxlength="80" value="Pulse and friction starting point" /></label><button id="save-preset" class="primary">Save named preset</button><button id="duplicate-preset">Duplicate</button><label>Saved preset <select id="saved-presets"><option value="">Choose a saved preset</option></select></label><button id="load-preset">Load</button><button id="revert-preset">Revert</button><button id="export-preset">Export JSON</button></div><details><summary>Import preset JSON</summary><textarea id="import-json" aria-label="Preset JSON to import" spellcheck="false"></textarea><button id="import-preset">Import</button></details></section>
+  </main>
+  <footer>Experimental voices for audible review. Production driving audio remains the current A voice.</footer>
+  <script type="module" src="/src/diagnostics/AudioPlayground.ts"></script>
+</body>
+</html>

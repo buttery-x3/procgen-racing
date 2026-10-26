@@ -1,7 +1,8 @@
 # Driving audio: sound quality and a tuning workflow
 
-26 October 2026. Research and proposal; no new sound engine or playground is
-implemented in this pass. Audited foundation: `development` at `c7d31fc`, including
+26 October 2026. Original research and proposal; its first playground prototype
+is now described in [the audio delivery notes](../audio.md#sound-quality-playground).
+Audited foundation: `development` at `c7d31fc`, including
 the Vivaldi loop fix. This document supersedes the timbre and iteration plan in
 [the original audio proposal](audio-system.md). Its infrastructure remains useful.
 
@@ -333,6 +334,6 @@ The complete report publisher can remain strict and be used when a new complete
 qualification is actually wanted. The 20-minute audio endurance test is excluded
 from required checks and runs only on explicit request.
 
-This research commit changes documentation only. Validation is document review,
-local-link checks and diff hygiene; no audio tests, full suite, build, browser
-driving sequence or endurance run is needed or claimed.
+The original research commit changed documentation only. The first playground
+implementation has its own targeted checks and delivery notes; no full suite,
+browser driving sequence or endurance run is claimed for that prototype.

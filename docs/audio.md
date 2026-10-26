@@ -13,6 +13,41 @@ infrastructure and comparison baseline, not accepted final timbre. The
 pulse/exhaust engine, richer friction texture and short A/B tuning workflow.
 Production voices and existing qualification records are preserved.
 
+## Sound-quality playground
+
+Open `/audio-playground.html` on the running development server for the first
+audible A/B prototype. **A** is the existing production engine and tyre voice;
+**B** is an experimental audio-rate combustion-pulse/exhaust-path engine and a
+noise-excited, multi-mode tyre voice. Both get the same short synthetic RPM/load
+or slip controls. The page starts on B; switch A/B during playback with a 60 ms
+fade. The comparison does not replace the driving game's audio.
+
+Choose an idle, steady-load, sweep or shift engine example, or a scrub, onset,
+sustained slide or recovery tyre example. Each ends after 7–9 seconds unless
+Loop is selected. Manual mode lets you vary RPM, engine load, tyre slip, sliding
+speed and wheel load. Solo engine, tyre or surface, or hear a simple mix. Start
+with Dry/Centred, then try the existing `SpatialAudio` headphone, stereo or mono
+routing and select a wheel. The per-candidate meters show digital RMS before
+audition trim. On a steady example, **Match B level to A** sets an approximate
+trim; leave that trim fixed when comparing a sweep or onset. The shared output
+has a protective limiter, but no per-example loudness normalization.
+
+B exposes engine body, exhaust openness, rasp, pulse unevenness and mechanical
+texture; tyre scrape, modal screech, roughness, brightness, onset and release.
+Named versioned presets live under a separate local-storage key, with load,
+duplicate, revert, JSON export and validated JSON import. They carry the
+backend version, seed, fixture, manual controls, route, wheel and audition trims; no sample assets
+are used. Saving or importing a preset never applies it to the game. User
+listening decides whether B is an improvement; meters only check for an active,
+finite digital signal. The next stage after selecting a promising timbre is a
+short real-control capture/replay and mix review before production integration.
+
+This playground adds one isolated AudioWorklet module, loaded only after Play.
+The existing production `EngineVoice`, `TyreVoice`, collector, buses, preferences,
+and qualification reports are unchanged. Focused development checks cover the
+new fixtures/preset codec, build integration and a short visible browser playback
+in each voice; no 20-minute endurance test or channel campaign is required.
+
 ## Listening and controls
 
 Sound is **enabled by default**. The first trusted pointer or keyboard interaction
