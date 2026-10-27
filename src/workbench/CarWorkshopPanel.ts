@@ -12,6 +12,7 @@ import {
   resolveCar,
 } from "../vehicle/CarDefinition";
 import type { BodyShape } from "../vehicle/CarDefinition";
+import { CarValidationClient } from "../vehicle/CarValidationClient";
 import type { CarPhysicsValidation } from "../vehicle/validateCarPhysics";
 import type {
   CarRecipe,
@@ -31,10 +32,11 @@ export class CarWorkshopPanel {
   private current!: VehicleSetup;
   private locks = { mechanics: false, proportions: false, appearance: false };
   private abort = new AbortController();
-  private validationWorker?: Worker;
+  private validation = new CarValidationClient();
   private validationId = 0;
   private validationTimer = 0;
-  private validationCache = new Map<string, CarPhysicsValidation>();
+  private physical?: { mechanics: string; result: CarPhysicsValidation };
+
   constructor(
     root: HTMLElement,
     private apply: (setup: VehicleSetup, rebuild: boolean) => void,
@@ -55,7 +57,7 @@ export class CarWorkshopPanel {
       <label for="car-band">PERFORMANCE BAND</label><select id="car-band"><option value="road">Road · forgiving</option><option value="sport">Sport · responsive</option><option value="race">Race · focused</option></select>
       <fieldset class="car-locks"><legend>KEEP WHEN SHUFFLING</legend><label><input type="checkbox" data-lock="mechanics"/>Mass, drivetrain & tuning</label><label><input type="checkbox" data-lock="proportions"/>Dimensions & proportions</label><label><input type="checkbox" data-lock="appearance"/>Paint & trim</label></fieldset>
       <button class="button save-button" data-car="shuffle">Shuffle unlocked ↗</button><button class="button subtle" data-car="generate">Preview this seed</button>
-      <details class="m6-details"><summary>Dimensions & packaging</summary><p>Override selected dimensions. Checks update before you apply.</p><div id="car-dimensions"></div><button class="button subtle" data-car="clear-dimensions">Reset dimension overrides</button></details>
+      <details class="m6-details"><summary>Dimensions & packaging</summary><p>Construction recipe dimensions are resolved with the applied chassis tune. The preview and Setup show the same effective wheelbase and wheel track. Checks update before you apply.</p><div id="car-dimensions"></div><button class="button subtle" data-car="clear-dimensions">Reset dimension overrides</button></details>
       <details class="m6-details"><summary>Appearance & seed streams</summary><label for="car-paint">Body paint</label><input type="color" id="car-paint" value="#e49156"/><label><input type="checkbox" id="car-stripe"/>Accent stripes</label><label><input type="checkbox" id="car-wing"/>Rear wing (visual)</label>${["mechanics", "proportions", "appearance"].map((id) => `<label for="car-${id}-seed">${id.toUpperCase()} SEED</label><input id="car-${id}-seed" maxlength="64"/>`).join("")}</details></aside>
       <section class="car-preview-content"><header><div><span class="eyebrow" id="car-fingerprint">CAR / PREVIEW</span><h3 id="car-preview-name">Procedural car</h3></div><label class="packaging-toggle"><input type="checkbox" id="car-packaging" checked/>Packaging overlay</label></header><div id="car-preview-canvas"></div><div class="car-preview-legend"><span>● Centre of mass</span><span>□ Engine</span><span id="car-axle-dimensions"></span><small>Drag to orbit · scroll to zoom</small></div><div class="car-derived-grid" id="car-derived"></div><div id="car-checks" class="car-checks" aria-live="polite"></div><div class="car-export" id="car-export" hidden><label for="car-export-json">Car & setup JSON</label><textarea id="car-export-json" readonly spellcheck="false"></textarea><button class="button subtle" data-car="download">Download car JSON ↓</button></div></section></div>
       <footer class="m6-dialog-footer"><p id="car-message" role="status">Preview the car, then apply it to your current test.</p><button class="button subtle" data-car="export">Export preview</button><button class="button save-button" data-car="apply" id="car-apply">Apply car & reset →</button></footer>`;
@@ -69,8 +71,7 @@ export class CarWorkshopPanel {
       () => {
         this.validationId++;
         clearTimeout(this.validationTimer);
-        this.validationWorker?.terminate();
-        this.validationWorker = undefined;
+        this.validation.dispose();
       },
       opts,
     );
@@ -301,6 +302,7 @@ export class CarWorkshopPanel {
     error?: string,
   ) {
     if (this.result !== result) return;
+    if (check) this.physical = { mechanics: mechanicsFingerprint(result.setup), result: check };
     const valid = !!check?.valid,
       detail =
         error ??
@@ -339,50 +341,17 @@ export class CarWorkshopPanel {
     const id = ++this.validationId;
     clearTimeout(this.validationTimer);
     if (!result.valid) return;
-    const key = mechanicsFingerprint(result.setup),
-      cached = this.validationCache.get(key);
-    if (cached) {
-      this.showPhysics(result, cached);
-      return;
-    }
+    this.validation.cancel();
     this.showPhysics(result);
     this.validationTimer = window.setTimeout(() => {
-      if (!this.validationWorker) {
-        this.validationWorker = new Worker(
-          new URL("../vehicle/carValidation.worker.ts", import.meta.url),
-          { type: "module" },
-        );
-        this.validationWorker.onmessage = (e) => {
-          if (e.data.id !== this.validationId || !this.result) return;
-          if (e.data.error) {
-            this.showPhysics(this.result, undefined, e.data.error);
-            return;
-          }
-          const data = e.data.result as CarPhysicsValidation;
-          this.validationCache.set(
-            mechanicsFingerprint(this.result.setup),
-            data,
-          );
-          while (this.validationCache.size > 24)
-            this.validationCache.delete(
-              this.validationCache.keys().next().value!,
-            );
-          this.showPhysics(this.result, data);
-        };
-        this.validationWorker.onerror = (e) => {
-          if (this.result)
-            this.showPhysics(
-              this.result,
-              undefined,
-              `Physical check unavailable: ${e.message}`,
-            );
-          this.validationWorker?.terminate();
-          this.validationWorker = undefined;
-        };
-      }
-      this.validationWorker.postMessage({ id, setup: result.setup });
+      void this.validation.validate(result.setup).then((data) => {
+        if (id === this.validationId) this.showPhysics(result, data);
+      }).catch((error) => {
+        if (id === this.validationId && error?.name !== "AbortError") this.showPhysics(result, undefined, textError(error));
+      });
     }, 160);
   }
+
   private change = (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input.dataset.dimension || input.dataset.shape) {
@@ -468,15 +437,13 @@ export class CarWorkshopPanel {
     );
     data.validation = {
       checks: this.result.checks,
-      physics: this.validationCache.get(
-        mechanicsFingerprint(this.result.setup),
-      ),
+      physics: this.physical?.mechanics === mechanicsFingerprint(this.result.setup) ? this.physical.result : undefined,
     };
     return JSON.stringify(data, null, 2);
   }
   dispose() {
     clearTimeout(this.validationTimer);
-    this.validationWorker?.terminate();
+    this.validation.dispose();
     this.abort.abort();
     this.preview?.dispose();
     this.dialog.remove();

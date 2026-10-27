@@ -1,3 +1,9 @@
+import { WorkbenchChrome } from "./WorkbenchChrome";
+import { allowCommand } from "./commands";
+import { bindingName, INPUT_LABELS } from "./display";
+import { KEY_ACTIONS } from "../input/settings";
+import { resolveCar } from "../vehicle/CarDefinition";
+import { trackContext } from "../race/TrackContext";
 import {
   rideFrequency,
   PRESETS,
@@ -20,7 +26,6 @@ import type { GenerationRecipe } from "../track/generationTypes";
 import type { CircuitArchive } from "../storage/CircuitStorage";
 import { CircuitGeneratorPanel } from "./CircuitGeneratorPanel";
 import { elevationPath, mapProjection, routePath } from "./CircuitMap";
-import { pitOffset } from "../track/venue/geometry";
 import { CarWorkshopPanel } from "./CarWorkshopPanel";
 import { GaragePanel } from "./GaragePanel";
 import { TracePanel } from "./TracePanel";
@@ -29,7 +34,7 @@ import { generateCar, carDerived } from "../vehicle/generateCar";
 import { copySetup } from "../storage/GarageStorage";
 import type { InputSettings } from "../input/settings";
 import { loadInputSettings } from "../input/settings";
-import { fingerprint } from "../vehicle/CarDefinition";
+import { carIdentity, mechanicsFingerprint } from "../vehicle/CarDefinition";
 import { SessionPanel } from "./SessionPanel";
 import { CircuitLibraryPanel } from "./CircuitLibraryPanel";
 import { SoloStorage } from "../storage/SoloStorage";
@@ -39,6 +44,8 @@ import { AudioPanel } from "./AudioPanel";
 
 export interface WorkbenchCallbacks {
   action: (action: string) => void;
+  inputBoundary?: () => void;
+  pairingImport?: (raw: string) => void;
   setup: (setup: VehicleSetup, rebuild: boolean, group?: string) => void;
   generate: (recipe: GenerationRecipe, archive?: CircuitArchive) => void;
   input: (settings: InputSettings) => void;
@@ -363,7 +370,7 @@ const fields: Record<string, Field[]> = {
     },
     {
       key: "trackWidth",
-      label: "Track width",
+      label: "Wheel track",
       min: 1.3,
       max: 2.1,
       step: 0.01,
@@ -395,6 +402,7 @@ function renderField(
 
 export class Workbench {
   readonly viewport: HTMLElement;
+  readonly chrome: WorkbenchChrome;
   readonly generator: CircuitGeneratorPanel;
   readonly cars: CarWorkshopPanel;
   readonly garage: GaragePanel;
@@ -412,6 +420,8 @@ export class Workbench {
   private worldDatum = false;
   private advanced = false;
   private linked = false;
+  private changingWorkspace = false;
+  private selectedStartId = "start";
   private savedReference?: VehicleSetup;
   private baseline: VehicleSetup;
   private toastTimeout = 0;
@@ -422,11 +432,12 @@ export class Workbench {
     setup: VehicleSetup,
     private callbacks: WorkbenchCallbacks,
     hasSaved: boolean,
+    savedSetup?: VehicleSetup,
   ) {
     this.setup = { ...setup };
     this.draft = { ...setup };
     this.baseline = this.factorySetup(setup);
-    if (hasSaved) this.savedReference = copySetup(setup);
+    if (hasSaved) this.savedReference = copySetup(savedSetup ?? setup);
     const circuit = this.circuit;
     const route = routePath(circuit, 220, 150);
     const elevation = elevationPath(circuit, 220, 35);
@@ -434,7 +445,7 @@ export class Workbench {
       <header class="app-header">
         <a class="brand" href="#" aria-label="Procgen Racing home" data-action="home"><span class="brand-mark">P<span>R</span></span><span>PROCGEN<span class="brand-light">RACING</span></span></a>
         <div class="header-divider"></div><span class="header-title">DYNAMICS LAB <span>/ 08</span></span>
-        <div class="header-right"><button class="button subtle header-workshop" data-action="car-workshop">Car workshop</button><button class="button subtle header-workshop" data-action="garage">Garage / Compare</button><span class="live-badge" id="live-badge"><i></i>LIVE SIMULATION</span><button class="button subtle" id="pause-button" data-action="pause">${icon("pause")}<span>Pause</span></button><button class="button subtle surface-sound-button" id="surface-sound-button" data-action="surface-sound" aria-pressed="true">Sound on</button><button class="button subtle audio-settings-open" data-action="audio-settings" title="Sound settings and wheel listening checks">Sound settings</button><button class="button save-button" data-action="save">${icon("save")}Save setup</button></div>
+        <div class="header-right"><button class="button subtle header-workshop" data-action="car-workshop">Car workshop</button><button class="button subtle header-workshop" data-action="garage">Garage / Compare</button><span class="live-badge" id="live-badge"><i></i>LIVE SIMULATION</span><button class="button subtle" id="pause-button" data-action="pause">${icon("pause")}<span>Pause</span></button><button class="button subtle surface-sound-button" id="surface-sound-button" data-action="surface-sound" aria-pressed="true">Sound on</button><button class="button subtle audio-settings-open" data-action="audio-settings" title="Sound settings and wheel listening checks">Sound settings</button><button class="button save-button" data-action="save">${icon("save")}Save baseline</button></div>
       </header>
       <div class="workspace">
         <nav class="tool-rail" aria-label="Workbench tools"><div class="rail-tools"><button class="rail-button" data-action="car-workshop" title="Car workshop" aria-label="Open car workshop">${icon("rig")}</button><button class="rail-button" data-action="garage" title="Garage and A/B comparison" aria-label="Open garage and comparison">${icon("compare")}</button><button class="rail-button active" data-action="home" title="Suspension rig" aria-label="Suspension rig">${icon("rig")}</button><button class="rail-button" data-action="generator" title="Circuit workshop" aria-label="Open circuit workshop">${icon("layers")}</button><button class="rail-button" data-action="inspector" title="Toggle setup panel" aria-label="Toggle setup panel">${icon("sliders")}</button><button class="rail-button" data-action="telemetry" title="Expand response trace" aria-label="Expand response trace">${icon("chart")}</button></div><button class="rail-button" data-action="input-settings" title="Input settings" aria-label="Open input settings">${icon("sliders")}</button><button class="rail-button" data-action="help" title="Controls and guide" aria-label="Controls and guide">${icon("help")}</button><span class="rail-version">M8</span></nav>
@@ -465,7 +476,7 @@ export class Workbench {
             )
             .join(
               "",
-            )}</select><p id="reference-car-description">${REFERENCE_CARS[this.setup.referenceCar].description}</p></div><div class="preset-row"><label for="preset-select">BASE SETUP</label><select id="preset-select" aria-label="Base setup"><option value="balanced">Balanced road car</option><option value="comfort">Comfort / soft</option><option value="track">Track / firm</option><option value="custom" disabled>Custom setup</option></select><span class="preset-status" id="preset-status">BASELINE</span></div>
+            )}</select><p id="reference-car-description">${REFERENCE_CARS[this.setup.referenceCar].description}</p></div><div class="preset-row"><label for="preset-select">SUSPENSION PRESET</label><select id="preset-select" aria-label="Suspension preset"><option value="balanced">Balanced road car</option><option value="comfort">Comfort / soft</option><option value="track">Track / firm</option><option value="custom" disabled>Custom setup</option></select><span class="preset-status" id="preset-status">BASELINE</span></div>
           <div class="setup-tabs" role="tablist" aria-label="Tuning category"><button role="tab" aria-selected="true" id="tab-suspension" aria-controls="settings-panel" data-tab="suspension">Suspension</button><button role="tab" aria-selected="false" id="tab-chassis" aria-controls="settings-panel" data-tab="chassis">Chassis</button><button role="tab" aria-selected="false" id="tab-powertrain" aria-controls="settings-panel" data-tab="powertrain">Drivetrain</button><button role="tab" aria-selected="false" id="tab-tyres" aria-controls="settings-panel" data-tab="tyres">Tyres</button><button role="tab" aria-selected="false" id="tab-assists" aria-controls="settings-panel" data-tab="assists">Assists</button></div>
           <div class="setup-mode"><label><input type="checkbox" id="advanced-mode"/>All settings</label><label><input type="checkbox" id="link-axles"/>Link axle edits</label></div><div class="inspector-scroll"><div id="settings-panel" role="tabpanel" aria-labelledby="tab-suspension"></div>
             <div class="derived-values"><span>RIDE FREQUENCY</span><div><strong id="front-frequency">1.62 <small>Hz</small></strong><span>FRONT</span><strong id="rear-frequency">1.68 <small>Hz</small></strong><span>REAR</span></div></div>
@@ -473,7 +484,7 @@ export class Workbench {
             <div class="weight-block"><div class="section-label"><span>LIVE AXLE LOAD</span><span id="axle-total">12.3 kN</span></div><div class="weight-values"><span>FRONT <strong id="front-weight">54%</strong></span><span>REAR <strong id="rear-weight">46%</strong></span></div><div class="weight-bar"><i id="weight-bar-fill" style="width:54%"></i></div></div>
             <div class="setup-note"><span class="note-dot"></span><p>Use Test start to compare hills, banking, kerbs and loose surfaces. The Tyres tab shows each contact’s surface and slip.</p></div>
           </div>
-          <div class="inspector-footer"><button class="button subtle" data-action="compare" id="compare-button" ${hasSaved ? "" : "disabled"}>${icon("compare")}Compare saved</button><button class="button subtle" data-action="defaults" title="Restore this reference vehicle’s baseline">Reset setup</button></div>
+          <div class="inspector-footer"><button class="button subtle" data-action="compare" id="compare-button" ${hasSaved ? "" : "disabled"}>${icon("compare")}Try saved baseline</button><button class="button subtle" data-action="defaults" title="Restore this reference vehicle’s baseline">Reset to factory setup</button></div>
         </aside>
       </div>
       <footer class="status-bar"><span class="status-health"><i></i><span id="simulation-status">120 HZ PHYSICS</span></span><span id="performance-status">60 FPS</span><span class="status-controls"><kbd>W A S D</kbd> Drive <kbd>R</kbd> Reset <kbd>SPACE</kbd> Pause <button data-action="help">All controls ${icon("arrow")}</button></span><span id="input-status">KEYBOARD / GAMEPAD READY</span></footer>
@@ -513,7 +524,7 @@ export class Workbench {
       this.callbacks.setup(next, rebuild);
       this.setSetup(next);
     });
-    this.garage = new GaragePanel(root, hasSaved ? setup : null, (next) => {
+    this.garage = new GaragePanel(root, savedSetup ?? (hasSaved ? setup : null), (next) => {
       this.callbacks.setup(next, true);
       this.setSetup(next);
     });
@@ -527,6 +538,14 @@ export class Workbench {
     root.addEventListener("click", this.onClick, options);
     root.addEventListener("input", this.onInput, options);
     root.addEventListener("change", this.onChange, options);
+    this.chrome = new WorkbenchChrome(root, () => callbacks.inputBoundary?.());
+    root.querySelector("#pairing-import")!.addEventListener("change", async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file && file.size <= 8_000_000) callbacks.pairingImport?.(await file.text());
+      else if (file) this.toast("Pairing import exceeds 8 MB.");
+      (e.target as HTMLInputElement).value = "";
+    }, options);
+    root.querySelector("#category-select")!.addEventListener("change", (e) => callbacks.action(`category:${(e.target as HTMLSelectElement).value}`), options);
   }
 
   node(id: string) {
@@ -558,11 +577,9 @@ export class Workbench {
       return;
     }
     const action = button.dataset.action!;
+    if (!this.authorize(action)) return;
+    if (action === "preferences") { this.sessions.preferences.open(); return; }
     if (action === "car-workshop" || action === "garage") {
-      if (this.hasPendingChanges) {
-        this.toast("Apply or discard the pending chassis changes first.");
-        return;
-      }
       if (action === "car-workshop") this.cars.open(this.setup);
       else this.garage.open(this.setup);
       return;
@@ -579,12 +596,14 @@ export class Workbench {
       this.draft = copySetup(this.setup);
       this.renderSettings();
       this.markCustom();
+      this.callbacks.action("draft:changed");
       return;
     }
     if (action.startsWith("reset-field:")) {
       const key = action.slice(12) as NumericSetupKey,
         base = this.comparisonBase();
       this.draft = sanitizeSetup({ ...this.draft, [key]: base[key] });
+      if (STRUCTURAL_KEYS.has(key)) this.callbacks.action("draft:changed");
       if (!STRUCTURAL_KEYS.has(key)) {
         this.setup = sanitizeSetup({ ...this.setup, [key]: base[key] });
         this.callbacks.setup(this.setup, false, key);
@@ -602,12 +621,12 @@ export class Workbench {
       return;
     }
     if (action === "telemetry") {
-      this.node("response-panel").hidden = !this.node("response-panel").hidden;
+      this.chrome.toggle("recorder");
       if (!this.node("response-panel").hidden) this.trace.refreshRecordings();
       return;
     }
     if (action === "inspector") {
-      this.root.classList.toggle("inspector-collapsed");
+      this.chrome.toggle("inspector");
       return;
     }
     if (action === "help") {
@@ -631,11 +650,12 @@ export class Workbench {
       return;
     }
     if (action === "apply-chassis") {
-      this.setup = { ...this.draft };
-      this.callbacks.setup(this.setup, true);
-      this.renderSettings();
-      this.updateSummary();
-      this.markCustom();
+      try {
+        const next = copySetup(this.draft);
+        this.callbacks.setup(next, true);
+        this.setup = next;
+        this.renderSettings(); this.updateSummary(); this.markCustom();
+      } catch (error) { this.toast(`Chassis preparation failed; your draft is retained. ${String(error)}`); }
       return;
     }
     this.callbacks.action(action);
@@ -678,6 +698,7 @@ export class Workbench {
       [key]: input.valueAsNumber * field.scale,
     });
     this.draft = candidate;
+    if (STRUCTURAL_KEYS.has(key)) this.callbacks.action("draft:changed");
     const paired: Partial<Record<NumericSetupKey, NumericSetupKey>> = {
       frontSpring: "rearSpring",
       rearSpring: "frontSpring",
@@ -755,13 +776,16 @@ export class Workbench {
       return;
     }
     if (input.id === "circuit-start-select") {
-      this.callbacks.action(`circuit-start:${input.value}`);
+      if (this.authorize(`circuit-start:${input.value}`)) this.callbacks.action(`circuit-start:${input.value}`);
+      else input.value = this.selectedStartId;
       input.blur();
     }
-    if (input.id === "preset-select")
-      this.callbacks.action(`preset:${input.value}`);
-    if (input.id === "reference-car-select")
-      this.callbacks.action(`car:${input.value}`);
+    if (input.id === "preset-select") {
+      if (this.authorize(`preset:${input.value}`)) this.callbacks.action(`preset:${input.value}`); else this.markCustom();
+    }
+    if (input.id === "reference-car-select") {
+      if (this.authorize(`car:${input.value}`)) this.callbacks.action(`car:${input.value}`); else this.updateSummary();
+    }
     const enumKey = input.dataset.enum;
     if (enumKey) {
       this.setup = sanitizeSetup({ ...this.setup, [enumKey]: input.value });
@@ -926,18 +950,20 @@ export class Workbench {
     this.setup = { ...setup };
     this.draft = { ...setup };
     this.baseline = this.factorySetup(setup);
-    this.trace?.setSetup(setup);
     this.renderSettings();
     this.updateSummary();
     const select = this.node("preset-select") as HTMLSelectElement;
-    select.value = preset && PRESETS[preset] ? preset : "custom";
-    this.node("preset-status").textContent = preset ? "BASELINE" : "MODIFIED";
+    select.value = preset && PRESETS[preset] ? preset : mechanicsFingerprint(setup) === mechanicsFingerprint(this.baseline) ? "balanced" : "custom";
+    this.node("preset-status").textContent = mechanicsFingerprint(setup) === mechanicsFingerprint(this.baseline) ? "FACTORY" : "MODIFIED";
+    this.setCompareEnabled(!!this.savedReference && carIdentity(this.savedReference) === carIdentity(setup));
   }
   private markCustom() {
-    (this.node("preset-select") as HTMLSelectElement).value = "custom";
+    const factory = mechanicsFingerprint(this.setup) === mechanicsFingerprint(this.baseline);
+    (this.node("preset-select") as HTMLSelectElement).value = !this.hasPendingChanges && factory ? "balanced" : "custom";
+    this.node("active-setup-state").textContent = this.hasPendingChanges ? "PENDING CHASSIS" : factory ? "" : "MODIFIED";
     this.node("preset-status").textContent = this.hasPendingChanges
       ? "PENDING CHASSIS"
-      : "MODIFIED";
+      : factory ? "FACTORY" : "MODIFIED";
   }
   private factorySetup(setup: VehicleSetup) {
     try {
@@ -962,47 +988,27 @@ export class Workbench {
   }
   setSavedReference(setup: VehicleSetup) {
     this.savedReference = copySetup(setup);
+    this.setCompareEnabled(carIdentity(setup) === carIdentity(this.setup));
     this.renderSettings();
   }
   private comparisonBase() {
-    const id = (s: VehicleSetup) =>
-      s.vehicle
-        ? fingerprint({
-            family: s.vehicle.family,
-            dimensions: s.vehicle.dimensions,
-            components: s.vehicle.components,
-          })
-        : s.referenceCar;
-    return this.savedReference && id(this.savedReference) === id(this.setup)
-      ? this.savedReference
-      : this.baseline;
+    return this.savedReference && carIdentity(this.savedReference) === carIdentity(this.setup) ? this.savedReference : this.baseline;
   }
+
   recordTelemetry(t: VehicleTelemetry, yaw: number) {
     this.trace.capture(t, yaw);
   }
   private updateInputLabels(settings: InputSettings) {
-    const key = (name: keyof InputSettings["keys"]) =>
-      settings.keys[name][0]
-        .replace(/^Key|^Digit/, "")
-        .replace("ArrowUp", "↑")
-        .replace("ArrowDown", "↓")
-        .replace("ArrowLeft", "←")
-        .replace("ArrowRight", "→");
-    const hints = this.root.querySelectorAll(".status-controls kbd");
-    if (hints[0])
-      hints[0].textContent = [
-        key("throttle"),
-        key("left"),
-        key("brake"),
-        key("right"),
-      ].join(" ");
-    if (hints[1]) hints[1].textContent = key("reset");
-    if (hints[2]) hints[2].textContent = key("pause");
-    this.root.querySelector(".powertrain-hud small")!.textContent =
-      `${key("reverse")} REVERSE · ${key("shiftDown")} / ${key("shiftUp")} SHIFT`;
+    const list = this.root.querySelector(".controls-list")!;
+    list.replaceChildren(...KEY_ACTIONS.flatMap((action) => {
+      const dt = document.createElement("dt"), dd = document.createElement("dd");
+      dt.textContent = bindingName(settings, action); dd.textContent = INPUT_LABELS[action];
+      return [dt, dd];
+    }));
+    this.root.querySelector(".help-scope")!.textContent = "Accelerate in the selected direction; brake to stop before changing direction. Controls settings contains the current gamepad mapping and response calibration. Tyres share grip between acceleration, braking and cornering.";
   }
   private updateSummary() {
-    this.trace?.setSetup(this.setup);
+    if (!this.changingWorkspace) this.trace?.setSetup(this.setup);
     (this.node("reference-car-select") as HTMLSelectElement).value = this.setup
       .vehicle
       ? "generated"
@@ -1038,6 +1044,11 @@ export class Workbench {
     ).toUpperCase();
     this.node("vehicle-label").textContent =
       `${this.setup.drive.toUpperCase()} · ${Math.round(this.setup.mass).toLocaleString()} KG`;
+    const summary = this.root.querySelector("#active-car");
+    if (summary) { summary.textContent = this.setup.vehicle?.name ?? REFERENCE_CARS[this.setup.referenceCar].name; summary.setAttribute("title", summary.textContent); }
+    const detail = this.root.querySelector("#active-car-detail");
+    const dimensions = resolveCar(this.setup).dimensions;
+    if (detail) detail.textContent = `${this.setup.drive.toUpperCase()} · ${Math.round(this.setup.mass)} kg · ${dimensions.wheelbase.toFixed(2)} m wheelbase · ${dimensions.frontTrack.toFixed(2)} / ${dimensions.rearTrack.toFixed(2)} m effective wheel track. Workshop recipe dimensions and applied chassis overrides resolve to these values.`;
     const derived = carDerived(this.setup);
     this.node("setup-derived-extra").textContent =
       `${Math.round(derived.powerToWeight)} kW/t · ${Math.round(derived.clearance * 1000)} mm floor · ${(this.setup.frontWeight * 100).toFixed(1)}% front`;
@@ -1045,7 +1056,7 @@ export class Workbench {
   setExperiment(experiment: string) {
     this.root.classList.toggle("on-circuit", experiment === "circuit");
     this.node("session-strip").hidden = experiment !== "circuit";
-    this.trace?.setCondition(
+    if (!this.changingWorkspace) this.trace?.setCondition(
       `Manual / ${experiment}${experiment === "circuit" ? ` / ${this.circuit.definition.id}` : ""}`,
     );
     this.root
@@ -1074,8 +1085,13 @@ export class Workbench {
           : 'Suspension lab<span class="heading-dot">.</span>';
     this.node("circuit-controls").hidden = experiment !== "circuit";
     this.node("circuit-map").hidden = experiment !== "circuit";
+    this.root.querySelector<HTMLElement>('[data-camera="overview"]')!.hidden = experiment !== "circuit";
+    this.node("test-context").hidden = experiment === "circuit";
+    this.node("test-context").textContent = experiment.toUpperCase();
+    this.root.querySelectorAll<HTMLElement>('.working-right [data-action="session:trial"]').forEach((e) => e.hidden = experiment !== "circuit");
   }
   setCircuitStart(id: string) {
+    this.selectedStartId = id;
     (this.node("circuit-start-select") as HTMLSelectElement).value = id;
     const start = this.circuit.definition.starts.find(
       (start) => start.id === id,
@@ -1085,8 +1101,11 @@ export class Workbench {
   }
   setCircuit(circuit: CompiledCircuit) {
     this.circuit = circuit;
+    this.selectedStartId = circuit.definition.starts[0].id;
     this.map = mapProjection(circuit, 220, 150);
     this.node("circuit-name").textContent = circuit.definition.name;
+    this.node("active-track").textContent = circuit.definition.name;
+    this.node("active-track").title = circuit.definition.name;
     const select = this.node("circuit-start-select") as HTMLSelectElement;
     select.replaceChildren(
       ...circuit.definition.starts.map((start) => {
@@ -1110,15 +1129,20 @@ export class Workbench {
     this.generator.setActive(circuit.definition.name);
     this.setExperiment("circuit");
   }
+  setWorkspace(setup: VehicleSetup, circuit: CompiledCircuit, experiment: string, start: string) {
+    this.changingWorkspace = true;
+    try {
+      this.setCircuit(circuit); this.setExperiment(experiment); this.setSetup(setup); this.setCircuitStart(start);
+    } finally { this.changingWorkspace = false; }
+    this.trace.setContext(setup, `Manual / ${experiment}${experiment === "circuit" ? ` / ${circuit.definition.id}` : ""}`);
+  }
   setPaused(paused: boolean) {
     this.node("pause-button").innerHTML =
       `${icon(paused ? "play" : "pause")}<span>${paused ? "Resume" : "Pause"}</span>`;
     this.node("live-badge").innerHTML =
       `<i></i>${paused ? "SIMULATION PAUSED" : "LIVE SIMULATION"}`;
     this.node("live-badge").classList.toggle("paused", paused);
-    this.node("simulation-status").textContent = paused
-      ? "PAUSED"
-      : "120 HZ PHYSICS";
+    this.node("simulation-status").textContent = "120 HZ PHYSICS";
   }
   setSound(enabled: boolean) {
     const button = this.node("surface-sound-button");
@@ -1142,7 +1166,7 @@ export class Workbench {
     physicsMs: number,
     inputName: string | null,
   ) {
-    this.diagrams.update(t, this.worldDatum, this.setup.drive);
+    if (this.chrome.state.instruments) this.diagrams.update(t, this.worldDatum, this.setup.drive);
     const gear = t.powertrain.gear;
     this.node("gear-value").textContent =
       gear < 0 ? "R" : gear === 0 ? "N" : String(gear);
@@ -1219,19 +1243,9 @@ export class Workbench {
         advisory = this.node("circuit-advisory");
       advisory.hidden = true;
       if (pit) {
-        const s =
-          ((t.track.station + this.circuit.length / 2) % this.circuit.length) -
-          this.circuit.length / 2;
-        if (
-          s >= pit.entry &&
-          s <= pit.exit &&
-          Math.abs(
-            t.track.lateral -
-              pit.side * pitOffset(pit, t.track.station, this.circuit.length),
-          ) <
-            pit.width / 2 + 1
-        ) {
-          advisory.textContent = "PIT LANE · 50 KM/H";
+        const context = trackContext(this.circuit, t);
+        if (context.pit) {
+          advisory.textContent = `${context.overspeed ? "PIT OVERSPEED" : "PIT LANE"} · ${Math.round(context.limit * 3.6)} KM/H`;
           advisory.hidden = false;
         }
       }
@@ -1291,11 +1305,29 @@ export class Workbench {
       toast.hidden = true;
     }, 3500);
   }
+  setPreparation(message?: string, busy = false) {
+    let panel = this.root.querySelector<HTMLElement>("#preparation-status");
+    if (!panel) {
+      panel = document.createElement("div"); panel.id = "preparation-status";
+      panel.className = "preparation-status"; panel.setAttribute("role", "status");
+      panel.innerHTML = '<p></p><button class="button subtle" data-action="explore:cancel">Dismiss / cancel</button><button class="button subtle" data-action="explore:new">Retry</button><button class="button subtle" data-action="experiment:circuit">Use proving circuit</button>';
+      this.root.querySelector(".scene-stage")!.append(panel);
+    }
+    panel.hidden = !message;
+    panel.setAttribute("aria-busy", String(busy));
+    panel.querySelector("p")!.textContent = message ?? "";
+    panel.querySelectorAll<HTMLElement>('[data-action="explore:new"], [data-action="experiment:circuit"]').forEach((e) => e.hidden = busy);
+  }
   setUndoEnabled(enabled: boolean) {
     (this.node("undo-button") as HTMLButtonElement).disabled = !enabled;
   }
   setRedoEnabled(enabled: boolean) {
     (this.node("redo-button") as HTMLButtonElement).disabled = !enabled;
+  }
+  authorize(action: string) {
+    if (allowCommand(action, this.hasPendingChanges)) return true;
+    this.toast("Apply or discard the pending chassis changes first.");
+    return false;
   }
   get hasPendingChanges() {
     return Array.from(STRUCTURAL_KEYS).some(
@@ -1307,9 +1339,10 @@ export class Workbench {
   }
   setComparing(on: boolean) {
     this.node("compare-button").innerHTML =
-      `${icon("compare")}${on ? "Return to edit" : "Compare saved"}`;
+      `${icon("compare")}${on ? "Return to working setup" : "Try saved baseline"}`;
   }
   dispose() {
+    this.chrome.dispose();
     this.generator.dispose();
     this.cars.dispose();
     this.garage.dispose();

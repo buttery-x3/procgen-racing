@@ -1,0 +1,542 @@
+{
+  "runtimeSourceHash": "8565dd5b29ffc0a7",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "completed": true,
+  "consecutiveSamplesForSilenceEvent": 3,
+  "errors": [],
+  "events": [
+    {
+      "detail": "Actual gear 1 → 2 at 6273 RPM",
+      "kind": "first-upshift",
+      "seconds": 6.384199999809265,
+      "stage": "launch"
+    }
+  ],
+  "firstActualUpshiftObserved": true,
+  "format": "procgen-racing:audio-driving-diagnostic",
+  "latest": {
+    "audio": {
+      "baseLatencySeconds": 0.01,
+      "contextState": "running",
+      "controlP95Ms": 0.4000000953674317,
+      "controlTimingScope": "All captures plus graph publication per animation frame; excludes browser audio rendering",
+      "enabled": true,
+      "error": null,
+      "liveGraphs": 1,
+      "meterError": null,
+      "output": "headphones",
+      "outputLatencySeconds": 0.04,
+      "profile": "sport",
+      "retiringGraphs": 0,
+      "sampleRate": 48000,
+      "settings": {
+        "axleCue": 0.8,
+        "enabled": true,
+        "engine": 0.75,
+        "master": 0.6,
+        "output": "headphones",
+        "softSqueal": false,
+        "surface": 0.65,
+        "tyres": 1,
+        "version": 1,
+        "width": 0.75
+      },
+      "signal": {
+        "audioTime": 21.370666666666665,
+        "ceiling": {
+          "finite": true,
+          "peak": 0.08406247198581696,
+          "rms": 0.022966963828597708
+        },
+        "engine": {
+          "finite": true,
+          "peak": 0.07205833494663239,
+          "rms": 0.01966202212008401
+        },
+        "engineGain": 0.75,
+        "impact": {
+          "finite": true,
+          "peak": 0,
+          "rms": 0
+        },
+        "mix": {
+          "finite": true,
+          "peak": 0.07205833494663239,
+          "rms": 0.01966202212008401
+        },
+        "output": {
+          "finite": true,
+          "peak": 0.05043748393654823,
+          "rms": 0.013780178829897322
+        },
+        "outputGain": 0.6000000238418579,
+        "warmedUp": true,
+        "wheels": [
+          {
+            "id": "fl",
+            "signals": {
+              "hrtf": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "hrtf-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "input": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "mono-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "stereo": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "stereo-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              }
+            }
+          },
+          {
+            "id": "fr",
+            "signals": {
+              "hrtf": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "hrtf-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "input": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "mono-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "stereo": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "stereo-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              }
+            }
+          },
+          {
+            "id": "rl",
+            "signals": {
+              "hrtf": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "hrtf-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "input": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "mono-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "stereo": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "stereo-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              }
+            }
+          },
+          {
+            "id": "rr",
+            "signals": {
+              "hrtf": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "hrtf-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "input": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "mono-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "stereo": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              },
+              "stereo-routed": {
+                "finite": true,
+                "peak": 0,
+                "rms": 0
+              }
+            }
+          }
+        ]
+      },
+      "sourceBackend": "pulse-exhaust-reference-v3",
+      "sourceReady": true,
+      "state": "running",
+      "tyreModelId": "local:tyre-spectrum-v1:2941a61b863996e39695905bf50e6fd07e55fca54ea51941901711317804fdf0",
+      "updates": 2676
+    },
+    "experiment": "handling",
+    "frameAgeMs": 3.499999952317012,
+    "paused": false,
+    "sampledAt": 28441.299999952316,
+    "telemetry": {
+      "gear": 1,
+      "grounded": 4,
+      "rpm": 963.906965729104,
+      "shifting": false,
+      "speed": 0.029939332976937297,
+      "time": 21.52499999999942
+    },
+    "visibility": "visible"
+  },
+  "limitations": [
+    "No pass is inferred when muted, paused, hidden, warming up or without a running context.",
+    "Silence events describe sampled digital signals only. They do not establish speaker/headphone behavior.",
+    "A completed sequence can contain recorded failures; completion is not a pass."
+  ],
+  "meterWarmupSeconds": 0.15,
+  "nodeHealth": {
+    "ceiling": {
+      "maximumRms": 0.057803341913073306,
+      "minimumRms": 0.013452630926725676,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "engine": {
+      "maximumRms": 0.03435315669405448,
+      "minimumRms": 0.009189442924366652,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fl/hrtf": {
+      "maximumRms": 0.016568987531921188,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fl/hrtf-routed": {
+      "maximumRms": 0.016568987531921188,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fl/input": {
+      "maximumRms": 0.03943727967442533,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fl/mono-routed": {
+      "maximumRms": 0,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fl/stereo": {
+      "maximumRms": 0.02318666751987685,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fl/stereo-routed": {
+      "maximumRms": 0,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fr/hrtf": {
+      "maximumRms": 0.0173443700284716,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fr/hrtf-routed": {
+      "maximumRms": 0.0173443700284716,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fr/input": {
+      "maximumRms": 0.042670247232434795,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fr/mono-routed": {
+      "maximumRms": 0,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fr/stereo": {
+      "maximumRms": 0.025087451314226267,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "fr/stereo-routed": {
+      "maximumRms": 0,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "impact": {
+      "maximumRms": 0,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "mix": {
+      "maximumRms": 0.04981561703631914,
+      "minimumRms": 0.011500159530679729,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "output": {
+      "maximumRms": 0.03468200652532504,
+      "minimumRms": 0.008071578870861641,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rl/hrtf": {
+      "maximumRms": 0.027143932557346866,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rl/hrtf-routed": {
+      "maximumRms": 0.027143932557346866,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rl/input": {
+      "maximumRms": 0.06715506529619886,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rl/mono-routed": {
+      "maximumRms": 0,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rl/stereo": {
+      "maximumRms": 0.03948300145608901,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rl/stereo-routed": {
+      "maximumRms": 0,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rr/hrtf": {
+      "maximumRms": 0.02867563257334713,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rr/hrtf-routed": {
+      "maximumRms": 0.02867563257334713,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rr/input": {
+      "maximumRms": 0.06651638850496917,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rr/mono-routed": {
+      "maximumRms": 0,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rr/stereo": {
+      "maximumRms": 0.039107499209395866,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    },
+    "rr/stereo-routed": {
+      "maximumRms": 0,
+      "minimumRms": 0,
+      "nonFiniteSamples": 0,
+      "samples": 213
+    }
+  },
+  "recordedAt": "2026-10-27T03:03:55.852Z",
+  "sampleIntervalMs": 100,
+  "samples": 216,
+  "scope": "Production App RAF, SuspensionRig, VehicleAudio collector and native graph. Automatic default reference car on existing handling pad, or explicit manual controls. Lazy analyser taps on engine bus, impact, mix before ceiling, ceiling, final output, plus each wheel's input/raw panners/routed outputs. Sampled every 100 ms; 2048 samples can overlap. Diagnostic taps can add processing cost. Not a hardware-underrun or human-listening test.",
+  "silenceRmsThreshold": 0.000001,
+  "sourceHash": "a6c68096d2392216",
+  "stage": "finished",
+  "stageWarmupSeconds": 0.35,
+  "summaries": [
+    {
+      "appStalledSamples": 0,
+      "beganSeconds": 0,
+      "contextNotRunningSamples": 0,
+      "eligibleSamples": 22,
+      "endedSeconds": 2.504299999952316,
+      "engineSilentSamples": 0,
+      "maximumRpm": 973.715573637064,
+      "maximumSpeed": 0.00902265589684248,
+      "minimumEngineRms": 0.017154717610374928,
+      "minimumOutputRms": 0.012030365721586105,
+      "nonFiniteSamples": 0,
+      "outputSilentSamples": 0,
+      "samples": 26,
+      "stage": "idle"
+    },
+    {
+      "appStalledSamples": 0,
+      "beganSeconds": 2.504299999952316,
+      "contextNotRunningSamples": 0,
+      "eligibleSamples": 35,
+      "endedSeconds": 6.384199999809265,
+      "engineSilentSamples": 0,
+      "maximumRpm": 6145.681487286112,
+      "maximumSpeed": 16.018217086791992,
+      "minimumEngineRms": 0.017239909979341043,
+      "minimumOutputRms": 0.012033625432912951,
+      "nonFiniteSamples": 0,
+      "outputSilentSamples": 0,
+      "samples": 38,
+      "stage": "launch"
+    },
+    {
+      "appStalledSamples": 0,
+      "beganSeconds": 6.384199999809265,
+      "contextNotRunningSamples": 0,
+      "eligibleSamples": 16,
+      "endedSeconds": 8.384599999904633,
+      "engineSilentSamples": 0,
+      "maximumRpm": 6880.2310523728,
+      "maximumSpeed": 22.41615104675293,
+      "minimumEngineRms": 0.01156632818608358,
+      "minimumOutputRms": 0.012432464365767282,
+      "nonFiniteSamples": 0,
+      "outputSilentSamples": 0,
+      "samples": 20,
+      "stage": "shift recovery"
+    },
+    {
+      "appStalledSamples": 0,
+      "beganSeconds": 8.384599999904633,
+      "contextNotRunningSamples": 0,
+      "eligibleSamples": 44,
+      "endedSeconds": 13.1445,
+      "engineSilentSamples": 0,
+      "maximumRpm": 5601.312674104281,
+      "maximumSpeed": 22.41808319091797,
+      "minimumEngineRms": 0.009189442924366652,
+      "minimumOutputRms": 0.008193254444713917,
+      "nonFiniteSamples": 0,
+      "outputSilentSamples": 0,
+      "samples": 48,
+      "stage": "braking"
+    },
+    {
+      "appStalledSamples": 0,
+      "beganSeconds": 13.1445,
+      "contextNotRunningSamples": 0,
+      "eligibleSamples": 27,
+      "endedSeconds": 16.153599999904632,
+      "engineSilentSamples": 0,
+      "maximumRpm": 967.9128078425196,
+      "maximumSpeed": 0.006639421451836824,
+      "minimumEngineRms": 0.016820738892304607,
+      "minimumOutputRms": 0.011796382162594588,
+      "nonFiniteSamples": 0,
+      "outputSilentSamples": 0,
+      "samples": 30,
+      "stage": "stopped idle"
+    },
+    {
+      "appStalledSamples": 0,
+      "beganSeconds": 16.153599999904632,
+      "contextNotRunningSamples": 0,
+      "eligibleSamples": 26,
+      "endedSeconds": 19.153599999904632,
+      "engineSilentSamples": 0,
+      "maximumRpm": 3844.0480964129047,
+      "maximumSpeed": 6.393476486206055,
+      "minimumEngineRms": 0.011907159637460977,
+      "minimumOutputRms": 0.008858281467762805,
+      "nonFiniteSamples": 0,
+      "outputSilentSamples": 0,
+      "samples": 30,
+      "stage": "relaunch"
+    },
+    {
+      "appStalledSamples": 0,
+      "beganSeconds": 19.153599999904632,
+      "contextNotRunningSamples": 0,
+      "eligibleSamples": 20,
+      "endedSeconds": 21.563,
+      "engineSilentSamples": 0,
+      "maximumRpm": 3539.4670211317793,
+      "maximumSpeed": 6.527235984802246,
+      "minimumEngineRms": 0.011823026391061158,
+      "minimumOutputRms": 0.008915306268202658,
+      "nonFiniteSamples": 0,
+      "outputSilentSamples": 0,
+      "samples": 24,
+      "stage": "final braking"
+    }
+  ],
+  "version": 1
+}

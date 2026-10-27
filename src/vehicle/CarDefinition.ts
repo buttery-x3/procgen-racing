@@ -125,6 +125,11 @@ export function mechanicsFingerprint(setup: VehicleSetup) {
     },
   });
 }
+/** Baseline compatibility follows the constructed car, independently of its tune. */
+export function carIdentity(setup: VehicleSetup) {
+  const v = setup.vehicle;
+  return v ? fingerprint({ family: v.family, dimensions: v.dimensions, components: v.components, shape: v.shape }) : setup.referenceCar;
+}
 
 /** Principal axes of a symmetric positive inertia tensor, with Jacobi rotations. */
 export function principalInertia(tensor: number[][]) {

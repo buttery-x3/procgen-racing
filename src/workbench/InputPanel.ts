@@ -1,3 +1,4 @@
+import { INPUT_LABELS } from "./display";
 import {
   DEFAULT_INPUT,
   KEY_ACTIONS,
@@ -42,7 +43,7 @@ export class InputPanel {
   private render() {
     this.node("input-key-bindings").innerHTML = KEY_ACTIONS.map(
       (action) =>
-        `<div class="input-binding"><span>${{ throttle: "Throttle", brake: "Brake", left: "Steer left", right: "Steer right", handbrake: "Handbrake", reset: "Reset", pause: "Pause", camera: "Cycle camera", reverse: "Reverse / drive", shiftDown: "Shift down", shiftUp: "Shift up" }[action]}</span><button class="button subtle" data-bind="${action}">${esc(this.draft.keys[action].join(" / "))}</button></div>`,
+        `<div class="input-binding"><span>${INPUT_LABELS[action]}</span><button class="button subtle" data-bind="${action}">${esc(this.draft.keys[action].join(" / "))}</button></div>`,
     ).join("");
     this.node("input-pad-bindings").innerHTML = Object.entries(this.draft.pad)
       .map(

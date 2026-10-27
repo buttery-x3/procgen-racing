@@ -6,6 +6,7 @@ import type { InputSettings, KeyAction } from "./settings";
 export class Input {
   private keys = new Set<string>();
   private steering = 0;
+  private padBlocked = false;
   private previousPadButtons: boolean[] = [];
   gamepadName: string | null = null;
   enabled = true;
@@ -23,7 +24,7 @@ export class Input {
   private editing() {
     const target = document.activeElement;
     return (
-      !!document.querySelector("dialog[open]") ||
+      !!document.querySelector("dialog[open], [data-ui-menu][open]") ||
       target instanceof HTMLInputElement ||
       target instanceof HTMLSelectElement ||
       target instanceof HTMLTextAreaElement ||
@@ -42,7 +43,7 @@ export class Input {
     }
     if (
       (event.code === "Space" || event.code === "Enter") &&
-      document.activeElement instanceof HTMLButtonElement
+      (document.activeElement instanceof HTMLButtonElement || (document.activeElement as HTMLElement | null)?.tagName === "SUMMARY")
     )
       return;
     if (
@@ -82,9 +83,10 @@ export class Input {
   private onKeyUp = (event: KeyboardEvent) => {
     this.keys.delete(event.code);
   };
-  private clear = () => {
+  clear = () => {
     this.keys.clear();
     this.steering = 0;
+    this.padBlocked = true;
   };
   read(dt: number): VehicleControls {
     const pads = navigator.getGamepads?.() ?? [];
@@ -92,6 +94,7 @@ export class Input {
       (p) => p?.connected && p.mapping === "standard",
     );
     this.gamepadName = pad?.id ?? null;
+    if (this.padBlocked && (!pad || (pad.buttons.every((b) => !b.pressed && b.value < 0.05) && Math.abs(pad.axes[this.settings.steerAxis] ?? 0) <= this.settings.deadZone))) this.padBlocked = false;
     if (pad && this.editing()) this.navigateUI(pad);
     const padActions: Record<number, string> = {
       [this.settings.pad.pause]: "pause",
@@ -102,7 +105,7 @@ export class Input {
       [this.settings.pad.shiftDown]: "shift:down",
       [this.settings.pad.shiftUp]: "shift:up",
     };
-    if (!this.editing())
+    if (!this.editing() && !this.padBlocked)
       for (const [index, action] of Object.entries(padActions)) {
         if (
           pad?.buttons[Number(index)]?.pressed &&
@@ -118,7 +121,8 @@ export class Input {
     }
     const pressed = (...keys: string[]) =>
       keys.some((key) => this.keys.has(key));
-    const axis = pad?.axes[this.settings.steerAxis] ?? 0;
+    const drivePad = this.padBlocked ? undefined : pad;
+    const axis = drivePad?.axes[this.settings.steerAxis] ?? 0;
     const padSteer = responseAxis(axis, this.settings);
     const target =
       padSteer ||
@@ -130,7 +134,7 @@ export class Input {
       throttle: clamp(
         Math.max(
           Number(pressed(...this.settings.keys.throttle)),
-          pad?.buttons[this.settings.pad.throttle]?.value ?? 0,
+          drivePad?.buttons[this.settings.pad.throttle]?.value ?? 0,
         ),
         0,
         1,
@@ -138,7 +142,7 @@ export class Input {
       brake: clamp(
         Math.max(
           Number(pressed(...this.settings.keys.brake)),
-          pad?.buttons[this.settings.pad.brake]?.value ?? 0,
+          drivePad?.buttons[this.settings.pad.brake]?.value ?? 0,
         ),
         0,
         1,
@@ -146,7 +150,7 @@ export class Input {
       steer: clamp(this.steering, -1, 1),
       handbrake: Math.max(
         Number(pressed(...this.settings.keys.handbrake)),
-        pad?.buttons[this.settings.pad.handbrake]?.value ?? 0,
+        drivePad?.buttons[this.settings.pad.handbrake]?.value ?? 0,
       ),
     };
   }
@@ -156,15 +160,17 @@ export class Input {
     const dialog = Array.from(
       document.querySelectorAll<HTMLDialogElement>("dialog[open]"),
     ).at(-1);
-    const scope = dialog ?? document.querySelector(".inspector") ?? document;
+    const menu = document.querySelector<HTMLDetailsElement>("[data-ui-menu][open]");
+    const scope = dialog ?? menu ?? document.querySelector(".inspector") ?? document;
     const controls = Array.from(
       scope.querySelectorAll<HTMLElement>(
         'button:not([disabled]),input:not([type="hidden"]):not([disabled]),select:not([disabled]),summary,textarea',
       ),
     ).filter((e) => e.getClientRects().length > 0);
     const active = document.activeElement as HTMLElement | null;
-    if (pressed(1) && dialog) {
-      dialog.close();
+    if (pressed(1) && (dialog || menu)) {
+      if (dialog) dialog.close();
+      if (menu) { menu.open = false; menu.querySelector("summary")?.focus(); }
       return;
     }
     if (pressed(0) && active) {

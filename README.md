@@ -254,14 +254,20 @@ worker previews took 0.75–2.88 seconds on the development Ryzen 5 5600X deskto
 See the [qualification and limits](docs/m4-v2.md#delivered-qualification-26-october-2026)
 and [32-seed portfolio](http://127.0.0.1:5173/docs/research/m4-v2-portfolio.html).
 
-The app opens on the circuit. Use **Test start** to jump to a repeatable test;
-**R** resets to that selected start. Choose **Tyres** to see each wheel's material,
-slip and RPM. The original lab pads remain available in the surface toolbar.
+The app opens with a randomly selected Club, Touring, Endurance, Prototype, Formula
+or Stock car/track pairing. Choose a category or **New pairing** to explore another;
+the car and track activate together after validation. **Tests** contains the
+authored 3D proving circuit and all six original pads, with **Return to selected
+track** preserving the previous pairing. Use its **Test start** selector for a
+repeatable test; Reset vehicle returns to that start. Choose **Tyres** for each
+wheel's material, slip and RPM. Setup and live telemetry collapse independently.
 
 Open **Circuit workshop**, choose a seed/style/landscape/length, then **Preview seed**.
 **Drive circuit** loads the validated preview. Editing settings disables loading until
-the new recipe is generated. The workshop remembers the last loaded recipe; launch
-still opens the authored proving circuit, also available from the workshop.
+the new recipe is generated. The workshop shows the active category's selected
+recipe; all manual generation controls remain available. The car/track header
+menus contain the workshops, library, pairing seeds and exact pairing export/replay.
+**Save baseline** stores the current setup; load it explicitly from the car menu.
 M7 also saves the accepted definition and active variant in IndexedDB; use
 **Restore / import a circuit** to restore it after reload or import its JSON.
 
@@ -269,13 +275,15 @@ M7 supplies street, rural, mountain, airfield, speedway, road/oval hybrid and ex
 endurance layouts alongside the M4 touring/GP generator. M8 adds time trials,
 ghosts, solo rules and a circuit library. Choose **Start time trial** to reset to
 the grid and cross the chequered line ahead. **Session & records** explains validity
-and presentation settings. Racing overpasses remain an optional extension; open
+and ghosts; **Settings** contains general presentation, sound and input controls.
+Racing overpasses remain an optional extension; open
 rally/hill-climb routes remain out of scope.
 
 See the [implementation plan](docs/implementation-plan.md),
 [current UI/workbench analysis](docs/research/ui-workbench-analysis.md),
 [first-pass workbench implementation plan](docs/ui-workbench-first-pass-plan.md)
-(planned layout consolidation, reliability fixes and category-based exploration),
+(layout consolidation, reliability fixes and category-based exploration),
+[first-pass delivery and validation](docs/ui-workbench-first-pass.md),
 [M1 foundation notes](docs/foundation.md), [M2 model notes](docs/m2.md) and
 [M3 surface compiler notes](docs/m3.md), [M4 v2 notes](docs/m4-v2.md),
 [M5 venue notes](docs/m5.md), [M6 car/workbench notes](docs/m6.md), [M7 expanded-family notes](docs/m7.md), [M8 solo-session notes](docs/m8.md) and

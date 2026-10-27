@@ -19,7 +19,13 @@ them merely because a newer milestone or release exists.
   analysis only, with no UI implementation
 - [First-pass workbench implementation plan](../ui-workbench-first-pass-plan.md):
   compact toolbar, collapsible panels, reliability consolidation and six category
-  presets with seeded car/track exploration; planning only
+  presets with seeded car/track exploration; see the
+  [implemented first-pass delivery](../ui-workbench-first-pass.md) for measurements
+  and validation
+- [First-pass category qualification](ui-workbench-qualification.json),
+  [detailed UI evidence](ui-workbench-browser-qa.json) and
+  [short native audio handoff](ui-workbench-audio-driving.json); each retains its
+  actual source hash and scope, alongside the updated M8 development reports
 - [Synthesized driving audio research and implementation plan](audio-system.md)
   with [native audio qualification](audio-qualification.json) and
   [actual-app driving qualification](audio-driving-qualification.json), plus

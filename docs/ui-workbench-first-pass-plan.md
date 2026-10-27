@@ -1,6 +1,8 @@
 # First-pass workbench implementation plan
 
-Prepared 27 October 2026. **Planned work; no application implementation yet.**
+Prepared 27 October 2026. **Implemented on `codex/ui-workbench-first-pass`.**
+See [delivery and validation](ui-workbench-first-pass.md) for the actual result,
+measurements and qualification scope. This document retains the original plan.
 Based on `caa584bcd9f10036411853d2ff1a1237893b9dbc` on `development` and the
 [UI/codebase audit](research/ui-workbench-analysis.md). Planning branch:
 `codex/ui-workbench-first-pass-plan`. Follow the [repository workflow](workflow.md)

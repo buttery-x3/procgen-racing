@@ -28,7 +28,7 @@ import type { PresentationSettings } from "./settings";
 import type { TimingCourse } from "../race/TimingCourse";
 import type { GhostPose } from "../race/Ghost";
 
-const materials = {
+const carMaterials = {
   body: new THREE.MeshStandardMaterial({
     color: 0xe49156,
     metalness: 0.2,
@@ -58,6 +58,18 @@ const materials = {
     emissiveIntensity: 0.25,
   }),
 };
+
+const materials = carMaterials;
+function disposeCarResources(group: THREE.Group) {
+  const geometries = new Set<THREE.BufferGeometry>(), mats = new Set<THREE.Material>();
+  group.traverse((o) => { if (o instanceof THREE.Mesh || o instanceof THREE.Line) {
+    geometries.add(o.geometry);
+    for (const m of Array.isArray(o.material) ? o.material : [o.material]) mats.add(m);
+  }});
+  for (const m of group.userData.materials ?? []) mats.add(m);
+  geometries.forEach((g) => g.dispose()); mats.forEach((m) => m.dispose());
+  group.clear(); group.removeFromParent();
+}
 
 function box(
   w: number,
@@ -157,7 +169,8 @@ export class SceneView {
   private readonly sun = new VehicleSun();
   private readonly presentation = new VehiclePresentation();
   private readonly chaseCamera = new ChaseCamera();
-  private readonly ghost = new GhostView();
+  private ghost = new GhostView();
+  private carResources = new THREE.Group();
   private readonly effects = new DrivingEffects();
   private timingView?: TimingView;
   private settings = { ...DEFAULT_PRESENTATION };
@@ -281,47 +294,48 @@ export class SceneView {
   }
 
   buildCar(setup: VehicleSetup) {
-    this.setup = setup;
-    this.carSpec = resolveCar(setup);
-    materials.body.color.setHex(
-      setup.vehicle?.appearance.paint ??
-        REFERENCE_CARS[setup.referenceCar].color,
-    );
+    this.prepareCar(setup).commit();
+  }
+
+  /** Allocate a complete car/ghost off-scene. No live state changes until commit. */
+  prepareCar(setup: VehicleSetup) {
+    const carSpec = resolveCar(setup), car = new THREE.Group(), resources = new THREE.Group();
+    const wheelGroups: THREE.Group[] = [], wheelSpinners: THREE.Group[] = [];
+    const suspensionLines: THREE.Line[] = [], contactLines: THREE.Line[] = [];
+    let carArms: THREE.Mesh[] = [];
+    const ghost = new GhostView();
+    const materials = Object.fromEntries(Object.entries(carMaterials).map(([key, m]) => [key, m.clone()])) as typeof carMaterials;
+    materials.body.color.setHex(setup.vehicle?.appearance.paint ?? REFERENCE_CARS[setup.referenceCar].color);
     materials.lime.color.setHex(setup.vehicle?.appearance.accent ?? 0xc9e98b);
-    for (const line of [...this.suspensionLines, ...this.contactLines]) {
-      this.scene.remove(line);
-      line.geometry.dispose();
-      (line.material as THREE.Material).dispose();
-    }
-    this.car.traverse((object) => {
-      if (object instanceof THREE.Mesh || object instanceof THREE.Line)
-        object.geometry.dispose();
-    });
-    this.scene.remove(this.car);
-    this.car = new THREE.Group();
-    this.wheelGroups = [];
-    this.wheelSpinners = [];
-    this.suspensionLines = [];
-    this.contactLines = [];
+    resources.add(car);
+    resources.userData.materials = Object.values(materials);
+    let committed = false;
+    const dispose = () => {
+      if (committed) return;
+      disposeCarResources(resources);
+      Object.values(materials).forEach((m) => m.dispose());
+      ghost.dispose();
+    };
+    try {
     const width = setup.trackWidth + 0.2,
       length = setup.wheelbase + 1.28;
     if (setup.vehicle)
-      this.car.add(
+      car.add(
         createCarBody(setup, { ...materials, accent: materials.lime }),
       );
     else {
       const body = new THREE.Mesh(bodyGeometry(width, length), materials.body);
       body.castShadow = body.receiveShadow = true;
-      this.car.add(body);
-      this.car.add(
+      car.add(body);
+      car.add(
         box(width * 0.91, 0.16, length * 0.95, materials.dark, 0, -0.14, -0.01),
       );
       const cabinShape = cabinDimensions(setup);
       const cabin = new THREE.Mesh(cabinGeometry(cabinShape), materials.glass);
       cabin.castShadow = true;
       cabin.receiveShadow = true;
-      this.car.add(cabin);
-      this.car.add(
+      car.add(cabin);
+      car.add(
         box(
           cabinShape.roofWidth,
           cabinShape.roofThickness,
@@ -333,14 +347,14 @@ export class SceneView {
         ),
       );
       for (const x of [-width * 0.3, width * 0.3]) {
-        this.car.add(
+        car.add(
           box(0.31, 0.075, 0.06, materials.headlight, x, 0.095, length * 0.49),
         );
-        this.car.add(
+        car.add(
           box(0.3, 0.07, 0.035, materials.taillight, x, 0.15, -length * 0.49),
         );
       }
-      this.car.add(
+      car.add(
         box(
           0.11,
           0.015,
@@ -351,7 +365,7 @@ export class SceneView {
           length * 0.34,
         ),
       );
-      this.car.add(
+      car.add(
         box(
           0.035,
           0.015,
@@ -364,11 +378,11 @@ export class SceneView {
       );
     }
     for (let i = 0; i < 4; i++) {
-      const radius = this.carSpec.dimensions.wheelRadius,
+      const radius = carSpec.dimensions.wheelRadius,
         tyreWidth =
           i < 2
-            ? this.carSpec.dimensions.frontTyreWidth
-            : this.carSpec.dimensions.rearTyreWidth;
+            ? carSpec.dimensions.frontTyreWidth
+            : carSpec.dimensions.rearTyreWidth;
       const wheel = new THREE.Group();
       wheel.name = `wheel-${i}`;
       const spinner = new THREE.Group();
@@ -394,9 +408,9 @@ export class SceneView {
       const marker = box(0.245, 0.04, 0.11, materials.dark, 0, 0.13, 0);
       spinner.add(marker);
       wheel.add(spinner);
-      this.car.add(wheel);
-      this.wheelGroups.push(wheel);
-      this.wheelSpinners.push(spinner);
+      car.add(wheel);
+      wheelGroups.push(wheel);
+      wheelSpinners.push(spinner);
       const line = new THREE.Line(
         new THREE.BufferGeometry().setFromPoints([
           new THREE.Vector3(),
@@ -406,8 +420,8 @@ export class SceneView {
       );
       line.renderOrder = 5;
       line.frustumCulled = false;
-      this.scene.add(line);
-      this.suspensionLines.push(line);
+      resources.add(line);
+      suspensionLines.push(line);
       const contactLine = new THREE.Line(
         new THREE.BufferGeometry().setFromPoints([
           new THREE.Vector3(),
@@ -417,15 +431,28 @@ export class SceneView {
       );
       contactLine.renderOrder = 5;
       contactLine.frustumCulled = false;
-      this.scene.add(contactLine);
-      this.contactLines.push(contactLine);
+      resources.add(contactLine);
+      contactLines.push(contactLine);
     }
-    this.carArms =
+    carArms =
       setup.vehicle?.family === "open-wheel"
-        ? createControlArms(this.car, this.carSpec, materials.dark)
+        ? createControlArms(car, carSpec, materials.dark)
         : [];
-    this.scene.add(this.car);
-    this.ghost.build(this.car, this.carSpec);
+    ghost.build(car, carSpec);
+    ghost.material.opacity = this.settings.ghostOpacity;
+    return { dispose, commit: () => {
+      if (committed) return;
+      committed = true;
+      const old = this.carResources, oldGhost = this.ghost;
+      this.scene.remove(old, oldGhost.group);
+      this.setup = setup; this.carSpec = carSpec; this.car = car;
+      this.carResources = resources; this.ghost = ghost;
+      this.wheelGroups = wheelGroups; this.wheelSpinners = wheelSpinners;
+      this.suspensionLines = suspensionLines; this.contactLines = contactLines; this.carArms = carArms;
+      this.scene.add(resources, ghost.group);
+      oldGhost.dispose(); disposeCarResources(old);
+    }};
+    } catch (error) { dispose(); throw error; }
   }
 
   setCircuit(next: CircuitView) {
@@ -776,9 +803,16 @@ export class SceneView {
   }
   setTimingCourse(course: TimingCourse) {
     if (this.timingView?.course === course) return;
-    this.timingView?.dispose();
-    this.timingView = new TimingView(course);
-    this.scene.add(this.timingView.group);
+    this.prepareTimingCourse(course).commit();
+  }
+  prepareTimingCourse(course: TimingCourse) {
+    const next = new TimingView(course);
+    let committed = false;
+    return { commit: () => {
+      if (committed) return;
+      committed = true;
+      this.timingView?.dispose(); this.timingView = next; this.scene.add(next.group);
+    }, dispose: () => { if (!committed) next.dispose(); } };
   }
   showGhost(pose: GhostPose | null) {
     this.ghost.update(pose);

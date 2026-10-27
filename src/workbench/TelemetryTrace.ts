@@ -25,6 +25,8 @@ export interface TraceRun {
   mechanics: string;
   condition: string;
   sampleHz: 120;
+  /** Legacy v1 traces also contain road-relative angles. */
+  angleDatum?: "road";
   samples: TraceSample[];
   metrics?: RunMetrics;
 }
@@ -64,8 +66,8 @@ export const TRACE_METRICS: Record<
   { name: string; unit: string }
 > = {
   speed: { name: "Speed", unit: "km/h" },
-  roll: { name: "Body roll", unit: "°" },
-  pitch: { name: "Body pitch", unit: "°" },
+  roll: { name: "Roll · road", unit: "°" },
+  pitch: { name: "Pitch · road", unit: "°" },
   yaw: { name: "Yaw rate", unit: "°/s" },
   throttle: { name: "Throttle", unit: "%" },
   brake: { name: "Brake", unit: "%" },
@@ -157,6 +159,7 @@ export function makeTrace(
     mechanics: mechanicsFingerprint(setup),
     condition,
     sampleHz: 120,
+    angleDatum: "road",
     samples,
   };
 }

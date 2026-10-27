@@ -47,6 +47,10 @@ export class TracePanel {
       this.clear();
     this.setup = copySetup(setup);
   }
+  setContext(setup: VehicleSetup, condition: string) {
+    this.clear(); this.setup = copySetup(setup); this.condition = condition;
+  }
+  get captureSize() { return this.buffer.snapshot().length; }
   setCondition(condition: string) {
     if (condition !== this.condition) this.clear();
     this.condition = condition;

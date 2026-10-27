@@ -1,74 +1,1191 @@
 {
   "version": 1,
-  "sourceHash": "05ddbc2d8655f19b",
-  "physicsVersion": "3915c9277118cf78",
-  "date": "2026-10-26T07:29:47.601Z",
-  "scope": "v0.2.0 release smoke checks in IAB on the production App/Workbench at localhost:5318, using the isolated M8 qualification database. Includes release-key separation from earlier development results, old-ghost rejection, a real physical timed lap, persisted result/reference and presentation/library checks. Subjective audio quality and physical gamepad hardware are not assessed.",
-  "failed": 0,
+  "sourceHash": "8565dd5b29ffc0a7",
+  "testedCommit": "0adf9a538722d83bcfd06f97f384c2b452facaa5",
+  "date": "2026-10-27T03:09:48.498Z",
+  "scope": "Production App/Workbench on the committed build: physical timed lap and compatible ghost reload, 16 viewport/panel combinations, nonmodal keyboard menus, category replay/proving-ground archive return/draft protection, matched A/B, settings/manual authoring and short native audio handoff. First-upshift is an informational audio event, not a failure. Isolated qualification session databases. Hardware gamepad usability and broad browser coverage are not claimed.",
   "checks": [
     {
-      "check": "Release app boots with four grounded contacts and the existing workbench/diagrams",
+      "name": "production toolbar starts a valid physical timed lap",
+      "passed": true,
+      "result": {
+        "ghost": {
+          "bytes": 117600,
+          "duration": 61.19820470759635,
+          "samples": 1225
+        },
+        "result": {
+          "duration": 61.19820470759635,
+          "finishedAt": "2026-10-27T02:58:01.517Z",
+          "id": "mvq3if8t-1",
+          "identity": {
+            "assists": "3bb75e77fc24fdbb",
+            "car": "86b2c8c486ae2530",
+            "key": "e261ec1f1a353423",
+            "physics": "d259fe4e79fa30d7",
+            "rules": "solo-1",
+            "setup": "3366d2eebc8969da",
+            "track": "01813f533f1672b7",
+            "variant": "full"
+          },
+          "lap": 1,
+          "mode": "time-trial",
+          "reasons": [],
+          "sectors": [
+            17.85298621151946,
+            20.34812551692307,
+            22.99709297915382
+          ],
+          "valid": true
+        },
+        "scope": "Production App, Workbench, 120 Hz four-wheel physics, conservative scripted VehicleControls, real gates and limits, isolated qualification IndexedDB."
+      }
+    },
+    {
+      "name": "recorded ghost validates against the committed build",
       "passed": true
     },
     {
-      "check": "Earlier development PB is not credited to the new release compatibility key",
+      "name": "PB and compatible ghost restore after reload",
+      "passed": true,
+      "best": "1:01.198",
+      "ghost": "Personal-best reference"
+    },
+    {
+      "name": "16 desktop panel/viewport combinations retain one 52px toolbar and unique IDs",
       "passed": true
     },
     {
-      "check": "Pre-release 3b519332fd726112 ghost import is rejected as incompatible with the release key",
+      "name": "Nonmodal keyboard menu preserves pause, setup and session identity",
       "passed": true
     },
     {
-      "check": "Release key 3915c9277118cf78 completes a valid 61.198 s lap and validates its 1,225-pose ghost with sound/effects enabled",
+      "name": "Committed category activates a finite settled pair",
+      "passed": true,
+      "state": {
+        "time": 312.5249999998801,
+        "setup": "415138b6",
+        "car": "25082746",
+        "track": "touring-v2-2e413760",
+        "experiment": "circuit",
+        "start": "start",
+        "category": "club",
+        "pendingCategory": null,
+        "custom": false,
+        "pendingDraft": false,
+        "layout": {
+          "inspector": true,
+          "instruments": true,
+          "recorder": false
+        },
+        "captured": 2400,
+        "paused": false,
+        "sessionKey": "06e139b961d59c0d",
+        "sessionState": "invalid",
+        "grounded": 4,
+        "camera": "chase",
+        "finite": true,
+        "seed": "e787d739-549d-423f-ad83-fed4554448a9"
+      }
+    },
+    {
+      "name": "Pair descriptor repeats exact car, track and seed",
       "passed": true
     },
     {
-      "check": "Release personal best and compatible ghost restore after reload",
+      "name": "Authored proving circuit and accepted archive return retain tune",
       "passed": true
     },
     {
-      "check": "Existing 60% sound volume and enabled effects survive the release reload",
+      "name": "Pending draft protects active car/track against category change",
       "passed": true
     },
     {
-      "check": "Previously saved 24.05 km favourite circuit restores and revalidates, retaining the FR reference car",
+      "name": "Matched A/B worker still returns both recorded responses",
       "passed": true
     },
     {
-      "check": "No browser console errors during release smoke checks",
+      "name": "General presentation preferences have their own destination",
       "passed": true
+    },
+    {
+      "name": "Manual car workshop remains available without replacing active car",
+      "passed": true
+    },
+    {
+      "name": "Manual circuit workshop shows selected recipe without activating a new circuit",
+      "passed": true
+    },
+    {
+      "name": "Short native driving/audio sequence completes through a real upshift",
+      "passed": true,
+      "samples": 216,
+      "informationalEvents": [
+        {
+          "detail": "Actual gear 1 → 2 at 6273 RPM",
+          "kind": "first-upshift",
+          "seconds": 6.384199999809265,
+          "stage": "launch"
+        }
+      ]
+    },
+    {
+      "name": "Committed workbench has no console errors during checked flows",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "name": "Normal startup randomly prepares and activates a category/car/track pair",
+      "passed": true,
+      "startup": {
+        "car": "Endurance prototype / d053a140",
+        "category": "prototype",
+        "ready": true,
+        "track": "Extended endurance circuit / ae7aba10"
+      }
     }
   ],
-  "physicalLap": {
-    "scope": "Production App, Workbench, 120 Hz four-wheel physics, conservative scripted VehicleControls, real gates and limits, isolated qualification IndexedDB.",
-    "result": {
-      "id": "mvoxtrhr-1",
-      "lap": 1,
-      "duration": 61.198369002077676,
-      "sectors": [
-        17.852979716623242,
-        20.348124361887127,
-        22.997264923567307
-      ],
-      "valid": true,
-      "reasons": [],
-      "mode": "time-trial",
-      "identity": {
-        "track": "01813f533f1672b7",
-        "car": "86b2c8c486ae2530",
-        "setup": "3366d2eebc8969da",
-        "assists": "3bb75e77fc24fdbb",
-        "physics": "3915c9277118cf78",
-        "rules": "solo-1",
-        "variant": "full",
-        "key": "b358acf416905768"
+  "failed": 0,
+  "layout": [
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 665.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "flex",
+          "h": 1156,
+          "w": 370,
+          "x": 1471,
+          "y": 72
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 218,
+          "w": 1399,
+          "x": 72,
+          "y": 1010
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 886,
+          "w": 1399,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1399,
+          "x": 72,
+          "y": 72
+        }
       },
-      "finishedAt": "2026-10-26T07:31:06.736Z"
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
     },
-    "ghost": {
-      "samples": 1225,
-      "bytes": 117600,
-      "duration": 61.198369002077676
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 850.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 218,
+          "w": 1769,
+          "x": 72,
+          "y": 1010
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 886,
+          "w": 1769,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1769,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 665.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "flex",
+          "h": 1156,
+          "w": 370,
+          "x": 1471,
+          "y": 72
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 30,
+          "w": 1399,
+          "x": 72,
+          "y": 1198
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 1074,
+          "w": 1399,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1399,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 850.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 30,
+          "w": 1769,
+          "x": 72,
+          "y": 1198
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 1074,
+          "w": 1769,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1769,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 665.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "flex",
+          "h": 1156,
+          "w": 370,
+          "x": 1471,
+          "y": 72
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 218,
+          "w": 1399,
+          "x": 72,
+          "y": 1010
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 886,
+          "w": 1399,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1399,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 850.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 218,
+          "w": 1769,
+          "x": 72,
+          "y": 1010
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 886,
+          "w": 1769,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1769,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 665.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "flex",
+          "h": 1156,
+          "w": 370,
+          "x": 1471,
+          "y": 72
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 30,
+          "w": 1399,
+          "x": 72,
+          "y": 1198
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 1074,
+          "w": 1399,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1399,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 850.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 30,
+          "w": 1769,
+          "x": 72,
+          "y": 1198
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 1074,
+          "w": 1769,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1769,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 665.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "flex",
+          "h": 1156,
+          "w": 370,
+          "x": 1471,
+          "y": 72
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 218,
+          "w": 1399,
+          "x": 72,
+          "y": 1010
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 886,
+          "w": 1399,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1399,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 850.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 218,
+          "w": 1769,
+          "x": 72,
+          "y": 1010
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 886,
+          "w": 1769,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1769,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 665.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "flex",
+          "h": 1156,
+          "w": 370,
+          "x": 1471,
+          "y": 72
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 30,
+          "w": 1399,
+          "x": 72,
+          "y": 1198
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 1074,
+          "w": 1399,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1399,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 850.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 30,
+          "w": 1769,
+          "x": 72,
+          "y": 1198
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 1074,
+          "w": 1769,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1769,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 665.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "flex",
+          "h": 1156,
+          "w": 370,
+          "x": 1471,
+          "y": 72
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 218,
+          "w": 1399,
+          "x": 72,
+          "y": 1010
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 886,
+          "w": 1399,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1399,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 850.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 218,
+          "w": 1769,
+          "x": 72,
+          "y": 1010
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 886,
+          "w": 1769,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1769,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 665.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "flex",
+          "h": 1156,
+          "w": 370,
+          "x": 1471,
+          "y": 72
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 30,
+          "w": 1399,
+          "x": 72,
+          "y": 1198
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 1074,
+          "w": 1399,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1399,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
+    },
+    {
+      "boxes": {
+        "#session-strip": {
+          "display": "flex",
+          "h": 36.1875,
+          "w": 211.109375,
+          "x": 850.9375,
+          "y": 79.40625
+        },
+        ".category-buttons": {
+          "display": "flex",
+          "h": 35,
+          "w": 315.421875,
+          "x": 88,
+          "y": 80
+        },
+        ".category-select": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".inspector": {
+          "display": "none",
+          "h": 0,
+          "w": 0,
+          "x": 0,
+          "y": 0
+        },
+        ".instruments": {
+          "display": "block",
+          "h": 30,
+          "w": 1769,
+          "x": 72,
+          "y": 1198
+        },
+        ".scene-stage": {
+          "display": "block",
+          "h": 1074,
+          "w": 1769,
+          "x": 72,
+          "y": 124
+        },
+        ".tool-rail": {
+          "display": "flex",
+          "h": 1156,
+          "w": 72,
+          "x": 0,
+          "y": 72
+        },
+        ".working-toolbar": {
+          "display": "grid",
+          "h": 52,
+          "w": 1769,
+          "x": 72,
+          "y": 72
+        }
+      },
+      "duplicateIds": [],
+      "viewport": [
+        1841,
+        1260
+      ]
     }
-  }
+  ]
 }

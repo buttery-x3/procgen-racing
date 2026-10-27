@@ -1,0 +1,4505 @@
+{
+  "sourceHash": "b25d6a4bfd52e732",
+  "date": "2026-10-27T02:37:22.973Z",
+  "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+  "scope": "Catalog v1: at least ten accepted pairs per category, every offered car family/band and track branch/length endpoint. Production car static/12-second physical validation, circuit construction, isolated collider settling, archive replay and conservative physical laps on representatives. Does not certify arbitrary tunes or all combinations.",
+  "categories": [
+    {
+      "category": "club",
+      "accepted": 10,
+      "coverage": [
+        "car:hatch:sport",
+        "track:2:touring",
+        "max:touring",
+        "car:coupe:road",
+        "min:touring",
+        "car:coupe:sport",
+        "car:hatch:road"
+      ],
+      "required": [
+        "car:hatch:road",
+        "car:hatch:sport",
+        "car:coupe:road",
+        "car:coupe:sport",
+        "track:2:touring",
+        "min:touring",
+        "max:touring"
+      ],
+      "records": [
+        {
+          "category": "club",
+          "seed": "workbench-v1-1",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "a65b1a24",
+            "family": "hatch",
+            "band": "sport",
+            "layout": "FR",
+            "mechanicsSeed": "402639e9",
+            "proportionsSeed": "8d2a189d",
+            "appearanceSeed": "9d1b4390"
+          },
+          "track": {
+            "version": 2,
+            "seed": "d523a48c",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 3200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "club",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "d592e653"
+          },
+          "fingerprint": "v2-afd922dd/m5-513274b4",
+          "mechanics": "335d68be",
+          "actualLength": 3200.9097266242943,
+          "acceptedMs": 5777.537700000001,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+            "metrics": {
+              "distance": 15.511025493097211,
+              "maxSpeed": 18.060191345214843,
+              "zeroTo60": null,
+              "stopDistance": 2.4813847541812533,
+              "peakRoll": 0.000009307168327938247,
+              "peakPitch": 0.5612860481784889,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0151670749141737
+            },
+            "loadRatio": 1.000000031264523,
+            "frontFraction": 0.5708104629211859
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:hatch:sport",
+            "track:2:touring",
+            "max:touring"
+          ]
+        },
+        {
+          "category": "club",
+          "seed": "workbench-v1-15",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "88352eab",
+            "family": "coupe",
+            "band": "road",
+            "layout": "FR",
+            "mechanicsSeed": "335ceb0e",
+            "proportionsSeed": "a76b29e2",
+            "appearanceSeed": "c76d109"
+          },
+          "track": {
+            "version": 2,
+            "seed": "be96a411",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 2000,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "club",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "ab821d08"
+          },
+          "fingerprint": "v2-a793713a/m5-85ee3bc2",
+          "mechanics": "2d8cb283",
+          "actualLength": 2000.062679339003,
+          "acceptedMs": 2317.6481999999996,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 56.4% front at rest",
+            "metrics": {
+              "distance": 34.32335091802233,
+              "maxSpeed": 40.56495666503906,
+              "zeroTo60": null,
+              "stopDistance": 8.988390684127808,
+              "peakRoll": 2.663135308918809e-7,
+              "peakPitch": 0.8889400965449403,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.053233393487128
+            },
+            "loadRatio": 1.0000000405998464,
+            "frontFraction": 0.5637730784423572
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:coupe:road",
+            "track:2:touring",
+            "min:touring"
+          ]
+        },
+        {
+          "category": "club",
+          "seed": "workbench-v1-19",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "e02e5a9f",
+            "family": "coupe",
+            "band": "sport",
+            "layout": "FR",
+            "mechanicsSeed": "3839c0ea",
+            "proportionsSeed": "bd44de",
+            "appearanceSeed": "3b52116d"
+          },
+          "track": {
+            "version": 2,
+            "seed": "9376935d",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 2000,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "club",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "7c572b64"
+          },
+          "fingerprint": "v2-c4d5c714/m5-4d972753",
+          "mechanics": "f3cea0b9",
+          "actualLength": 2000.162673773023,
+          "acceptedMs": 2339.8147000000026,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 56.5% front at rest",
+            "metrics": {
+              "distance": 22.00629635297725,
+              "maxSpeed": 27.330121994018555,
+              "zeroTo60": null,
+              "stopDistance": 5.315875351428986,
+              "peakRoll": 2.7715812076087316e-7,
+              "peakPitch": 0.5020946302250984,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0226107564861178
+            },
+            "loadRatio": 1.0000000451400646,
+            "frontFraction": 0.5648348106169393
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:coupe:sport",
+            "track:2:touring",
+            "min:touring"
+          ]
+        },
+        {
+          "category": "club",
+          "seed": "workbench-v1-56",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "4c397b82",
+            "family": "hatch",
+            "band": "road",
+            "layout": "F-AWD",
+            "mechanicsSeed": "6bfcf2d7",
+            "proportionsSeed": "6e5282ff",
+            "appearanceSeed": "37eeaa16"
+          },
+          "track": {
+            "version": 2,
+            "seed": "f35e6b7e",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 2000,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "club",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "e72bb471"
+          },
+          "fingerprint": "v2-6261cab0/m5-49a829bb",
+          "mechanics": "8c85de8b",
+          "actualLength": 2000.922394240681,
+          "acceptedMs": 2089.897100000002,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+            "metrics": {
+              "distance": 22.047354275910457,
+              "maxSpeed": 24.772096252441408,
+              "zeroTo60": null,
+              "stopDistance": 3.448310434818268,
+              "peakRoll": 4.6783821980017946e-7,
+              "peakPitch": 1.0764652518917135,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0351272316079616
+            },
+            "loadRatio": 1.000000009084332,
+            "frontFraction": 0.5707817491324377
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:hatch:road",
+            "track:2:touring",
+            "min:touring"
+          ]
+        },
+        {
+          "category": "club",
+          "seed": "workbench-v1-145",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "815f882b",
+            "family": "hatch",
+            "band": "road",
+            "layout": "FF",
+            "mechanicsSeed": "2168788e",
+            "proportionsSeed": "e6973362",
+            "appearanceSeed": "48a69189"
+          },
+          "track": {
+            "version": 2,
+            "seed": "9421ec91",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 2000,
+            "character": "technical",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "club",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "5588e88"
+          },
+          "fingerprint": "v2-be5991fa/m5-10474390",
+          "mechanics": "5356de72",
+          "actualLength": 2000.7834445780354,
+          "acceptedMs": 2488.733800000002,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+            "metrics": {
+              "distance": 13.37432769908561,
+              "maxSpeed": 15.456278800964355,
+              "zeroTo60": null,
+              "stopDistance": 1.8557462692260742,
+              "peakRoll": 3.856966402671685e-7,
+              "peakPitch": 0.9008989849503738,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0168332660874726
+            },
+            "loadRatio": 1.0000000079148914,
+            "frontFraction": 0.5706066316914851
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:hatch:road",
+            "track:2:touring",
+            "min:touring"
+          ]
+        },
+        {
+          "category": "club",
+          "seed": "workbench-v1-248",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "c3609631",
+            "family": "hatch",
+            "band": "road",
+            "layout": "FR",
+            "mechanicsSeed": "690b9144",
+            "proportionsSeed": "96acddc",
+            "appearanceSeed": "8e4c136f"
+          },
+          "track": {
+            "version": 2,
+            "seed": "e485089b",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 2000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "club",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "a9e6908e"
+          },
+          "fingerprint": "v2-0df09850/m5-a44f5256",
+          "mechanics": "d1f5ddcc",
+          "actualLength": 2000.4671785043374,
+          "acceptedMs": 2129.3834999999963,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.0% front at rest",
+            "metrics": {
+              "distance": 12.415628438853547,
+              "maxSpeed": 13.797051429748535,
+              "zeroTo60": null,
+              "stopDistance": 1.5996189117488102,
+              "peakRoll": 0.000023826547020217533,
+              "peakPitch": 1.0239503239388366,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0154102826367997
+            },
+            "loadRatio": 1.0000000192026697,
+            "frontFraction": 0.5695825470688248
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:hatch:road",
+            "track:2:touring",
+            "min:touring"
+          ]
+        },
+        {
+          "category": "club",
+          "seed": "workbench-v1-282",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "d76f1e1b",
+            "family": "hatch",
+            "band": "road",
+            "layout": "F-AWD",
+            "mechanicsSeed": "29582ebe",
+            "proportionsSeed": "2696e632",
+            "appearanceSeed": "25acf119"
+          },
+          "track": {
+            "version": 2,
+            "seed": "bcbb7521",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 2000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "club",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "280f538"
+          },
+          "fingerprint": "v2-a3f1dba3/m5-d4203580",
+          "mechanics": "525d66a7",
+          "actualLength": 2000.1183347865904,
+          "acceptedMs": 1989.3503000000055,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+            "metrics": {
+              "distance": 24.208410287638525,
+              "maxSpeed": 27.430032348632814,
+              "zeroTo60": null,
+              "stopDistance": 4.264856338500977,
+              "peakRoll": 5.354779318166452e-7,
+              "peakPitch": 1.1712217287059876,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0424834135211434
+            },
+            "loadRatio": 1.0000000826802642,
+            "frontFraction": 0.5706173375851739
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:hatch:road",
+            "track:2:touring",
+            "min:touring"
+          ]
+        },
+        {
+          "category": "club",
+          "seed": "workbench-v1-344",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "6054e2be",
+            "family": "hatch",
+            "band": "road",
+            "layout": "FR",
+            "mechanicsSeed": "f0cf43b",
+            "proportionsSeed": "e731a8f3",
+            "appearanceSeed": "eb1c8522"
+          },
+          "track": {
+            "version": 2,
+            "seed": "1c5f7ec2",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 2000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "club",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "757b2cc5"
+          },
+          "fingerprint": "v2-ca8c0788/m5-bad95719",
+          "mechanics": "f7e84053",
+          "actualLength": 2000.0761250042058,
+          "acceptedMs": 1771.9998999999953,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.2% front at rest",
+            "metrics": {
+              "distance": 14.345253011340207,
+              "maxSpeed": 16.38134307861328,
+              "zeroTo60": null,
+              "stopDistance": 2.019432067997685,
+              "peakRoll": 0.00013023571456542983,
+              "peakPitch": 0.8841842536347906,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0166776287350492
+            },
+            "loadRatio": 1.0000000442627939,
+            "frontFraction": 0.5718205331346659
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:hatch:road",
+            "track:2:touring",
+            "min:touring"
+          ]
+        },
+        {
+          "category": "club",
+          "seed": "workbench-v1-372",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "2ea40777",
+            "family": "hatch",
+            "band": "road",
+            "layout": "FR",
+            "mechanicsSeed": "9a3bac02",
+            "proportionsSeed": "7f8ac6a6",
+            "appearanceSeed": "114332e5"
+          },
+          "track": {
+            "version": 2,
+            "seed": "ce43a335",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 2000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "club",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "cd00533c"
+          },
+          "fingerprint": "v2-b66de5d7/m5-2de19107",
+          "mechanics": "d9f49c2c",
+          "actualLength": 2000.0941191096474,
+          "acceptedMs": 2020.7212,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+            "metrics": {
+              "distance": 13.805572541637845,
+              "maxSpeed": 15.405317687988282,
+              "zeroTo60": null,
+              "stopDistance": 1.7775440216070029,
+              "peakRoll": 0.000007527720710407301,
+              "peakPitch": 0.8978805635393843,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.016881834562153
+            },
+            "loadRatio": 1.0000000190338598,
+            "frontFraction": 0.5705561472814414
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:hatch:road",
+            "track:2:touring",
+            "min:touring"
+          ]
+        },
+        {
+          "category": "club",
+          "seed": "workbench-v1-408",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "b67a92d7",
+            "family": "hatch",
+            "band": "road",
+            "layout": "FF",
+            "mechanicsSeed": "a871ba62",
+            "proportionsSeed": "f94bd806",
+            "appearanceSeed": "959e96c5"
+          },
+          "track": {
+            "version": 2,
+            "seed": "99c40c15",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 2000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "club",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "6e5fc39c"
+          },
+          "fingerprint": "v2-ddf260af/m5-865873af",
+          "mechanics": "4f4c7825",
+          "actualLength": 2000.0574138150694,
+          "acceptedMs": 2131.506499999996,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.2% front at rest",
+            "metrics": {
+              "distance": 21.98759229507548,
+              "maxSpeed": 23.472269439697268,
+              "zeroTo60": null,
+              "stopDistance": 4.487609162926674,
+              "peakRoll": 0.0000012618985365282177,
+              "peakPitch": 0.7742128445867026,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0194328330830889
+            },
+            "loadRatio": 1.0000000248154386,
+            "frontFraction": 0.5717323022169473
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:hatch:road",
+            "track:2:touring",
+            "min:touring"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "touring",
+      "accepted": 10,
+      "coverage": [
+        "car:hatch:race",
+        "track:3:street",
+        "max:street",
+        "car:sedan:sport",
+        "track:3:airfield",
+        "max:airfield",
+        "car:sedan:race",
+        "track:2:touring",
+        "min:touring",
+        "car:coupe:race",
+        "max:touring",
+        "car:hatch:sport",
+        "min:airfield",
+        "car:coupe:sport",
+        "min:street"
+      ],
+      "required": [
+        "car:hatch:sport",
+        "car:hatch:race",
+        "car:sedan:sport",
+        "car:sedan:race",
+        "car:coupe:sport",
+        "car:coupe:race",
+        "track:2:touring",
+        "min:touring",
+        "max:touring",
+        "track:3:street",
+        "min:street",
+        "max:street",
+        "track:3:airfield",
+        "min:airfield",
+        "max:airfield"
+      ],
+      "records": [
+        {
+          "category": "touring",
+          "seed": "workbench-v1-1",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "a65b1a24",
+            "family": "hatch",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "402639e9",
+            "proportionsSeed": "8d2a189d",
+            "appearanceSeed": "9d1b4390"
+          },
+          "track": {
+            "version": 3,
+            "seed": "d523a48c",
+            "family": "street",
+            "relief": "rolling",
+            "targetLength": 4500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "d592e653"
+          },
+          "fingerprint": "v3-6a340a31/m7-venue-f659a5a1",
+          "mechanics": "ccf838f8",
+          "actualLength": 4498.25680079557,
+          "acceptedMs": 4495.8894999999975,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+            "metrics": {
+              "distance": 17.7516937754348,
+              "maxSpeed": 21.36094608306885,
+              "zeroTo60": null,
+              "stopDistance": 3.1758079528808594,
+              "peakRoll": 3.5760066257500757e-7,
+              "peakPitch": 0.41864293966419525,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0163123473693685
+            },
+            "loadRatio": 1.0000000076806332,
+            "frontFraction": 0.5708704777651634
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:hatch:race",
+            "track:3:street",
+            "max:street"
+          ]
+        },
+        {
+          "category": "touring",
+          "seed": "workbench-v1-14",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "ccc54aa4",
+            "family": "sedan",
+            "band": "sport",
+            "layout": "FF",
+            "mechanicsSeed": "2cbae669",
+            "proportionsSeed": "c959d91d",
+            "appearanceSeed": "8b26d110"
+          },
+          "track": {
+            "version": 3,
+            "seed": "cdba8a0c",
+            "family": "airfield",
+            "relief": "rolling",
+            "targetLength": 4500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "da8f9ed3"
+          },
+          "fingerprint": "v3-586becb/m7-venue-23d3ea66",
+          "mechanics": "bdb08d9d",
+          "actualLength": 4497.546207795288,
+          "acceptedMs": 3399.3866000000125,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+            "metrics": {
+              "distance": 23.779447565831774,
+              "maxSpeed": 30.02471466064453,
+              "zeroTo60": null,
+              "stopDistance": 5.390846014022827,
+              "peakRoll": 8.941328432810486e-7,
+              "peakPitch": 0.5801668929803007,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0236750410385844
+            },
+            "loadRatio": 1.0000000224018462,
+            "frontFraction": 0.5708491532749814
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:sedan:sport",
+            "track:3:airfield",
+            "max:airfield"
+          ]
+        },
+        {
+          "category": "touring",
+          "seed": "workbench-v1-19",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "e02e5a9f",
+            "family": "sedan",
+            "band": "race",
+            "layout": "F-AWD",
+            "mechanicsSeed": "3839c0ea",
+            "proportionsSeed": "bd44de",
+            "appearanceSeed": "3b52116d"
+          },
+          "track": {
+            "version": 2,
+            "seed": "9376935d",
+            "family": "touring",
+            "relief": "gentle",
+            "targetLength": 2800,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "7c572b64"
+          },
+          "fingerprint": "v2-540fe307/m5-b355d25e",
+          "mechanics": "17369716",
+          "actualLength": 2800.146126911859,
+          "acceptedMs": 2479.666299999997,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.0% front at rest",
+            "metrics": {
+              "distance": 47.55571176196058,
+              "maxSpeed": 53.8080551147461,
+              "zeroTo60": null,
+              "stopDistance": 12.000894546508789,
+              "peakRoll": 6.859477548583689e-7,
+              "peakPitch": 0.5568733347246151,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0547140474545285
+            },
+            "loadRatio": 1.0000000881881295,
+            "frontFraction": 0.5698903671025721
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:sedan:race",
+            "track:2:touring",
+            "min:touring"
+          ]
+        },
+        {
+          "category": "touring",
+          "seed": "workbench-v1-172",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "2d4f071d",
+            "family": "coupe",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "f2e9e5c8",
+            "proportionsSeed": "ad613b20",
+            "appearanceSeed": "a00e113b"
+          },
+          "track": {
+            "version": 2,
+            "seed": "502524af",
+            "family": "touring",
+            "relief": "rolling",
+            "targetLength": 4500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "d326ca42"
+          },
+          "fingerprint": "v2-0967deb1/m5-0cf95ed5",
+          "mechanics": "ddf56e80",
+          "actualLength": 4500.838868803096,
+          "acceptedMs": 3428.681899999996,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 56.4% front at rest",
+            "metrics": {
+              "distance": 43.31708535439936,
+              "maxSpeed": 50.53338088989258,
+              "zeroTo60": null,
+              "stopDistance": 11.322425854154487,
+              "peakRoll": 0.0006344108041611709,
+              "peakPitch": 0.5758679216351611,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0530147989250633
+            },
+            "loadRatio": 1.0000000548427004,
+            "frontFraction": 0.5638784147947844
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:coupe:race",
+            "track:2:touring",
+            "max:touring"
+          ]
+        },
+        {
+          "category": "touring",
+          "seed": "workbench-v1-372",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "2ea40777",
+            "family": "hatch",
+            "band": "sport",
+            "layout": "FR",
+            "mechanicsSeed": "9a3bac02",
+            "proportionsSeed": "7f8ac6a6",
+            "appearanceSeed": "114332e5"
+          },
+          "track": {
+            "version": 3,
+            "seed": "ce43a335",
+            "family": "airfield",
+            "relief": "gentle",
+            "targetLength": 2800,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "cd00533c"
+          },
+          "fingerprint": "v3-c2ca44ad/m7-venue-3ee371e9",
+          "mechanics": "bc61f6c2",
+          "actualLength": 2799.883599480073,
+          "acceptedMs": 2064.9493999999977,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.1% front at rest",
+            "metrics": {
+              "distance": 15.188500754387695,
+              "maxSpeed": 17.64994125366211,
+              "zeroTo60": null,
+              "stopDistance": 2.1415207369564424,
+              "peakRoll": 0.002792339317741256,
+              "peakPitch": 0.7369816904487414,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0169672794818811
+            },
+            "loadRatio": 1.000000026219068,
+            "frontFraction": 0.5707577021324772
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:hatch:sport",
+            "track:3:airfield",
+            "min:airfield"
+          ]
+        },
+        {
+          "category": "touring",
+          "seed": "workbench-v1-15",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "88352eab",
+            "family": "coupe",
+            "band": "sport",
+            "layout": "FR",
+            "mechanicsSeed": "335ceb0e",
+            "proportionsSeed": "a76b29e2",
+            "appearanceSeed": "c76d109"
+          },
+          "track": {
+            "version": 3,
+            "seed": "be96a411",
+            "family": "street",
+            "relief": "gentle",
+            "targetLength": 2800,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "ab821d08"
+          },
+          "fingerprint": "v3-12bd5994/m7-venue-2dc498ad",
+          "mechanics": "5d793f65",
+          "actualLength": 2797.1443233484333,
+          "acceptedMs": 2006.1763000000064,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 56.4% front at rest",
+            "metrics": {
+              "distance": 42.178562198072655,
+              "maxSpeed": 48.5971435546875,
+              "zeroTo60": null,
+              "stopDistance": 11.519920349121094,
+              "peakRoll": 2.1361015631274963e-7,
+              "peakPitch": 0.7171662444470499,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.057745671913531
+            },
+            "loadRatio": 1.0000000527663668,
+            "frontFraction": 0.5638390078612074
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:coupe:sport",
+            "track:3:street",
+            "min:street"
+          ]
+        },
+        {
+          "category": "touring",
+          "seed": "workbench-v1-269",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "c0611280",
+            "family": "coupe",
+            "band": "sport",
+            "layout": "F-AWD",
+            "mechanicsSeed": "980a423d",
+            "proportionsSeed": "95a96821",
+            "appearanceSeed": "f68904ec"
+          },
+          "track": {
+            "version": 3,
+            "seed": "15284dd0",
+            "family": "street",
+            "relief": "rolling",
+            "targetLength": 2800,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "da332fa7"
+          },
+          "fingerprint": "v3-b0d232fe/m7-venue-5a5b41ea",
+          "mechanics": "84937fa3",
+          "actualLength": 2799.404696584829,
+          "acceptedMs": 1850.4861999999994,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 56.5% front at rest",
+            "metrics": {
+              "distance": 38.36288265181855,
+              "maxSpeed": 45.064997863769534,
+              "zeroTo60": null,
+              "stopDistance": 9.027206897735596,
+              "peakRoll": 3.064874005918147e-7,
+              "peakPitch": 0.7873059771677949,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0566391203828567
+            },
+            "loadRatio": 1.0000000534156692,
+            "frontFraction": 0.5648721492677207
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:coupe:sport",
+            "track:3:street",
+            "min:street"
+          ]
+        },
+        {
+          "category": "touring",
+          "seed": "workbench-v1-464",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "97cc8261",
+            "family": "coupe",
+            "band": "sport",
+            "layout": "F-AWD",
+            "mechanicsSeed": "7195ad74",
+            "proportionsSeed": "f0daa02c",
+            "appearanceSeed": "dbec73ff"
+          },
+          "track": {
+            "version": 3,
+            "seed": "624730eb",
+            "family": "street",
+            "relief": "gentle",
+            "targetLength": 2800,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "88ae0a7e"
+          },
+          "fingerprint": "v3-2bc25ceb/m7-venue-36c3fd30",
+          "mechanics": "8d7aa3e3",
+          "actualLength": 2798.1895018512155,
+          "acceptedMs": 1692.1751999999979,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 56.5% front at rest",
+            "metrics": {
+              "distance": 43.86307337263041,
+              "maxSpeed": 50.10314598083496,
+              "zeroTo60": null,
+              "stopDistance": 11.082710266113281,
+              "peakRoll": 3.50090902573602e-7,
+              "peakPitch": 0.8458009408448395,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.064318194636841
+            },
+            "loadRatio": 1.0000000338232204,
+            "frontFraction": 0.5648586942235623
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:coupe:sport",
+            "track:3:street",
+            "min:street"
+          ]
+        },
+        {
+          "category": "touring",
+          "seed": "workbench-v1-499",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "1361cd91",
+            "family": "coupe",
+            "band": "sport",
+            "layout": "F-AWD",
+            "mechanicsSeed": "ef92b3a4",
+            "proportionsSeed": "28c7233c",
+            "appearanceSeed": "f28d2c4f"
+          },
+          "track": {
+            "version": 3,
+            "seed": "8a2edf7b",
+            "family": "street",
+            "relief": "gentle",
+            "targetLength": 2800,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "a66dd9ee"
+          },
+          "fingerprint": "v3-7c18f290/m7-venue-b9552b33",
+          "mechanics": "e8511141",
+          "actualLength": 2797.3146857621377,
+          "acceptedMs": 1709.0503000000026,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 56.5% front at rest",
+            "metrics": {
+              "distance": 36.11801533445126,
+              "maxSpeed": 42.70595169067383,
+              "zeroTo60": null,
+              "stopDistance": 8.197089195251465,
+              "peakRoll": 2.6815639162758156e-7,
+              "peakPitch": 0.8093049770533114,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0559109318878677
+            },
+            "loadRatio": 1.000000047872431,
+            "frontFraction": 0.5648002501614114
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:coupe:sport",
+            "track:3:street",
+            "min:street"
+          ]
+        },
+        {
+          "category": "touring",
+          "seed": "workbench-v1-938",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "4329e56f",
+            "family": "coupe",
+            "band": "sport",
+            "layout": "FR",
+            "mechanicsSeed": "1b87527a",
+            "proportionsSeed": "e80895ce",
+            "appearanceSeed": "e6b7869d"
+          },
+          "track": {
+            "version": 3,
+            "seed": "8cbd524d",
+            "family": "street",
+            "relief": "gentle",
+            "targetLength": 2800,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "2a2edf4"
+          },
+          "fingerprint": "v3-909062d1/m7-venue-e927107a",
+          "mechanics": "4ddf645d",
+          "actualLength": 2799.271363591887,
+          "acceptedMs": 1696.8150999999925,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 56.5% front at rest",
+            "metrics": {
+              "distance": 39.03858955896017,
+              "maxSpeed": 45.567237854003906,
+              "zeroTo60": null,
+              "stopDistance": 10.218129180682734,
+              "peakRoll": 0.0018566918109378864,
+              "peakPitch": 0.7586511189301339,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0556503926079237
+            },
+            "loadRatio": 1.0000000144930057,
+            "frontFraction": 0.5648489004637518
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:coupe:sport",
+            "track:3:street",
+            "min:street"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "endurance",
+      "accepted": 10,
+      "coverage": [
+        "car:gt:race",
+        "track:3:endurance",
+        "max:endurance",
+        "car:prototype:race",
+        "track:3:rural",
+        "min:rural",
+        "max:rural",
+        "min:endurance"
+      ],
+      "required": [
+        "car:gt:race",
+        "car:prototype:race",
+        "track:3:rural",
+        "min:rural",
+        "max:rural",
+        "track:3:endurance",
+        "min:endurance",
+        "max:endurance"
+      ],
+      "records": [
+        {
+          "category": "endurance",
+          "seed": "workbench-v1-1",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "a65b1a24",
+            "family": "gt",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "402639e9",
+            "proportionsSeed": "8d2a189d",
+            "appearanceSeed": "9d1b4390"
+          },
+          "track": {
+            "version": 3,
+            "seed": "d523a48c",
+            "family": "endurance",
+            "relief": "rolling",
+            "targetLength": 12000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "d592e653"
+          },
+          "fingerprint": "v3-efba81d6/m7-venue-59b578af",
+          "mechanics": "6968f68d",
+          "actualLength": 12032.27805663375,
+          "acceptedMs": 6164.547599999991,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.9% front at rest",
+            "metrics": {
+              "distance": 78.18379598295542,
+              "maxSpeed": 90.29728317260742,
+              "zeroTo60": 2.8583333333333334,
+              "stopDistance": 20.891918182373047,
+              "peakRoll": 1.7452667780919191e-7,
+              "peakPitch": 0.6582987409090497,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.1671570715614925
+            },
+            "loadRatio": 1.000000012957094,
+            "frontFraction": 0.4491528662044889
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:gt:race",
+            "track:3:endurance",
+            "max:endurance"
+          ]
+        },
+        {
+          "category": "endurance",
+          "seed": "workbench-v1-15",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "88352eab",
+            "family": "prototype",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "335ceb0e",
+            "proportionsSeed": "a76b29e2",
+            "appearanceSeed": "c76d109"
+          },
+          "track": {
+            "version": 3,
+            "seed": "be96a411",
+            "family": "rural",
+            "relief": "gentle",
+            "targetLength": 6000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "ab821d08"
+          },
+          "fingerprint": "v3-853cf1b7/m7-venue-a5aa6f92",
+          "mechanics": "5fc74641",
+          "actualLength": 6000.394614610467,
+          "acceptedMs": 3986.7988999999943,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.9% front at rest",
+            "metrics": {
+              "distance": 90.9670600942627,
+              "maxSpeed": 102.13244247436526,
+              "zeroTo60": 2.4833333333333334,
+              "stopDistance": 25.506626129150394,
+              "peakRoll": 5.097029621880859e-7,
+              "peakPitch": 0.6580878876124999,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2375228803756904
+            },
+            "loadRatio": 1.0000000465670495,
+            "frontFraction": 0.44914228982318216
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:rural",
+            "min:rural"
+          ]
+        },
+        {
+          "category": "endurance",
+          "seed": "workbench-v1-40",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "8a9bc279",
+            "family": "prototype",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "b6015f0c",
+            "proportionsSeed": "1b7a7714",
+            "appearanceSeed": "cb44fd57"
+          },
+          "track": {
+            "version": 3,
+            "seed": "41056f03",
+            "family": "rural",
+            "relief": "gentle",
+            "targetLength": 10000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "47b86e96"
+          },
+          "fingerprint": "v3-6ca7586f/m7-venue-277c9e32",
+          "mechanics": "67923133",
+          "actualLength": 10007.519963848494,
+          "acceptedMs": 4982.957200000004,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.9% front at rest",
+            "metrics": {
+              "distance": 87.64245990666825,
+              "maxSpeed": 100.25057373046876,
+              "zeroTo60": 2.591666666666667,
+              "stopDistance": 24.460739135742188,
+              "peakRoll": 2.1178907760543795e-7,
+              "peakPitch": 0.6151931227690292,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.23507541947202
+            },
+            "loadRatio": 1.000000063253075,
+            "frontFraction": 0.4491274560905966
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:rural",
+            "max:rural"
+          ]
+        },
+        {
+          "category": "endurance",
+          "seed": "workbench-v1-177",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "5f4a0b22",
+            "family": "prototype",
+            "band": "race",
+            "layout": "M-AWD",
+            "mechanicsSeed": "dd208077",
+            "proportionsSeed": "69c5639f",
+            "appearanceSeed": "bb8d1c36"
+          },
+          "track": {
+            "version": 3,
+            "seed": "3458041e",
+            "family": "endurance",
+            "relief": "rolling",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "4f755311"
+          },
+          "fingerprint": "v3-1d3bebb/m7-venue-249f39ca",
+          "mechanics": "b0b84e2e",
+          "actualLength": 8007.28985777241,
+          "acceptedMs": 5571.805300000007,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 97.9943523610497,
+              "maxSpeed": 109.28143844604493,
+              "zeroTo60": 2.3166666666666664,
+              "stopDistance": 27.28048324584961,
+              "peakRoll": 8.68677577722451e-7,
+              "peakPitch": 0.5853789244862967,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2928372703243383
+            },
+            "loadRatio": 1.0000000437972156,
+            "frontFraction": 0.4481138629726368
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "endurance",
+          "seed": "workbench-v1-285",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "48982362",
+            "family": "prototype",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "299d69b7",
+            "proportionsSeed": "c7cb83df",
+            "appearanceSeed": "18357576"
+          },
+          "track": {
+            "version": 3,
+            "seed": "841b7de",
+            "family": "endurance",
+            "relief": "rolling",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "fc2c9b51"
+          },
+          "fingerprint": "v3-cb5d9c69/m7-venue-8755f4ba",
+          "mechanics": "02cbe089",
+          "actualLength": 8020.633811213623,
+          "acceptedMs": 5214.418399999995,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 88.95496751271975,
+              "maxSpeed": 100.7521957397461,
+              "zeroTo60": 2.5416666666666665,
+              "stopDistance": 24.88284683227539,
+              "peakRoll": 8.726245400869854e-7,
+              "peakPitch": 0.6413818878599996,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2331873609169834
+            },
+            "loadRatio": 0.9999999616117083,
+            "frontFraction": 0.4481344170367475
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "endurance",
+          "seed": "workbench-v1-464",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "97cc8261",
+            "family": "prototype",
+            "band": "race",
+            "layout": "M-AWD",
+            "mechanicsSeed": "7195ad74",
+            "proportionsSeed": "f0daa02c",
+            "appearanceSeed": "dbec73ff"
+          },
+          "track": {
+            "version": 3,
+            "seed": "624730eb",
+            "family": "endurance",
+            "relief": "gentle",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "88ae0a7e"
+          },
+          "fingerprint": "v3-a42c1b95/m7-venue-cdf7316b",
+          "mechanics": "a5dc77a2",
+          "actualLength": 8020.419387833166,
+          "acceptedMs": 6413.752900000021,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.9% front at rest",
+            "metrics": {
+              "distance": 97.87948611664089,
+              "maxSpeed": 109.70573043823242,
+              "zeroTo60": 2.341666666666667,
+              "stopDistance": 27.51321792602539,
+              "peakRoll": 1.9829246373097254e-7,
+              "peakPitch": 0.7007766425044692,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.3448456977518721
+            },
+            "loadRatio": 1.0000000563271079,
+            "frontFraction": 0.4491454041874634
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "endurance",
+          "seed": "workbench-v1-485",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "6a28c724",
+            "family": "prototype",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "961e7ee9",
+            "proportionsSeed": "aae0659d",
+            "appearanceSeed": "f2efe290"
+          },
+          "track": {
+            "version": 3,
+            "seed": "2f63338c",
+            "family": "endurance",
+            "relief": "rolling",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "2fce6353"
+          },
+          "fingerprint": "v3-fc695a5d/m7-venue-64923de6",
+          "mechanics": "bcdb0804",
+          "actualLength": 8014.940890518812,
+          "acceptedMs": 6174.091600000014,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 84.55400851745648,
+              "maxSpeed": 97.43534088134766,
+              "zeroTo60": 2.683333333333333,
+              "stopDistance": 23.45302963256836,
+              "peakRoll": 2.5512576024691916e-7,
+              "peakPitch": 0.5395829149580631,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.242003226074253
+            },
+            "loadRatio": 1.0000000608674895,
+            "frontFraction": 0.44810883881137453
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "endurance",
+          "seed": "workbench-v1-499",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "1361cd91",
+            "family": "prototype",
+            "band": "race",
+            "layout": "M-AWD",
+            "mechanicsSeed": "ef92b3a4",
+            "proportionsSeed": "28c7233c",
+            "appearanceSeed": "f28d2c4f"
+          },
+          "track": {
+            "version": 3,
+            "seed": "8a2edf7b",
+            "family": "endurance",
+            "relief": "gentle",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "a66dd9ee"
+          },
+          "fingerprint": "v3-9468d4d1/m7-venue-95dab47c",
+          "mechanics": "0755af80",
+          "actualLength": 8002.565008881318,
+          "acceptedMs": 6377.578799999988,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 96.81615832413195,
+              "maxSpeed": 108.05181427001953,
+              "zeroTo60": 2.341666666666667,
+              "stopDistance": 26.794021606445312,
+              "peakRoll": 1.5694621950017148e-7,
+              "peakPitch": 0.6432552774466023,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2959226816587217
+            },
+            "loadRatio": 1.000000039238487,
+            "frontFraction": 0.448123953501835
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "endurance",
+          "seed": "workbench-v1-536",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "59f0cf19",
+            "family": "prototype",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "82a544ac",
+            "proportionsSeed": "5f364db4",
+            "appearanceSeed": "fdc98377"
+          },
+          "track": {
+            "version": 3,
+            "seed": "ed37b223",
+            "family": "endurance",
+            "relief": "gentle",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "f9107136"
+          },
+          "fingerprint": "v3-392963e2/m7-venue-ea739290",
+          "mechanics": "46d8fb3e",
+          "actualLength": 7992.368590840955,
+          "acceptedMs": 8049.022900000011,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.9% front at rest",
+            "metrics": {
+              "distance": 94.35256388469725,
+              "maxSpeed": 105.37717895507812,
+              "zeroTo60": 2.4,
+              "stopDistance": 26.641788482666016,
+              "peakRoll": 1.6286424867551158e-7,
+              "peakPitch": 0.6907898198981055,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.266687764142708
+            },
+            "loadRatio": 1.0000000572171317,
+            "frontFraction": 0.44914267747313025
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "endurance",
+          "seed": "workbench-v1-642",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "dd01d66b",
+            "family": "prototype",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "965cb4ce",
+            "proportionsSeed": "26fbbca2",
+            "appearanceSeed": "9f7acbc9"
+          },
+          "track": {
+            "version": 3,
+            "seed": "a76bd451",
+            "family": "endurance",
+            "relief": "rolling",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "235a8ac8"
+          },
+          "fingerprint": "v3-8f7e4350/m7-venue-eb680614",
+          "mechanics": "c19e662d",
+          "actualLength": 8006.2754371803385,
+          "acceptedMs": 5706.953600000008,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 85.89016345664606,
+              "maxSpeed": 95.01377563476562,
+              "zeroTo60": 2.7083333333333335,
+              "stopDistance": 24.523296356201172,
+              "peakRoll": 1.738664924844995e-7,
+              "peakPitch": 0.6136728797395347,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.3214120990670775
+            },
+            "loadRatio": 1.0000000459264708,
+            "frontFraction": 0.4481358811785469
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "prototype",
+      "accepted": 10,
+      "coverage": [
+        "car:prototype:race",
+        "track:3:endurance",
+        "max:endurance",
+        "track:2:gp",
+        "min:gp",
+        "max:gp",
+        "min:endurance"
+      ],
+      "required": [
+        "car:prototype:race",
+        "track:2:gp",
+        "min:gp",
+        "max:gp",
+        "track:3:endurance",
+        "min:endurance",
+        "max:endurance"
+      ],
+      "records": [
+        {
+          "category": "prototype",
+          "seed": "workbench-v1-1",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "a65b1a24",
+            "family": "prototype",
+            "band": "race",
+            "layout": "M-AWD",
+            "mechanicsSeed": "402639e9",
+            "proportionsSeed": "8d2a189d",
+            "appearanceSeed": "9d1b4390"
+          },
+          "track": {
+            "version": 3,
+            "seed": "d523a48c",
+            "family": "endurance",
+            "relief": "rolling",
+            "targetLength": 12000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "d592e653"
+          },
+          "fingerprint": "v3-efba81d6/m7-venue-59b578af",
+          "mechanics": "a2c89549",
+          "actualLength": 12032.27805663375,
+          "acceptedMs": 5825.176000000007,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 103.23123936524314,
+              "maxSpeed": 114.29289321899414,
+              "zeroTo60": 2.1916666666666664,
+              "stopDistance": 29.201160430908203,
+              "peakRoll": 1.6381926749928482e-7,
+              "peakPitch": 0.6237765308578288,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.422571565188995
+            },
+            "loadRatio": 1.0000001180166267,
+            "frontFraction": 0.44811638365913886
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "max:endurance"
+          ]
+        },
+        {
+          "category": "prototype",
+          "seed": "workbench-v1-15",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "88352eab",
+            "family": "prototype",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "335ceb0e",
+            "proportionsSeed": "a76b29e2",
+            "appearanceSeed": "c76d109"
+          },
+          "track": {
+            "version": 2,
+            "seed": "be96a411",
+            "family": "gp",
+            "relief": "gentle",
+            "targetLength": 4000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "ab821d08"
+          },
+          "fingerprint": "v2-d3453533/m5-ab8ea83f",
+          "mechanics": "5fc74641",
+          "actualLength": 4000.1149028970262,
+          "acceptedMs": 3217.8000000000175,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.9% front at rest",
+            "metrics": {
+              "distance": 90.9670600942627,
+              "maxSpeed": 102.13244247436526,
+              "zeroTo60": 2.4833333333333334,
+              "stopDistance": 25.506626129150394,
+              "peakRoll": 5.097029621880859e-7,
+              "peakPitch": 0.6580878876124999,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2375228803756904
+            },
+            "loadRatio": 1.0000000465670495,
+            "frontFraction": 0.44914228982318216
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:2:gp",
+            "min:gp"
+          ]
+        },
+        {
+          "category": "prototype",
+          "seed": "workbench-v1-17",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "d699a16d",
+            "family": "prototype",
+            "band": "race",
+            "layout": "M-AWD",
+            "mechanicsSeed": "a5e2b18",
+            "proportionsSeed": "97819590",
+            "appearanceSeed": "77fa02b"
+          },
+          "track": {
+            "version": 2,
+            "seed": "73ce7c9f",
+            "family": "gp",
+            "relief": "gentle",
+            "targetLength": 6000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "b625d112"
+          },
+          "fingerprint": "v2-9e5e8042/m5-a539a799",
+          "mechanics": "864841b2",
+          "actualLength": 6000.085819287053,
+          "acceptedMs": 5088.44690000001,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 97.70363812199915,
+              "maxSpeed": 109.27108383178711,
+              "zeroTo60": 2.3333333333333335,
+              "stopDistance": 27.20733642578125,
+              "peakRoll": 2.505339455237123e-7,
+              "peakPitch": 0.6441725022602175,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.3140385857482508
+            },
+            "loadRatio": 1.000000079726707,
+            "frontFraction": 0.4481188848448915
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:2:gp",
+            "max:gp"
+          ]
+        },
+        {
+          "category": "prototype",
+          "seed": "workbench-v1-177",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "5f4a0b22",
+            "family": "prototype",
+            "band": "race",
+            "layout": "M-AWD",
+            "mechanicsSeed": "dd208077",
+            "proportionsSeed": "69c5639f",
+            "appearanceSeed": "bb8d1c36"
+          },
+          "track": {
+            "version": 3,
+            "seed": "3458041e",
+            "family": "endurance",
+            "relief": "rolling",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "4f755311"
+          },
+          "fingerprint": "v3-1d3bebb/m7-venue-249f39ca",
+          "mechanics": "b0b84e2e",
+          "actualLength": 8007.28985777241,
+          "acceptedMs": 7204.724600000016,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 97.9943523610497,
+              "maxSpeed": 109.28143844604493,
+              "zeroTo60": 2.3166666666666664,
+              "stopDistance": 27.28048324584961,
+              "peakRoll": 8.68677577722451e-7,
+              "peakPitch": 0.5853789244862967,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2928372703243383
+            },
+            "loadRatio": 1.0000000437972156,
+            "frontFraction": 0.4481138629726368
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "prototype",
+          "seed": "workbench-v1-245",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "7e3881f6",
+            "family": "prototype",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "1e73bd73",
+            "proportionsSeed": "85a811fb",
+            "appearanceSeed": "558e433a"
+          },
+          "track": {
+            "version": 3,
+            "seed": "9588187a",
+            "family": "endurance",
+            "relief": "rolling",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "aa0eebdd"
+          },
+          "fingerprint": "v3-5452fa65/m7-venue-7ec87aaf",
+          "mechanics": "bc96089e",
+          "actualLength": 8013.901121737593,
+          "acceptedMs": 5651.383000000002,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.9% front at rest",
+            "metrics": {
+              "distance": 90.01762201470336,
+              "maxSpeed": 101.96310882568359,
+              "zeroTo60": 2.525,
+              "stopDistance": 25.31066131591797,
+              "peakRoll": 2.1105575839140075e-7,
+              "peakPitch": 0.5974182044730054,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2436262788166836
+            },
+            "loadRatio": 1.000000146672723,
+            "frontFraction": 0.44912379528879337
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "prototype",
+          "seed": "workbench-v1-285",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "48982362",
+            "family": "prototype",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "299d69b7",
+            "proportionsSeed": "c7cb83df",
+            "appearanceSeed": "18357576"
+          },
+          "track": {
+            "version": 3,
+            "seed": "841b7de",
+            "family": "endurance",
+            "relief": "rolling",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "fc2c9b51"
+          },
+          "fingerprint": "v3-cb5d9c69/m7-venue-8755f4ba",
+          "mechanics": "02cbe089",
+          "actualLength": 8020.633811213623,
+          "acceptedMs": 5228.434799999988,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 88.95496751271975,
+              "maxSpeed": 100.7521957397461,
+              "zeroTo60": 2.5416666666666665,
+              "stopDistance": 24.88284683227539,
+              "peakRoll": 8.726245400869854e-7,
+              "peakPitch": 0.6413818878599996,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2331873609169834
+            },
+            "loadRatio": 0.9999999616117083,
+            "frontFraction": 0.4481344170367475
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "prototype",
+          "seed": "workbench-v1-372",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "2ea40777",
+            "family": "prototype",
+            "band": "race",
+            "layout": "M-AWD",
+            "mechanicsSeed": "9a3bac02",
+            "proportionsSeed": "7f8ac6a6",
+            "appearanceSeed": "114332e5"
+          },
+          "track": {
+            "version": 3,
+            "seed": "ce43a335",
+            "family": "endurance",
+            "relief": "gentle",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "cd00533c"
+          },
+          "fingerprint": "v3-21229452/m7-venue-f034c988",
+          "mechanics": "c1cbbf51",
+          "actualLength": 8000.2669322993615,
+          "acceptedMs": 5517.410200000013,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 87.61811256886213,
+              "maxSpeed": 99.71675491333008,
+              "zeroTo60": 2.5666666666666664,
+              "stopDistance": 23.542022705078125,
+              "peakRoll": 2.5695553647162614e-7,
+              "peakPitch": 0.5819394676462316,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2576202555677476
+            },
+            "loadRatio": 1.000000105082571,
+            "frontFraction": 0.4481239585453441
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "prototype",
+          "seed": "workbench-v1-464",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "97cc8261",
+            "family": "prototype",
+            "band": "race",
+            "layout": "M-AWD",
+            "mechanicsSeed": "7195ad74",
+            "proportionsSeed": "f0daa02c",
+            "appearanceSeed": "dbec73ff"
+          },
+          "track": {
+            "version": 3,
+            "seed": "624730eb",
+            "family": "endurance",
+            "relief": "gentle",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "88ae0a7e"
+          },
+          "fingerprint": "v3-a42c1b95/m7-venue-cdf7316b",
+          "mechanics": "a5dc77a2",
+          "actualLength": 8020.419387833166,
+          "acceptedMs": 5835.92359999998,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.9% front at rest",
+            "metrics": {
+              "distance": 97.87948611664089,
+              "maxSpeed": 109.70573043823242,
+              "zeroTo60": 2.341666666666667,
+              "stopDistance": 27.51321792602539,
+              "peakRoll": 1.9829246373097254e-7,
+              "peakPitch": 0.7007766425044692,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.3448456977518721
+            },
+            "loadRatio": 1.0000000563271079,
+            "frontFraction": 0.4491454041874634
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "prototype",
+          "seed": "workbench-v1-485",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "6a28c724",
+            "family": "prototype",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "961e7ee9",
+            "proportionsSeed": "aae0659d",
+            "appearanceSeed": "f2efe290"
+          },
+          "track": {
+            "version": 3,
+            "seed": "2f63338c",
+            "family": "endurance",
+            "relief": "rolling",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "2fce6353"
+          },
+          "fingerprint": "v3-fc695a5d/m7-venue-64923de6",
+          "mechanics": "bcdb0804",
+          "actualLength": 8014.940890518812,
+          "acceptedMs": 5762.589100000012,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 84.55400851745648,
+              "maxSpeed": 97.43534088134766,
+              "zeroTo60": 2.683333333333333,
+              "stopDistance": 23.45302963256836,
+              "peakRoll": 2.5512576024691916e-7,
+              "peakPitch": 0.5395829149580631,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.242003226074253
+            },
+            "loadRatio": 1.0000000608674895,
+            "frontFraction": 0.44810883881137453
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        },
+        {
+          "category": "prototype",
+          "seed": "workbench-v1-499",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "1361cd91",
+            "family": "prototype",
+            "band": "race",
+            "layout": "M-AWD",
+            "mechanicsSeed": "ef92b3a4",
+            "proportionsSeed": "28c7233c",
+            "appearanceSeed": "f28d2c4f"
+          },
+          "track": {
+            "version": 3,
+            "seed": "8a2edf7b",
+            "family": "endurance",
+            "relief": "gentle",
+            "targetLength": 8000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": true
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "a66dd9ee"
+          },
+          "fingerprint": "v3-9468d4d1/m7-venue-95dab47c",
+          "mechanics": "0755af80",
+          "actualLength": 8002.565008881318,
+          "acceptedMs": 6551.2579999999725,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.8% front at rest",
+            "metrics": {
+              "distance": 96.81615832413195,
+              "maxSpeed": 108.05181427001953,
+              "zeroTo60": 2.341666666666667,
+              "stopDistance": 26.794021606445312,
+              "peakRoll": 1.5694621950017148e-7,
+              "peakPitch": 0.6432552774466023,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2959226816587217
+            },
+            "loadRatio": 1.000000039238487,
+            "frontFraction": 0.448123953501835
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:prototype:race",
+            "track:3:endurance",
+            "min:endurance"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "formula",
+      "accepted": 10,
+      "coverage": [
+        "car:open-wheel:race",
+        "track:3:airfield",
+        "max:airfield",
+        "track:2:gp",
+        "min:gp",
+        "max:gp",
+        "min:airfield"
+      ],
+      "required": [
+        "car:open-wheel:race",
+        "track:2:gp",
+        "min:gp",
+        "max:gp",
+        "track:3:airfield",
+        "min:airfield",
+        "max:airfield"
+      ],
+      "records": [
+        {
+          "category": "formula",
+          "seed": "workbench-v1-1",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "a65b1a24",
+            "family": "open-wheel",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "402639e9",
+            "proportionsSeed": "8d2a189d",
+            "appearanceSeed": "9d1b4390"
+          },
+          "track": {
+            "version": 3,
+            "seed": "d523a48c",
+            "family": "airfield",
+            "relief": "gentle",
+            "targetLength": 5500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "d592e653"
+          },
+          "fingerprint": "v3-4d457c93/m7-venue-89bcbea1",
+          "mechanics": "dc2cf528",
+          "actualLength": 5495.803581434705,
+          "acceptedMs": 4018.429200000013,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.3% front at rest",
+            "metrics": {
+              "distance": 77.88426780875226,
+              "maxSpeed": 89.1521095275879,
+              "zeroTo60": 3.0666666666666664,
+              "stopDistance": 22.646595001220703,
+              "peakRoll": 1.650136833847231e-7,
+              "peakPitch": 0.44954326291140323,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.297815879181725
+            },
+            "loadRatio": 0.9999999494627795,
+            "frontFraction": 0.44310253141153383
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:open-wheel:race",
+            "track:3:airfield",
+            "max:airfield"
+          ]
+        },
+        {
+          "category": "formula",
+          "seed": "workbench-v1-15",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "88352eab",
+            "family": "open-wheel",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "335ceb0e",
+            "proportionsSeed": "a76b29e2",
+            "appearanceSeed": "c76d109"
+          },
+          "track": {
+            "version": 2,
+            "seed": "be96a411",
+            "family": "gp",
+            "relief": "gentle",
+            "targetLength": 4000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "ab821d08"
+          },
+          "fingerprint": "v2-d3453533/m5-ab8ea83f",
+          "mechanics": "89492bac",
+          "actualLength": 4000.1149028970262,
+          "acceptedMs": 3500.6417000000365,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.3% front at rest",
+            "metrics": {
+              "distance": 77.16023064232297,
+              "maxSpeed": 88.83208465576172,
+              "zeroTo60": 3.0833333333333335,
+              "stopDistance": 22.125926971435547,
+              "peakRoll": 2.798356883249088e-7,
+              "peakPitch": 0.5131631192426312,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.289563934956873
+            },
+            "loadRatio": 1.0000000599916843,
+            "frontFraction": 0.443118989946599
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:open-wheel:race",
+            "track:2:gp",
+            "min:gp"
+          ]
+        },
+        {
+          "category": "formula",
+          "seed": "workbench-v1-17",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "d699a16d",
+            "family": "open-wheel",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "a5e2b18",
+            "proportionsSeed": "97819590",
+            "appearanceSeed": "77fa02b"
+          },
+          "track": {
+            "version": 2,
+            "seed": "73ce7c9f",
+            "family": "gp",
+            "relief": "gentle",
+            "targetLength": 6000,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "b625d112"
+          },
+          "fingerprint": "v2-9e5e8042/m5-a539a799",
+          "mechanics": "0871333f",
+          "actualLength": 6000.085819287053,
+          "acceptedMs": 5081.199399999983,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.2% front at rest",
+            "metrics": {
+              "distance": 69.26921662125801,
+              "maxSpeed": 81.53869400024415,
+              "zeroTo60": 3.375,
+              "stopDistance": 18.895559310913086,
+              "peakRoll": 3.2490596218653273e-7,
+              "peakPitch": 0.44168607138441085,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2280528377443198
+            },
+            "loadRatio": 1.0000000630226817,
+            "frontFraction": 0.4420904495137893
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:open-wheel:race",
+            "track:2:gp",
+            "max:gp"
+          ]
+        },
+        {
+          "category": "formula",
+          "seed": "workbench-v1-13",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "d2ab2199",
+            "family": "open-wheel",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "19f9032c",
+            "proportionsSeed": "d6587034",
+            "appearanceSeed": "b69e66f7"
+          },
+          "track": {
+            "version": 3,
+            "seed": "b1574da3",
+            "family": "airfield",
+            "relief": "gentle",
+            "targetLength": 3500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "5bd6bb6"
+          },
+          "fingerprint": "v3-4e461777/m7-venue-386aa848",
+          "mechanics": "5c40347c",
+          "actualLength": 3499.82092111521,
+          "acceptedMs": 2263.6387000000104,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.1% front at rest",
+            "metrics": {
+              "distance": 62.72497573683583,
+              "maxSpeed": 74.60634841918946,
+              "zeroTo60": 3.675,
+              "stopDistance": 16.145145416259766,
+              "peakRoll": 2.3838186005506685e-7,
+              "peakPitch": 0.38564083920947856,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.19039749700203
+            },
+            "loadRatio": 1.0000000778956635,
+            "frontFraction": 0.44108359989890045
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:open-wheel:race",
+            "track:3:airfield",
+            "min:airfield"
+          ]
+        },
+        {
+          "category": "formula",
+          "seed": "workbench-v1-70",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "fc1f3cca",
+            "family": "open-wheel",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "390f967f",
+            "proportionsSeed": "a5aca817",
+            "appearanceSeed": "e091221e"
+          },
+          "track": {
+            "version": 3,
+            "seed": "9d9942c6",
+            "family": "airfield",
+            "relief": "gentle",
+            "targetLength": 3500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "e8615959"
+          },
+          "fingerprint": "v3-d7df71e9/m7-venue-796755f3",
+          "mechanics": "2f465a88",
+          "actualLength": 3499.537138833206,
+          "acceptedMs": 2317.3702999999514,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.2% front at rest",
+            "metrics": {
+              "distance": 74.66054917136037,
+              "maxSpeed": 86.24181747436523,
+              "zeroTo60": 3.1666666666666665,
+              "stopDistance": 21.136037826538086,
+              "peakRoll": 4.1110335159773834e-7,
+              "peakPitch": 0.43325700372670006,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2742486502108443
+            },
+            "loadRatio": 1.0000000073110342,
+            "frontFraction": 0.4420988864370031
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:open-wheel:race",
+            "track:3:airfield",
+            "min:airfield"
+          ]
+        },
+        {
+          "category": "formula",
+          "seed": "workbench-v1-73",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "9174f4cf",
+            "family": "open-wheel",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "e6a2a8da",
+            "proportionsSeed": "f45c722e",
+            "appearanceSeed": "b53abf7d"
+          },
+          "track": {
+            "version": 3,
+            "seed": "e650f52d",
+            "family": "airfield",
+            "relief": "gentle",
+            "targetLength": 3500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "86f35f54"
+          },
+          "fingerprint": "v3-7e83d5/m7-venue-7d84309e",
+          "mechanics": "95052cc5",
+          "actualLength": 3499.752937980653,
+          "acceptedMs": 2093.5092000000295,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.2% front at rest",
+            "metrics": {
+              "distance": 71.57933812241961,
+              "maxSpeed": 83.39560317993164,
+              "zeroTo60": 3.2916666666666665,
+              "stopDistance": 19.95339584350586,
+              "peakRoll": 2.354283641117386e-7,
+              "peakPitch": 0.4488634031835925,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2614254705805183
+            },
+            "loadRatio": 1.000000063096833,
+            "frontFraction": 0.4420995553531438
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:open-wheel:race",
+            "track:3:airfield",
+            "min:airfield"
+          ]
+        },
+        {
+          "category": "formula",
+          "seed": "workbench-v1-111",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "a38e8452",
+            "family": "open-wheel",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "a99f27e7",
+            "proportionsSeed": "a8a1f2ef",
+            "appearanceSeed": "e52f1786"
+          },
+          "track": {
+            "version": 3,
+            "seed": "8ca2f76e",
+            "family": "airfield",
+            "relief": "gentle",
+            "targetLength": 3500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "95065701"
+          },
+          "fingerprint": "v3-bad3fa8a/m7-venue-4e341601",
+          "mechanics": "899aa27d",
+          "actualLength": 3490.8641600209376,
+          "acceptedMs": 2112.7211000000243,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.3% front at rest",
+            "metrics": {
+              "distance": 75.83780890845212,
+              "maxSpeed": 88.08353118896484,
+              "zeroTo60": 3.125,
+              "stopDistance": 21.47760772705078,
+              "peakRoll": 2.625999540462248e-7,
+              "peakPitch": 0.4170062477493348,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2697287214560973
+            },
+            "loadRatio": 1.0000000650458107,
+            "frontFraction": 0.443090299005378
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:open-wheel:race",
+            "track:3:airfield",
+            "min:airfield"
+          ]
+        },
+        {
+          "category": "formula",
+          "seed": "workbench-v1-141",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "9d72cdb7",
+            "family": "open-wheel",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "388eef42",
+            "proportionsSeed": "971757e6",
+            "appearanceSeed": "fc6b8025"
+          },
+          "track": {
+            "version": 3,
+            "seed": "56123df5",
+            "family": "airfield",
+            "relief": "gentle",
+            "targetLength": 3500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "fcfbc57c"
+          },
+          "fingerprint": "v3-cd4e0d3a/m7-venue-2cad3027",
+          "mechanics": "6d65f633",
+          "actualLength": 3494.0815663395633,
+          "acceptedMs": 2158.1488000000245,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.3% front at rest",
+            "metrics": {
+              "distance": 70.06364467759042,
+              "maxSpeed": 81.65037689208985,
+              "zeroTo60": 3.3583333333333334,
+              "stopDistance": 19.469465255737305,
+              "peakRoll": 2.564721354720849e-7,
+              "peakPitch": 0.3865666354660324,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2419570586627087
+            },
+            "loadRatio": 1.0000000480634337,
+            "frontFraction": 0.4430873224762054
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:open-wheel:race",
+            "track:3:airfield",
+            "min:airfield"
+          ]
+        },
+        {
+          "category": "formula",
+          "seed": "workbench-v1-177",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "5f4a0b22",
+            "family": "open-wheel",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "dd208077",
+            "proportionsSeed": "69c5639f",
+            "appearanceSeed": "bb8d1c36"
+          },
+          "track": {
+            "version": 3,
+            "seed": "3458041e",
+            "family": "airfield",
+            "relief": "gentle",
+            "targetLength": 3500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "4f755311"
+          },
+          "fingerprint": "v3-825d3877/m7-venue-189dedee",
+          "mechanics": "e026dde6",
+          "actualLength": 3499.9929837232753,
+          "acceptedMs": 2249.4605999999912,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.2% front at rest",
+            "metrics": {
+              "distance": 76.83218004984246,
+              "maxSpeed": 88.33414306640626,
+              "zeroTo60": 3.091666666666667,
+              "stopDistance": 22.017559051513672,
+              "peakRoll": 2.3078591028783728e-7,
+              "peakPitch": 0.46939210386907476,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2796789433869453
+            },
+            "loadRatio": 1.000000026781868,
+            "frontFraction": 0.4420983647434288
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:open-wheel:race",
+            "track:3:airfield",
+            "min:airfield"
+          ]
+        },
+        {
+          "category": "formula",
+          "seed": "workbench-v1-245",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "7e3881f6",
+            "family": "open-wheel",
+            "band": "race",
+            "layout": "MR",
+            "mechanicsSeed": "1e73bd73",
+            "proportionsSeed": "85a811fb",
+            "appearanceSeed": "558e433a"
+          },
+          "track": {
+            "version": 3,
+            "seed": "9588187a",
+            "family": "airfield",
+            "relief": "gentle",
+            "targetLength": 3500,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "aa0eebdd"
+          },
+          "fingerprint": "v3-b160c6be/m7-venue-47d3918",
+          "mechanics": "99ab9a61",
+          "actualLength": 3498.5236331817587,
+          "acceptedMs": 2296.1013000000385,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 44.3% front at rest",
+            "metrics": {
+              "distance": 71.19048883194526,
+              "maxSpeed": 83.06422119140625,
+              "zeroTo60": 3.308333333333333,
+              "stopDistance": 19.8674259185791,
+              "peakRoll": 3.580066142131137e-7,
+              "peakPitch": 0.4888022811903133,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.2449257922797052
+            },
+            "loadRatio": 0.9999999895278078,
+            "frontFraction": 0.44310705418614216
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:open-wheel:race",
+            "track:3:airfield",
+            "min:airfield"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "stock",
+      "accepted": 10,
+      "coverage": [
+        "car:stock:race",
+        "track:3:hybrid",
+        "max:hybrid",
+        "track:3:oval",
+        "min:oval",
+        "max:oval",
+        "min:hybrid"
+      ],
+      "required": [
+        "car:stock:race",
+        "track:3:oval",
+        "min:oval",
+        "max:oval",
+        "track:3:hybrid",
+        "min:hybrid",
+        "max:hybrid"
+      ],
+      "records": [
+        {
+          "category": "stock",
+          "seed": "workbench-v1-1",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "a65b1a24",
+            "family": "stock",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "402639e9",
+            "proportionsSeed": "8d2a189d",
+            "appearanceSeed": "9d1b4390"
+          },
+          "track": {
+            "version": 3,
+            "seed": "d523a48c",
+            "family": "hybrid",
+            "relief": "rolling",
+            "targetLength": 5200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "d592e653"
+          },
+          "fingerprint": "v3-6edac5aa/m7-venue-99eb9ce",
+          "mechanics": "4c019374",
+          "actualLength": 5200.070112802497,
+          "acceptedMs": 2951.334600000002,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.6% front at rest",
+            "metrics": {
+              "distance": 73.18409157920894,
+              "maxSpeed": 83.73950958251953,
+              "zeroTo60": 3.0666666666666664,
+              "stopDistance": 20.023641586306802,
+              "peakRoll": 0.000005381517983210328,
+              "peakPitch": 0.5430555311370728,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.1026823869033735
+            },
+            "loadRatio": 0.9999998665827392,
+            "frontFraction": 0.5759283300463188
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:stock:race",
+            "track:3:hybrid",
+            "max:hybrid"
+          ]
+        },
+        {
+          "category": "stock",
+          "seed": "workbench-v1-15",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "88352eab",
+            "family": "stock",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "335ceb0e",
+            "proportionsSeed": "a76b29e2",
+            "appearanceSeed": "c76d109"
+          },
+          "track": {
+            "version": 3,
+            "seed": "be96a411",
+            "family": "oval",
+            "relief": "gentle",
+            "targetLength": 1600,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "ab821d08"
+          },
+          "fingerprint": "v3-d579244d/m7-venue-93f16dd8",
+          "mechanics": "52d6f7e9",
+          "actualLength": 1599.9971301382022,
+          "acceptedMs": 1095.3165000000154,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+            "metrics": {
+              "distance": 78.46263889643136,
+              "maxSpeed": 88.44333343505859,
+              "zeroTo60": 2.8583333333333334,
+              "stopDistance": 21.80997848511438,
+              "peakRoll": 0.000008914460195899213,
+              "peakPitch": 0.5644869143142663,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0956766767477928
+            },
+            "loadRatio": 0.9999999881860826,
+            "frontFraction": 0.5749273265920737
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:stock:race",
+            "track:3:oval",
+            "min:oval"
+          ]
+        },
+        {
+          "category": "stock",
+          "seed": "workbench-v1-17",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "d699a16d",
+            "family": "stock",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "a5e2b18",
+            "proportionsSeed": "97819590",
+            "appearanceSeed": "77fa02b"
+          },
+          "track": {
+            "version": 3,
+            "seed": "73ce7c9f",
+            "family": "oval",
+            "relief": "gentle",
+            "targetLength": 3200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "b625d112"
+          },
+          "fingerprint": "v3-1a2fafa1/m7-venue-cb121a47",
+          "mechanics": "68be1eb4",
+          "actualLength": 3199.9984322457226,
+          "acceptedMs": 1643.749199999962,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+            "metrics": {
+              "distance": 72.4080810929197,
+              "maxSpeed": 81.19238433837891,
+              "zeroTo60": 3.1166666666666667,
+              "stopDistance": 19.936702728271484,
+              "peakRoll": 4.32817484991276e-7,
+              "peakPitch": 0.5482686879328432,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0984974668609773
+            },
+            "loadRatio": 1.0000000479248783,
+            "frontFraction": 0.5749295001112337
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:stock:race",
+            "track:3:oval",
+            "max:oval"
+          ]
+        },
+        {
+          "category": "stock",
+          "seed": "workbench-v1-13",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "d2ab2199",
+            "family": "stock",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "19f9032c",
+            "proportionsSeed": "d6587034",
+            "appearanceSeed": "b69e66f7"
+          },
+          "track": {
+            "version": 3,
+            "seed": "b1574da3",
+            "family": "hybrid",
+            "relief": "gentle",
+            "targetLength": 3200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "5bd6bb6"
+          },
+          "fingerprint": "v3-dc083d41/m7-venue-f82363db",
+          "mechanics": "befc1673",
+          "actualLength": 3199.9857354053343,
+          "acceptedMs": 1706.530299999984,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+            "metrics": {
+              "distance": 71.51611524159611,
+              "maxSpeed": 82.21990814208985,
+              "zeroTo60": 3.125,
+              "stopDistance": 19.367916107751977,
+              "peakRoll": 0.00008103559969640615,
+              "peakPitch": 0.5320831738280314,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0968270944395282
+            },
+            "loadRatio": 1.0000000625857692,
+            "frontFraction": 0.5749327562546658
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:stock:race",
+            "track:3:hybrid",
+            "min:hybrid"
+          ]
+        },
+        {
+          "category": "stock",
+          "seed": "workbench-v1-70",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "fc1f3cca",
+            "family": "stock",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "390f967f",
+            "proportionsSeed": "a5aca817",
+            "appearanceSeed": "e091221e"
+          },
+          "track": {
+            "version": 3,
+            "seed": "9d9942c6",
+            "family": "hybrid",
+            "relief": "gentle",
+            "targetLength": 3200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "e8615959"
+          },
+          "fingerprint": "v3-225e4336/m7-venue-d040e948",
+          "mechanics": "83cf0d57",
+          "actualLength": 3199.985809064217,
+          "acceptedMs": 1737.4998999999953,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+            "metrics": {
+              "distance": 69.35525516238648,
+              "maxSpeed": 78.0034652709961,
+              "zeroTo60": 3.2333333333333334,
+              "stopDistance": 18.751182556153267,
+              "peakRoll": 0.0000037650255242013865,
+              "peakPitch": 0.46784113174632797,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0848792656579747
+            },
+            "loadRatio": 1.0000000668054523,
+            "frontFraction": 0.5749422656777459
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:stock:race",
+            "track:3:hybrid",
+            "min:hybrid"
+          ]
+        },
+        {
+          "category": "stock",
+          "seed": "workbench-v1-73",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "9174f4cf",
+            "family": "stock",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "e6a2a8da",
+            "proportionsSeed": "f45c722e",
+            "appearanceSeed": "b53abf7d"
+          },
+          "track": {
+            "version": 3,
+            "seed": "e650f52d",
+            "family": "hybrid",
+            "relief": "gentle",
+            "targetLength": 3200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "86f35f54"
+          },
+          "fingerprint": "v3-c79ec121/m7-venue-6d100cec",
+          "mechanics": "60346e19",
+          "actualLength": 3199.9857755456155,
+          "acceptedMs": 1890.9634000000078,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+            "metrics": {
+              "distance": 74.33432203699128,
+              "maxSpeed": 84.39681472778322,
+              "zeroTo60": 3,
+              "stopDistance": 20.148143770692496,
+              "peakRoll": 0.0001402270434961447,
+              "peakPitch": 0.466312866685963,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0837658047122625
+            },
+            "loadRatio": 1.000000105182217,
+            "frontFraction": 0.5749396117553317
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:stock:race",
+            "track:3:hybrid",
+            "min:hybrid"
+          ]
+        },
+        {
+          "category": "stock",
+          "seed": "workbench-v1-111",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "a38e8452",
+            "family": "stock",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "a99f27e7",
+            "proportionsSeed": "a8a1f2ef",
+            "appearanceSeed": "e52f1786"
+          },
+          "track": {
+            "version": 3,
+            "seed": "8ca2f76e",
+            "family": "hybrid",
+            "relief": "rolling",
+            "targetLength": 3200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "95065701"
+          },
+          "fingerprint": "v3-9ac2ef5/m7-venue-b93798d5",
+          "mechanics": "57ef46e5",
+          "actualLength": 3199.9855327406376,
+          "acceptedMs": 1849.364899999986,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+            "metrics": {
+              "distance": 68.46012693150313,
+              "maxSpeed": 78.74495315551758,
+              "zeroTo60": 3.308333333333333,
+              "stopDistance": 18.849683785590596,
+              "peakRoll": 0.0004368500319406092,
+              "peakPitch": 0.4486436315209251,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.1520059053411074
+            },
+            "loadRatio": 1.000000034319668,
+            "frontFraction": 0.5749327912785008
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:stock:race",
+            "track:3:hybrid",
+            "min:hybrid"
+          ]
+        },
+        {
+          "category": "stock",
+          "seed": "workbench-v1-141",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "9d72cdb7",
+            "family": "stock",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "388eef42",
+            "proportionsSeed": "971757e6",
+            "appearanceSeed": "fc6b8025"
+          },
+          "track": {
+            "version": 3,
+            "seed": "56123df5",
+            "family": "hybrid",
+            "relief": "gentle",
+            "targetLength": 3200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "fcfbc57c"
+          },
+          "fingerprint": "v3-2dac3fbc/m7-venue-11d0f75a",
+          "mechanics": "707e0ab0",
+          "actualLength": 3199.9859791721033,
+          "acceptedMs": 1708.815500000026,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+            "metrics": {
+              "distance": 68.11140831078353,
+              "maxSpeed": 79.25051651000977,
+              "zeroTo60": 3.308333333333333,
+              "stopDistance": 18.47037699867302,
+              "peakRoll": 0.0005210816168568925,
+              "peakPitch": 0.5149432604229488,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.0788314069294311
+            },
+            "loadRatio": 1.0000001189184848,
+            "frontFraction": 0.574937183388972
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:stock:race",
+            "track:3:hybrid",
+            "min:hybrid"
+          ]
+        },
+        {
+          "category": "stock",
+          "seed": "workbench-v1-177",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "5f4a0b22",
+            "family": "stock",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "dd208077",
+            "proportionsSeed": "69c5639f",
+            "appearanceSeed": "bb8d1c36"
+          },
+          "track": {
+            "version": 3,
+            "seed": "3458041e",
+            "family": "hybrid",
+            "relief": "rolling",
+            "targetLength": 3200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "4f755311"
+          },
+          "fingerprint": "v3-8fcb60/m7-venue-ad3ba949",
+          "mechanics": "14bb0037",
+          "actualLength": 3199.9858015147174,
+          "acceptedMs": 1877.2199000000255,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+            "metrics": {
+              "distance": 81.7397518504816,
+              "maxSpeed": 91.04221801757812,
+              "zeroTo60": 2.75,
+              "stopDistance": 23.038722992265463,
+              "peakRoll": 0.00005359859940901854,
+              "peakPitch": 0.5903945825819538,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.1027607344119974
+            },
+            "loadRatio": 1.0000000289615183,
+            "frontFraction": 0.5749277759367544
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:stock:race",
+            "track:3:hybrid",
+            "min:hybrid"
+          ]
+        },
+        {
+          "category": "stock",
+          "seed": "workbench-v1-245",
+          "attempt": 0,
+          "car": {
+            "version": 1,
+            "seed": "7e3881f6",
+            "family": "stock",
+            "band": "race",
+            "layout": "FR",
+            "mechanicsSeed": "1e73bd73",
+            "proportionsSeed": "85a811fb",
+            "appearanceSeed": "558e433a"
+          },
+          "track": {
+            "version": 3,
+            "seed": "9588187a",
+            "family": "hybrid",
+            "relief": "rolling",
+            "targetLength": 3200,
+            "character": "mixed",
+            "envelope": "comfortable",
+            "layout": 0,
+            "variant": "full",
+            "oval": "oval",
+            "banking": "mild",
+            "endurance": false
+          },
+          "venue": {
+            "version": 1,
+            "enabled": true,
+            "theme": "traditional",
+            "kerb": "low",
+            "pits": true,
+            "scenery": "standard",
+            "scenerySeed": "aa0eebdd"
+          },
+          "fingerprint": "v3-1c66e2e0/m7-venue-4028977",
+          "mechanics": "eeed8ce2",
+          "actualLength": 3199.98571815464,
+          "acceptedMs": 1756.561800000025,
+          "physical": {
+            "valid": true,
+            "detail": "12 s launch/brake check · 100.0% weight supported · 57.5% front at rest",
+            "metrics": {
+              "distance": 81.51668784624515,
+              "maxSpeed": 91.59412307739261,
+              "zeroTo60": 2.783333333333333,
+              "stopDistance": 23.21456940919823,
+              "peakRoll": 0.0016199709020063941,
+              "peakPitch": 0.5546063918424607,
+              "groundedFraction": 0.9999999999999967,
+              "peakLoad": 1.109216980498681
+            },
+            "loadRatio": 1.0000000168765633,
+            "frontFraction": 0.5749276451904655
+          },
+          "grounded": 4,
+          "coverage": [
+            "car:stock:race",
+            "track:3:hybrid",
+            "min:hybrid"
+          ]
+        }
+      ]
+    }
+  ],
+  "attempts": [
+    {
+      "category": "club",
+      "seed": "workbench-v1-1",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5777.537700000001
+    },
+    {
+      "category": "club",
+      "seed": "workbench-v1-15",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2317.6481999999996
+    },
+    {
+      "category": "club",
+      "seed": "workbench-v1-19",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2339.8147000000026
+    },
+    {
+      "category": "club",
+      "seed": "workbench-v1-56",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2089.897100000002
+    },
+    {
+      "category": "club",
+      "seed": "workbench-v1-145",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2488.733800000002
+    },
+    {
+      "category": "club",
+      "seed": "workbench-v1-248",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2129.3834999999963
+    },
+    {
+      "category": "club",
+      "seed": "workbench-v1-282",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1989.3503000000055
+    },
+    {
+      "category": "club",
+      "seed": "workbench-v1-344",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1771.9998999999953
+    },
+    {
+      "category": "club",
+      "seed": "workbench-v1-372",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2020.7212
+    },
+    {
+      "category": "club",
+      "seed": "workbench-v1-408",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2131.506499999996
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-1",
+      "attempt": 0,
+      "ok": true,
+      "ms": 4495.8894999999975
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-14",
+      "attempt": 0,
+      "ok": true,
+      "ms": 3399.3866000000125
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-19",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2479.666299999997
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-172",
+      "attempt": 0,
+      "ok": true,
+      "ms": 3428.681899999996
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-372",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2064.9493999999977
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-15",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2006.1763000000064
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-269",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1850.4861999999994
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-464",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1692.1751999999979
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-499",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1709.0503000000026
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-938",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1696.8150999999925
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-1",
+      "attempt": 0,
+      "ok": true,
+      "ms": 6164.547599999991
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-15",
+      "attempt": 0,
+      "ok": true,
+      "ms": 3986.7988999999943
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-40",
+      "attempt": 0,
+      "ok": true,
+      "ms": 4982.957200000004
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-177",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5571.805300000007
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-285",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5214.418399999995
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-464",
+      "attempt": 0,
+      "ok": true,
+      "ms": 6413.752900000021
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-485",
+      "attempt": 0,
+      "ok": true,
+      "ms": 6174.091600000014
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-499",
+      "attempt": 0,
+      "ok": true,
+      "ms": 6377.578799999988
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-536",
+      "attempt": 0,
+      "ok": true,
+      "ms": 8049.022900000011
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-642",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5706.953600000008
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-1",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5825.176000000007
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-15",
+      "attempt": 0,
+      "ok": true,
+      "ms": 3217.8000000000175
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-17",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5088.44690000001
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-177",
+      "attempt": 0,
+      "ok": true,
+      "ms": 7204.724600000016
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-245",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5651.383000000002
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-285",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5228.434799999988
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-372",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5517.410200000013
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-464",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5835.92359999998
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-485",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5762.589100000012
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-499",
+      "attempt": 0,
+      "ok": true,
+      "ms": 6551.2579999999725
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-1",
+      "attempt": 0,
+      "ok": true,
+      "ms": 4018.429200000013
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-15",
+      "attempt": 0,
+      "ok": true,
+      "ms": 3500.6417000000365
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-17",
+      "attempt": 0,
+      "ok": true,
+      "ms": 5081.199399999983
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-13",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2263.6387000000104
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-70",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2317.3702999999514
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-73",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2093.5092000000295
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-111",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2112.7211000000243
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-141",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2158.1488000000245
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-177",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2249.4605999999912
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-245",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2296.1013000000385
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-1",
+      "attempt": 0,
+      "ok": true,
+      "ms": 2951.334600000002
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-15",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1095.3165000000154
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-17",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1643.749199999962
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-13",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1706.530299999984
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-70",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1737.4998999999953
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-73",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1890.9634000000078
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-111",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1849.364899999986
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-141",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1708.815500000026
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-177",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1877.2199000000255
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-245",
+      "attempt": 0,
+      "ok": true,
+      "ms": 1756.561800000025
+    }
+  ],
+  "laps": [
+    {
+      "category": "club",
+      "seed": "workbench-v1-1",
+      "car": "hatch",
+      "track": "2:touring",
+      "length": 3200.9097266242943,
+      "steps": 34659,
+      "finite": true,
+      "peakLateral": 0.23358595323789041,
+      "valid": true,
+      "duration": 284.2647530370885,
+      "reasons": []
+    },
+    {
+      "category": "club",
+      "seed": "workbench-v1-15",
+      "car": "coupe",
+      "track": "2:touring",
+      "length": 2000.062679339003,
+      "steps": 21347,
+      "finite": true,
+      "peakLateral": 0.1574589145967912,
+      "valid": true,
+      "duration": 173.88468130241387,
+      "reasons": []
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-1",
+      "car": "hatch",
+      "track": "3:street",
+      "length": 4498.25680079557,
+      "steps": 48094,
+      "finite": true,
+      "peakLateral": 0.15576630128297259,
+      "valid": true,
+      "duration": 396.52515440345513,
+      "reasons": []
+    },
+    {
+      "category": "touring",
+      "seed": "workbench-v1-14",
+      "car": "sedan",
+      "track": "3:airfield",
+      "length": 4497.546207795288,
+      "steps": 48200,
+      "finite": true,
+      "peakLateral": 0.1595953826149115,
+      "valid": true,
+      "duration": 397.8730028023282,
+      "reasons": []
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-1",
+      "car": "gt",
+      "track": "3:endurance",
+      "length": 12032.27805663375,
+      "steps": 123545,
+      "finite": true,
+      "peakLateral": 0.12976730921846438,
+      "valid": true,
+      "duration": 1026.8826878088696,
+      "reasons": []
+    },
+    {
+      "category": "endurance",
+      "seed": "workbench-v1-15",
+      "car": "prototype",
+      "track": "3:rural",
+      "length": 6000.394614610467,
+      "steps": 61751,
+      "finite": true,
+      "peakLateral": 0.17710038710491138,
+      "valid": true,
+      "duration": 511.9347568843571,
+      "reasons": []
+    },
+    {
+      "category": "prototype",
+      "seed": "workbench-v1-15",
+      "car": "prototype",
+      "track": "2:gp",
+      "length": 4000.1149028970262,
+      "steps": 41275,
+      "finite": true,
+      "peakLateral": 0.19430105153748606,
+      "valid": true,
+      "duration": 341.305663694618,
+      "reasons": []
+    },
+    {
+      "category": "formula",
+      "seed": "workbench-v1-1",
+      "car": "open-wheel",
+      "track": "3:airfield",
+      "length": 5495.803581434705,
+      "steps": 56777,
+      "finite": true,
+      "peakLateral": 0.15286094565661493,
+      "valid": true,
+      "duration": 470.4726180226232,
+      "reasons": []
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-1",
+      "car": "stock",
+      "track": "3:hybrid",
+      "length": 5200.070112802497,
+      "steps": 53596,
+      "finite": true,
+      "peakLateral": 0.24161770588693826,
+      "valid": true,
+      "duration": 443.76628311138495,
+      "reasons": []
+    },
+    {
+      "category": "stock",
+      "seed": "workbench-v1-15",
+      "car": "stock",
+      "track": "3:oval",
+      "length": 1599.9971301382022,
+      "steps": 16715,
+      "finite": true,
+      "peakLateral": 0.2812469694000558,
+      "valid": true,
+      "duration": 136.41441862856712,
+      "reasons": []
+    }
+  ],
+  "failures": [],
+  "elapsedSeconds": 345.45646700000003,
+  "accepted": 60,
+  "rejectedAttempts": 0,
+  "failed": 0
+}

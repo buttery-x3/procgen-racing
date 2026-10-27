@@ -1,5 +1,6 @@
 import "../style.css";
 import "../workbench/m6.css";
+import "../workbench/first-pass.css";
 import { App } from "../app/App";
 import { DEFAULT_SETUP } from "../vehicle/setup";
 import { SoloStorage } from "../storage/SoloStorage";
@@ -118,7 +119,7 @@ function driver(t: VehicleTelemetry): VehicleControls | undefined {
   return { ...zero, brake: 1 };
 }
 
-const app = new App({ setup: { ...DEFAULT_SETUP }, experiment: "handling", driver,
+const app = new App({ deterministic: true, setup: { ...DEFAULT_SETUP }, experiment: "handling", driver,
   storage: new SoloStorage("procgen-racing:audio-driving-diagnostic") });
 
 function report() {
