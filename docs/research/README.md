@@ -1,7 +1,8 @@
 # Research and qualification records
 
 The [release and milestone workflow](../workflow.md) applies to this directory.
-`main` holds the `v0.2.0` M0–M8 baseline; `v0.1.0` preserves M0–M5. Work for each
+`main` holds the `v0.3.0` driving-audio baseline over M0–M8; `v0.2.0` preserves
+M0–M8 and `v0.1.0` preserves M0–M5. Work for each
 future milestone belongs on its own branch from `development`, then is merged and
 pushed to remote `development` on completion for testing. Later promotion to `main` requires an
 explicit release request.
@@ -16,6 +17,9 @@ them merely because a newer milestone or release exists.
   measured vertical layout, duplicate controls/data paths, and a conservative
   organization proposal informed by the owner's teaching and exploration goals;
   analysis only, with no UI implementation
+- [First-pass workbench implementation plan](../ui-workbench-first-pass-plan.md):
+  compact toolbar, collapsible panels, reliability consolidation and six category
+  presets with seeded car/track exploration; planning only
 - [Synthesized driving audio research and implementation plan](audio-system.md)
   with [native audio qualification](audio-qualification.json) and
   [actual-app driving qualification](audio-driving-qualification.json), plus

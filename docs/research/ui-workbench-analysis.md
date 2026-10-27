@@ -6,6 +6,14 @@ Audited source: `5e3c7ed666a058e22050110c260b3f686aac0f0c` on `development`
 (v0.3.0 integration). Research branch: `codex/ui-workbench-analysis`.
 The [repository workflow](../workflow.md) governs subsequent implementation.
 
+**Follow-up scope, 27 October 2026:** the owner requested an
+[implementation plan for the first pass](../ui-workbench-first-pass-plan.md),
+including the reliability consolidations and category-based random car/track
+selection. That plan supersedes this audit's earlier deferral of category buttons;
+all seven existing test environments remain available through Tests. The audit's
+measurements and observations below remain historical evidence, not implementation
+results.
+
 ## Recommendation
 
 Preserve the existing technical appearance and make the working arrangement more
