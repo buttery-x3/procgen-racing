@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "sourceHash": "05ddbc2d8655f19b",
-  "date": "2026-10-26T07:30:15.611Z",
+  "sourceHash": "8565dd5b29ffc0a7",
+  "date": "2026-10-27T02:56:10.753Z",
   "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
   "node": "v24.15.0",
   "scope": "Node CPU-only future-AI stress sample: three independent Rapier worlds/vehicle rigs sharing the authored circuit definition. Ordinary scripted VehicleControls, two 120 Hz steps per measured 60 Hz frame. 60 warm-up frames plus 600 measured frames. No renderer, inter-car contacts or shared-world broad phase; not an AI grid-size or browser FPS promise.",
   "cars": 3,
   "measuredFrames": 600,
   "simulationPerFrameMs": {
-    "p50": 0.5997999999999593,
-    "p95": 1.0918000000001484,
-    "max": 3.870600000000195
+    "p50": 1.2363000000004831,
+    "p95": 3.091099999999642,
+    "max": 12.039499999999862
   },
   "finite": true
 }

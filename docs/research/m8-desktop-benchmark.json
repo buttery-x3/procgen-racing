@@ -1,386 +1,381 @@
 {
-  "version": 1,
-  "physicsVersion": "3915c9277118cf78",
-  "scope": "Visible browser RAF; production SceneView, GenerationClient, SuspensionRig and RaceSession at 1920x1080, pixel ratio 1, PCF shadows, 120 Hz physics, timing gates, 20 Hz working recorder, bounded effects and a synthetic trailing ghost for render load. FR reference car. This renderer/session benchmark excludes the workbench DOM and does not substitute for actual ghost playback or full-lap tests. Generation/setup precede warm-up. Browser scheduling and other desktop load affect results. GPU bytes are not measurable.",
-  "date": "2026-10-26T07:35:35.919Z",
-  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
-  "hardwareConcurrency": 12,
+  "sourceHash": "8565dd5b29ffc0a7",
+  "date": "2026-10-27T03:00:08.157Z",
   "deviceMemory": 32,
+  "hardwareConcurrency": 12,
+  "physicsVersion": "d259fe4e79fa30d7",
   "results": [
     {
-      "recipe": {
-        "version": 3,
-        "seed": "m8-desktop-101",
-        "family": "street",
-        "relief": "gentle",
-        "targetLength": 3600,
-        "character": "mixed",
-        "envelope": "comfortable",
-        "layout": 0,
-        "variant": "full",
-        "oval": "oval",
-        "banking": "fast",
-        "endurance": false
-      },
+      "distanceDriven": 152.4641057935355,
       "fingerprint": "v3-3c530dff/m7-venue-9877a01",
-      "workerMs": 1427.2999999523163,
-      "setupMs": 321.39999997615814,
+      "frameIntervalMs": {
+        "max": 10.299999999999272,
+        "over33ms": 0,
+        "p50": 10,
+        "p95": 10.100000000000364
+      },
+      "frameSamples": 720,
       "geometry": {
-        "inheritedShare": 1,
+        "branchIds": [
+          "main",
+          "pit"
+        ],
         "connectorShare": 0,
-        "networkNodes": 56,
-        "networkEdges": 105,
+        "inheritedShare": 1,
         "junctions": 12,
-        "variants": 2,
         "laneBankRange": [
           0,
           0.03435334171074635
         ],
         "maxLaneBankRate": 0.0010651859441372462,
+        "networkEdges": 105,
+        "networkNodes": 56,
+        "surfaceChunks": 124,
+        "transferBytes": 4091716,
+        "triangles": 181342,
+        "variants": 2
+      },
+      "grounded": 4,
+      "heap": {
+        "after": {
+          "limitMiB": 4192,
+          "totalMiB": 106.56209087371826,
+          "usedMiB": 85.34143733978271
+        },
+        "before": {
+          "limitMiB": 4192,
+          "totalMiB": 83.99186325073242,
+          "usedMiB": 64.56466293334961
+        },
+        "peakUsedMiB": 85.34143733978271
+      },
+      "height": 1080,
+      "meanFps": 100.0027778549404,
+      "pixelRatio": 1,
+      "queries": {
+        "calls": 3619,
+        "maxCandidates": 120
+      },
+      "recipe": {
+        "banking": "fast",
+        "character": "mixed",
+        "endurance": false,
+        "envelope": "comfortable",
+        "family": "street",
+        "layout": 0,
+        "oval": "oval",
+        "relief": "gentle",
+        "seed": "m8-desktop-101",
+        "targetLength": 3600,
+        "variant": "full",
+        "version": 3
+      },
+      "renderSubmissionMs": {
+        "p50": 1.5999999046325684,
+        "p95": 2.3999998569488525
+      },
+      "renderer": {
+        "drawCalls": 103,
+        "geometries": 76,
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "textures": 5,
+        "vendor": "Google Inc. (NVIDIA)",
+        "visibleTriangles": 33847
+      },
+      "session": {
+        "identity": {
+          "assists": "3bb75e77fc24fdbb",
+          "car": "86b2c8c486ae2530",
+          "key": "fea3365efaae3032",
+          "physics": "d259fe4e79fa30d7",
+          "rules": "solo-1",
+          "setup": "3366d2eebc8969da",
+          "track": "fceb09398b7f3515",
+          "variant": "full"
+        },
+        "recordingBytes": 6912192,
+        "state": "running"
+      },
+      "setupMs": 373.2000000476837,
+      "simulationMs": {
+        "p50": 0.7999999523162842,
+        "p95": 1.3000001907348633
+      },
+      "streaming": {
+        "peakMeshes": 33,
+        "peakObstacle": 24,
+        "peakSurface": 27,
+        "physics": {
+          "created": 89,
+          "materialColliders": 61,
+          "obstacleChunks": 24,
+          "obstacleColliders": 24,
+          "peakObstacleChunks": 24,
+          "peakSurfaceChunks": 27,
+          "retired": 4,
+          "surfaceChunks": 27
+        },
+        "render": {
+          "loads": 38,
+          "overviewTriangles": 0,
+          "peakSurfaceMeshes": 33,
+          "retired": 5,
+          "surfaceMeshes": 33
+        }
+      },
+      "visibility": "visible",
+      "warmupFrames": 180,
+      "width": 1920,
+      "workerMs": 2004.5
+    },
+    {
+      "distanceDriven": 152.2613048553476,
+      "fingerprint": "v3-c219dbd1/m7-venue-de96d65d",
+      "frameIntervalMs": {
+        "max": 10.200000000000728,
+        "over33ms": 0,
+        "p50": 10,
+        "p95": 10.100000000002185
+      },
+      "frameSamples": 720,
+      "geometry": {
         "branchIds": [
           "main",
           "pit"
         ],
-        "transferBytes": 4091716,
-        "surfaceChunks": 124,
-        "triangles": 181342
-      },
-      "frameSamples": 720,
-      "warmupFrames": 180,
-      "width": 1920,
-      "height": 1080,
-      "pixelRatio": 1,
-      "visibility": "visible",
-      "frameIntervalMs": {
-        "p50": 10,
-        "p95": 10.100000000000364,
-        "max": 10.199999999998909,
-        "over33ms": 0
-      },
-      "meanFps": 100.00277785494042,
-      "simulationMs": {
-        "p50": 0.5,
-        "p95": 0.8999999761581421
-      },
-      "renderSubmissionMs": {
-        "p50": 1.2999999523162842,
-        "p95": 1.9000000953674316
-      },
-      "distanceDriven": 152.4641057935355,
-      "grounded": 4,
-      "heap": {
-        "before": {
-          "usedMiB": 69.62063217163086,
-          "totalMiB": 92.14642333984375,
-          "limitMiB": 4192
-        },
-        "after": {
-          "usedMiB": 75.92337989807129,
-          "totalMiB": 107.66291618347168,
-          "limitMiB": 4192
-        },
-        "peakUsedMiB": 85.71021461486816
-      },
-      "renderer": {
-        "vendor": "Google Inc. (NVIDIA)",
-        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-        "drawCalls": 103,
-        "visibleTriangles": 33847,
-        "geometries": 76,
-        "textures": 5
-      },
-      "streaming": {
-        "peakSurface": 27,
-        "peakObstacle": 24,
-        "peakMeshes": 33,
-        "physics": {
-          "surfaceChunks": 27,
-          "obstacleChunks": 24,
-          "materialColliders": 61,
-          "obstacleColliders": 24,
-          "peakSurfaceChunks": 27,
-          "peakObstacleChunks": 24,
-          "created": 89,
-          "retired": 4
-        },
-        "render": {
-          "surfaceMeshes": 33,
-          "peakSurfaceMeshes": 33,
-          "loads": 38,
-          "retired": 5,
-          "overviewTriangles": 0
-        }
-      },
-      "queries": {
-        "calls": 6877,
-        "maxCandidates": 120
-      },
-      "session": {
-        "identity": {
-          "track": "fceb09398b7f3515",
-          "car": "86b2c8c486ae2530",
-          "setup": "3366d2eebc8969da",
-          "assists": "3bb75e77fc24fdbb",
-          "physics": "3915c9277118cf78",
-          "rules": "solo-1",
-          "variant": "full",
-          "key": "9677a73d10e33801"
-        },
-        "state": "running",
-        "recordingBytes": 6912192
-      }
-    },
-    {
-      "recipe": {
-        "version": 3,
-        "seed": "m8-desktop-101",
-        "family": "oval",
-        "relief": "gentle",
-        "targetLength": 4400,
-        "character": "mixed",
-        "envelope": "comfortable",
-        "layout": 0,
-        "variant": "full",
-        "oval": "oval",
-        "banking": "fast",
-        "endurance": false
-      },
-      "fingerprint": "v3-c219dbd1/m7-venue-de96d65d",
-      "workerMs": 1457.7000000476837,
-      "setupMs": 121.39999997615814,
-      "geometry": {
-        "inheritedShare": 1,
         "connectorShare": 0,
-        "networkNodes": 5,
-        "networkEdges": 5,
+        "inheritedShare": 1,
         "junctions": 0,
-        "variants": 1,
         "laneBankRange": [
           0,
           0.40133049533437376
         ],
         "maxLaneBankRate": 0.002151450048262269,
+        "networkEdges": 5,
+        "networkNodes": 5,
+        "surfaceChunks": 158,
+        "transferBytes": 4705856,
+        "triangles": 208538,
+        "variants": 1
+      },
+      "grounded": 4,
+      "heap": {
+        "after": {
+          "limitMiB": 4192,
+          "totalMiB": 153.63044929504397,
+          "usedMiB": 114.19728660583496
+        },
+        "before": {
+          "limitMiB": 4192,
+          "totalMiB": 131.74124908447266,
+          "usedMiB": 92.09856033325195
+        },
+        "peakUsedMiB": 116.6000804901123
+      },
+      "height": 1080,
+      "meanFps": 100.004166840285,
+      "pixelRatio": 1,
+      "queries": {
+        "calls": 3616,
+        "maxCandidates": 110
+      },
+      "recipe": {
+        "banking": "fast",
+        "character": "mixed",
+        "endurance": false,
+        "envelope": "comfortable",
+        "family": "oval",
+        "layout": 0,
+        "oval": "oval",
+        "relief": "gentle",
+        "seed": "m8-desktop-101",
+        "targetLength": 4400,
+        "variant": "full",
+        "version": 3
+      },
+      "renderSubmissionMs": {
+        "p50": 2.0999999046325684,
+        "p95": 3
+      },
+      "renderer": {
+        "drawCalls": 118,
+        "geometries": 80,
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "textures": 5,
+        "vendor": "Google Inc. (NVIDIA)",
+        "visibleTriangles": 30632
+      },
+      "session": {
+        "identity": {
+          "assists": "3bb75e77fc24fdbb",
+          "car": "86b2c8c486ae2530",
+          "key": "97ebcda1accdde0d",
+          "physics": "d259fe4e79fa30d7",
+          "rules": "solo-1",
+          "setup": "3366d2eebc8969da",
+          "track": "47419589a89569bd",
+          "variant": "full"
+        },
+        "recordingBytes": 6912192,
+        "state": "running"
+      },
+      "setupMs": 178,
+      "simulationMs": {
+        "p50": 0.7000000476837158,
+        "p95": 1.1999998092651367
+      },
+      "streaming": {
+        "peakMeshes": 32,
+        "peakObstacle": 20,
+        "peakSurface": 27,
+        "physics": {
+          "created": 71,
+          "materialColliders": 46,
+          "obstacleChunks": 20,
+          "obstacleColliders": 20,
+          "peakObstacleChunks": 20,
+          "peakSurfaceChunks": 27,
+          "retired": 5,
+          "surfaceChunks": 27
+        },
+        "render": {
+          "loads": 34,
+          "overviewTriangles": 0,
+          "peakSurfaceMeshes": 32,
+          "retired": 4,
+          "surfaceMeshes": 30
+        }
+      },
+      "visibility": "visible",
+      "warmupFrames": 180,
+      "width": 1920,
+      "workerMs": 2044.2000000476835
+    },
+    {
+      "distanceDriven": 152.46100469187513,
+      "fingerprint": "v3-85a195b2/m7-venue-3dde371c",
+      "frameIntervalMs": {
+        "max": 10.19999999999709,
+        "over33ms": 0,
+        "p50": 10,
+        "p95": 10.10000000000582
+      },
+      "frameSamples": 720,
+      "geometry": {
         "branchIds": [
           "main",
           "pit"
         ],
-        "transferBytes": 4705856,
-        "surfaceChunks": 158,
-        "triangles": 208538
-      },
-      "frameSamples": 720,
-      "warmupFrames": 180,
-      "width": 1920,
-      "height": 1080,
-      "pixelRatio": 1,
-      "visibility": "visible",
-      "frameIntervalMs": {
-        "p50": 10,
-        "p95": 10.100000000002183,
-        "max": 10.100000000002183,
-        "over33ms": 0
-      },
-      "meanFps": 100.00277785494042,
-      "simulationMs": {
-        "p50": 0.40000009536743164,
-        "p95": 0.8000000715255737
-      },
-      "renderSubmissionMs": {
-        "p50": 1.0999999046325684,
-        "p95": 1.7000000476837158
-      },
-      "distanceDriven": 152.2613048553476,
-      "grounded": 4,
-      "heap": {
-        "before": {
-          "usedMiB": 114.74080753326416,
-          "totalMiB": 147.85012531280518,
-          "limitMiB": 4192
-        },
-        "after": {
-          "usedMiB": 84.06693267822266,
-          "totalMiB": 147.1620330810547,
-          "limitMiB": 4192
-        },
-        "peakUsedMiB": 114.74080753326416
-      },
-      "renderer": {
-        "vendor": "Google Inc. (NVIDIA)",
-        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
-        "drawCalls": 118,
-        "visibleTriangles": 30632,
-        "geometries": 80,
-        "textures": 5
-      },
-      "streaming": {
-        "peakSurface": 27,
-        "peakObstacle": 20,
-        "peakMeshes": 32,
-        "physics": {
-          "surfaceChunks": 27,
-          "obstacleChunks": 20,
-          "materialColliders": 46,
-          "obstacleColliders": 20,
-          "peakSurfaceChunks": 27,
-          "peakObstacleChunks": 20,
-          "created": 71,
-          "retired": 5
-        },
-        "render": {
-          "surfaceMeshes": 30,
-          "peakSurfaceMeshes": 32,
-          "loads": 34,
-          "retired": 4,
-          "overviewTriangles": 0
-        }
-      },
-      "queries": {
-        "calls": 6871,
-        "maxCandidates": 110
-      },
-      "session": {
-        "identity": {
-          "track": "47419589a89569bd",
-          "car": "86b2c8c486ae2530",
-          "setup": "3366d2eebc8969da",
-          "assists": "3bb75e77fc24fdbb",
-          "physics": "3915c9277118cf78",
-          "rules": "solo-1",
-          "variant": "full",
-          "key": "29fb99125c1725ae"
-        },
-        "state": "running",
-        "recordingBytes": 6912192
-      }
-    },
-    {
-      "recipe": {
-        "version": 3,
-        "seed": "m8-desktop-101",
-        "family": "endurance",
-        "relief": "gentle",
-        "targetLength": 24000,
-        "character": "mixed",
-        "envelope": "comfortable",
-        "layout": 0,
-        "variant": "full",
-        "oval": "oval",
-        "banking": "fast",
-        "endurance": true
-      },
-      "fingerprint": "v3-85a195b2/m7-venue-3dde371c",
-      "workerMs": 9170.300000071526,
-      "setupMs": 272.2000000476837,
-      "geometry": {
-        "inheritedShare": 0.9376247504990021,
         "connectorShare": 0.06237524950099793,
-        "networkNodes": 56,
-        "networkEdges": 98,
+        "inheritedShare": 0.937624750499002,
         "junctions": 30,
-        "variants": 2,
         "laneBankRange": [
           0,
           0.02724184429973853
         ],
         "maxLaneBankRate": 0.0007048657036276957,
-        "branchIds": [
-          "main",
-          "pit"
-        ],
-        "transferBytes": 28878008,
+        "networkEdges": 98,
+        "networkNodes": 56,
         "surfaceChunks": 1817,
-        "triangles": 1275710
+        "transferBytes": 28878008,
+        "triangles": 1275710,
+        "variants": 2
       },
-      "frameSamples": 720,
-      "warmupFrames": 180,
-      "width": 1920,
-      "height": 1080,
-      "pixelRatio": 1,
-      "visibility": "visible",
-      "frameIntervalMs": {
-        "p50": 10,
-        "p95": 10.10000000000582,
-        "max": 10.200000000004366,
-        "over33ms": 0
-      },
-      "meanFps": 100.00416684028504,
-      "simulationMs": {
-        "p50": 0.5,
-        "p95": 1
-      },
-      "renderSubmissionMs": {
-        "p50": 1.600000023841858,
-        "p95": 2.299999952316284
-      },
-      "distanceDriven": 152.46100469187513,
       "grounded": 4,
       "heap": {
-        "before": {
-          "usedMiB": 176.42545127868652,
-          "totalMiB": 210.45619010925293,
-          "limitMiB": 4192
-        },
         "after": {
-          "usedMiB": 172.2270050048828,
-          "totalMiB": 231.68243789672852,
-          "limitMiB": 4192
+          "limitMiB": 4192,
+          "totalMiB": 235.52755165100095,
+          "usedMiB": 194.740083694458
         },
-        "peakUsedMiB": 191.76965713500977
+        "before": {
+          "limitMiB": 4192,
+          "totalMiB": 203.3013038635254,
+          "usedMiB": 166.43687438964844
+        },
+        "peakUsedMiB": 194.88865852355957
+      },
+      "height": 1080,
+      "meanFps": 100.00277785494048,
+      "pixelRatio": 1,
+      "queries": {
+        "calls": 3619,
+        "maxCandidates": 155
+      },
+      "recipe": {
+        "banking": "fast",
+        "character": "mixed",
+        "endurance": true,
+        "envelope": "comfortable",
+        "family": "endurance",
+        "layout": 0,
+        "oval": "oval",
+        "relief": "gentle",
+        "seed": "m8-desktop-101",
+        "targetLength": 24000,
+        "variant": "full",
+        "version": 3
+      },
+      "renderSubmissionMs": {
+        "p50": 3.200000047683716,
+        "p95": 4.200000047683716
       },
       "renderer": {
-        "vendor": "Google Inc. (NVIDIA)",
-        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
         "drawCalls": 97,
-        "visibleTriangles": 33489,
         "geometries": 73,
-        "textures": 4
-      },
-      "streaming": {
-        "peakSurface": 30,
-        "peakObstacle": 27,
-        "peakMeshes": 37,
-        "physics": {
-          "surfaceChunks": 30,
-          "obstacleChunks": 27,
-          "materialColliders": 59,
-          "obstacleColliders": 27,
-          "peakSurfaceChunks": 30,
-          "peakObstacleChunks": 27,
-          "created": 89,
-          "retired": 3
-        },
-        "render": {
-          "surfaceMeshes": 36,
-          "peakSurfaceMeshes": 37,
-          "loads": 40,
-          "retired": 4,
-          "overviewTriangles": 0
-        }
-      },
-      "queries": {
-        "calls": 6877,
-        "maxCandidates": 155
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "textures": 4,
+        "vendor": "Google Inc. (NVIDIA)",
+        "visibleTriangles": 33489
       },
       "session": {
         "identity": {
-          "track": "66d295eb071ae8af",
-          "car": "86b2c8c486ae2530",
-          "setup": "3366d2eebc8969da",
           "assists": "3bb75e77fc24fdbb",
-          "physics": "3915c9277118cf78",
+          "car": "86b2c8c486ae2530",
+          "key": "da0e2e9af8015e1e",
+          "physics": "d259fe4e79fa30d7",
           "rules": "solo-1",
-          "variant": "full",
-          "key": "b7e3b16d94275b11"
+          "setup": "3366d2eebc8969da",
+          "track": "66d295eb071ae8af",
+          "variant": "full"
         },
-        "state": "running",
-        "recordingBytes": 6912192
-      }
+        "recordingBytes": 6912192,
+        "state": "running"
+      },
+      "setupMs": 325.2999999523163,
+      "simulationMs": {
+        "p50": 0.7999999523162842,
+        "p95": 1.4000000953674316
+      },
+      "streaming": {
+        "peakMeshes": 37,
+        "peakObstacle": 27,
+        "peakSurface": 30,
+        "physics": {
+          "created": 89,
+          "materialColliders": 59,
+          "obstacleChunks": 27,
+          "obstacleColliders": 27,
+          "peakObstacleChunks": 27,
+          "peakSurfaceChunks": 30,
+          "retired": 3,
+          "surfaceChunks": 30
+        },
+        "render": {
+          "loads": 40,
+          "overviewTriangles": 0,
+          "peakSurfaceMeshes": 37,
+          "retired": 4,
+          "surfaceMeshes": 36
+        }
+      },
+      "visibility": "visible",
+      "warmupFrames": 180,
+      "width": 1920,
+      "workerMs": 12256.099999904633
     }
   ],
-  "sourceHash": "05ddbc2d8655f19b",
-  "desktop": {
-    "cpu": "AMD Ryzen 5 5600X 6-Core Processor",
-    "installedMemoryGiB": 32,
-    "note": "Actual WebGL GPU is recorded per case. Other desktop activity was not controlled. Regression and physical qualification commands completed before this release sample."
-  }
+  "scope": "Visible browser RAF; production SceneView, GenerationClient, SuspensionRig and RaceSession at 1920x1080, pixel ratio 1, PCF shadows, 120 Hz physics, timing gates, 20 Hz working recorder, bounded effects and a synthetic trailing ghost for render load. FR reference car. This renderer/session benchmark excludes the workbench DOM and does not substitute for actual ghost playback or full-lap tests. Generation/setup precede warm-up. Browser scheduling and other desktop load affect results. GPU bytes are not measurable.",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "version": 1
 }

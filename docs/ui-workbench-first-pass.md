@@ -150,7 +150,61 @@ laps. Its actual report and source hash are preserved separately from later UI-o
 validation. Unchanged generation/car physics evidence is reused with its original
 scope rather than being relabelled after presentation changes.
 
-Final measured results and evidence links are recorded below after validation.
+### Delivered measurements
+
+Implementation commit: `0adf9a538722d83bcfd06f97f384c2b452facaa5`.
+Frozen runtime source: `8565dd5b29ffc0a7`; physics/rules build:
+`d259fe4e79fa30d7`. Subsequent integration documentation does not change that tree
+of executable sources. Build passed; **133/133 focused tests** passed in 11 files.
+
+| CSS viewport | Scene, panels open | Scene, instruments collapsed | Local toolbar |
+| --- | ---: | ---: | ---: |
+| 1841 × 1260 | 886 px | 1074 px | 52 px |
+| 1920 × 1080 | 706 px | 894 px | 52 px |
+| 1600 × 900 | 526 px | 714 px | 52 px |
+| 1366 × 768 | 458 px | 582 px | 52 px |
+
+All 16 viewport/panel combinations were measured on the committed build. The rail
+stays 72 px at the wider breakpoints and 64 px at 1366 px, independently of Setup
+collapse. The timer group remains centered in the available working area and no
+duplicate IDs were present. At the original audit viewport the scene gains **181 px**
+with instruments open and **369 px** with them collapsed, relative to the previous
+705 px scene. Diagram sizes retain their existing responsive breakpoints.
+
+The category campaign accepted **60/60 pairs**, ten per category, with **zero
+rejected attempts** and **10/10 representative physical laps** passing. Every
+offered car family/band, track branch and requested length endpoint was covered.
+Its original runtime source hash is `b25d6a4bfd52e732`; retain that provenance.
+Later changes affected input/command/UI handling and source LF canonicalization;
+the catalog, generation algorithms and numerical validation/vehicle behavior are
+unchanged. The final M8/browser/flow checks cover the later integration rather than
+relabelling that category campaign as a fresh run.
+
+On the frozen committed runtime, M8 passed **25/25 physical laps** with keyed
+personal bests and ghost round trips. The actual toolbar/browser fixture completed
+a valid **61.198 s** lap and validated its **1,225-pose** ghost, then restored both
+best and reference after reload. Three visible 1920 × 1080 renderer samples on the
+Ryzen 5 5600X / 32 GiB / RTX 3060 measured about **100 fps** and **10.1 ms p95**
+frame intervals; scheduling was capped near 100 Hz, not a worst-case performance
+claim. The three-world CPU sample remained finite; other desktop work was not
+controlled. Full details and source hashes are in the reports.
+
+The frozen-runtime browser report contains **16 passing checks**, including normal
+random startup, exact pairing replay, proving-ground/archive return, pending-draft
+protection, matched A/B responses and manual-workshop recipe synchronization. The
+short native audio/driving sequence completed with **216 samples**, an observed
+upshift, no failure events and no uncaught errors. Its single `first-upshift` event
+is informational; its audio feature fingerprint and runtime source hash are both
+preserved. This is digital integration evidence, not a new timbre/listening study.
+
+- [Category/physical-pair campaign](research/ui-workbench-qualification.json)
+- [Detailed workbench UI checks before LF canonicalization](research/ui-workbench-browser-qa.json)
+- [Frozen-runtime timed laps and ghost exchange](research/m8-qualification.json)
+- [Frozen-runtime visible renderer measurements](research/m8-desktop-benchmark.json)
+- [Frozen-runtime browser checks](research/m8-browser-qa.json)
+- [Frozen-runtime three-world CPU sample](research/m8-stress.json)
+- [Short native audio/driving integration](research/ui-workbench-audio-driving.json)
+
 Physical gamepad hardware, broad browser/GPU coverage and arbitrary manual tuning
 combinations remain outside this desktop sample. The automated input tests cover
 gamepad release gating; they do not claim a hardware usability study. The audio
