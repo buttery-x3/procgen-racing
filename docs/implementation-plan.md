@@ -29,6 +29,12 @@ Every future milestone starts from `development` on a separate
 
 ## 1. Agreed product direction
 
+The next UI pass is specified separately in the
+[first-pass workbench implementation plan](ui-workbench-first-pass-plan.md),
+following the [current UI audit](research/ui-workbench-analysis.md). It preserves
+the technical workbench while consolidating layout/data paths and adding category
+buttons for random car/track exploration. It is planned, not yet implemented.
+
 Build a browser racing sandbox around a circuit generator, a procedural car builder, and a modern tuning workbench. The first release is solo driving and time trials. Design the data and control interfaces so AI racing can follow without replacing the vehicle or track systems.
 
 Confirmed requirements:
