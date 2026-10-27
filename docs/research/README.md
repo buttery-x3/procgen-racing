@@ -12,6 +12,10 @@ hashes and measurements identify the implementation actually tested; do not rewr
 them merely because a newer milestone or release exists.
 
 - [Circuit research](circuit-design.md)
+- [Current UI and workbench analysis](ui-workbench-analysis.md): feature inventory,
+  measured vertical layout, duplicate controls/data paths, and a conservative
+  organization proposal informed by the owner's teaching and exploration goals;
+  analysis only, with no UI implementation
 - [Synthesized driving audio research and implementation plan](audio-system.md)
   with [native audio qualification](audio-qualification.json) and
   [actual-app driving qualification](audio-driving-qualification.json), plus
