@@ -273,6 +273,7 @@ and presentation settings. Racing overpasses remain an optional extension; open
 rally/hill-climb routes remain out of scope.
 
 See the [implementation plan](docs/implementation-plan.md),
+[current UI/workbench analysis](docs/research/ui-workbench-analysis.md),
 [M1 foundation notes](docs/foundation.md), [M2 model notes](docs/m2.md) and
 [M3 surface compiler notes](docs/m3.md), [M4 v2 notes](docs/m4-v2.md),
 [M5 venue notes](docs/m5.md), [M6 car/workbench notes](docs/m6.md), [M7 expanded-family notes](docs/m7.md), [M8 solo-session notes](docs/m8.md) and
