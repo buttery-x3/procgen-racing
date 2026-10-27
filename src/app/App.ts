@@ -1,3 +1,14 @@
+import { prepareWorkspace } from "./PreparedWorkspace";
+import { CircuitPreparation } from "../track/Preparation";
+import { CarValidationClient } from "../vehicle/CarValidationClient";
+import { commandDefinition, nextCamera } from "../workbench/commands";
+import { CATEGORIES, randomCategory, explorationRecipe, categoryName } from "../exploration/catalog";
+import type { Category } from "../exploration/catalog";
+import { decodeSelection, loadSelection, saveSelection } from "../exploration/selection";
+import type { ExplorationSelection } from "../exploration/selection";
+import { mechanicsFingerprint, fingerprint, carIdentity } from "../vehicle/CarDefinition";
+import { downloadJSON } from "../workbench/ui";
+import type { TimingCourse } from "../race/TimingCourse";
 import { Input } from "../input/Input";
 import { initializePhysics, SuspensionRig } from "../physics/SuspensionRig";
 import { SceneView } from "../rendering/SceneView";
@@ -19,14 +30,12 @@ import { Workbench } from "../workbench/Workbench";
 import { REFERENCE_CARS } from "../vehicle/referenceCars";
 import { signedForwardSpeed } from "../vehicle/coordinates";
 import { getTestCircuit } from "../track/testCircuit";
-import { GenerationClient } from "../track/GenerationClient";
 import { hydrateCircuit } from "../track/SurfaceCompiler";
 import type { CompiledCircuit } from "../track/SurfaceCompiler";
 import type {
   GenerationRecipe,
   GenerationResult,
 } from "../track/generationTypes";
-import { CircuitView } from "../rendering/CircuitView";
 import { VehicleAudio } from "../audio/VehicleAudio";
 import { venueGeometrySettings } from "../track/venue/types";
 import { SetupHistory, copySetup } from "../storage/GarageStorage";
@@ -61,7 +70,14 @@ export class App {
   private setupHistory = new SetupHistory();
   private savedSetup: VehicleSetup | null = loadSetup();
   private comparisonReturn: VehicleSetup | null = null;
-  private readonly generation = new GenerationClient();
+  private readonly generation = new CircuitPreparation();
+  private readonly carValidation = new CarValidationClient();
+  private selection?: ExplorationSelection;
+  private previousTrack?: CircuitArchive;
+  private activeArchive?: CircuitArchive;
+  private selectionCustom = false;
+  private pendingCategory?: Category;
+  private startupPending = false;
   private readonly surfaceAudio = new VehicleAudio();
   private preview?: GenerationResult;
   private previewVersion = 0;
@@ -73,6 +89,7 @@ export class App {
   private importedReference?: { record: SavedSession; ghost: GhostData };
   constructor(
     private diagnostics?: {
+      deterministic?: boolean;
       driver?: (
         telemetry: VehicleTelemetry,
         setup: VehicleSetup,
@@ -91,7 +108,7 @@ export class App {
   async initialize(root: HTMLElement) {
     await initializePhysics();
     if (this.disposed) return;
-    const setup = this.diagnostics?.setup ?? this.savedSetup ?? DEFAULT_SETUP;
+    const setup = this.diagnostics?.setup ?? (this.diagnostics?.deterministic ? this.savedSetup : undefined) ?? DEFAULT_SETUP;
     const experiment = this.diagnostics?.experiment ?? "circuit";
     this.rig = new SuspensionRig(setup);
     this.surfaceAudio.setSetup(setup);
@@ -103,6 +120,8 @@ export class App {
       setup,
       {
         action: (action) => this.action(action),
+        inputBoundary: () => this.input?.clear(),
+        pairingImport: (raw) => { try { void this.explore(undefined, decodeSelection(raw)); } catch (e) { this.workbench.toast(String(e)); } },
         setup: (next, rebuild, group) =>
           this.applySetup(next, false, true, rebuild, group),
         generate: (recipe, archive) =>
@@ -119,8 +138,11 @@ export class App {
         storage: this.soloStorage,
       },
       !!this.savedSetup,
+      this.savedSetup ?? undefined,
     );
-    if (this.savedSetup) this.workbench.setSetup(setup);
+    if (this.savedSetup) this.workbench.setSavedReference(this.savedSetup);
+    this.workbench.setSetup(setup);
+    this.workbench.setCircuit(this.rig.circuit);
     this.workbench.setExperiment(experiment);
     this.view = new SceneView(this.workbench.viewport, setup, getTestCircuit());
     this.view.remember(this.rig.telemetry, true);
@@ -155,13 +177,15 @@ export class App {
     document.addEventListener("visibilitychange", this.visibility);
     window.addEventListener("blur", this.blur);
     this.frame = requestAnimationFrame(this.animate);
+    if (!this.diagnostics?.deterministic) { this.startupPending = true; void this.explore(randomCategory()); }
   }
 
   private async generatePreview(
     recipe: GenerationRecipe,
     archive?: CircuitArchive,
   ) {
-    const version = ++this.previewVersion;
+    this.cancelPreparation();
+    const version = this.previewVersion;
     this.preview = undefined;
     try {
       const venue = this.workbench.generator.venueSettings();
@@ -182,15 +206,15 @@ export class App {
         );
       const result =
         this.previewCache.get(key) ??
-        (await this.generation.generate(
+        (await this.generation.prepare(
           recipe,
+          venue,
           (progress) => {
             if (version === this.previewVersion && !this.disposed)
               this.workbench.generator.progress(progress);
           },
-          venue,
-          cached,
           archive,
+          cached,
         ));
       if (version !== this.previewVersion || this.disposed) return;
       this.preview = result;
@@ -229,38 +253,101 @@ export class App {
     }
   }
 
-  private loadCircuit(circuit: CompiledCircuit, archive?: CircuitArchive) {
+  private commitWorkspace(next: ReturnType<typeof prepareWorkspace>, archive: CircuitArchive | undefined, remember: boolean, mode: SessionMode = "practice", clearComparison = true) {
+    const old = this.rig;
+    if (remember) this.setupHistory.record(old.setup);
+    this.session?.abandon("Workspace changed");
     this.surfaceAudio.silence();
-    // Build the view before changing physics. Both preparation failures keep the
-    // current scene; successful replacement releases all previous mesh/colliders.
-    const nextView = new CircuitView(circuit);
-    try {
-      this.session?.abandon("Circuit changed");
-      this.rig.setCircuit(circuit);
-    } catch (error) {
-      nextView.dispose();
-      throw error;
-    }
-    this.view.setCircuit(nextView);
-    this.workbench.setCircuit(circuit);
+    this.rig = next.rig;
+    next.car.commit();
+    this.view.setCircuit(next.road);
+    next.timing?.commit();
+    next.release();
+    this.activeArchive = archive;
+    if (clearComparison) { this.comparisonReturn = null; this.workbench.setComparing(false); }
+    this.workbench.setWorkspace(this.rig.setup, this.rig.circuit, this.rig.experiment, this.rig.circuitStart);
+    this.workbench.setUndoEnabled(this.setupHistory.canUndo);
+    this.workbench.setRedoEnabled(this.setupHistory.canRedo);
+    this.workbench.library.setCurrent(archive, this.rig.circuit.distance);
     this.view.remember(this.rig.telemetry, true);
-    this.view.setCamera("chase");
-    this.workbench.setCamera("chase");
-    this.configureSession();
-    this.workbench.library.setCurrent(archive, circuit.distance);
-    this.accumulator = 0;
-    this.paused = false;
-    this.workbench.setPaused(false);
-    this.workbench.update(
-      this.rig.telemetry,
-      this.fps,
-      0,
-      this.input.gamepadName,
-    );
+    this.view.setCamera("chase"); this.workbench.setCamera("chase");
+    this.configureSession(mode, next.course);
+    this.surfaceAudio.setSetup(this.rig.setup);
+    this.input.clear(); this.accumulator = 0;
+    this.workbench.setPaused(this.paused);
+    old.dispose();
+  }
+  private loadCircuit(circuit: CompiledCircuit, archive?: CircuitArchive, testing = false) {
+    if (!this.workbench.authorize("experiment:circuit")) return;
+    this.cancelPreparation();
+    const next = prepareWorkspace(this.view, this.rig.setup, circuit);
+    try { this.commitWorkspace(next, archive, false); } finally { next.dispose(); }
+    if (!testing) { this.selectionCustom = true; this.previousTrack = archive; }
+    this.updateSelectionContext();
     this.workbench.generator.close();
-    this.workbench.toast(
-      `${circuit.definition.name} loaded. Your vehicle setup is retained.`,
-    );
+    this.workbench.toast(`${circuit.definition.name} loaded. Your vehicle setup is retained.`);
+  }
+
+  private cancelPreparation() {
+    this.previewVersion++;
+    this.generation.cancel(); this.carValidation.cancel();
+    this.pendingCategory = undefined;
+    this.workbench?.chrome.setCategory(this.selectionCustom ? undefined : this.selection?.category);
+    this.workbench?.setPreparation();
+  }
+  private updateSelectionContext() {
+    const s = this.selection;
+    const custom = this.selectionCustom || (!!s && fingerprint(this.rig.setup.vehicle) !== fingerprint(s.factory.vehicle));
+    this.workbench.chrome.setCategory(custom ? undefined : s?.category, this.pendingCategory);
+    const detail = this.workbench.node("pairing-detail");
+    detail.textContent = s ? `${custom ? "Custom · from " : ""}${categoryName(s.category)} · seed ${s.seed} · attempt ${s.attempt + 1} · car ${s.car.seed} · mechanics ${s.car.mechanicsSeed} · proportions ${s.car.proportionsSeed} · appearance ${s.car.appearanceSeed} · track ${s.track.seed} · scenery ${s.venue.scenerySeed} · catalog ${s.catalog}.` : "Custom / authored proving circuit. Manual recipes remain available in the workshops.";
+    this.workbench.node("active-setup-state").textContent = this.workbench.hasPendingChanges ? "PENDING CHASSIS" : s && mechanicsFingerprint(this.rig.setup) !== s.mechanics ? "MODIFIED" : custom ? "CUSTOM" : "";
+  }
+  private async explore(category?: Category, repeat?: ExplorationSelection) {
+    if (!this.workbench.authorize("explore:new")) return;
+    this.cancelPreparation();
+    const token = this.previewVersion;
+    category = repeat?.category ?? category ?? this.selection?.category ?? randomCategory();
+    const rootSeed = repeat?.seed ?? crypto.randomUUID();
+    this.pendingCategory = category;
+    this.workbench.chrome.setCategory(this.selectionCustom ? undefined : this.selection?.category, category);
+    const failures: string[] = [];
+    for (let attempt = repeat?.attempt ?? 0; attempt < (repeat ? repeat.attempt + 1 : 3); attempt++) {
+      let staged: ReturnType<typeof prepareWorkspace> | undefined;
+      try {
+        const recipe = repeat ?? explorationRecipe(category, rootSeed, attempt);
+        this.workbench.setPreparation(`Preparing ${categoryName(category)} · ${attempt + 1}/3 · checking vehicle…`, true);
+        const car = generateCar(recipe.car);
+        if (!car.valid) throw new Error(car.checks.filter((c) => !c.passed).map((c) => c.detail).join("; "));
+        const physical = await this.carValidation.validate(car.setup);
+        if (this.disposed || token !== this.previewVersion) return;
+        if (!physical.valid) throw new Error(physical.detail);
+        const result = await this.generation.prepare(recipe.track, recipe.venue, (p) => this.workbench.setPreparation(`Preparing ${categoryName(category)} · ${p.stage}`, true), repeat?.archive);
+        if (this.disposed || token !== this.previewVersion) return;
+        if (result.fallback) throw new Error("Generator returned a fallback instead of the selected recipe.");
+        const circuit = hydrateCircuit(result.circuit), archive = circuitArchive(result);
+        staged = prepareWorkspace(this.view, car.setup, circuit);
+        // Allow cancellation/intent changes before replacing the active pair at a frame boundary.
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+        if (this.disposed || token !== this.previewVersion || this.workbench.hasPendingChanges) return;
+        this.commitWorkspace(staged, archive, true);
+        this.selection = { ...recipe, format: "procgen-racing/exploration", factory: copySetup(car.setup), archive, mechanics: mechanicsFingerprint(car.setup), circuitFingerprint: result.fingerprint };
+        this.selectionCustom = false; this.previousTrack = archive; this.preview = result;
+        this.workbench.generator.setSelection(recipe.track, recipe.venue, result);
+        const stored = saveSelection(this.selection);
+        this.pendingCategory = undefined; this.startupPending = false;
+        this.workbench.setPreparation(); this.updateSelectionContext();
+        this.workbench.toast(`${categoryName(category)} ready · ${car.definition.name}${stored ? "" : " · pairing storage unavailable; export to keep it"}`);
+        return;
+      } catch (e) {
+        if (this.disposed || token !== this.previewVersion || (e instanceof DOMException && e.name === "AbortError")) return;
+        failures.push(e instanceof Error ? e.message : String(e));
+      } finally { staged?.dispose(); }
+    }
+    if (token !== this.previewVersion) return;
+    this.pendingCategory = undefined; this.updateSelectionContext();
+    if (this.startupPending) { this.paused = true; this.workbench.setPaused(true); }
+    this.workbench.setPreparation(`Could not prepare ${categoryName(category)}. ${failures.join(" / ")}`, false);
   }
 
   private applySetup(
@@ -273,10 +360,7 @@ export class App {
     const next = sanitizeSetup(setup);
     const identical = JSON.stringify(next) === JSON.stringify(this.rig.setup);
     if (identical && !rebuild) return;
-    this.session?.abandon("Car or setup changed");
-    if (remember) {
-      if (!identical) this.setupHistory.record(this.rig.setup, group);
-    }
+    this.cancelPreparation();
     const structure = (s: VehicleSetup) =>
       s.vehicle && {
         family: s.vehicle.family,
@@ -294,22 +378,23 @@ export class App {
       Array.from(STRUCTURAL_KEYS).some(
         (key) => next[key] !== this.rig.setup[key],
       );
-    this.rig.updateSetup(next, structural);
+    if (structural) {
+      const prepared = prepareWorkspace(this.view, next, this.rig.circuit, this.rig.experiment, this.rig.circuitStart);
+      try { this.commitWorkspace(prepared, this.activeArchive, remember, this.session.mode, remember); } finally { prepared.dispose(); }
+      this.updateSelectionContext();
+      return;
+    }
+    const preparedCar = visual ? this.view.prepareCar(next) : undefined;
+    this.session?.abandon("Car or setup changed");
+    if (remember && !identical) this.setupHistory.record(this.rig.setup, group);
+    this.rig.updateSetup(next, false);
     this.surfaceAudio.setSetup(next);
     this.configureSession();
-    if (structural || visual) {
-      this.view.buildCar(next);
-    }
-    if (structural) {
-      this.view.remember(this.rig.telemetry, true);
-      this.accumulator = 0;
-      this.workbench.toast(
-        "Chassis rebuilt. Dimensions and mass properties applied.",
-      );
-    }
+    preparedCar?.commit();
     if (refresh) this.workbench.setSetup(next);
     this.workbench.setUndoEnabled(this.setupHistory.canUndo);
     this.workbench.setRedoEnabled(this.setupHistory.canRedo);
+    this.updateSelectionContext();
     if (this.comparisonReturn && remember) {
       this.comparisonReturn = null;
       this.workbench.setComparing(false);
@@ -317,6 +402,30 @@ export class App {
   }
 
   private action(action: string) {
+    try { this.executeAction(action); }
+    catch (error) { this.workbench.toast(`Action could not complete. ${error instanceof Error ? error.message : String(error)}`); }
+  }
+  private executeAction(action: string) {
+    if (action === "draft:changed") { this.cancelPreparation(); this.updateSelectionContext(); return; }
+    if (!this.workbench.authorize(action)) return;
+    const definition = commandDefinition(action);
+    if (definition.effect !== "view" && !action.startsWith("explore:") && !action.startsWith("category:")) this.cancelPreparation();
+    if (action.startsWith("category:")) {
+      const category = action.slice(9) as Category;
+      if (category === this.workbench.chrome.selectedCategory && this.rig.experiment === "circuit") { if (this.pendingCategory) this.cancelPreparation(); return; }
+      if (CATEGORIES.includes(category) && (category !== this.workbench.chrome.selectedCategory || this.rig.experiment !== "circuit")) void this.explore(category);
+      return;
+    }
+    if (action.startsWith("explore:")) {
+      if (action === "explore:cancel") { this.cancelPreparation(); return; }
+      if (action === "explore:export") { if (this.selection) downloadJSON(`pairing-${this.selection.seed}.json`, JSON.stringify(this.selection, null, 2)); else this.workbench.toast("Select a category first."); return; }
+      if (action === "explore:repeat") { if (this.selection) void this.explore(undefined, this.selection); else this.workbench.toast("Select a category first."); return; }
+      if (action === "explore:restore") { const last = loadSelection(); if (last) void this.explore(undefined, last); else this.workbench.toast("No valid saved pairing is available."); return; }
+      void this.explore(action === "explore:random" ? randomCategory() : undefined); return;
+    }
+    if (action === "load-baseline") { if (this.savedSetup) this.applySetup(this.savedSetup, true, true, true); else this.workbench.toast("No saved baseline is available."); return; }
+    if (action === "track:return") { if (this.previousTrack) void this.driveArchive(this.previousTrack, true).catch((e) => this.workbench.toast(String(e))); else this.loadCircuit(getTestCircuit(), undefined, true); return; }
+
     if (["reset", "home", "drop"].includes(action) ||
         /^(experiment:|start:|session:(trial|practice))/.test(action))
       this.surfaceAudio.silence();
@@ -331,8 +440,7 @@ export class App {
       action === "generator:cancel" ||
       action === "generator:invalidate"
     ) {
-      this.previewVersion++;
-      this.generation.cancel();
+      this.cancelPreparation();
       if (action.endsWith("invalidate")) this.preview = undefined;
     } else if (
       action === "generator:drive" ||
@@ -478,14 +586,12 @@ export class App {
     } else if (action.startsWith("experiment:")) {
       this.session.abandon("Test surface changed");
       const experiment = action.slice(11) as Experiment;
+      if (experiment === "circuit") { this.loadCircuit(getTestCircuit(), undefined, true); return; }
       this.rig.setExperiment(experiment);
       this.configureSession();
       this.view.remember(this.rig.telemetry, true);
       this.workbench.setExperiment(experiment);
-      if (experiment === "circuit") {
-        this.view.setCamera("chase");
-        this.workbench.setCamera("chase");
-      } else if (this.view.cameraMode === "overview") {
+      if (this.view.cameraMode === "overview") {
         this.view.homeCamera();
         this.workbench.setCamera("orbit");
       }
@@ -499,20 +605,12 @@ export class App {
         | "bonnet"
         | "top"
         | "overview";
+      if (mode === "overview" && this.rig.experiment !== "circuit") return;
       this.view.setCamera(mode);
       this.workbench.setCamera(mode);
     } else if (action === "cycle-camera") {
-      const modes = ["chase", "bonnet", "top", "orbit"] as const;
-      this.action(
-        `camera:${modes[(modes.findIndex((mode) => mode === this.view.cameraMode) + 1) % 3]}`,
-      );
+      this.action(`camera:${nextCamera(this.view.cameraMode)}`);
     } else if (action === "session:trial" || action === "session:practice") {
-      if (this.workbench.hasPendingChanges) {
-        this.workbench.toast(
-          "Apply or discard pending chassis changes before starting a session.",
-        );
-        return;
-      }
       this.session.abandon("New session started");
       this.rig.setCircuitStart(this.rig.circuit.definition.starts[0].id);
       this.workbench.setExperiment("circuit");
@@ -564,19 +662,13 @@ export class App {
         `${PRESETS[name].label} setup · ${PRESETS[name].description}`,
       );
     } else if (action === "save") {
-      if (this.workbench.hasPendingChanges) {
-        this.workbench.toast(
-          "Apply the pending chassis changes before saving this setup.",
-        );
-        return;
-      }
       try {
         saveSetup(this.rig.setup);
         this.savedSetup = copySetup(this.rig.setup);
         this.workbench.setSavedReference(this.savedSetup);
         this.workbench.setCompareEnabled(true);
         this.workbench.toast(
-          "Setup saved in this browser. It will be restored next time.",
+          "Baseline saved in this browser. Load it explicitly from the car menu.",
         );
       } catch {
         this.workbench.toast(
@@ -584,6 +676,7 @@ export class App {
         );
       }
     } else if (action === "compare" && this.savedSetup) {
+      if (!this.comparisonReturn && carIdentity(this.savedSetup) !== carIdentity(this.rig.setup)) { this.workbench.toast("The saved baseline belongs to a different car. Use Load saved baseline to replace the car."); return; }
       if (this.comparisonReturn) {
         const next = this.comparisonReturn;
         this.comparisonReturn = null;
@@ -615,6 +708,7 @@ export class App {
 
   private configureSession(
     mode: SessionMode = this.session?.mode ?? "practice",
+    preparedCourse?: TimingCourse,
   ) {
     const version = ++this.contextVersion,
       circuit = this.rig.circuit,
@@ -628,7 +722,7 @@ export class App {
       circuit,
       identity,
       (lap) => this.persistLap(lap, trackName, carName),
-      oldCourse,
+      preparedCourse ?? oldCourse,
     );
     this.session.restart(mode, this.rig.telemetry);
     this.view.setTimingCourse(this.session.course);
@@ -752,22 +846,16 @@ export class App {
     this.view.configure(settings);
     // Audio mixer preferences have their own version and do not affect sessions.
   }
-  private async driveArchive(archive: CircuitArchive) {
-    const version = ++this.previewVersion;
-    const result = await this.generation.generate(
-      archive.recipe,
-      (progress) => this.workbench.library.status(progress.stage),
-      archive.definition.venue?.settings ?? DEFAULT_VENUE,
-      undefined,
-      archive,
-    );
-    if (this.disposed || version !== this.previewVersion) return;
-    if (
-      !result.report.valid ||
-      result.report.checks.some((c) => c.status === "fail")
-    )
-      throw new Error("Saved circuit failed current construction validation.");
-    this.loadCircuit(hydrateCircuit(result.circuit), circuitArchive(result));
+  private async driveArchive(archive: CircuitArchive, testing = false) {
+    if (!this.workbench.authorize("track:return")) return;
+    this.cancelPreparation();
+    const version = this.previewVersion;
+    try {
+      const result = await this.generation.prepare(archive.recipe, archive.definition.venue?.settings ?? DEFAULT_VENUE,
+        (progress) => this.workbench.library.status(progress.stage), archive);
+      if (this.disposed || version !== this.previewVersion) return;
+      this.loadCircuit(hydrateCircuit(result.circuit), circuitArchive(result), testing);
+    } catch (e) { if ((e as Error).name !== "AbortError") throw e; }
   }
 
   private visibility = () => {
@@ -869,6 +957,20 @@ export class App {
   audioDiagnostics() {
     return this.surfaceAudio.diagnostics();
   }
+  /** Read-only state for the isolated workbench qualification page. */
+  workbenchDiagnostics() {
+    return {
+      time: this.rig.telemetry.time, setup: mechanicsFingerprint(this.rig.setup), car: carIdentity(this.rig.setup),
+      track: this.rig.circuit.definition.id, experiment: this.rig.experiment, start: this.rig.circuitStart,
+      category: this.selection?.category ?? null, pendingCategory: this.pendingCategory ?? null,
+      custom: this.selectionCustom, pendingDraft: this.workbench.hasPendingChanges,
+      layout: { ...this.workbench.chrome.state }, captured: this.workbench.trace.captureSize,
+      paused: this.paused, sessionKey: this.session.identity.key, sessionState: this.session.snapshot().state,
+      grounded: this.rig.telemetry.groundedCount, camera: this.view.cameraMode,
+      finite: [this.rig.telemetry.position.x, this.rig.telemetry.position.y, this.rig.telemetry.position.z].every(Number.isFinite),
+      seed: this.selection?.seed ?? null,
+    };
+  }
 
   /** Snapshot the production RAF/physics/audio path without replacing its control publication. */
   audioDrivingDiagnostics() {
@@ -888,6 +990,7 @@ export class App {
     document.removeEventListener("visibilitychange", this.visibility);
     window.removeEventListener("blur", this.blur);
     this.contextVersion++;
+    this.carValidation.dispose();
     this.generation.dispose();
     this.surfaceAudio.dispose();
     this.previewCache.clear();

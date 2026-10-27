@@ -1,3 +1,4 @@
+import { trackContext } from "./TrackContext";
 import type { VehicleTelemetry } from "../vehicle/types";
 import type { CompiledCircuit } from "../track/SurfaceCompiler";
 import type { SessionIdentity } from "./identity";
@@ -41,12 +42,6 @@ export class RaceSession {
   private flag: "green" | "yellow" | "pit" = "green";
   private message = "Practice · cross the chequered line to start a lap.";
   private recorder?: GhostRecorder;
-  private pitBounds?: {
-    minX: number;
-    maxX: number;
-    minZ: number;
-    maxZ: number;
-  };
   constructor(
     circuit: CompiledCircuit,
     readonly identity: SessionIdentity,
@@ -55,48 +50,6 @@ export class RaceSession {
   ) {
     this.course =
       course?.circuit === circuit ? course : new TimingCourse(circuit);
-    const pit = circuit.definition.venue?.pit;
-    if (pit)
-      this.pitBounds = {
-        minX: Math.min(...pit.points.map((p) => p.x)) - pit.width,
-        maxX: Math.max(...pit.points.map((p) => p.x)) + pit.width,
-        minZ: Math.min(...pit.points.map((p) => p.z)) - pit.width,
-        maxZ: Math.max(...pit.points.map((p) => p.z)) + pit.width,
-      };
-  }
-  private inPit(t: VehicleTelemetry) {
-    const bounds = this.pitBounds,
-      p = t.position,
-      pit = this.course.circuit.definition.venue?.pit;
-    if (
-      !pit ||
-      !bounds ||
-      p.x < bounds.minX ||
-      p.x > bounds.maxX ||
-      p.z < bounds.minZ ||
-      p.z > bounds.maxZ
-    )
-      return false;
-    for (let i = 1; i < pit.points.length; i++) {
-      const a = pit.points[i - 1],
-        b = pit.points[i],
-        dx = b.x - a.x,
-        dz = b.z - a.z,
-        u = Math.max(
-          0,
-          Math.min(
-            1,
-            ((p.x - a.x) * dx + (p.z - a.z) * dz) /
-              Math.max(1e-9, dx * dx + dz * dz),
-          ),
-        );
-      if (
-        Math.hypot(p.x - a.x - dx * u, p.z - a.z - dz * u) < pit.width / 2 &&
-        Math.abs(p.y - a.y - (b.y - a.y) * u) < 2.5
-      )
-        return true;
-    }
-    return false;
   }
   setReference(best: LapResult | null, ghost?: GhostData, imported = false) {
     if (best && best.identity.key !== this.identity.key)
@@ -238,8 +191,8 @@ export class RaceSession {
       this.message = "Out-lap · cross the line after the reset.";
       return;
     }
-    const circuit = this.course.circuit,
-      location = circuit.locate(t.position, { station: t.track?.station });
+    const circuit = this.course.circuit;
+    const { location, pit, onRoad, limit } = trackContext(circuit, t);
     const progress = this.course.progress(location.distance),
       forward = location.sample.forward;
     const along =
@@ -247,39 +200,6 @@ export class RaceSession {
       t.velocity.y * forward.y +
       t.velocity.z * forward.z;
     this.wrongWayTime = along < -2 ? this.wrongWayTime + dt : 0;
-    // Merge triangles can overlap the racing surface. Pit limits start only once
-    // the chassis centre is beyond the racing edge on the separate pit branch.
-    const outside =
-      location.lateral > location.sample.leftWidth + 0.1 ||
-      location.lateral < -location.sample.rightWidth - 0.1;
-    const pit =
-      outside &&
-      (t.track?.branchId === "pit" ||
-        location.branchId === "pit" ||
-        this.inPit(t));
-    let onRoad = false;
-    // The rule concerns the four tyre-centre projections, not a chassis box or
-    // surface colour: tarmac run-off and the oval apron are outside the race road.
-    for (const wheel of t.wheels) {
-      const contact = wheel.grounded ? wheel.contact : wheel.hub;
-      const loc = circuit.locate(contact, {
-        station: location.station,
-        branchId: "main",
-      });
-      if (
-        loc.lateral <= loc.sample.leftWidth + 0.1 &&
-        loc.lateral >= -loc.sample.rightWidth - 0.1
-      ) {
-        const dx = contact.x - loc.sample.position.x,
-          dz = contact.z - loc.sample.position.z;
-        if (
-          Math.hypot(dx, dz) <
-          Math.max(loc.sample.leftWidth, loc.sample.rightWidth) + 4
-        )
-          onRoad = true;
-      }
-    }
-    const limit = circuit.definition.venue?.pit?.speedLimit ?? 60 / 3.6;
     this.pitSpeedTime = pit && t.speed > limit + 1 ? this.pitSpeedTime + dt : 0;
     if (!onRoad && !pit)
       this.invalidate("Track limits · all four tyres outside the white edge");

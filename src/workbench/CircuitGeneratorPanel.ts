@@ -447,7 +447,7 @@ export class CircuitGeneratorPanel {
   }
   open() {
     this.dialog.showModal();
-    if (!this.result && !this.busy) this.generate();
+
   }
   close() {
     this.dialog.close();
@@ -515,6 +515,27 @@ export class CircuitGeneratorPanel {
     this.field("venue-seed").value = venue.scenerySeed;
     this.updateFamily(recipe.targetLength);
     this.generate(archive);
+  }
+  setSelection(recipe: GenerationRecipe, venue: VenueSettings, result: GenerationResult) {
+    this.field("generator-version").value = String(recipe.version);
+    this.field("generator-family").value = recipe.family;
+    this.field("generator-seed").value = recipe.seed;
+    this.field("generator-relief").value = recipe.relief;
+    this.field("generator-character").value = recipe.version === 1 ? "mixed" : recipe.character;
+    this.field("generator-envelope").value = recipe.version === 1 ? "comfortable" : recipe.envelope;
+    this.setRouteAlternative(recipe.version === 1 ? 0 : recipe.layout);
+    this.field("generator-variant").value = recipe.version === 3 ? recipe.variant : "full";
+    this.field("generator-oval").value = recipe.version === 3 ? recipe.oval : "oval";
+    this.field("generator-banking").value = recipe.version === 3 ? recipe.banking : "mild";
+    this.node<HTMLInputElement>("generator-endurance").checked = recipe.version === 3 && recipe.endurance;
+    this.node<HTMLInputElement>("venue-enabled").checked = venue.enabled;
+    this.node<HTMLInputElement>("venue-pits").checked = venue.pits;
+    this.field("venue-theme").value = venue.theme;
+    this.field("venue-kerb").value = venue.kerb;
+    this.field("venue-scenery").value = venue.scenery;
+    this.field("venue-seed").value = venue.scenerySeed;
+    this.updateFamily(recipe.targetLength);
+    this.ready(result);
   }
   private cancel() {
     this.callbacks.action("generator:cancel");

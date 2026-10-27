@@ -12,3 +12,4 @@ app.initialize(root).catch((error: unknown) => {
     error instanceof Error ? error.message : String(error);
 });
 if (import.meta.hot) import.meta.hot.dispose(() => app.dispose());
+import "./workbench/first-pass.css";

@@ -21,6 +21,7 @@ export default defineConfig({
         benchmark: "m7-benchmark.html",
         soloQualification: "m8-lap-test.html",
         soloBenchmark: "m8-benchmark.html",
+        workbenchQualification: "workbench-test.html",
         audioLab: "audio-lab.html",
         audioDriving: "audio-driving.html",
         audioPlayground: "audio-playground.html",

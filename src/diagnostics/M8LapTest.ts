@@ -1,11 +1,12 @@
 import "../style.css";
 import "../workbench/m6.css";
+import "../workbench/first-pass.css";
 import { App } from "../app/App";
 import { SoloStorage } from "../storage/SoloStorage";
 import { referenceControls } from "./ReferenceDriver";
 import { validateGhost } from "../storage/SoloStorage";
 let driving = false;
-const app = new App({
+const app = new App({ deterministic: true,
   storage: new SoloStorage("procgen-racing:m8-qualification"),
   driver: (t, s, c) =>
     driving

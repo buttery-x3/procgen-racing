@@ -1,0 +1,62 @@
+/* Retain the existing instrument palette and component scale. */
+.workbench-first-pass { --rail-size: 64px; --inspector-size: 338px; }
+.workbench-first-pass .workspace { grid-template-columns: var(--rail-size) minmax(0, 1fr) var(--inspector-size); }
+.workbench-first-pass.inspector-collapsed .workspace { grid-template-columns: var(--rail-size) minmax(0, 1fr); }
+.workbench-first-pass .lab-main { min-height: 0; position: relative; }
+.workbench-first-pass .working-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 8px; height: 52px; min-height: 52px; padding: 0 16px; overflow: visible; z-index: 12; }
+.working-left,.working-right,.category-buttons { display: flex; align-items: center; gap: 5px; min-width: 0; }
+.working-right { justify-content: flex-end; }
+.working-left button,.working-left summary { white-space: nowrap; }
+.category-buttons { gap: 0; border: 1px solid var(--line); border-radius: 4px; padding: 3px; }
+.category-buttons button { padding: 6px 7px; color: var(--muted); background: transparent; font-size: 11px; }
+.category-buttons [aria-pressed="true"] { color: var(--lime); background: #303c30; }
+.category-buttons .pending { color: #edcf91; text-decoration: underline; }
+.category-select { display: none; max-width: 140px; padding: 6px; background: #171d1b; color: var(--lime); border: 1px solid var(--line); border-radius: 3px; font: 11px var(--mono); }
+.compact-categories .category-buttons { display: none; }
+.compact-categories .category-select { display: block; }
+.working-toolbar details,.active-context details { position: relative; }
+.working-toolbar summary,.active-context summary { cursor: pointer; list-style: none; font-size: 11px; color: #c7d0bf; padding: 7px; border: 1px solid var(--line); border-radius: 3px; }
+.working-toolbar summary::-webkit-details-marker,.active-context summary::-webkit-details-marker { display: none; }
+.context-popup { position: absolute; left: 0; top: calc(100% + 5px); width: 300px; max-height: min(650px, 75vh); overflow: auto; padding: 16px; background: #1c2321; border: 1px solid #56624e; box-shadow: 3px 5px 14px #0008; color: #cbd1c3; z-index: 30; display: flex; flex-direction: column; gap: 8px; font: 12px/1.5 var(--font-sans, sans-serif); }
+.context-popup button { text-align: left; padding: 8px; color: #d1dbc8; background: #29312a; border: 1px solid #495242; border-radius: 3px; }
+.context-popup p { margin: 0; overflow-wrap: anywhere; }
+.context-popup select,.context-popup input { max-width: 100%; }
+.context-popup [hidden] { display: none !important; }
+.context-popup #test-environments { display: grid; gap: 4px; }
+.workbench-first-pass .context-popup .circuit-controls { display: block; padding: 0; border: 0; background: none; }
+.workbench-first-pass .context-popup .circuit-controls > div { display: flex; flex-direction: column; align-items: stretch; gap: 6px; }
+.workbench-first-pass .context-popup .circuit-controls p { margin: 8px 0; }
+.workbench-first-pass .compact-timing { display: flex; align-items: center; gap: 12px; padding: 0; min-height: 0; height: auto; background: none; border: 0; }
+.compact-timing .session-clock,.compact-timing .session-delta { min-width: 0; }
+.compact-timing .session-clock strong { font-size: 22px; line-height: 1.1; }
+.compact-timing .session-delta strong { font-size: 17px; line-height: 1.1; }
+.compact-timing .session-clock span,.compact-timing .session-delta span { font-size: 8px; }
+.compact-timing .timing-details summary { font-size: 9px; max-width: 112px; overflow: hidden; text-overflow: ellipsis; }
+.compact-timing[data-flag="invalid"] summary,.compact-timing[data-flag="yellow"] summary { color: #edbd7f; border-color: #806641; }
+.compact-timing[data-flag="pit"] summary { color: #a0dce2; border-color: #547c86; }
+.compact-timing .context-popup { left: 50%; transform: translateX(-50%); }
+.active-context { display: flex; align-items: center; gap: 8px; min-width: 0; margin-right: 15px; flex: 1; }
+.active-context details { min-width: 0; max-width: 36%; }
+.active-context summary { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+#active-setup-state { color: var(--lime); font: 9px var(--mono); white-space: nowrap; }
+.workbench-first-pass .header-right { gap: 8px; }
+.workbench-first-pass .header-divider { margin: 0 15px; }
+.setup-reopen { position: absolute; top: 50%; right: 0; transform: translateY(-50%); z-index: 7; }
+.workbench-first-pass .inspector-heading > [data-layout] { float: right; }
+.workbench-first-pass.instruments-collapsed .instruments { height: 30px; min-height: 30px; flex: 0 0 30px; padding: 0 18px; }
+.instruments-collapsed .diagram-grid-layout,.instruments-collapsed #datum-button,.instruments-collapsed .instruments-heading > .eyebrow { display: none; }
+.workbench-first-pass.instruments-collapsed .instruments-heading { margin: 0; height: 29px; }
+.workbench-first-pass .instruments-heading { gap: 12px; }
+.workbench-first-pass .instruments-heading > .eyebrow { margin-right: auto; }
+.workbench-first-pass .scene-heading { display: none; }
+.workbench-first-pass .scene-stage { min-height: 0; }
+.preferences-dialog { max-width: 570px; }
+.preferences-body { padding: 25px; display: grid; gap: 16px; }
+.preparation-status { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: min(620px, 80%); padding: 14px; background: #202820ee; border: 1px solid #65734c; z-index: 8; font-size: 12px; }
+.preparation-status p { margin: 0 0 10px; }
+.workbench-first-pass .tool-rail { padding-top: 18px; }
+.workbench-first-pass .working-right .button { padding: 7px 9px; font-size: 11px; }
+.workbench-first-pass .status-bar #input-status { margin-left: auto; }
+@media (min-width: 1600px) { .workbench-first-pass { --rail-size: 72px; --inspector-size: 370px; } }
+@media (max-width: 1450px) { .workbench-first-pass .live-badge { display: none; } .workbench-first-pass .working-toolbar { gap: 5px; padding: 0 8px; } .workbench-first-pass .compact-timing { gap: 8px; } }
+@media (max-width: 1150px) { .workbench-first-pass { --inspector-size: 300px; } .working-right [data-action="sessions"] { font-size: 0 !important; } .working-right [data-action="sessions"]:after { content: "Records"; font-size: 10px; } }
